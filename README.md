@@ -1,2 +1,2 @@
-# ClairObscureArchipelagoRandomizer
-A Clair Obscure : Expedition 33 mod for the Archipelago multi-game randomizer system
+# ClairObscurArchipelagoRandomizer
+A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system
