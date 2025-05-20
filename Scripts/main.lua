@@ -10,15 +10,18 @@ function TestSomeFunctions()
     end
 end
 
-function Test()
-    ---@class UBP_ExplorationProgressionSystem_C
-    local a = FindFirstOf("BP_ExplorationProgressionSystem_C")
-    if a:IsValid() then
-        a:SetExplorationCapacityUnlocked(6, true)
-        --a:SetExplorationCapacityUnlocked(6, false)
-    end
+function Dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. Dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
 end
-
 
 RegisterKeyBind(Key.F1, { ModifierKey.CONTROL }, function()
     ExecuteInGameThread(function()
@@ -26,9 +29,19 @@ RegisterKeyBind(Key.F1, { ModifierKey.CONTROL }, function()
     end)
 end)
 
+local asset_monoco = "/Game/Audio/MetaSound/MUSIC/Tracks/MonocoStation/MUS_Track_MonocoStation_BT_Monoco.MUS_Track_MonocoStation_BT_Monoco"
 
-RegisterKeyBind(Key.F2, { ModifierKey.CONTROL }, function()
-    ExecuteInGameThread(function()
-        Test()
-    end)
+
+RegisterHook("/Game/Gameplay/InteractiveMusic/BP_InteractiveMusicSystem.BP_InteractiveMusicSystem_C:CreateInteractiveMusicWithContextIfNeeded", function(self, context, sound, music)
+
+    ---@class FS_InteractiveMusic
+    local InteractiveMusic = music:get()
+
+    local audio_comp = InteractiveMusic["AudioComponent_7_F10237DD43456A26DE6840B3DC60292D"]
+
+    local asset = LoadAsset(asset_monoco)
+    if asset and asset:IsValid() then
+        audio_comp.Sound = asset
+    end
+    print(audio_comp.Sound:GetFullName())
 end)
