@@ -1,0 +1,18 @@
+WorldMapExploration:
+  - "Game/Content/Gameplay/Exploration/ExplorationCapacities/E_WorldMapExplorationCapacity"
+    - 0: Base
+    - 1: HardenLands
+    - 2: Swim
+    - 3: SwimBoost (dive ?)
+    - 4: Fly
+    - 5 : Invalid
+
+Exploration:
+  - Game/Content/Gameplay/Exploration/ExplorationCapacities/E_ExplorationCapacity
+    - 0: FreeAim
+    - 1: AttackInWorld
+    - 2: FreeAimTeleport (grapple ?)
+    - 3: Overlay
+    - 4: GameMenu
+    - 5 : FastTravel
+    - 6: Camp

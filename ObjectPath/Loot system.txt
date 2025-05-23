@@ -1,0 +1,6 @@
+DataTables:
+    - Chroma loot multiplier: 
+        - Object path: /Game/Gameplay/Inventory/LootSystem/ProgressionBalancing/S_ProgressionBalancingLevel.0
+        - Name : DT_ProgressionBalancingLevels
+    - Uprgade item per range of levels:
+        -
