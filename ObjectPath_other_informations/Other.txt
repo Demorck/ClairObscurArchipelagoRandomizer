@@ -1,0 +1,2 @@
+Enemies name and their explications: 
+    Game/Content/StringTables/Gameplay/ST_Enemies_Name
