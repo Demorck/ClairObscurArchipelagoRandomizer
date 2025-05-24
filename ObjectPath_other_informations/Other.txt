@@ -1,2 +1,6 @@
 Enemies name and their explications: 
     Game/Content/StringTables/Gameplay/ST_Enemies_Name
+
+
+Journal's entry ? 
+    Game/Content/StringTables/Dialogs/Journal/ST_JO_Entries
