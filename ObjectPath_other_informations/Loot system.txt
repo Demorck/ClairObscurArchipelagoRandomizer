@@ -26,3 +26,4 @@ Loot on floor:
 
     Sometimes, we can find chests in generated folder 
         Example: (Sandfall/Content/Levels/ConceptLevels/ConceptLevel_SeaCliff_V1/_Generated_/67GS4DT6NH7SMG9O1U5ZQ8VWU.umap, search for Chest_SmallLevel_StonewaveCliffsCave_3)
+            Sandfall/Content/Levels/Manor/Manor_Main_WP/_Generated_/7KDO3URHPISPARC6UXXO19XYI.umap and Chest_Manor_7 and Chest_Manor_11
