@@ -21,3 +21,4 @@ Loot on floor:
         - Double (Roll Chance)
 
     Sometimes references are not empy and section is (like Chest_GoblusLair_11)
+    Chest_SpringMeadows_14, Chest_SpringMeadows_24
