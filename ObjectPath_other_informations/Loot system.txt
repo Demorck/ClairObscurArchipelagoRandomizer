@@ -22,3 +22,7 @@ Loot on floor:
 
     Sometimes references are not empy and section is (like Chest_GoblusLair_11)
     Chest_SpringMeadows_14, Chest_SpringMeadows_24
+
+
+    Sometimes, we can find chests in generated folder 
+        Example: (Sandfall/Content/Levels/ConceptLevels/ConceptLevel_SeaCliff_V1/_Generated_/67GS4DT6NH7SMG9O1U5ZQ8VWU.umap, search for Chest_SmallLevel_StonewaveCliffsCave_3)
