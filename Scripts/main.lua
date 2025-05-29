@@ -1,28 +1,5 @@
-print("[MyLuaMod] Mod loaded\n")
-
 function TestSomeFunctions()
   
-    ---@class FS_ChestLootTableSetup
-    -- local a = FindFirstOf("S_ChestLootTableSetup")
-    -- if a:IsValid() then
-    --     local s = FText("aa")
-    --     a:ReceiveGold(500000, s:ToString())
-    -- end
-
-    local a = FindFirstOf("DT_ChestsContent")
-    if a:IsValid() then
-        print("valide la datatable ma couille")
-    end
-
-    local a = StaticFindObject("Game/Content/Gameplay/GPE/Chests/Content/DT_ChestsContent.DT_ChestsContent")
-    if a:IsValid() then
-        print("valide la datatable ma couille 2")
-    end
-
-    local a = LoadAsset("Game/Content/Gameplay/GPE/Chests/Content/DT_ChestsContent.DT_ChestsContent")
-    if a:IsValid() then
-        print("valide la datatable ma couille 2")
-    end
 end
 
 function Dump(o)
@@ -46,30 +23,45 @@ end)
 
 local asset_monoco = "/Game/Audio/MetaSound/MUSIC/Tracks/MonocoStation/MUS_Track_MonocoStation_BT_Monoco.MUS_Track_MonocoStation_BT_Monoco"
 
-RegisterHook("/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:RollChestItems", function(self, context, ItemsToLoot)
-    ---@class FS_LootContext
-    local context = context:get()
-
-    ---@class TMap<FName, int32>
-    local ItemsToLoot = ItemsToLoot:get()
-
-    ItemsToLoot:ForEach(function (key, values)
-        print("Key: " .. key:get():ToString() .. " - Quantity: " .. tostring(values:get()))
-
-        -- key:set("ChromaPack_Regular")
-    end)
-end)
-
-
-NotifyOnNewObject("/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C", function (component)
+-- Tested in Small level StoneWave Cliff
+-- Change loot 
+RegisterHook("/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:ComputeChestLootTableSections", function (Context, lootTable, RollChance)
     -- local chest = component:get()
-    local lootMap = component.ItemsToLoot
-    print(tostring(lootMap["Chest_SeaCliff_36"]))
+    local context = Context:get()
+
+    print(context:GetFullName()) -- BP_Chest_Regular_C /Game/Levels/ConceptLevels/ConceptLevel_SeaCliff_V1/_Generated_/67GS4DT6NH7SMG9O1U5ZQ8VWU.ConceptLevel_SeaCliff_V1:PersistentLevel.BP_Chest_Regular_C_UAID_C87F5409F1EC60F801_1853506310
+    local test = context["ChestSetupHandle"]["RowName"]---@cast test FName
+    print(test:ToString()) -- Chest_SmallLevel_StonewaveCliffsCave_1
+
+
+    ---@class TArray<FS_LootTableSection>
+    local loot_table = lootTable:get()
+
+
+    ---@class TArray<FS_LootTableEntry>
+    local loot_entries = loot_table[1]["LootEntries_14_4A650E0F4C998FBA66B50DAEE60C253A"]
+
+    ---@class FS_LootTableEntry
+    local loot_table_entry = loot_entries[1]
+
+    ---@class FName
+    local loot_name = loot_table_entry["ItemID_7_8AE2C1FA4D5144FF4549F59430C1FC3A"]
+
+    ---@class double
+    local roll_chance = RollChance:get()
+
+    if loot_name:ToString() == "Consumable_LuminaPoint" then
+        loot_table_entry["ItemID_7_8AE2C1FA4D5144FF4549F59430C1FC3A"] = FName("ChromaPack_Large") -- Change occurs here !
+        loot_table_entry["Quantity_4_E9AC4373432C806BD7F0B4BE05A1303D"] = 50
+    end
+
+    print(loot_name:ToString())
+    print(tostring(roll_chance))
 end)
 
 
 
-
+-- Change music
 -- RegisterHook("/Game/Gameplay/InteractiveMusic/BP_InteractiveMusicSystem.BP_InteractiveMusicSystem_C:CreateInteractiveMusicWithContextIfNeeded", function(self, context, sound, music)
 
 --     ---@class FS_InteractiveMusic
