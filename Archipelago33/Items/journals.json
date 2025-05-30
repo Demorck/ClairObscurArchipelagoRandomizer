@@ -2,295 +2,246 @@
     {
         "type": "Journal",
         "name": "Journal - Simon",
-        "internal_name": "ITEM_Journal_Exp100A_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Julie Search and Rescue",
-        "internal_name": "ITEM_Journal_Exp100B_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 84",
-        "internal_name": "ITEM_Journal_Exp84_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 81",
-        "internal_name": "ITEM_Journal_Exp81_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 78",
-        "internal_name": "ITEM_Journal_Exp78_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 70",
-        "internal_name": "ITEM_Journal_Exp70_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 69",
-        "internal_name": "ITEM_Journal_Exp69_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 68",
-        "internal_name": "ITEM_Journal_Exp68_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 67",
-        "internal_name": "ITEM_Journal_Exp67_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 66",
-        "internal_name": "ITEM_Journal_Exp66_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 65",
-        "internal_name": "ITEM_Journal_Exp65_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 64",
-        "internal_name": "ITEM_Journal_Exp64_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 63",
-        "internal_name": "ITEM_Journal_Exp63_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 62",
-        "internal_name": "ITEM_Journal_Exp62_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 61",
-        "internal_name": "ITEM_Journal_Exp61_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 60",
-        "internal_name": "ITEM_Journal_Exp60_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 59",
-        "internal_name": "ITEM_Journal_Exp59_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 58",
-        "internal_name": "ITEM_Journal_Exp58_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 57",
-        "internal_name": "ITEM_Journal_Exp57_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 56",
-        "internal_name": "ITEM_Journal_Exp56_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 55",
-        "internal_name": "ITEM_Journal_Exp55_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 54",
-        "internal_name": "ITEM_Journal_Exp54_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 53",
-        "internal_name": "ITEM_Journal_Exp53_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 52",
-        "internal_name": "ITEM_Journal_Exp52_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 51",
-        "internal_name": "ITEM_Journal_Exp51_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 50",
-        "internal_name": "ITEM_Journal_Exp50_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 49",
-        "internal_name": "ITEM_Journal_Exp49_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 48",
-        "internal_name": "ITEM_Journal_Exp48_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 47",
-        "internal_name": "ITEM_Journal_Exp47_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 46",
-        "internal_name": "ITEM_Journal_Exp46_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 45",
-        "internal_name": "ITEM_Journal_Exp45_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 44",
-        "internal_name": "ITEM_Journal_Exp44_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 43",
-        "internal_name": "ITEM_Journal_Exp43_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 42",
-        "internal_name": "ITEM_Journal_Exp42_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 41",
-        "internal_name": "ITEM_Journal_Exp41_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 40",
-        "internal_name": "ITEM_Journal_Exp40_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 39",
-        "internal_name": "ITEM_Journal_Exp39_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 38",
-        "internal_name": "ITEM_Journal_Exp38_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 37",
-        "internal_name": "ITEM_Journal_Exp37_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 36",
-        "internal_name": "ITEM_Journal_Exp36_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 35",
-        "internal_name": "ITEM_Journal_Exp35_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Expedition 34",
-        "internal_name": "ITEM_Journal_Exp34_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Fracture Survivor",
-        "internal_name": "ITEM_Journal_OldLumiere_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Unknown (Sirene)",
-        "internal_name": "ITEM_Journal_RenoirSirene_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Unknown (Visages)",
-        "internal_name": "ITEM_Journal_RenoirVisages_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Unknown (Reacher)",
-        "internal_name": "ITEM_Journal_RenoirReacher_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Renoir",
-        "internal_name": "ITEM_Journal_RenoirManor_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Aline",
-        "internal_name": "ITEM_Journal_Aline_Name",
-        "is_progressive": false
+        "progressive": 0
     },
     {
         "type": "Journal",
         "name": "Journal - Verso",
-        "internal_name": "ITEM_Journal_Verso_Name",
-        "is_progressive": false
+        "progressive": 0
     }
 ]

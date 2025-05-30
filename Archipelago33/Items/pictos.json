@@ -1,0 +1,1627 @@
+[
+    {
+        "type": "Picto",
+        "name": "DoubleAP",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AP+1TurnStart",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AP+1Attack",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AP+1Parry",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Augmented1stStrike",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "RiskSeeker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Survivor",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AegisRevival",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Recovery",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LuckyAim",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CounterUpdragdeA",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SecondChance",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FirstStrike",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SoloFighter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Teamwork",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SweetKill",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AugmentedAttack",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AttackLifesteal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AugmentedAim",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ComboAttack1",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingParry",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LimonsolPictos",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "02_ArmPicto_Placeholder",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoPowerful",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoRush",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Auto1Hp",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoRegen",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiBurn",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiFrozen",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiSilence",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiStun",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiInverted",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiCurse",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiBound",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiShock",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiDizzy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PhysicalCoat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FireCoat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "IceCoat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ThunderCoat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EarthCoat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LightCoat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DarkCoat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "NullPhysical",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "NullFire",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "NullIce",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "NullEarth",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "NullThunder",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "NullDark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "NullLight",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AbsorbPhysical",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AbsorbFire",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AbsorbIce",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AbsorbEarth",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AbsorbLight",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AbsorbThunder",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AbsorbDark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Speedster",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Blitz",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AngelGrace",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AngelPresent",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AngelicChance",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BackAtYou",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Dodger",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "RiskTaker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InitialAp+1A",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InitialAp+1B",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InitialAp+1C",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InitialAp+1D",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ManOfParry",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Confident",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HighOnPerfect",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FasterThanHisShadow",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BrambleSkin",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SpreadingBrambleSkin",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BrambleParry",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BloodyBullet",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FastAttacker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveBombFire",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveBombIce",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveBombThunder",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveBombEarth",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveCheer",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveWithRegen",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveWithShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveWithPrecision",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveWithPower",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveWithRush",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FireSkin",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FrozenSkin",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InvertedSkin",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "OverConfident",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Fugitive",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Solidifying",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "TheOne",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BootyHunter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "TurboKiller",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SniperWolf",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BurningShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FrozenShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "StunningShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InvertedShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PiercingShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BurningDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DefenseBreakerDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DefenseRiserDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerBreakerDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerRiserDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SpeedsterDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FlashDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HazardousChoice",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombPhysical",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombFire",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombFrozen",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombThunder",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombEarth",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombLight",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombDark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeathBombVoid",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EnergyDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ShieldingDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ProtectingDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EmpoweringDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BurnAffinity",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FrozenAffinity",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InvertedAffinity",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ExhaustAffinity",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PhysicalModifier",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoBurn",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoCurse",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LastStand",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Stand",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "MakeItQuick",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "OverPowered",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SosShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SosPower",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CounterUpdragdeB",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CounterUpdragdeC",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoPrecision",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiExhaust",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GathererA",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SosRush",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GestralFlute",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SosPrecision",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LearnerA",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BramblePerformer",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SolidifyingMeditation",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerBreakerShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BlankPictos",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "TEST_FullStatsPicto",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "TEST_FullStatsPicto_1",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "TEST_FullStatsPicto_2",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "TEST_FullStatsPicto_3",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DoubleBurn",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ProtectingFire",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingFire",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "RewardingMark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DoubleMark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "StunBoost",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Sniper",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PierceDefense",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Energy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Cheater",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FromBehind",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ProBlocker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingCounter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerfulShield",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BaseShield",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "InMediasRes",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ShieldBreaker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ShieldAffinity",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CriticalMoment",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CriticalHavoc",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FasterThanStrong",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Warming",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Shortcut",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "RandomDefense",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GlassCanon",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ProtectionSpirit",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DefensiveMode",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreaterPowerful",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreaterSpeed",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreaterPrecision",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreaterShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LastStandCritical",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveParadox",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EffectiveHeal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SharedCare",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EnergizingHeal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerfulHeal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ProtectingHeal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AcceleratorHeal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ConfidentFighter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PerfectHeal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingShare",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "WeaknessGain",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DeadEnergy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PatientFighter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EffectivSupport",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "VersatileHealer",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BeneficialContamination",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PerfectReward",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PhysicalFighter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Roulette",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SoulEater",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Painter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Immaculate",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Tainted",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FirstOffensive",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CursedPower",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CriticalCursedPower",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ProRetreat",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ParryHelper",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "WeakeningMark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BurningMark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerfulMark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingMark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "StayMarked",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CharybdeToScylla",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimBurnShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimInvertedShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimMarkingShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimPowerful",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimSpeed",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimPrecision",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FreeAimEnergy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Versatile",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerfulStrike",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ShellStrike",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerlessStrike",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DefenslessStrike",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReinforcementParade",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LastStandSpeed",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LastStandPowerful",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LastStandShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerOfPain",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "JumpRecovery",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "FullEnergyAttack",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ComboAttack2",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ComboAttack3",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "Breaker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SimpleBreaker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EnergyBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakMomentum",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakingStrong",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "StunEnergy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingStun",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BurningBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CriticalBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakingCounter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakShot",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreatFireBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientFighter",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientHeal",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientEnergy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientStacker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientBreaker",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PostGradient",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientCure",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientCounterCharge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientWeakness",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientMark",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ReviveTintEnergy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealingTintEnergy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerfulTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ShellTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ShieldingTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SpeedTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreatHealingTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CleansingTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BigHealingTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BigEnergyTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "TimeTint",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "APOnBurn",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakDamageOnBurn",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CritChanceBurn",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BurningDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BurnDurationIncrease",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakDamageOnCrit",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CritChanceOnWeak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CritChanceOnStunned",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CritChanceOnDefenseless",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerDodgeCombo",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "MarkOnBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "SlowOnBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DefenselessOnBreak",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakSpecialist",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakingDeath",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakDamageOnSlow",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LongerPowerful",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LongerShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LongerRush",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "PowerfulOnShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "RushOnPowerful",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ShellOnRush",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "EvasiveHealer",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "APOnPowerful",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "APOnShell",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "APOnRush",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "HealOnBuff",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreaterPowerless",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreaterDefenseless",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GreaterSlow",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AutoDispelEnergy",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DispelOnAPConsume",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiBlight",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientOnCrit",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientOnBurn",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientOnStun",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "GradientOnBuff",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "LongerDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ParrySpecialist",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "DodgeSpecialist",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BestDefense",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BonusHealthNoDefense",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "ParryDamageNoDodge",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "BreakingAttack",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "AntiCharm",
+        "progressive": 2
+    },
+    {
+        "type": "Picto",
+        "name": "CleasLife",
+        "progressive": 2
+    }
+]

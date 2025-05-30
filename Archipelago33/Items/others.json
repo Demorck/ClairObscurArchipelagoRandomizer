@@ -1,0 +1,44 @@
+[ 
+    {
+        "type": "Upgrade material",
+        "name": "UpgradeMaterial_Level1",
+        "progressive": 2
+    },
+    {
+        "type": "Upgrade material",
+        "name": "UpgradeMaterial_Level2",
+        "progressive": 2
+    },
+    {
+        "type": "Upgrade material",
+        "name": "UpgradeMaterial_Level3",
+        "progressive": 2
+    },
+    {
+        "type": "Upgrade material",
+        "name": "UpgradeMaterial_Level4",
+        "progressive": 2
+    },
+
+    {
+        "type": "Upgrade material",
+        "name": "ConsumableUpgradeMaterial_Health",
+        "progressive": 2
+    },
+    {
+        "type": "Upgrade material",
+        "name": "ConsumableUpgradeMaterial_AP",
+        "progressive": 2
+    },
+    {
+        "type": "Upgrade material",
+        "name": "ConsumableUpgradeMaterial_Revive",
+        "progressive": 2
+    },
+
+    {
+        "type": "Victory",
+        "name": "Goal",
+        "progressive": 10
+    }
+]

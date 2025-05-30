@@ -1,0 +1,607 @@
+[
+    {
+        "type": "Weapon",
+        "name": "Noahram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Maellum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Lunerim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Scieleson",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Verleso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Monocaro",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Lanceram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Nosaram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Volesterum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Gaulteram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Elerim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Medalum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Potierim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Brulerum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Jarum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Chevalam",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Delaram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Saperim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Seashelum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Scaverim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Glaisum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Cruleram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Minason",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Seeram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Deminerim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Lusteson",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Abysseram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Gobluson",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sakaram",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Coralim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Algueron",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Gesam",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Redalim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sekarum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Bourgelon",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Blodam",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Corderon",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Cultam",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Demonam",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Trebuchim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Rangeson",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Betelim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Veremum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Hevason",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Painerim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Yeverum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Direton",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Melarum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Lighterim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Duenum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Chation",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Chainebum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Troubadum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Ramasson",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Chaliso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Benisim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Battlum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Charnon",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Corpeso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Dualim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Stalum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Contorson",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Danseso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Braselim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Coldum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Glaceso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Snowim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sadon",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Clierum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Garganon",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Moissoso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Angerim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Blizzon",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Confuso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Facesum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Chapelim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sireso_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenon_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenum_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sireso_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenim_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenum_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenim_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenon_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacheso_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reachum_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacherim_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacheron_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacheso_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacheron_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reachum_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacherim_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "GDC_Weapon_Sciel",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "GDC_Weapon_Maelle",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "GDC_Weapon_Lune",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "GDC_Weapon_Verso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "GDC_Weapon_Monoco",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Grandaro",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Chromaro",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Boucharo",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Joyaro",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenaro_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sirenaro_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacharo_1",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Reacharo_2",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Brumaro",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Sidaro",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "MitigatedPerfection",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Beselbum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Gelerim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Nibalum",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Velokan",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Telarim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Milerim",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "03_Weapon_Placeholder",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "DebugSciel",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "DebugLune",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "DebugVerso",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "DebugMaelle",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "DebugMonoco",
+        "progressive": 2
+    },
+    {
+        "type": "Weapon",
+        "name": "Simoso",
+        "progressive": 2
+    }
+]
