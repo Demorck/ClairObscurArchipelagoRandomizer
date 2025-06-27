@@ -1,6 +1,9 @@
 Enemies name and their explications: 
     Game/Content/StringTables/Gameplay/ST_Enemies_Name
 
+Enemies table: 
+    Game/Content/jRPGTemplate/DataTables/DT_jRPG_Enemies
+
 
 Journal's entry ? 
     Game/Content/StringTables/Dialogs/Journal/ST_JO_Entries
