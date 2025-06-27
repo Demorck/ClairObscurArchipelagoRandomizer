@@ -1,0 +1,116 @@
+[
+    {
+        "name": "Chest_Visages_1",
+        "location": "Visages",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_2",
+        "location": "Visages",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_3",
+        "location": "Visages",
+        "original_item": "DoubleBurn",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_4",
+        "location": "Visages",
+        "original_item": "FullEnergyAttack",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_5",
+        "location": "Visages",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_6",
+        "location": "Visages",
+        "original_item": "ReviveTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_7",
+        "location": "Visages",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_8",
+        "location": "Visages",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_10",
+        "location": "Visages",
+        "original_item": "HealingTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_11",
+        "location": "Visages",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_12",
+        "location": "Visages",
+        "original_item": "ConfidentFighter",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_13",
+        "location": "Visages",
+        "original_item": "Confuso",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_14",
+        "location": "Visages",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_15",
+        "location": "Visages",
+        "original_item": "GlassCanon",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_16",
+        "location": "Visages",
+        "original_item": "EnergyTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_17",
+        "location": "Visages",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_18",
+        "location": "Visages",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_19",
+        "location": "Visages",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Visages_20",
+        "location": "Visages",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    }
+]

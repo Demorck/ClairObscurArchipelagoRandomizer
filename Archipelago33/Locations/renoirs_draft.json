@@ -1,0 +1,74 @@
+[
+    {
+        "name": "Chest_RenoirSDraft_1",
+        "location": "Renoir SDraft",
+        "original_item": "BreakMomentum",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_2",
+        "location": "Renoir SDraft",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_3",
+        "location": "Renoir SDraft",
+        "original_item": "RushOnPowerful",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_4",
+        "location": "Renoir SDraft",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_5",
+        "location": "Renoir SDraft",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_6",
+        "location": "Renoir SDraft",
+        "original_item": "GradientOnCrit",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_7",
+        "location": "Renoir SDraft",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_8",
+        "location": "Renoir SDraft",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_9",
+        "location": "Renoir SDraft",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_10",
+        "location": "Renoir SDraft",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_11",
+        "location": "Renoir SDraft",
+        "original_item": "GradientOnBurn",
+        "condition": {}
+    },
+    {
+        "name": "Chest_RenoirSDraft_12",
+        "location": "Renoir SDraft",
+        "original_item": "MusicRecord_32",
+        "condition": {}
+    }
+]

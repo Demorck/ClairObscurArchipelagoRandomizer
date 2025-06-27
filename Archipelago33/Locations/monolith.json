@@ -1,0 +1,248 @@
+[
+    {
+        "name": "Chest_Monolith_1",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_2",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_3",
+        "location": "Monolith",
+        "original_item": "ReviveTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_4",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_5",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_6",
+        "location": "Monolith",
+        "original_item": "StayMarked",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_7",
+        "location": "Monolith",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_8",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_9",
+        "location": "Monolith",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_10",
+        "location": "Monolith",
+        "original_item": "Reacherim_2",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_11",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_12",
+        "location": "Monolith",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_13",
+        "location": "Monolith",
+        "original_item": "RandomDefense",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_14",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_15",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_16",
+        "location": "Monolith",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_17",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_18",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_19",
+        "location": "Monolith",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_20",
+        "location": "Monolith",
+        "original_item": "WeaknessGain",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_21",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_22",
+        "location": "Monolith",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_23",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_24",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_25",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_26",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_27",
+        "location": "Monolith",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_28",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_29",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_30",
+        "location": "Monolith",
+        "original_item": "PowerlessStrike",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_31",
+        "location": "Monolith",
+        "original_item": "ReinforcementParade",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_32",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_33",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_34",
+        "location": "Monolith",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_35",
+        "location": "Monolith",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_36",
+        "location": "Monolith",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_37",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_38",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_39",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_40",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Monolith_41",
+        "location": "Monolith",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]

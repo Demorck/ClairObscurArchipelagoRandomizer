@@ -1,0 +1,284 @@
+[
+    {
+        "name": "Chest_SmallLevel_RedWoods_1",
+        "location": "Small Level Red Woods",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_GoblusLair_02_1",
+        "location": "Small Level Goblus Lair 02",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_StonewaveCliffsCave_1",
+        "location": "Small Level Stonewave Cliffs Cave",
+        "original_item": "ExhaustAffinity",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_StonewaveCliffsCave_2",
+        "location": "Small Level Stonewave Cliffs Cave",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_StonewaveCliffsCave_3",
+        "location": "Small Level Stonewave Cliffs Cave",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_StonewaveCliffsCave_4",
+        "location": "Small Level Stonewave Cliffs Cave",
+        "original_item": "PartyHealShard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_ChosenPath_1",
+        "location": "Small Level Chosen Path",
+        "original_item": "BaseShield",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_FloatingIsland_1",
+        "location": "Small Level Floating Island",
+        "original_item": "GreaterSlow",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_Visages_1",
+        "location": "Small Level Visages",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_Visages_2",
+        "location": "Small Level Visages",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_Reacher_1",
+        "location": "Small Level Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_1",
+        "location": "Small Level Rock Trailing",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_2",
+        "location": "Small Level Rock Trailing",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_3",
+        "location": "Small Level Rock Trailing",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_4",
+        "location": "Small Level Rock Trailing",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_5",
+        "location": "Small Level Rock Trailing",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_6",
+        "location": "Small Level Rock Trailing",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_7",
+        "location": "Small Level Rock Trailing",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_RockTrailing_8",
+        "location": "Small Level Rock Trailing",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_Cemetery_1",
+        "location": "Small Level Cemetery",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_Cemetery_2",
+        "location": "Small Level Cemetery",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_Cemetery_3",
+        "location": "Small Level Cemetery",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_Cemetery_4",
+        "location": "Small Level Cemetery",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_CoastalCave_1",
+        "location": "Small Level Coastal Cave",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_CavernCrusher_1",
+        "location": "Small Level Cavern Crusher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_DoorMaze_1",
+        "location": "Small Level Door Maze",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_DoorMaze_2",
+        "location": "Small Level Door Maze",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_DoorMaze_3",
+        "location": "Small Level Door Maze",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_DoorMaze_4",
+        "location": "Small Level Door Maze",
+        "original_item": "Quest_WoodBoards",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_DoorMaze_5",
+        "location": "Small Level Door Maze",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_SinisterCave_1",
+        "location": "Small Level Sinister Cave",
+        "original_item": "Elerim",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_SinisterCave_2",
+        "location": "Small Level Sinister Cave",
+        "original_item": "MusicRecord_13",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_SinisterCave_3",
+        "location": "Small Level Sinister Cave",
+        "original_item": "Corderon",
+        "condition": {}
+    },
+    {
+        "name": "Chest_MiniLevels_1",
+        "location": "Mini Levels",
+        "original_item": "MusicRecord_20",
+        "condition": {}
+    },
+    {
+        "name": "Chest_MiniLevels_2",
+        "location": "Mini Levels",
+        "original_item": "MusicRecord_21",
+        "condition": {}
+    },
+    {
+        "name": "Chest_MiniLevels_3",
+        "location": "Mini Levels",
+        "original_item": "MusicRecord_16",
+        "condition": {}
+    },
+    {
+        "name": "Chest_MiniLevels_4",
+        "location": "Mini Levels",
+        "original_item": "MusicRecord_23",
+        "condition": {}
+    },
+    {
+        "name": "Chest_MiniLevels_5",
+        "location": "Mini Levels",
+        "original_item": "MusicRecord_24",
+        "condition": {}
+    },
+    {
+        "name": "Chest_MiniLevels_6",
+        "location": "Mini Levels",
+        "original_item": "MusicRecord_25",
+        "condition": {}
+    },
+    {
+        "name": "Chest_MiniLevels_7",
+        "location": "Mini Levels",
+        "original_item": "MusicRecord_11",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_SpringMeadows_1",
+        "location": "Small Level Spring Meadows",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_FlyingCasinoEntrance_1",
+        "location": "Small Level Flying Casino Entrance",
+        "original_item": "MusicRecord_10",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_TheCarrousel_1",
+        "location": "Small Level The Carrousel",
+        "original_item": "MusicRecord_12",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_TheCarrousel_2",
+        "location": "Small Level The Carrousel",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_WhiteSands_1",
+        "location": "Small Level White Sands",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_WhiteSands_2",
+        "location": "Small Level White Sands",
+        "original_item": "MusicRecord_28",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SmallLevel_SacredRiver_1",
+        "location": "Small Level Sacred River",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]

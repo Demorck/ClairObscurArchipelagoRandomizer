@@ -1,0 +1,158 @@
+[
+    {
+        "name": "Chest_ForgottenBattlefield_1",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_2",
+        "location": "Forgotten Battlefield",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_3",
+        "location": "Forgotten Battlefield",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_4",
+        "location": "Forgotten Battlefield",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_5",
+        "location": "Forgotten Battlefield",
+        "original_item": "HealingTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_6",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_7",
+        "location": "Forgotten Battlefield",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_8",
+        "location": "Forgotten Battlefield",
+        "original_item": "SweetKill",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_9",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_10",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_11",
+        "location": "Forgotten Battlefield",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_12",
+        "location": "Forgotten Battlefield",
+        "original_item": "EnergyDeath",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_13",
+        "location": "Forgotten Battlefield",
+        "original_item": "EnergyTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_14",
+        "location": "Forgotten Battlefield",
+        "original_item": "PowerfulTint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_15",
+        "location": "Forgotten Battlefield",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_16",
+        "location": "Forgotten Battlefield",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_17",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_18",
+        "location": "Forgotten Battlefield",
+        "original_item": "ReviveTintEnergy",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_19",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_20",
+        "location": "Forgotten Battlefield",
+        "original_item": "ReviveTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_21",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_22",
+        "location": "Forgotten Battlefield",
+        "original_item": "InitialAp+1D",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_23",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_24",
+        "location": "Forgotten Battlefield",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_25",
+        "location": "Forgotten Battlefield",
+        "original_item": "PartyHealShard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_ForgottenBattlefield_26",
+        "location": "Forgotten Battlefield",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]

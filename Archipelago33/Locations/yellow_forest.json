@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Chest_YellowForest_1",
+        "location": "Yellow Forest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_YellowForest_2",
+        "location": "Yellow Forest",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_YellowForest_3",
+        "location": "Yellow Forest",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_YellowForest_4",
+        "location": "Yellow Forest",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_YellowForest_5",
+        "location": "Yellow Forest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_YellowForest_6",
+        "location": "Yellow Forest",
+        "original_item": "DeathBombPhysical",
+        "condition": {}
+    }
+]

@@ -1,0 +1,410 @@
+[
+    {
+        "name": "Chest_WorldMap_1",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_2",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_3",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_4",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_5",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_6",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_7",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_8",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_9",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_10",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_11",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_12",
+        "location": "World Map",
+        "original_item": "HealingParry",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_13",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_14",
+        "location": "World Map",
+        "original_item": "InitialAp+1A",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_15",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_16",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_17",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_18",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_19",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_20",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_21",
+        "location": "World Map",
+        "original_item": "SharedCare",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_22",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_23",
+        "location": "World Map",
+        "original_item": "EnergizingHeal",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_24",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_25",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_26",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_27",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_28",
+        "location": "World Map",
+        "original_item": "DeadEnergy",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_29",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_30",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_31",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_32",
+        "location": "World Map",
+        "original_item": "ShieldingTint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_33",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_34",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_35",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_36",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_37",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_38",
+        "location": "World Map",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_39",
+        "location": "World Map",
+        "original_item": "GreatFireBreak",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_40",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_41",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_42",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_43",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_44",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_45",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_46",
+        "location": "World Map",
+        "original_item": "BreakDamageOnBurn",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_47",
+        "location": "World Map",
+        "original_item": "GradientTint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_48",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_49",
+        "location": "World Map",
+        "original_item": "CritChanceOnDefenseless",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_50",
+        "location": "World Map",
+        "original_item": "AcceleratorHeal",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_51",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_52",
+        "location": "World Map",
+        "original_item": "EffectivSupport",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_53",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_54",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_55",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_56",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_57",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_58",
+        "location": "World Map",
+        "original_item": "BreakDamageOnCrit",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_59",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_60",
+        "location": "World Map",
+        "original_item": "PowerDodgeCombo",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_61",
+        "location": "World Map",
+        "original_item": "LongerRush",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_62",
+        "location": "World Map",
+        "original_item": "BreakDamageOnSlow",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_63",
+        "location": "World Map",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_64",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_65",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_66",
+        "location": "World Map",
+        "original_item": "APOnShell",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_67",
+        "location": "World Map",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_WorldMap_68",
+        "location": "World Map",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    }
+]

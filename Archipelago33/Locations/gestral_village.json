@@ -1,0 +1,56 @@
+[
+    {
+        "name": "Chest_GestralVillage_1",
+        "location": "Gestral Village",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_2",
+        "location": "Gestral Village",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_3",
+        "location": "Gestral Village",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_4",
+        "location": "Gestral Village",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_5",
+        "location": "Gestral Village",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_6",
+        "location": "Gestral Village",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_7",
+        "location": "Gestral Village",
+        "original_item": "Betelim",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_8",
+        "location": "Gestral Village",
+        "original_item": "FreeAimPowerful",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GestralVillage_9",
+        "location": "Gestral Village",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    }
+]

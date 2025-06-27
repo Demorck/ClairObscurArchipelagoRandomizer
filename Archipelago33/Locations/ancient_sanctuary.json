@@ -1,0 +1,110 @@
+[
+    {
+        "name": "Chest_AncientSanctuary_1",
+        "location": "Ancient Sanctuary",
+        "original_item": "BurningMark",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_2",
+        "location": "Ancient Sanctuary",
+        "original_item": "AttackLifesteal",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_3",
+        "location": "Ancient Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_4",
+        "location": "Ancient Sanctuary",
+        "original_item": "HealingTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_5",
+        "location": "Ancient Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_6",
+        "location": "Ancient Sanctuary",
+        "original_item": "JumpRecovery",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_7",
+        "location": "Ancient Sanctuary",
+        "original_item": "InitialAp+1B",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_8",
+        "location": "Ancient Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_9",
+        "location": "Ancient Sanctuary",
+        "original_item": "ReviveTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_10",
+        "location": "Ancient Sanctuary",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_11",
+        "location": "Ancient Sanctuary",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_12",
+        "location": "Ancient Sanctuary",
+        "original_item": "EnergyTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_13",
+        "location": "Ancient Sanctuary",
+        "original_item": "PiercingShot",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_14",
+        "location": "Ancient Sanctuary",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_15",
+        "location": "Ancient Sanctuary",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_16",
+        "location": "Ancient Sanctuary",
+        "original_item": "StunBoost",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_17",
+        "location": "Ancient Sanctuary",
+        "original_item": "PartyHealShard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_AncientSanctuary_19",
+        "location": "Ancient Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]

@@ -1,0 +1,56 @@
+[
+    {
+        "name": "Chest_CrimsonForest_1",
+        "location": "Crimson Forest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_2",
+        "location": "Crimson Forest",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_3",
+        "location": "Crimson Forest",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_4",
+        "location": "Crimson Forest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_5",
+        "location": "Crimson Forest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_6",
+        "location": "Crimson Forest",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_7",
+        "location": "Crimson Forest",
+        "original_item": "Chevalam",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_8",
+        "location": "Crimson Forest",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_CrimsonForest_9",
+        "location": "Crimson Forest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]

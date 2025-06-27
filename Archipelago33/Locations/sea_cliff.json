@@ -1,0 +1,236 @@
+[
+    {
+        "name": "Chest_SeaCliff_1",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_2",
+        "location": "Sea Cliff",
+        "original_item": "ReviveWithRegen",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_3",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_4",
+        "location": "Sea Cliff",
+        "original_item": "Coralim",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_5",
+        "location": "Sea Cliff",
+        "original_item": "Delaram",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_6",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_7",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_8",
+        "location": "Sea Cliff",
+        "original_item": "HealingTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_9",
+        "location": "Sea Cliff",
+        "original_item": "BreakingCounter",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_10",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_11",
+        "location": "Sea Cliff",
+        "original_item": "HealingTintEnergy",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_12",
+        "location": "Sea Cliff",
+        "original_item": "Duenum",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_13",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_14",
+        "location": "Sea Cliff",
+        "original_item": "DefensiveMode",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_15",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_16",
+        "location": "Sea Cliff",
+        "original_item": "FirstStrike",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_17",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_18",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_19",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_20",
+        "location": "Sea Cliff",
+        "original_item": "EnergyTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_21",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_22",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_23",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_24",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_25",
+        "location": "Sea Cliff",
+        "original_item": "SosPower",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_26",
+        "location": "Sea Cliff",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_27",
+        "location": "Sea Cliff",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_28",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_29",
+        "location": "Sea Cliff",
+        "original_item": "ReviveTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_30",
+        "location": "Sea Cliff",
+        "original_item": "BreakShot",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_31",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_32",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_33",
+        "location": "Sea Cliff",
+        "original_item": "WeakeningMark",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_34",
+        "location": "Sea Cliff",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_35",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_36",
+        "location": "Sea Cliff",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_37",
+        "location": "Sea Cliff",
+        "original_item": "AutoShell",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_38",
+        "location": "Sea Cliff",
+        "original_item": "Quest_HexgaRock",
+        "condition": {}
+    },
+    {
+        "name": "Chest_SeaCliff_39",
+        "location": "Sea Cliff",
+        "original_item": "MusicRecord_3",
+        "condition": {}
+    }
+]

@@ -1,0 +1,56 @@
+[
+    {
+        "name": "Chest_DarkShores_1",
+        "location": "Dark Shores",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_DarkShores_2",
+        "location": "Dark Shores",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_DarkShores_3",
+        "location": "Dark Shores",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_DarkShores_4",
+        "location": "Dark Shores",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_DarkShores_5",
+        "location": "Dark Shores",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_DarkShores_6",
+        "location": "Dark Shores",
+        "original_item": "InMediasRes",
+        "condition": {}
+    },
+    {
+        "name": "Chest_DarkShores_7",
+        "location": "Dark Shores",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },    
+    {
+        "name": "Chest_DarkShores_8",
+        "location": "Dark Shores",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_DarkShores_9",
+        "location": "Dark Shores",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]

@@ -1,0 +1,98 @@
+[
+    {
+        "name": "Chest_TwilightSanctuary_1",
+        "location": "Twilight Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_2",
+        "location": "Twilight Sanctuary",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_3",
+        "location": "Twilight Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_4",
+        "location": "Twilight Sanctuary",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_5",
+        "location": "Twilight Sanctuary",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_6",
+        "location": "Twilight Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_7",
+        "location": "Twilight Sanctuary",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_8",
+        "location": "Twilight Sanctuary",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_9",
+        "location": "Twilight Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_10",
+        "location": "Twilight Sanctuary",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_11",
+        "location": "Twilight Sanctuary",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_12",
+        "location": "Twilight Sanctuary",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_13",
+        "location": "Twilight Sanctuary",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_14",
+        "location": "Twilight Sanctuary",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_15",
+        "location": "Twilight Sanctuary",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_TwilightSanctuary_16",
+        "location": "Twilight Sanctuary",
+        "original_item": "GradientBreak",
+        "condition": {}
+    }
+]

@@ -1,0 +1,164 @@
+[
+    {
+        "name": "Chest_GoblusLair_1",
+        "location": "Goblus Lair",
+        "original_item": "RewardingMark",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_2",
+        "location": "Goblus Lair",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_3",
+        "location": "Goblus Lair",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_4",
+        "location": "Goblus Lair",
+        "original_item": "AugmentedAim",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_5",
+        "location": "Goblus Lair",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_6",
+        "location": "Goblus Lair",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_7",
+        "location": "Goblus Lair",
+        "original_item": "SimpleBreaker",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_8",
+        "location": "Goblus Lair",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_9",
+        "location": "Goblus Lair",
+        "original_item": "EnergyBreak",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_10",
+        "location": "Goblus Lair",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_11",
+        "location": "Goblus Lair",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_12",
+        "location": "Goblus Lair",
+        "original_item": "Versatile",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_13",
+        "location": "Goblus Lair",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_14",
+        "location": "Goblus Lair",
+        "original_item": "SosShell",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_15",
+        "location": "Goblus Lair",
+        "original_item": "Consumable_Respec",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_16",
+        "location": "Goblus Lair",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_17",
+        "location": "Goblus Lair",
+        "original_item": "EnergyTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_18",
+        "location": "Goblus Lair",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_19",
+        "location": "Goblus Lair",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_20",
+        "location": "Goblus Lair",
+        "original_item": "Quest_Mine",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_21",
+        "location": "Goblus Lair",
+        "original_item": "FreeAimMarkingShot",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_22",
+        "location": "Goblus Lair",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_23",
+        "location": "Goblus Lair",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_24",
+        "location": "Goblus Lair",
+        "original_item": "PartyHealShard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_25",
+        "location": "Goblus Lair",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_26",
+        "location": "Goblus Lair",
+        "original_item": "ReviveTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GoblusLair_27",
+        "location": "Goblus Lair",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]

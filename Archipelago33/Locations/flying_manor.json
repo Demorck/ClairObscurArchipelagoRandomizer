@@ -1,0 +1,218 @@
+[
+    {
+        "name": "Chest_FlyingManor_1",
+        "location": "Flying Manor",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_2",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_3",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_4",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_5",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_6",
+        "location": "Flying Manor",
+        "original_item": "ReviveWithPower",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_9",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_10",
+        "location": "Flying Manor",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_11",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_12",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_13",
+        "location": "Flying Manor",
+        "original_item": "GradientOnBuff",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_14",
+        "location": "Flying Manor",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_15",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_16",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_17",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_18",
+        "location": "Flying Manor",
+        "original_item": "VersatileHealer",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_19",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_21",
+        "location": "Flying Manor",
+        "original_item": "Roulette",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_22",
+        "location": "Flying Manor",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_23",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_24",
+        "location": "Flying Manor",
+        "original_item": "Painter",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_25",
+        "location": "Flying Manor",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_26",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_27",
+        "location": "Flying Manor",
+        "original_item": "PowerfulMark",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_28",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_29",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_30",
+        "location": "Flying Manor",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_32",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_33",
+        "location": "Flying Manor",
+        "original_item": "FreeAimShell",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_34",
+        "location": "Flying Manor",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_36",
+        "location": "Flying Manor",
+        "original_item": "FreeAimEnergy",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_37",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_38",
+        "location": "Flying Manor",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_39",
+        "location": "Flying Manor",
+        "original_item": "BreakingStrong",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_40",
+        "location": "Flying Manor",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FlyingManor_41",
+        "location": "Flying Manor",
+        "original_item": "StunEnergy",
+        "condition": {}
+    }
+]

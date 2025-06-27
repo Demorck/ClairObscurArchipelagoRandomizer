@@ -1,0 +1,176 @@
+[
+    {
+        "name": "Chest_Sirene_1",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_2",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_3",
+        "location": "Sirene",
+        "original_item": "ShieldAffinity",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_4",
+        "location": "Sirene",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_6",
+        "location": "Sirene",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_7",
+        "location": "Sirene",
+        "original_item": "ProtectingDeath",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_8",
+        "location": "Sirene",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_9",
+        "location": "Sirene",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_10",
+        "location": "Sirene",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_11",
+        "location": "Sirene",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_12",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_13",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_14",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_15",
+        "location": "Sirene",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_16",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_17",
+        "location": "Sirene",
+        "original_item": "EffectiveHeal",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_18",
+        "location": "Sirene",
+        "original_item": "GreaterShell",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_19",
+        "location": "Sirene",
+        "original_item": "ReviveTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_20",
+        "location": "Sirene",
+        "original_item": "AutoRegen",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_21",
+        "location": "Sirene",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_22",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_23",
+        "location": "Sirene",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_24",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_25",
+        "location": "Sirene",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_26",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_27",
+        "location": "Sirene",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_28",
+        "location": "Sirene",
+        "original_item": "EnergyTint_Shard",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_29",
+        "location": "Sirene",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Sirene_30",
+        "location": "Sirene",
+        "original_item": "HealingFire",
+        "condition": {}
+    }
+]

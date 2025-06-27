@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Chest_EsquiesNest_1",
+        "location": "Esquies Nest",
+        "original_item": "InitialAp+1C",
+        "condition": {}
+    },
+    {
+        "name": "Chest_EsquiesNest_2",
+        "location": "Esquies Nest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_EsquiesNest_3",
+        "location": "Esquies Nest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_EsquiesNest_4",
+        "location": "Esquies Nest",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_EsquiesNest_5",
+        "location": "Esquies Nest",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_EsquiesNest_6",
+        "location": "Esquies Nest",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_EsquiesNest_7",
+        "location": "Esquies Nest",
+        "original_item": "Quest_Mushroom",
+        "condition": {}
+    }
+]

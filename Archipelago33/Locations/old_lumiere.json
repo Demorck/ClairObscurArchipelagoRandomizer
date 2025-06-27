@@ -1,0 +1,122 @@
+[
+    {
+        "name": "Chest_OldLumiere_1",
+        "location": "Old Lumiere",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_2",
+        "location": "Old Lumiere",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_3",
+        "location": "Old Lumiere",
+        "original_item": "TimeTint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_4",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_5",
+        "location": "Old Lumiere",
+        "original_item": "AutoRush",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_6",
+        "location": "Old Lumiere",
+        "original_item": "UpgradeMaterial",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_7",
+        "location": "Old Lumiere",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_8",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_9",
+        "location": "Old Lumiere",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_10",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_11",
+        "location": "Old Lumiere",
+        "original_item": "Reacharo_1",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_12",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_13",
+        "location": "Old Lumiere",
+        "original_item": "HealingDeath",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_14",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_15",
+        "location": "Old Lumiere",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_16",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_ExtraLarge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_17",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_18",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_19",
+        "location": "Old Lumiere",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_OldLumiere_20",
+        "location": "Old Lumiere",
+        "original_item": "Redalim",
+        "condition": {}
+    }
+]

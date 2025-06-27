@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Chest_GrandisStation_1",
+        "location": "Grandis Station",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_GrandisStation_2",
+        "location": "Grandis Station",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    }
+]

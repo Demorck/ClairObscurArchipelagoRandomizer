@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Chest_Manor_1",
+        "location": "Manor",
+        "original_item": "ConsumableUpgradeMaterial_AP",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_2",
+        "location": "Manor",
+        "original_item": "MusicRecord_19",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_3",
+        "location": "Manor",
+        "original_item": "ConsumableUpgradeMaterial_Revive",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_4",
+        "location": "Manor",
+        "original_item": "MusicRecord_26",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_5",
+        "location": "Manor",
+        "original_item": "FaceMaelle_Rebellious",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_6",
+        "location": "Manor",
+        "original_item": "ConsumableUpgradeMaterial_AP",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_7",
+        "location": "Manor",
+        "original_item": "MusicRecord_1",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_8",
+        "location": "Manor",
+        "original_item": "MusicRecord_31",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_9",
+        "location": "Manor",
+        "original_item": "MusicRecord_29",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_11",
+        "location": "Manor",
+        "original_item": "SkinMaelle_Alicia",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_12",
+        "location": "Manor",
+        "original_item": "MusicRecord_8",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_13",
+        "location": "Manor",
+        "original_item": "SkinMaelle_CivilianSkirt",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_14",
+        "location": "Manor",
+        "original_item": "ConsumableUpgradeMaterial_Health",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_15",
+        "location": "Manor",
+        "original_item": "MusicRecord_22",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Manor_16",
+        "location": "Manor",
+        "original_item": "SkinVerso_Civil",
+        "condition": {}
+    }
+]

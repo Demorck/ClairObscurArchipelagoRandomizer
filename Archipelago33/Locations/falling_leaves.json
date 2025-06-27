@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Chest_FallingLeaves_1",
+        "location": "Falling Leaves",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FallingLeaves_2",
+        "location": "Falling Leaves",
+        "original_item": "SosRush",
+        "condition": {}
+    },
+    {
+        "name": "Chest_FallingLeaves_3",
+        "location": "Falling Leaves",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    }
+]

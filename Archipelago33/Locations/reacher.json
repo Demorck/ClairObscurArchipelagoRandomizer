@@ -1,0 +1,158 @@
+[
+    {
+        "name": "Chest_Reacher_1",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_2",
+        "location": "Reacher",
+        "original_item": "GradientStacker",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_3",
+        "location": "Reacher",
+        "original_item": "GradientCounterCharge",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_4",
+        "location": "Reacher",
+        "original_item": "ShellTint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_5",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_6",
+        "location": "Reacher",
+        "original_item": "LongerShell",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_7",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_8",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_9",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_10",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_11",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_12",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_13",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_14",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_15",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_16",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_17",
+        "location": "Reacher",
+        "original_item": "HealOnBuff",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_18",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_19",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_20",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Large",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_21",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_22",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_23",
+        "location": "Reacher",
+        "original_item": "ChromaPack_Regular",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_24",
+        "location": "Reacher",
+        "original_item": "DispelOnAPConsume",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_25",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    },
+    {
+        "name": "Chest_Reacher_26",
+        "location": "Reacher",
+        "original_item": "Consumable_LuminaPoint",
+        "condition": {}
+    }
+]
