@@ -9793,7 +9793,7 @@
     },
     {
         "name": "Boss_Simon",
-        "location": "Boss",
+        "location": "Renoir's Draft",
         "is_boss": true,
         "type": "Boss",
         "stats": {
@@ -12349,7 +12349,7 @@
     },
     {
         "name": "Boss_Simon_Phase2",
-        "location": "Boss",
+        "location": "Renoir's Draft",
         "is_boss": true,
         "type": "Boss",
         "stats": {
