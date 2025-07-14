@@ -6,4 +6,4 @@ Enemies table:
 
 
 Journal's entry ? 
-    Game/Content/StringTables/Dialogs/Journal/ST_JO_Entries
+    Game/Content/StringTables/Dialogs/Journal/ST_JO_Entries..

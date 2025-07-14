@@ -5,6 +5,8 @@ DataTables:
     - Uprgade item per range of levels:
         -
 
+    - Important: \Content\Gameplay\GPE\Chests\Content\DT_ChestsContent.json
+
 
 
 Loot on floor:
