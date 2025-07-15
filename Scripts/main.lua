@@ -3,6 +3,8 @@ Inventory  = require "Inventory"
 Characters = require "Characters"
 Archipelago = require "Archipelago"
 
+local running = true
+
 local UEHelpers = require "UEHelpers"
 
 function TestSomeFunctions()
@@ -17,6 +19,7 @@ end
 
 function PrintMessage()
    print("DEBUG: Printed ! :)")
+   running = false
 end
 
 function Dump(o)

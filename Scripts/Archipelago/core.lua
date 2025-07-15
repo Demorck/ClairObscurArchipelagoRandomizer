@@ -25,7 +25,7 @@ AP_REF.APLocationColor = "00FF7F"
 AP_REF.APEntranceColor = "6495ED"
 
 -- TODO: user input
-AP_REF.APHost = "localhost:38281"
+AP_REF.APHost = "localhost:62311"
 AP_REF.APSlot = "Player1"
 AP_REF.APPassword = ""
 AP_REF.Version = {0, 5, 4}
@@ -76,8 +76,19 @@ local function room_info_handler()
     
     AP_REF.APClient:ConnectSlot(AP_REF.APSlot, AP_REF.APPassword, AP_REF.APItemsHandling, AP_REF.APTags, AP_REF.Version)
 end
+
+local function on_slot_refused(reasons)
+    debug_print("DEBUG: Slot refused: " .. table.concat(reasons, ", "))
+end
+
+local function on_items_received(items)
+    debug_print("Items received:")
+    for _, item in ipairs(items) do
+        debug_print(item.item)
+    end
+end
+
 function APConnect(host)
-    
     local uuid = ""
 	debug_print("Trying to connect at host: " .. host .. " with the game: " .. AP_REF.APGameName)
     AP_REF.APClient = AP(uuid, AP_REF.APGameName, host)
@@ -86,27 +97,31 @@ function APConnect(host)
 	AP_REF.APClient:set_socket_error_handler(socket_error_handler)
 	AP_REF.APClient:set_socket_disconnected_handler(socket_disconnected_handler)
 	AP_REF.APClient:set_room_info_handler(room_info_handler)
+    AP_REF.APClient:set_slot_refused_handler(on_slot_refused)
+    AP_REF.APClient:set_items_received_handler(on_items_received)
 end
 
--- Need to find a function to hook to poll every frame. (ExecuteInGameThread and LoopAsync don't work)
-RegisterHook("/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:Tick", function(self, deltaSeconds)
-    local name = self:GetFullName()
-    print(name)
+-- Just for now, to connect and disconnect easily
+local want_to_connect = false
 
-    if AP_REF.APClient ~= nil then
-        if AP_REF.APClient:get_state() == AP.State.DISCONNECTED then
-            connected = false
+LoopAsync(33, function ()
+    if want_to_connect then
+        if AP_REF.APClient ~= nil then
+            AP_REF.APClient:poll()
         else
-            connected = true
+            APConnect(AP_REF.APHost)
         end
-        AP_REF.APClient:poll()
-   end
+    else 
+        if AP_REF.APClient ~= nil then
+            AP_REF.APClient = nil
+            collectgarbage("collect")
+        end
+    end
+    return false
 end)
 
-
-
 function AP_REF.Connect(self)
-    APConnect(AP_REF.APHost)
+    want_to_connect = not want_to_connect
 end
 
 return AP_REF
