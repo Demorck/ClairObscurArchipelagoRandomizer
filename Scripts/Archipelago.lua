@@ -1,3 +1,5 @@
+
+
 local Archipelago = {}
 
 Archipelago.seed = nil
@@ -36,8 +38,6 @@ function Archipelago.GetPlayer()
     player["alias"] = AP_REF.APClient:get_player_alias(player['number'])
     player["game"] = AP_REF.APClient:get_player_game(player['number'])
 
-    print(player["alias"])
-
     return player
 end
 
@@ -58,6 +58,98 @@ end
 AP_REF.on_slot_connected = APSlotConnectedHandler
 
 
+function Archipelago.SlotDataHandler(slot_data)
+    local player = Archipelago.GetPlayer()
 
+    Archipelago.seed = player["seed"]
+    Archipelago.slot = player["slot"]
+
+    if slot_data.death_link ~= nil then
+        Archipelago.death_link = slot_data.death_link
+    end
+    
+    Data.Load()
+end
+
+function APItemsReceivedHandler(items_received)
+    return Archipelago.ItemsReceivedHandler(items_received)
+end
+AP_REF.on_items_received = APItemsReceivedHandler
+
+---comment
+---@param items_received table<integer, NetworkItem>
+function Archipelago.ItemsReceivedHandler(items_received)
+    local items = {}
+
+    for k, row in pairs(items_received) do
+        if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
+            local item_data = GetItemFromAPData(row.item)
+            local location_data = nil
+            
+            if row.location ~= nil then
+                location_data = GetLocationFromAPData(row.location)
+            end
+            
+            if item_data ~= nil then
+                Archipelago.ReceiveItem(item_data["name"])
+                Storage.lastReceivedItemIndex = row.index
+            end
+        end
+    end
+    
+    Storage.Update()
+end
+
+function Archipelago.ReceiveItem(item_name)
+    local local_item_data = nil ---@type ItemData
+
+    for _, item in pairs(Data.items) do
+        if item.name == item_name then
+            local_item_data = item
+        end
+    end
+
+    if local_item_data ~= nil then
+        Inventory.AddItem(local_item_data.name, 1)
+    end
+end
+
+
+function Archipelago.CanReceiveItems()
+    return Archipelago.IsConnected()
+end
+
+---comment
+---@param item_id integer
+function GetItemFromAPData(item_id)
+    local player = Archipelago.GetPlayer()
+    local item = {}
+    
+    item["name"] = AP_REF.APClient:get_item_name(item_id, player["game"])
+
+    if not item["name"] then
+        return nil
+    end
+
+    item["id"] = item_id
+
+    return item
+end
+
+function GetLocationFromAPData(location_id)
+    local player = Archipelago.GetPlayer()
+    local location = {}
+
+    location["name"] = AP_REF.APClient:get_location_name(location_id, player["game"])
+
+    if not location["name"] then
+        return nil
+    end
+
+    location["id"] = location_id
+
+    return location
+    
+end
 
 return Archipelago

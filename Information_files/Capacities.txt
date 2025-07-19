@@ -3,7 +3,7 @@ WorldMapExploration:
     - 0: Base
     - 1: HardenLands
     - 2: Swim
-    - 3: SwimBoost (dive ?)
+    - 3: SwimBoost (Corals)
     - 4: Fly
     - 5 : Invalid
 

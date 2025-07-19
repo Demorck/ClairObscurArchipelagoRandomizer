@@ -81,11 +81,20 @@ local function on_slot_refused(reasons)
     debug_print("DEBUG: Slot refused: " .. table.concat(reasons, ", "))
 end
 
-local function on_items_received(items)
-    debug_print("Items received:")
-    for _, item in ipairs(items) do
-        debug_print(item.item)
-    end
+
+local function set_items_received_handler(callback)
+	function items_received_handler(items)
+		callback(items)
+	end
+	AP_REF.APClient:set_items_received_handler(items_received_handler)
+end
+
+local function set_slot_connected_handler(callback)
+	function slot_connected_handler(slot_data)
+		debug_print("Slot Connected")
+		callback(slot_data)
+	end
+	AP_REF.APClient:set_slot_connected_handler(slot_connected_handler)
 end
 
 function APConnect(host)
@@ -98,7 +107,10 @@ function APConnect(host)
 	AP_REF.APClient:set_socket_disconnected_handler(socket_disconnected_handler)
 	AP_REF.APClient:set_room_info_handler(room_info_handler)
     AP_REF.APClient:set_slot_refused_handler(on_slot_refused)
-    AP_REF.APClient:set_items_received_handler(on_items_received)
+
+    
+    set_items_received_handler(AP_REF.on_items_received)
+    set_slot_connected_handler(AP_REF.on_slot_connected)
 end
 
 -- Just for now, to connect and disconnect easily

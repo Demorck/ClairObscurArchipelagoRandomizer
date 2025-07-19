@@ -1,7 +1,10 @@
-AP_REF         = require "Archipelago/core"
+AP_REF     = require "Archipelago/core"
+Data       = require "Data"
+Storage    = require "Storage"
 Inventory  = require "Inventory"
 Characters = require "Characters"
 Archipelago = require "Archipelago"
+
 
 local running = true
 
@@ -18,8 +21,7 @@ function TestSomeFunctions()
 end
 
 function PrintMessage()
-   print("DEBUG: Printed ! :)")
-   running = false
+   
 end
 
 function Dump(o)
@@ -45,4 +47,34 @@ RegisterKeyBind(Key.F2, { ModifierKey.CONTROL }, function()
     ExecuteInGameThread(function()
         PrintMessage()
     end)
+end)
+
+
+LoopAsync(33, function ()
+   if Archipelago.waitingForSync then
+         Archipelago.waitingForSync = false
+         Archipelago.Sync()
+   end
+
+   -- if Archipelago.CanReceiveItems() then
+   --    Archipelago.ProcessItemsQueue()
+   -- end
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if not Archipelago.waitingForSync then
+      Archipelago.waitingForSync = true
+   end
+
+   return false
 end)
