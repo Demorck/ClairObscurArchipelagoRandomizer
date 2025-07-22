@@ -1,10 +1,6 @@
 local Inventory = {}
 
 local InventoryBluePrintName = "AC_jRPG_InventoryManager_C"
-local CapacitiesBluePrintName = "BP_ExplorationProgressionSystem_C"
-
-
-local WorldMapCapacities = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" }
 
 ---@return UAC_jRPG_InventoryManager_C | nil
 function Inventory.GetInventoryManager()
@@ -90,31 +86,6 @@ function Inventory.GetAmountOfItem(itemName)
             return value
         end
     end
-end
-
-function Inventory.UnlockNextWorldMapAbility()
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-    local abilities = Inventory.GetWorldMapAbilities()
-
-    for i, value in ipairs(abilities) do
-        if not value then
-        end
-    end
-end
-
-function Inventory.GetWorldMapAbilities()
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-
-    local result = {}
-
-   for key, value in ipairs(WorldMapCapacities) do
-      local out = {}
-      ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
-
-      result[value] = out.IsUnlocked
-   end
-
-   return result
 end
 
 return Inventory

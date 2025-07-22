@@ -136,17 +136,59 @@ function GetItemFromAPData(item_id)
     return item
 end
 
-function GetLocationFromAPData(location_id)
+function APLocationsCheckedHandler(locations_checked)
+    return Archipelago.LocationsCheckedHandler(locations_checked)
+end
+AP_REF.on_location_checked = APLocationsCheckedHandler
+
+function Archipelago.LocationsCheckedHandler(locations_checked)
+    local player = Archipelago.GetPlayer()
+    print("feur")
+
+    for k, location_id in pairs(locations_checked) do
+        local id = tonumber(location_id)
+        if id == nil then
+            error("Error when converting location_id to number: " .. location_id)
+        end
+        local location_name = AP_REF.APClient:get_location_name(id, player['game'])
+
+        for k, loc in pairs(Data.locations) do
+            if loc['name'] == location_name then
+                loc['sent'] = true
+                break
+            end
+        end
+    end
+end
+
+--- need to add location to storage to avoid redoing the same thing if a crash happens
+function Archipelago.SendLocationCheck(location_name)
+    local location_data = GetLocationFromAPData(location_name)
+
+    if location_data == nil then return end
+
+    local location_to_send = {} -- LocationChecks need an array
+    location_to_send[1] = location_data["id"]
+    
+    if not location_data then
+        return
+    end
+
+    AP_REF.APClient:LocationChecks(location_to_send)
+end
+
+
+function GetLocationFromAPData(location_name)
     local player = Archipelago.GetPlayer()
     local location = {}
 
-    location["name"] = AP_REF.APClient:get_location_name(location_id, player["game"])
+    location["id"] = AP_REF.APClient:get_location_id(location_name)
 
-    if not location["name"] then
+    if not location["id"] then
         return nil
     end
 
-    location["id"] = location_id
+    location["name"] = location_name
 
     return location
     

@@ -25,8 +25,8 @@ AP_REF.APLocationColor = "00FF7F"
 AP_REF.APEntranceColor = "6495ED"
 
 -- TODO: user input
-AP_REF.APHost = "localhost:62311"
-AP_REF.APSlot = "Player1"
+AP_REF.APHost = "localhost:64896"
+AP_REF.APSlot = "BONJOUR"
 AP_REF.APPassword = ""
 AP_REF.Version = {0, 5, 4}
 
@@ -52,11 +52,51 @@ AP_REF.APColors = {
     white_bg="FFFFFF"
 }
 
+
 local function debug_print(str)
 	if DEBUG then
 		print("DEBUG: " .. str)
 	end
 end
+
+local function callback_passthrough()
+    a = 1 + 1
+end
+
+local function callback_passthrough_one_arg(pass)
+    debug_print(pass)
+    a = 1 + 1
+end
+
+local function callback_passthrough_two_arg(pass1, pass2)
+    debug_print(pass1)
+    debug_print(pass2)
+    a = 1 + 1
+end
+
+local function callback_passthrough_three_arg(pass1, pass2, pass3)
+    debug_print(pass1)
+    debug_print(pass2)
+    debug_print(pass3)
+    a = 1 + 1
+end
+
+
+AP_REF.on_socket_connected = callback_passthrough
+AP_REF.on_socket_error = callback_passthrough_one_arg
+AP_REF.on_socket_disconnected = callback_passthrough
+AP_REF.on_room_info = callback_passthrough
+AP_REF.on_slot_connected = callback_passthrough_one_arg
+AP_REF.on_slot_refused = callback_passthrough_one_arg
+AP_REF.on_items_received = callback_passthrough_one_arg
+AP_REF.on_location_info = callback_passthrough_one_arg
+AP_REF.on_location_checked = callback_passthrough_one_arg
+AP_REF.on_data_package_changed = callback_passthrough_one_arg
+AP_REF.on_print = callback_passthrough_one_arg
+AP_REF.on_print_json = callback_passthrough_two_arg
+AP_REF.on_bounced = callback_passthrough_one_arg
+AP_REF.on_retrieved = callback_passthrough_three_arg
+AP_REF.on_set_reply = callback_passthrough_one_arg
 
 local function socket_connected()
 		debug_print("Socket connected")
@@ -97,6 +137,21 @@ local function set_slot_connected_handler(callback)
 	AP_REF.APClient:set_slot_connected_handler(slot_connected_handler)
 end
 
+local function set_location_info_handler(callback)
+	function location_info_handler(items)
+		debug_print("Locations info")
+		callback(items)
+	end
+	AP_REF.APClient:set_location_info_handler(location_info_handler)
+end
+local function set_location_checked_handler(callback)
+	function location_checked_handler(locations)
+		debug_print("Locations checked")
+		callback(locations)
+	end
+	AP_REF.APClient:set_location_checked_handler(location_checked_handler)
+end
+
 function APConnect(host)
     local uuid = ""
 	debug_print("Trying to connect at host: " .. host .. " with the game: " .. AP_REF.APGameName)
@@ -111,6 +166,9 @@ function APConnect(host)
     
     set_items_received_handler(AP_REF.on_items_received)
     set_slot_connected_handler(AP_REF.on_slot_connected)
+    set_items_received_handler(AP_REF.on_items_received)
+    set_location_info_handler(AP_REF.on_location_info)
+    set_location_checked_handler(AP_REF.on_location_checked)
 end
 
 -- Just for now, to connect and disconnect easily

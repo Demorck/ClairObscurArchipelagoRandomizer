@@ -20,11 +20,13 @@ function Data.Load()
 
 
     local items_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/Archipelago33/Items/items.json"
-    local locations_path = Data.file_path .. "locations/locations.json"
+    local locations_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/Archipelago33/locations/locations.json"
     
-    local content = JSON.read_file(items_path)
-    
-    Data.items = content
+    local content_items = JSON.read_file(items_path)
+    local content_locations = JSON.read_file(locations_path)
+
+    Data.items = content_items
+    Data.locations = content_locations
 end
 
 
