@@ -1,4 +1,4 @@
-AP_REF     = require "Archipelago/core"
+AP_REF     = require "Archipelago/Init"
 Data       = require "Data"
 Storage    = require "Storage"
 Inventory  = require "Inventory"
