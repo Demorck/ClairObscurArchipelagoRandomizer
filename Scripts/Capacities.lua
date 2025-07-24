@@ -13,10 +13,30 @@ function Capacities.UnlockNextWorldMapAbility()
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     local abilities = Capacities.GetWorldMapAbilities()
 
-    for i, value in ipairs(abilities) do
-        if not value then
+    for _, capacity in ipairs(WorldMapCapacities) do
+        local row = abilities[capacity]
+        if not row.isUnlocked then
+            local t = { row.enumerator }
+            ExplorationProgression:UnlockWorldMapCapacities(t)
+            break
         end
     end
+end
+
+function Capacities.UnlockSpecificCapacity(capacity_to_unlock)
+    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    local abilities = Capacities.GetWorldMapAbilities()
+    local index = 0
+    for i, capacity in ipairs(WorldMapCapacities) do
+        if capacity == capacity_to_unlock then
+            index = i
+        end
+    end
+
+    if index == 0 then return end
+
+    local t = { index }
+    ExplorationProgression:UnlockWorldMapCapacities(t)
 end
 
 function Capacities.GetWorldMapAbilities()
@@ -28,8 +48,13 @@ function Capacities.GetWorldMapAbilities()
       local out = {}
       ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
 
-      result[value] = out.IsUnlocked
+      result[value] = {
+        enumerator = key,
+        is_unlocked = out.IsUnlocked
+      }
    end
 
    return result
 end
+
+return Capacities

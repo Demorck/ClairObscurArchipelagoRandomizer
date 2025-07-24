@@ -2,9 +2,16 @@ AP_REF     = require "Archipelago/Init"
 Data       = require "Data"
 Storage    = require "Storage"
 Inventory  = require "Inventory"
+Capacities = require "Capacities"
 Characters = require "Characters"
 Archipelago = require "Archipelago"
 
+--- Just some notes
+--- ABP_jRPG_Character_World_C:LoadAndActivateCharacter called when use press T to change character in overworld
+---
+---
+---
+---
 
 local running = true
 
@@ -21,11 +28,6 @@ function TestSomeFunctions()
 end
 
 function PrintMessage()
-   local manager = FindFirstOf("AC_jRPG_CharactersManager_C") ---@type UAC_jRPG_CharactersManager_C
-
-   local fname = FName("Frey")
-   manager:AddCharacterToParty(fname)
-
 end
 
 function Debug_things()
@@ -65,6 +67,8 @@ end)
 
 
 LoopAsync(33, function ()
+   if AP_REF.APClient == nil then return false end
+
    if Archipelago.waitingForSync then
          Archipelago.waitingForSync = false
          Archipelago.Sync()

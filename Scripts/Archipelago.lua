@@ -103,6 +103,11 @@ end
 function Archipelago.ReceiveItem(item_name)
     local local_item_data = nil ---@type ItemData
 
+    if item_name == "Progressive Rock" then
+        Capacities.UnlockNextWorldMapAbility()
+        return
+    end
+
     for _, item in pairs(Data.items) do
         if item.name == item_name then
             local_item_data = item
