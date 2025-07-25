@@ -6,7 +6,8 @@ local WorldMapCapacities = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" }
 
 
 function Capacities.UnlockDestroyPaintedRock()
-
+    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName)---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    ExplorationProgression:UnlockFreeAimDamageLevel(1)
 end
 
 function Capacities.UnlockNextWorldMapAbility()

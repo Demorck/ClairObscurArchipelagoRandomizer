@@ -10,7 +10,8 @@ if AP == nil then
 end
 
 local AP_REF = config
-AP_REF.APClient = nil
+AP_REF.APClient = nil ---@type APClient
+AP_REF.AP = AP
 
 client.setup(AP_REF, AP, handlers)
 

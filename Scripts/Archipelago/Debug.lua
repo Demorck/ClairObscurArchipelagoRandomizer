@@ -16,14 +16,24 @@ end
 
 --- Prints a debug message if debug is enabled.
 ---@param str string The message to print.
-function debug.print(str)
+---@param from string | nil The prefix to print to know where the print comes from
+---@param fun function | nil The function to use if different from print
+function debug.print(str, from, fun)
     if ENABLED then
         local converted_str = str
         if type(str) == "table" then
             converted_str = Dump(str)
         end
+
+        if from == nil then
+            from = ""
+        end
         
-        print("DEBUG: " .. converted_str)
+        if fun == nil then
+            print("[Clair Obscur Randomizer] DEBUG " .. from .. " : " .. converted_str)
+        else
+            fun("[Clair Obscur Randomizer] DEBUG " .. from .. " : " .. converted_str)
+        end
     end
 end
 

@@ -30,9 +30,13 @@ function Inventory.AddItem(itemName, amount)
         --- It's the default level of pictos/weapon when looting. 99 is level 32 for example which is the max
         local lootContext = {
             EncounterLevel_3_FF609CBA4F19C630FF9FF0B543BB3BAB = 99
-        } 
+        }
         local returned = {}
         playerInventory:AddItemToInventory(name, amount, lootContext, returned)
+        return true
+    else
+        Debug.print("playerInventory not found !!")
+        return false
     end
 end
 

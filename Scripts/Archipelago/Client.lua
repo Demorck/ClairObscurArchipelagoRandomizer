@@ -33,10 +33,10 @@ function M.connect()
     M.AP_REF.APClient:set_room_info_handler(M.handlers.room_info_handler)
     M.AP_REF.APClient:set_slot_refused_handler(M.handlers.slot_refused_handler)
 
-    -- M.handlers.set_items_received_handler(Debug.callbacks.on_items_received)
-    M.handlers.set_slot_connected_handler(Debug.callbacks.on_slot_connected)
-    M.handlers.set_location_info_handler(Debug.callbacks.on_location_info)
-    M.handlers.set_location_checked_handler(Debug.callbacks.on_location_checked)
+    M.handlers.set_items_received_handler(AP_REF.on_items_received)
+    M.handlers.set_slot_connected_handler(AP_REF.on_slot_connected)
+    M.handlers.set_location_info_handler(AP_REF.on_location_info)
+    M.handlers.set_location_checked_handler(AP_REF.on_location_checked)
 end
 
 return M

@@ -1,36 +1,24 @@
 AP_REF     = require "Archipelago/Init"
 Data       = require "Data"
+Debug      = require "Archipelago.Debug"
 Storage    = require "Storage"
 Inventory  = require "Inventory"
 Capacities = require "Capacities"
 Characters = require "Characters"
 Archipelago = require "Archipelago"
-
---- Just some notes
---- ABP_jRPG_Character_World_C:LoadAndActivateCharacter called when use press T to change character in overworld
----
----
----
----
-
-local running = true
-
 local UEHelpers = require "UEHelpers"
 
 function TestSomeFunctions()
    AP_REF:Connect()
-   -- Archipelago.Init()
-
-   -- if Archipelago.waitingForSync then
-   --    Archipelago.waitingForSync = false
-   --    Archipelago.Sync()
-   -- end
 end
 
 function PrintMessage()
 end
 
 function Debug_things()
+   local battle_manager = FindFirstOf("AC_jRPG_BattleManager_C") ---@type UAC_jRPG_BattleManager_C
+
+   print(battle_manager.EncounterName:ToString())
 end
 
 function Dump(o)
@@ -99,14 +87,6 @@ end)
 RegisterHook("/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:RollChestItems", function(self, lootContext, itemsToLoot)
    if AP_REF.APClient == nil then return end
    
-   local context = self:get() ---@type ABP_Chest_Regular_C
-   local colors = context.ColorWhenOpening -- When you pick the item, there is some dust. That's this color 
-   colors.R = 0
-   colors.G = 0
-   colors.B = 1
-   context:UpdateVisuals()
-   
-
    local map = itemsToLoot:get() ---@type TMap<FName, int32>
 
    map:ForEach(function (key, value)
@@ -117,7 +97,11 @@ end)
 RegisterHook("/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:UpdateFeedbackParametersFromLoot", function(self)
    if AP_REF.APClient == nil then return end
 
-   local chest = self:get() ---@type ABP_Chest_Regular_C
+   local chest = self:get() ---@type ABP_Chest_Regular_C   
+   local colors = chest.ColorWhenOpening -- When you pick the item, there is some dust. That's this color 
+   colors.R = 0
+   colors.G = 0
+   colors.B = 1
 
    local fx = chest.FX_Chest
    if fx then
@@ -129,5 +113,15 @@ RegisterHook("/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:Upda
    } ---@type FLinearColor
 
       fx:SetColorParameter(FName("Color"), color)  -- the fx when the item is on the floor
+
+      
+   chest:UpdateVisuals()
    end
+end)
+
+--- 701
+RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory", function (self)
+   local current_context = self:get() ---@type UAC_jRPG_BattleManager_C
+
+   print(current_context.EncounterName:ToString()) 
 end)

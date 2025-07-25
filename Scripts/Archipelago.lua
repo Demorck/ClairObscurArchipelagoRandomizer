@@ -1,5 +1,3 @@
-
-
 local Archipelago = {}
 
 Archipelago.seed = nil
@@ -91,8 +89,14 @@ function Archipelago.ItemsReceivedHandler(items_received)
             end
             
             if item_data ~= nil then
-                Archipelago.ReceiveItem(item_data["name"])
-                Storage.lastReceivedItemIndex = row.index
+                if Archipelago.ReceiveItem(item_data["name"]) then
+                    Storage.lastReceivedItemIndex = row.index
+                else
+                    Debug.print("Receiving an item but an error occurs: " .. item_data["name"], "Archipelago.ItemsReceivedHandler")
+                    break
+                end
+            else
+                print("item data nul")
             end
         end
     end
@@ -105,7 +109,7 @@ function Archipelago.ReceiveItem(item_name)
 
     if item_name == "Progressive Rock" then
         Capacities.UnlockNextWorldMapAbility()
-        return
+        return true
     end
 
     for _, item in pairs(Data.items) do
@@ -115,8 +119,14 @@ function Archipelago.ReceiveItem(item_name)
     end
 
     if local_item_data ~= nil then
-        Inventory.AddItem(local_item_data.name, 1)
+        if Inventory.AddItem(local_item_data.name, 1) then
+            return true
+        end
+    else
+        Debug.print("Local item data nil, name is " .. item_name, "Archipelago.ReceiveItem", warn)
     end
+
+    return false
 end
 
 
@@ -180,6 +190,10 @@ function Archipelago.SendLocationCheck(location_name)
     end
 
     AP_REF.APClient:LocationChecks(location_to_send)
+end
+
+function Archipelago.SendVictory()
+    AP_REF.APClient:StatusUpdate(AP_REF.AP.ClientStatus.GOAL)
 end
 
 

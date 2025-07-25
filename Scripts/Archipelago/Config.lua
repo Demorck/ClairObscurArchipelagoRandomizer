@@ -22,4 +22,6 @@ config.Version = {0, 5, 4}
 config.clientEnabled = true
 config.clientDisabledMessage = ""
 
+config.goal = 0
+
 return config
