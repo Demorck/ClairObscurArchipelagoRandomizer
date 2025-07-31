@@ -5,7 +5,8 @@ JSON = require("json")
 ---@field name string Internal name of the item
 ---@field progressive integer 0 is junk, 1 is progressive, 2 is useful
 
-
+---@class Data
+---@field items ItemData[]
 local Data = {}
 
 

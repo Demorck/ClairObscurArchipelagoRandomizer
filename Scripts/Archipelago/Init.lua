@@ -40,6 +40,13 @@ end)
 ---@param self any Ignored (used for method call syntax).
 function AP_REF.Connect(self)
     want_to_connect = not want_to_connect
+
+    if want_to_connect then
+        Hooks.Register()
+    else 
+        Hooks.Unregister()
+    end
+
 end
 
 return AP_REF

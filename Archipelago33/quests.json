@@ -1,0 +1,397 @@
+{
+  "Main_GoldenPath": [
+    "1_LumiereBeginning",
+    "2_SpringMeadow",
+    "3_Goblu",
+    "4_AncientSanctuary",
+    "5_GestralVillage",
+    "6_EsquieNest",
+    "7_SeaCliff",
+    "8_ForgottenBattlefield",
+    "9_MonocoStation",
+    "10_OldLumiere",
+    "11_Axon1",
+    "12_Axon2",
+    "13_EnterTheMonolith",
+    "14_DefeatthePaintress",
+    "15_ReturnToLumiereAfterMonolith",
+    "16_GoBackToLumiereAndDefeatRenoir",
+    "17_RenoirDefeated"
+  ],
+  "Main_ForcedCamps": [
+    "1_ForcedCamp_PostSpringMeadows",
+    "2_ForcedCamp_PostGoblu",
+    "3_ForcedCamp_PostGestralVillage",
+    "4_ForcedCamp_PostEsquieNest",
+    "5_ForcedCamp_PostSeaCliff",
+    "6_ForcedCamp_PostBattlefield",
+    "7_ForcedCamp_PostOldLumiere",
+    "8_ForcedCamp_Post1stAxon",
+    "9_ForcedCamp_Post2ndAxon",
+    "10_ForcedCamp_PostLumiereAttack"
+  ],
+  "TheExpeditionFestival": [
+    "1_MaelleDialog",
+    "2_ApprenticesDialog",
+    "3_EmmaDialog"
+  ],
+  "TheGestralTournament": [
+    "DefeatGestralChampion_1",
+    "DefeatGestralChampion_2",
+    "DefeatGestralChampion_3",
+    "DefeatSciel"
+  ],
+  "Bonus_LostGestrals": [
+    "FindLostGestral_1",
+    "FindLostGestral_2",
+    "FindLostGestral_3",
+    "FindLostGestral_4",
+    "FindLostGestral_5",
+    "FindLostGestral_6",
+    "FindLostGestral_7",
+    "FindLostGestral_8",
+    "FindLostGestral_9"
+  ],
+  "Bonus_FlyingCasino": [
+    "EnterTheCasino",
+    "WinFrontlines_1",
+    "WinFrontlines_2",
+    "WinFrontlines_3",
+    "TalkToLoser"
+  ],
+  "Bonus_WarriorForest": [
+    "DefeatFirstEncounter",
+    "DefeatSecondEncounter",
+    "DefeatThirdEncounter",
+    "ReportToGestralWarrior",
+    "ExploreCleaWorkshop",
+    "DefendGestralWarrior",
+    "DefeatChevaliereAlpha"
+  ],
+  "Bonus_GustaveInvention": [
+    "GiveMushroom",
+    "DefeatUltimateSakapatateUpgraded"
+  ],
+  "Bonus_JournalCollector": [
+    "GiveExpeditionJournals_1",
+    "GiveExpeditionJournals_2",
+    "GiveExpeditionJournals_3",
+    "GiveExpeditionJournals_4",
+    "GiveExpeditionJournals_5"
+  ],
+  "Bonus_HuntingBoard": [
+    "DefeatAlphaNevrons"
+  ],
+  "Bonus_HiddenGestralArena": [
+    "DefeatFighter_1",
+    "DefeatFighter_2",
+    "DefeatFighter_3",
+    "DefeatFighter_4"
+  ],
+  "Bonus_StrongestPunch": [
+    "Deal9999Dmg"
+  ],
+  "Bonus_HangingGestral": [
+    "HelpGestralKid"
+  ],
+  "Bonus_GrandisDefense": [
+    "DefeatGargant",
+    "GiveEternalIce"
+  ],
+  "Bonus_GrandisFashion": [
+    "EloquenceBattle_Maelle",
+    "EloquenceBattle_Lune",
+    "EloquenceBattle_Sciel"
+  ],
+  "Bonus_MonsterInBasement": [
+    "DefeatMonsterInBasement"
+  ],
+  "Bonus_ManBeforeFracture": [
+    "DefeatOscarMask"
+  ],
+  "Bonus_OldDoor": [
+    "OpenOldDoor",
+    "GetReward"
+  ],
+  "Bonus_CrushingWalls": [
+    "DefeatGiantSapling"
+  ],
+  "Bonus_GatesOfSkill": [
+    "OpenSkillDoor_Might",
+    "OpenSkillDoor_Vitality",
+    "OpenSkillDoor_Defense",
+    "OpenSkillDoor_Agility",
+    "OpenSkillDoor_Luck"
+  ],
+  "Bonus_CleaTowers": [
+    "ClearCleaTower_1",
+    "ClearCleaTower_2",
+    "ClearCleaTower_3"
+  ],
+  "Bonus_Carrousel": [
+    "DestroyIceChunks"
+  ],
+  "Bonus_ChosenPath": [
+    "VersoChosen",
+    "MaelleChosen",
+    "LuneChosen",
+    "ScielChosen",
+    "MonocoChosen"
+  ],
+  "Bonus_KeyOldLumiere": [
+    "OpenSewerDoor"
+  ],
+  "Bonus_ChromaDoorMime": [
+    "DefeatMime_Verso",
+    "DefeatMime_Maelle",
+    "DefeatMime_Lune",
+    "DefeatMime_Sciel",
+    "DefeatMime_Monoco"
+  ],
+  "DarkGestralArena_Golgra": [
+    "DefeatRound1",
+    "DefeatRound2",
+    "DefeatRound3",
+    "GolgraDefeated",
+    "DefeatedByGolgra"
+  ],
+  "FacelessBoy_OrangeForest": [
+    "FindAnExplanation",
+    "KillTheScavenger"
+  ],
+  "CleaWorkshopQuest": [
+    "FeedPart1",
+    "FeedPart2",
+    "FeedPart3",
+    "DefeatLampmaster",
+    "FeedAllParts"
+  ],
+  "CleaFlyingHouse_4Statues": [
+    "DefeateEveque",
+    "DefeatDualliste",
+    "DefeatLampmaster",
+    "DefeatGoblu",
+    "OpenTheDoor",
+    "DefeatMirrorClea"
+  ],
+  "CleaTower_CleaDialogue": [
+    "TalkedWithClea",
+    "CompletedFloor11",
+    "CompletedFloor22",
+    "CompletedFloor32",
+    "CompletedFloor33",
+    "TalkedWithCleaAfterFloor33"
+  ],
+  "Relationship_Conditions": [
+    "RdEsquie_Lvl5_ExitCampAfterSecondAxon"
+  ],
+  "Nevron_JarNeedLight": [
+    "GiveResin",
+    "LightJarLamp",
+    "KilledJar"
+  ],
+  "Nevron_DemineurMissingMine": [
+    "GiveMine",
+    "KillDemineur"
+  ],
+  "Nevron_SmallBourgeon": [
+    "AcquireBourgeonSkin",
+    "GiveBourgeonSkin",
+    "ReturnAfterSomeTime",
+    "KillCompletedBourgeon"
+  ],
+  "Nevron_DanseuseDanceClass": [
+    "DefeatDanseuseDanceTeacher",
+    "KillDanseuseDanceTeacher"
+  ],
+  "Nevron_PortierDoorMaze": [
+    "SparePortierSpirit",
+    "ReachPuzzle",
+    "SucceedPuzzle",
+    "GiveWoodBoards",
+    "KillCompletedPortier"
+  ],
+  "Nevron_WeaponlessChalier": [
+    "DefeatChalier",
+    "GiveWoodenStick",
+    "ForgeGiantBrulerWeapon",
+    "DefeatWeaponlessChalier",
+    "KillChalier",
+    "SpareChalier"
+  ],
+  "Nevron_Benisseur": [
+    "SpendChroma_1",
+    "SpendChroma_2",
+    "SpendChroma_3",
+    "SpendChroma_4",
+    "KillCompletedBenisseur"
+  ],
+  "Nevron_Hexga": [
+    "GiveHexgaCrystal",
+    "KillCompletedHexga"
+  ],
+  "Nevron_JudgeOfMercy": [
+    "KillJudgeOfMercy"
+  ],
+  "Nevron_Troubadour": [
+    "DefeatTroubadour",
+    "KillCompletedTroubadour"
+  ],
+  "Festival_MaelleBattle": [
+    "3_MaelleBattleWon"
+  ],
+  "SecondaryObjectives_MainPath": [
+    "CuratorTraining"
+  ],
+  "LumiereAct3_Teleporter": [
+    "ActivateGardenTeleporter"
+  ],
+  "CleasWorkshop_Deadzones": [
+    "Path01",
+    "Path02",
+    "Path03",
+    "BrokenLampmaster"
+  ],
+  "RedForestStates": [
+    "State00",
+    "State01",
+    "State02",
+    "State03",
+    "State04"
+  ],
+  "MainPath_Ep\u00eelogue": [
+    "EpilogueMaelle",
+    "EpilogueVerso",
+    "RenoirFightInProgress"
+  ],
+  "GV_DefeatGolgraWithMonoco": [
+    "DefeatGolgraWithMonoco"
+  ],
+  "Main_EsquieNestBringStone": [
+    "BringBackRock"
+  ],
+  "Quests_LumiereAct1": [
+    "PickUpFlower",
+    "FinishDuelWithMaelle",
+    "FoundSophie",
+    "DefeatMime",
+    "FindTrashcanMan",
+    "InspiredPainter",
+    "Newspaper_Expedition",
+    "Newspaper_Petals",
+    "Sculpture_Color",
+    "Sculpture_Nevron",
+    "RunWithMaellePart1",
+    "RunWithMaellePart2"
+  ],
+  "Camp_WriteInGustaveJournal": [
+    "IsWritingInJournal"
+  ],
+  "Main_ManorInterlude": [
+    "ManorInterlude",
+    "ReachTheAtelier",
+    "EnterTheCanvas"
+  ],
+  "Main_BeatingMirrorRenoirOldLumiere": [
+    "BeatingMirrorRenoir"
+  ],
+  "MM_StalactStuck": [
+    "GetFireKey",
+    "StalactFinished"
+  ],
+  "Bonus_CoastalCave": [
+    "DefeatCruler"
+  ],
+  "Bonus_GustaveHomageEarlyUnlock": [
+    "ReadApprenticesJournal_ForgottenBattlefield",
+    "ReadApprenticesJournal_MonocoStation",
+    "ReadApprenticesJournal_OldLumiere",
+    "ReadApprenticesJournal_Axon1",
+    "ReadApprenticesJournal_Axon2",
+    "ReadApprenticesJournal_EnterTheMonolith"
+  ],
+  "GPE_ExplosionsLumiereAct3": [
+    "ExplosionsStatus"
+  ],
+  "Relationship_Maelle": [
+    "Relationship_Lvl0",
+    "Relationship_Lvl1",
+    "Relationship_Lvl2",
+    "Relationship_Lvl3",
+    "Relationship_Lvl4",
+    "Relationship_Lvl5",
+    "Relationship_Lvl6",
+    "Relationship_Lvl7"
+  ],
+  "Relationship_Lune": [
+    "Relationship_Lvl0",
+    "Relationship_Lvl1",
+    "Relationship_Lvl2",
+    "Relationship_Lvl3",
+    "Relationship_Lvl4",
+    "Relationship_Lvl5",
+    "Relationship_Lvl6",
+    "Relationship_Lvl7"
+  ],
+  "Relationship_Sciel": [
+    "Relationship_Lvl0",
+    "Relationship_Lvl1",
+    "Relationship_Lvl2",
+    "Relationship_Lvl3",
+    "Relationship_Lvl4",
+    "Relationship_Lvl5",
+    "Relationship_Lvl6",
+    "Relationship_Lvl7"
+  ],
+  "Relationship_Monoco": [
+    "Relationship_Lvl0",
+    "Relationship_Lvl1",
+    "Relationship_Lvl2",
+    "Relationship_Lvl3",
+    "Relationship_Lvl4",
+    "Relationship_Lvl5",
+    "Relationship_Lvl6",
+    "Relationship_Lvl7"
+  ],
+  "Relationship_Esquie": [
+    "Relationship_Lvl0",
+    "Relationship_Lvl1",
+    "Relationship_Lvl2",
+    "Relationship_Lvl3",
+    "Relationship_Lvl4",
+    "Relationship_Lvl5",
+    "Relationship_Lvl6",
+    "Relationship_Lvl7"
+  ],
+  "Relationship_Noco": [
+    "Relationship_Lvl0",
+    "Relationship_Lvl1"
+  ],
+  "Gestralbeach_Wipeout": [
+    "ReachTheFinalGestral"
+  ],
+  "Gestralbeach_ClimbWall": [
+    "ReachTheTop"
+  ],
+  "Gestralbeach_GestralRace": [
+    "BronzeMedal",
+    "SilverMedal",
+    "GoldMedal"
+  ],
+  "Gestralbeach_BeachVolley": [
+    "BeatEasyMode",
+    "BeatMediumMode",
+    "BeathardMode"
+  ],
+  "AxonsHearts": [
+    "SireneHeart",
+    "VisagesHeart"
+  ],
+  "Bonus_AlphaEater": [
+    "GatherAlphaChroma_Beast",
+    "GatherAlphaChroma_Clea",
+    "GatheredEnoughAlphaChroma_Clea",
+    "GatheredEnoughAlphaChroma_Beast",
+    "Finished"
+  ]
+}
