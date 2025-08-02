@@ -3,7 +3,9 @@ local Characters = {}
 local BluePrintName = "AC_jRPG_CharactersManager_C"
 local Characters_name = {"Frey", "Maelle", "Lune", "Sciel", "Verso", "Monoco" }
 
-function Characters.RemoveCharacterFromParty(name)
+local helper_bp = "BP_ArchipelagoHelper_C"
+
+function Characters:RemoveCharacterFromParty(name)
     ---@class UAC_jRPG_CharactersManager_C
     local manager = FindFirstOf(BluePrintName)
 
@@ -12,9 +14,15 @@ function Characters.RemoveCharacterFromParty(name)
 end
 
 
-function Characters.All1HP()
+function Characters:AddCharacter(name)
+    local helper = FindFirstOf(helper_bp) ---@type ABP_ArchipelagoHelper_C
 
+    local found = {}
+    local struct = {}
+    local fname = FName(name)
+    helper:AddCharacterToCollectonFromHardcodedName(fname, found, struct)
 
+    -- print(Dump(found))
 end
 
 

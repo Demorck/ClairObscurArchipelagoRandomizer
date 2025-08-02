@@ -39,3 +39,9 @@ luac.out
 *.x86_64
 *.hex
 
+# That's the UE project -> Exclude everything except for my mod
+Blueprints/*
+!Blueprints/Content
+Blueprints/Content/**
+!Blueprints/Content/ClairObscurRandomizer
+!Blueprints/Content/ClairObscurRandomizer/**

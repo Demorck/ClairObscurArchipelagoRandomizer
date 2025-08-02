@@ -16,10 +16,46 @@ function TestSomeFunctions()
 end
 
 function PrintMessage()
-   Quests:UnlockNextGestral()
+   
+   local helper_bp = "BP_ArchipelagoHelper_C"
+   local helper = FindFirstOf(helper_bp) ---@type ABP_ArchipelagoHelper_C
+
+   helper:AddToLogger("Pictos", "Joostar")
 end
 
 function Debug_things()
+   local a = FindAllOf("BP_jRPG_Enemy_World_Base_Seamless_C")
+
+   local result = {}
+
+   for _, actor in ipairs(a) do
+    ---@cast actor ABP_jRPG_Enemy_World_Base_Seamless_C
+      if actor.SelectedEncounter ~= nil then
+         local rowName = actor.SelectedEncounter["RowName"]:ToString()
+         local actorName = actor:GetFName():ToString()
+
+         local cleanName = actorName:match("^BP_EnemyWorld_(.-)_C")
+
+         if result[rowName] == nil then
+               result[rowName] = {}
+         end
+
+         local alreadyPresent = false
+         for _, name in ipairs(result[rowName]) do
+               if name == cleanName then
+                  alreadyPresent = true
+                  break
+               end
+         end
+         if not alreadyPresent then
+               table.insert(result[rowName], cleanName)
+         end
+      end
+   end
+
+   for encounter, enemies in pairs(result) do
+      print(encounter .. " = [" .. table.concat(enemies, ", ") .. "]")
+   end
 end
 
 function Dump(o)
@@ -70,3 +106,9 @@ LoopAsync(33, function ()
    return false
 end)
 
+
+-- RegisterHook("/Game/LevelTools/BP_jRPG_MapTeleportPoint.BP_jRPG_MapTeleportPoint_C:ProcessChangeMap", function(self)
+--    local mappoint = self:get() ---@type ABP_jRPG_MapTeleportPoint_C
+
+--    print(mappoint.DestinationAreaName:ToString())
+-- end)
