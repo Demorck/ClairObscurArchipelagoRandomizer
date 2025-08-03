@@ -46,4 +46,20 @@ function Quests:UnlockNextGestral()
     Save:SaveGame()
 end
 
+function Quests:SetObjectiveStatus(quest_name, objective_name, status)
+    local quest_system = FindFirstOf(BluePrintName) ---@cast quest_system UBP_QuestSystem_C
+
+    local fname = FName(quest_name)
+    local quest_data = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
+    quest_data.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:ForEach(function (key, value)
+        local name = key:get():ToString()
+
+        if name == objective_name then
+            value:set(status)
+        end
+    end)
+
+    Save:SaveGame()
+end 
+
 return Quests

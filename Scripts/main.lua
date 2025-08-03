@@ -9,6 +9,7 @@ Characters  = require "Characters"
 Quests      = require "Quests" ---@type Quests
 Save        = require "Save"
 Archipelago = require "Archipelago"
+ClientBP      = require "ClientBP"
 local UEHelpers = require "UEHelpers"
 
 function TestSomeFunctions()
@@ -16,11 +17,6 @@ function TestSomeFunctions()
 end
 
 function PrintMessage()
-   
-   local helper_bp = "BP_ArchipelagoHelper_C"
-   local helper = FindFirstOf(helper_bp) ---@type ABP_ArchipelagoHelper_C
-
-   helper:AddToLogger("Pictos", "Joostar")
 end
 
 function Debug_things()
@@ -105,7 +101,6 @@ LoopAsync(33, function ()
 
    return false
 end)
-
 
 -- RegisterHook("/Game/LevelTools/BP_jRPG_MapTeleportPoint.BP_jRPG_MapTeleportPoint_C:ProcessChangeMap", function(self)
 --    local mappoint = self:get() ---@type ABP_jRPG_MapTeleportPoint_C

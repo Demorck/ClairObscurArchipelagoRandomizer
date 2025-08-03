@@ -79,17 +79,13 @@ AP_REF.on_items_received = APItemsReceivedHandler
 function Archipelago.ItemsReceivedHandler(items_received)
     local items = {}
 
-    for k, row in pairs(items_received) do
+    for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
             local item_data = GetItemFromAPData(row.item)
-            local location_data = nil
-            
-            if row.location ~= nil then
-                location_data = GetLocationFromAPData(row.location)
-            end
             
             if item_data ~= nil then
                 if Archipelago.ReceiveItem(item_data["name"]) then
+                    ClientBP:PushNotification(item_data["name"], row.player)
                     Storage.lastReceivedItemIndex = row.index
                 else
                     Debug.print("Receiving an item but an error occurs: " .. item_data["name"], "Archipelago.ItemsReceivedHandler")
@@ -119,7 +115,7 @@ function Archipelago.ReceiveItem(item_name)
     end
 
     if local_item_data ~= nil then
-        if Inventory.AddItem(local_item_data.name, 1) then
+        if Inventory.AddItem(local_item_data.internal_name, local_item_data.quantity) then
             return true
         end
     else

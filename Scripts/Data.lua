@@ -2,8 +2,10 @@ JSON = require("json")
 
 ---@class ItemData
 ---@field type string Type of the item
----@field name string Internal name of the item
+---@field name string Player name of the item
+---@field internal_name string Internal name of the item
 ---@field progressive integer 0 is junk, 1 is progressive, 2 is useful
+---@field quantity integer
 
 ---@class Data
 ---@field items ItemData[]
@@ -20,13 +22,16 @@ function Data.Load()
     if #Data.items > 0 then return end
 
 
-    local items_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/Archipelago33/Items/items.json"
-    local locations_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/Archipelago33/locations/locations.json"
+    local items_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/items.json"
+    local locations_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/locations.json"
     
     local content_items = JSON.read_file(items_path)
     local content_locations = JSON.read_file(locations_path)
 
     Data.items = content_items
+    if Data.items == nil then
+        Debug.print("Error importing items data", "Data.load", error)
+    end
     Data.locations = content_locations
 end
 

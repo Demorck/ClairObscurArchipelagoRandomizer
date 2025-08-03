@@ -43,5 +43,5 @@ luac.out
 Blueprints/*
 !Blueprints/Content
 Blueprints/Content/**
-!Blueprints/Content/ClairObscurRandomizer
-!Blueprints/Content/ClairObscurRandomizer/**
+!Blueprints/Content/Mods
+!Blueprints/Content/Mods/**

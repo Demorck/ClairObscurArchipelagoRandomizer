@@ -21,16 +21,19 @@ function Inventory.AddGold(amount)
     end
 end
 
+--- TODO: Modify lootcontext
 function Inventory.AddItem(itemName, amount)
     --- @class UAC_jRPG_InventoryManager_C
     local playerInventory = Inventory.GetInventoryManager()
     if playerInventory ~= nil then
         local name = FName(itemName)
+
         ---@class FS_LootContext
         --- It's the default level of pictos/weapon when looting. 99 is level 32 for example which is the max
         local lootContext = {
             EncounterLevel_3_FF609CBA4F19C630FF9FF0B543BB3BAB = 99
         }
+
         local returned = {}
         playerInventory:AddItemToInventory(name, amount, lootContext, returned)
         return true
