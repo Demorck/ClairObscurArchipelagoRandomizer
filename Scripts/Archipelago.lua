@@ -175,7 +175,6 @@ end
 --- need to add location to storage to avoid redoing the same thing if a crash happens
 function Archipelago.SendLocationCheck(location_name)
     local location_data = GetLocationFromAPData(location_name)
-
     if location_data == nil then return end
 
     local location_to_send = {} -- LocationChecks need an array
@@ -184,8 +183,12 @@ function Archipelago.SendLocationCheck(location_name)
     if not location_data then
         return
     end
+    
+    local function async() -- needed otherwise it crashes
+        AP_REF.APClient:LocationChecks(location_to_send)
+    end
 
-    AP_REF.APClient:LocationChecks(location_to_send)
+    ExecuteAsync(async)
 end
 
 function Archipelago.SendVictory()
@@ -194,16 +197,21 @@ end
 
 
 function GetLocationFromAPData(location_name)
-    local player = Archipelago.GetPlayer()
+    local location_data = Data:FindEntry(Data.locations, location_name) ---@cast location_data LocationData | nil
     local location = {}
 
-    location["id"] = AP_REF.APClient:get_location_id(location_name)
+    if location_data == nil then
+        Debug.print("Location_data is nul. Name of location: " .. location_name)
+        return nil
+    end
+
+    location["id"] = AP_REF.APClient:get_location_id(location_data.name)
 
     if not location["id"] then
         return nil
     end
 
-    location["name"] = location_name
+    location["name"] = location_data.name
 
     return location
     

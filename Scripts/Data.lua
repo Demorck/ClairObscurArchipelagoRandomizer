@@ -4,11 +4,21 @@ JSON = require("json")
 ---@field type string Type of the item
 ---@field name string Player name of the item
 ---@field internal_name string Internal name of the item
----@field progressive integer 0 is junk, 1 is progressive, 2 is useful
 ---@field quantity integer
+---@field progressive integer 0 is junk, 1 is progressive, 2 is useful
+
+
+---@class LocationData
+---@field internal_name string Internal name of the location (Chest_AncientSanctuary_2)
+---@field name string Readable name of the location (Ancient Sanctuary: Sanctuary Maze - In dark cave before shortcut to flag 1)
+---@field location string The region where is the location (Ancient Sanctuary)
+---@field original_item string
+---@field condition table not used here
+---@field type string The type (chest, boss, dive, etc.)
 
 ---@class Data
----@field items ItemData[]
+---@field items ItemData[] | nil
+---@field locations LocationData[] | nil
 local Data = {}
 
 
@@ -33,6 +43,20 @@ function Data.Load()
         Debug.print("Error importing items data", "Data.load", error)
     end
     Data.locations = content_locations
+end
+
+---Return an entry if find it Data
+---@param table ItemData[] | LocationData[]
+---@param internal_name string
+---@return ItemData | LocationData | nil
+function Data:FindEntry(table, internal_name)
+    for _, row in pairs(table) do
+        if row.internal_name == internal_name then
+            return row
+        end
+    end
+
+    return nil
 end
 
 

@@ -10,6 +10,7 @@ Quests      = require "Quests" ---@type Quests
 Save        = require "Save"
 Archipelago = require "Archipelago"
 ClientBP      = require "ClientBP"
+Battle      = require "Battle"
 local UEHelpers = require "UEHelpers"
 
 function TestSomeFunctions()
@@ -17,6 +18,15 @@ function TestSomeFunctions()
 end
 
 function PrintMessage()
+   local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
+   local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+
+   for _, tp in ipairs(interactible) do
+         local scene = tp.LevelDestination
+
+
+         print(tp.LevelDestination.RowName:ToString())
+   end
 end
 
 function Debug_things()
@@ -107,3 +117,24 @@ end)
 
 --    print(mappoint.DestinationAreaName:ToString())
 -- end)
+
+RegisterHook("/Game/jRPGTemplate/Blueprints/Basics/FL_jRPG_CustomFunctionLibrary.FL_jRPG_CustomFunctionLibrary_C:GetCurrentLevelData", function (self, _worldContext, found, levelData, rowName)
+   --  local name = rowName:get()
+   --  local level = name:ToString() ---@type string
+
+   --  if level == "WorldMap" then
+   --    local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
+   --    if interactible == nil then
+   --       print("nullos")
+   --       return
+   --    end
+   --    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+
+   --    for _, tp in ipairs(interactible) do
+   --          local scene = tp.LevelDestination
+
+
+   --          print(tp.LevelDestination.RowName:ToString())
+   --    end
+   --  end
+end)

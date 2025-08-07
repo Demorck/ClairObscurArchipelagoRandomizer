@@ -8,9 +8,9 @@ local BlueprintName = "BP_ArchipelagoHelper_C"
 function ClientBP:PushNotification(item, player)
     local helper = FindFirstOf(BlueprintName) ---@type ABP_ArchipelagoHelper_C
 
-    if helper == nil then
-            Debug.print("Impossible to push notification: ClientBP nil", "Client:PushNotification", error)
-            return
+    if helper == nil or not helper:IsValid() then
+        Debug.print("Impossible to push notification: ClientBP nil", "Client:PushNotification")
+        return
     end
 
     helper:AddToLogger(tostring(item), tostring(player))

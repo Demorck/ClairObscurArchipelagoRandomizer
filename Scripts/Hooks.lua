@@ -28,11 +28,7 @@ function Register_AddItemsFromChestToInventory()
         local fname = chest_regular.ChestSetupHandle["RowName"] ---@type FName
         local name_of_chest = fname:ToString()
 
-        local function async() -- needed otherwise it crashes
-            Archipelago.SendLocationCheck(name_of_chest)
-        end
-
-        ExecuteAsync(async)
+        Archipelago.SendLocationCheck(name_of_chest)
     end)
 
     Hooks.TableIDs[function_name] = {preID, postID}
@@ -89,6 +85,14 @@ function Register_UpdateFeedback()
     Hooks.TableIDs[function_name] = {preID, postID}
 end
 
+function Register_RemovePortalIfNoTickets()
+    local function_name = "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:UpdateFeedbackParametersFromLoot"
+
+    local preID, postID = RegisterHook(function_name, function(self, _)
+        
+    end)
+    
+end
 
 
 return Hooks

@@ -1,10 +1,11 @@
 local Battle = {}
 
 local BluePrintName = "AC_jRPG_BattleManager_C"
+local goals = {"L_Boss_Paintress_P1", "L_Boss_Curator_P1", "TowerBattle_33", "Boss_SimonALPHA*1"}
 
 ---Return true if the encounter defeated is the goal
 ---@param encounter_name any
-function Battle.IsEncounterGoal(encounter_name)
+function Battle:IsEncounterGoal(encounter_name)
     local goal = AP_REF.goal
 
     if goal == 0 then
@@ -20,13 +21,45 @@ function Battle.IsEncounterGoal(encounter_name)
     end
 end
 
+function Battle:IsBossNotGoal(encounter_name)
+    local row = Data:FindEntry(Data.locations, encounter_name) ---@cast row LocationData | nil
+
+    if row == nil then return false end
+
+    if (row.type == "Boss" or row.type == "Tower") and not Battle:IsEncounterGoal(encounter_name) then
+        return true
+    end
+
+    return false
+end
+
 RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory", function (self)
     if AP_REF.APClient == nil then return end
-    local current_context = self:get() ---@type UAC_jRPG_BattleManager_C
+    local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
 
     local encounter_name = current_context.EncounterName:ToString()
 
-    if Battle.IsEncounterGoal(encounter_name) then
+    if Battle:IsEncounterGoal(encounter_name) then
         Archipelago:SendVictory()
     end
+
+    if Battle:IsBossNotGoal(encounter_name) then
+        Archipelago.SendLocationCheck(encounter_name)
+    end
+end)
+
+RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:StartBattle", function (self, EngageType)
+    if AP_REF.APClient == nil then return end
+    local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
+    
+    local encounter_name = current_context.EncounterName:ToString()
+    print(encounter_name)
+end)
+
+
+RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:RollBattleRewards", function (self, rewards)
+    if AP_REF.APClient == nil then return end
+    local a = rewards:get() ---@cast a FS_BattleRewards
+
+    a.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:Empty()
 end)
