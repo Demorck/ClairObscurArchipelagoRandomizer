@@ -14,8 +14,8 @@ config.APTrapColor = "FA8072"
 config.APLocationColor = "00FF7F"
 config.APEntranceColor = "6495ED"
 
-config.APHost = "localhost:58380"
-config.APSlot = "coe33"
+config.APHost = ""
+config.APSlot = "bebou"
 config.APPassword = ""
 config.Version = {0, 5, 4}
 

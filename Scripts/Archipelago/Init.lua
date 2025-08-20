@@ -3,6 +3,12 @@ local config = require("Archipelago.Config")
 local handlers = require("Archipelago.Handlers")
 local client = require("Archipelago.Client")
 
+E_CLIENT_INFOS = {
+    DISCONNECTED = 0,
+    TRYING_TO_CONNECT = 1,
+    CONNECTED = 2
+}
+
 local AP = require "lua-apclientpp"
 if AP == nil then
     error("lua-apclientpp not found! Abort")
@@ -36,6 +42,13 @@ LoopAsync(33, function ()
 end)
 
 
+function AP_REF:set_config(host, port, slot, password)
+    config.APHost = host .. ":" .. port
+    config.APSlot = slot
+    config.APPassword = password
+end
+
+
 --- Toggles the connection to the Archipelago server.
 ---@param self any Ignored (used for method call syntax).
 function AP_REF.Connect(self)
@@ -45,8 +58,14 @@ function AP_REF.Connect(self)
         Hooks.Register()
     else 
         Hooks.Unregister()
+        local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+        a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
     end
 
+end
+
+function AP_REF:IsConnected()
+    return AP_REF.APClient ~= nil
 end
 
 return AP_REF

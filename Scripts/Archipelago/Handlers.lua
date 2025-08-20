@@ -9,6 +9,8 @@ local M = {}
 --- called when the socket is connected.
 function M.socket_connected()
     Debug.print("Socket connected", "Archipelago.Handlers.socket_connected")
+    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+    a:ChangeAPTextConnect(E_CLIENT_INFOS.CONNECTED)
 end
 
 --- called when connect or a ping failed - no action required, reconnect is automatic.
@@ -16,11 +18,15 @@ end
 function M.socket_error_handler(msg)
     Debug.print("Socket error", "Archipelago.Handlers.socket_error_handler", warn)
     Debug.print(msg, "Archipelago.Handlers.socket_error_handler", warn)
+    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+    a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
 end
 
 --- called when the socket gets disconnected - no action required, reconnect is automatic.
 function M.socket_disconnected_handler()
     Debug.print("Socket disconnected", "Archipelago.Handlers.socket_disconnected_handler")
+    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+    a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
 end
 
 --- called when the server sent room info. send ConnectSlot from this callback.
@@ -44,6 +50,8 @@ end
 --- @param reasons table The reasons that the connection has been declined
 function M.slot_refused_handler(reasons)
     Debug.print("Slot refused: " .. table.concat(reasons, ", "), "Archipelago.Handlers.slot_refused_handler", warn)
+    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+    a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
 end
 
 --- called when receiving items - previously received after connect and new over time

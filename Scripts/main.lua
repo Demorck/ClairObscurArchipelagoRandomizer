@@ -64,6 +64,19 @@ function Debug_things()
    end
 end
 
+
+RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, password)
+   local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
+   local host = host:get():ToString()
+   local port = port:get():ToString()
+   local slot = slot:get():ToString()
+   local password = password:get():ToString()
+
+   AP_REF:set_config(host, port, slot, password)
+
+   AP_REF:Connect()
+end)
+
 function Dump(o)
    if type(o) == 'table' then
       local s = '{ '
