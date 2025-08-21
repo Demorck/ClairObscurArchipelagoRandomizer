@@ -1,3 +1,4 @@
+Logger      = require "Logger"
 Hooks       = require "Hooks"
 AP_REF      = require "Archipelago/Init"
 Data        = require "Data"
@@ -9,7 +10,7 @@ Characters  = require "Characters"
 Quests      = require "Quests" ---@type Quests
 Save        = require "Save"
 Archipelago = require "Archipelago"
-ClientBP      = require "ClientBP"
+ClientBP    = require "ClientBP"
 Battle      = require "Battle"
 local UEHelpers = require "UEHelpers"
 
@@ -30,7 +31,7 @@ function PrintMessage()
 end
 
 function Debug_things()
-   
+   Inventory:AddItem("Consumable_Respec", 1)
 end
 
 

@@ -22,13 +22,12 @@ end
 --- Connects to the Archipelago server using configuration.
 function M.connect()
     local uuid = ""
-    Debug.print("Trying to connect at host: " .. M.config.APHost .. " with the game: " .. M.config.APGameName)
+    Logger:info("Trying to connect at host: " .. M.config.APHost .. " with the game: " .. M.config.APGameName .. " and slot: " .. M.config.APSlot)
 
     M.AP_REF.APClient = M.AP(uuid, M.config.APGameName, M.config.APHost)
     
     local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
     a:ChangeAPTextConnect(E_CLIENT_INFOS.TRYING_TO_CONNECT)
-    Debug.print("Connecting")
 
     M.AP_REF.APClient:set_socket_connected_handler(M.handlers.socket_connected)
     M.AP_REF.APClient:set_socket_error_handler(M.handlers.socket_error_handler)

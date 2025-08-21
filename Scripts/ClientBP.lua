@@ -2,7 +2,7 @@ local ClientBP = {}
 
 local BlueprintName = "BP_ArchipelagoHelper_C"
 
----comment
+--- Not used yet
 ---@param item integer
 ---@param player integer
 function ClientBP:PushNotification(item, player)

@@ -12,6 +12,7 @@ function Capacities:UnlockDestroyPaintedRock()
 end
 
 function Capacities:UnlockNextWorldMapAbility()
+    Logger:info("Unlocking next world map ability...")
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     local abilities = Capacities:GetWorldMapAbilities()
 
@@ -19,7 +20,7 @@ function Capacities:UnlockNextWorldMapAbility()
         local row = abilities[capacity]
         if not row.isUnlocked then
             local t = { row.enumerator }
-            ExplorationProgression:UnlockWorldMapCapacities(t)
+            Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
             break
         end
     end
@@ -42,13 +43,14 @@ function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
 end
 
 function Capacities:GetWorldMapAbilities()
+    Logger:info("Getting world map abilities...")
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
 
     local result = {}
 
    for key, value in ipairs(WorldMapCapacities) do
       local out = {}
-      ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
+      Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
 
       result[value] = {
         enumerator = key,
@@ -60,6 +62,7 @@ function Capacities:GetWorldMapAbilities()
 end
 
 function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
+    Logger:info("Unlocking exploration capacity: " .. capacity_to_unlock)
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
 
     local index = -1
@@ -73,14 +76,15 @@ function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
         return
     end
 
-    ExplorationProgression:SetExplorationCapacityUnlocked(index, true)
+    Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", index, true)
 end
 
 function Capacities:UnlockAllExplorationCapacities()
+    Logger:info("Unlocking all exploration capacities...")
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
 
-    for i, capacity in ipairs(ExplorationCapacities) do
-        ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+    for i, _ in ipairs(ExplorationCapacities) do
+        Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
     end
 end
 

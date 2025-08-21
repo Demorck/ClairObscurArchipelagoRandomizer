@@ -82,17 +82,17 @@ function Archipelago.ItemsReceivedHandler(items_received)
     for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
             local item_data = GetItemFromAPData(row.item)
-            
             if item_data ~= nil then
+                Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
                 if Archipelago.ReceiveItem(item_data["name"]) then
                     -- ClientBP:PushNotification(item_data["name"], row.player)
                     Storage.lastReceivedItemIndex = row.index
                 else
-                    Debug.print("Receiving an item but an error occurs: " .. item_data["name"], "Archipelago.ItemsReceivedHandler")
+                    Logger:error("Receiving an item but an error occurs: " .. item_data["name"])
                     break
                 end
             else
-                print("item data nul")
+                Logger:error("Item data is nil for item: " .. row.item)
             end
         end
     end
@@ -100,6 +100,9 @@ function Archipelago.ItemsReceivedHandler(items_received)
     Storage:Update()
 end
 
+--- Receives an item and adds it to the inventory.
+---@param item_name string
+---@return boolean returns true if the item was successfully received, false otherwise
 function Archipelago.ReceiveItem(item_name)
     local local_item_data = nil ---@type ItemData
 
@@ -128,7 +131,8 @@ function Archipelago.ReceiveItem(item_name)
             return true
         end
     else
-        Debug.print("Local item data nil, name is " .. item_name, "Archipelago.ReceiveItem", warn)
+        Logger:error("Item not found in local data: " .. item_name)
+        return false
     end
 
     return false
@@ -163,7 +167,6 @@ AP_REF.on_location_checked = APLocationsCheckedHandler
 
 function Archipelago.LocationsCheckedHandler(locations_checked)
     local player = Archipelago.GetPlayer()
-    print("feur")
 
     for k, location_id in pairs(locations_checked) do
         local id = tonumber(location_id)

@@ -3,6 +3,7 @@ local Hooks = {}
 Hooks.TableIDs = {}
 
 function Hooks.Register()
+    Logger:info("Registering hooks...")
     Register_AddItemsFromChestToInventory()
     Register_AllChestsContentIsZero()
     Register_UpdateFeedback()

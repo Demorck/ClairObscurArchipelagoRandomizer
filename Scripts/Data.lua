@@ -30,7 +30,7 @@ Data.locations = {}
 
 function Data.Load()
     if #Data.items > 0 then return end
-
+    Logger:info("Loading data...")
 
     local items_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/items.json"
     local locations_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/locations.json"
@@ -40,9 +40,13 @@ function Data.Load()
 
     Data.items = content_items
     if Data.items == nil then
-        Debug.print("Error importing items data", "Data.load", error)
+        Logger:error("Failed to load items from " .. items_path)
     end
+    
     Data.locations = content_locations
+    if Data.locations == nil then
+        Logger:error("Failed to load locations from " .. locations_path)
+    end
 end
 
 ---Return an entry if find it Data
@@ -56,6 +60,7 @@ function Data:FindEntry(table, internal_name)
         end
     end
 
+    Logger:warn("Entry not found in Data: " .. internal_name)
     return nil
 end
 

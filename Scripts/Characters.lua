@@ -15,17 +15,17 @@ end
 
 
 function Characters:AddCharacter(name)
+    Logger:info("Adding character to party: " .. name)
     local helper = FindFirstOf(helper_bp) ---@type ABP_ArchipelagoHelper_C
 
     local found = {}
     local struct = {}
     local fname = FName(name)
-    helper:AddCharacterToCollectonFromHardcodedName(fname, found, struct)
-
-    -- print(Dump(found))
+    Logger:callMethod(helper, "AddCharacterToCollectonFromHardcodedName", fname, found, struct)
 end
 
 function Characters:AddEveryone()
+    Logger:info("Adding everyone to party...")
     for _, char in ipairs(Characters_name) do
         self:AddCharacter(char)
     end

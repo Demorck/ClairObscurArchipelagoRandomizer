@@ -34,6 +34,7 @@ LoopAsync(33, function ()
         end
     else 
         if AP_REF.APClient ~= nil then
+            Logger:info("Disconnecting from Archipelago server...")
             AP_REF.APClient = nil
             collectgarbage("collect")
         end
