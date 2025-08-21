@@ -4,12 +4,12 @@ local Quests = {}
 local BluePrintName = "BP_QuestSystem_C"
 
 ---@enum
-local STATUS = {
-    NOT_STARTED = 1,
-    STARTED     = 2,
-    COMPLETED   = 3,
-    CANCELED    = 4,
-    FAILED      = 5
+QUEST_STATUS = {
+    NOT_STARTED = 0,
+    STARTED     = 1,
+    COMPLETED   = 2,
+    CANCELED    = 3,
+    FAILED      = 4
 }
 
 local QUESTS_NAME = {
@@ -37,9 +37,9 @@ function Quests:UnlockNextGestral()
     for _, gestral_name in ipairs(QUESTS_NAME.GESTRALS.Objectives) do
         local gestral_fname = FName(gestral_name)
         local status = objectives.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Find(gestral_fname):get() ---@type E_QuestStatus
-        if status ~= STATUS.STARTED and status ~= STATUS.COMPLETED then
+        if status ~= QUEST_STATUS.STARTED and status ~= QUEST_STATUS.COMPLETED then
             local key = FName(gestral_name)
-            objectives.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Add(key, STATUS.STARTED)
+            objectives.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Add(key, QUEST_STATUS.STARTED)
         end
     end
 

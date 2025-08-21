@@ -85,7 +85,7 @@ function Archipelago.ItemsReceivedHandler(items_received)
             
             if item_data ~= nil then
                 if Archipelago.ReceiveItem(item_data["name"]) then
-                    ClientBP:PushNotification(item_data["name"], row.player)
+                    -- ClientBP:PushNotification(item_data["name"], row.player)
                     Storage.lastReceivedItemIndex = row.index
                 else
                     Debug.print("Receiving an item but an error occurs: " .. item_data["name"], "Archipelago.ItemsReceivedHandler")
@@ -97,14 +97,14 @@ function Archipelago.ItemsReceivedHandler(items_received)
         end
     end
     
-    Storage.Update()
+    Storage:Update()
 end
 
 function Archipelago.ReceiveItem(item_name)
     local local_item_data = nil ---@type ItemData
 
     if item_name == "Progressive Rock" then
-        Capacities.UnlockNextWorldMapAbility()
+        Capacities:UnlockNextWorldMapAbility()
         return true
     end
 
@@ -114,8 +114,17 @@ function Archipelago.ReceiveItem(item_name)
         end
     end
 
+    if local_item_data.type == "Area" then
+        Storage.current_ticket[local_item_data.internal_name] = true
+
+        if local_item_data.name == "Area - Esquie's Nest" then
+            Quests:SetObjectiveStatus("Main_GoldenPath", "6_EsquieNest", QUEST_STATUS.STARTED)
+        end
+        return true
+    end
+
     if local_item_data ~= nil then
-        if Inventory.AddItem(local_item_data.internal_name, local_item_data.quantity) then
+        if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity) then
             return true
         end
     else

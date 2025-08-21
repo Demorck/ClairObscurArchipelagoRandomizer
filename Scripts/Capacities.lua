@@ -3,16 +3,17 @@ local CapacitiesBluePrintName = "BP_ExplorationProgressionSystem_C"
 
 
 local WorldMapCapacities = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" }
+local ExplorationCapacities = { "FreeAim", "AttackInWorld", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" }
 
 
-function Capacities.UnlockDestroyPaintedRock()
+function Capacities:UnlockDestroyPaintedRock()
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName)---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     ExplorationProgression:UnlockFreeAimDamageLevel(1)
 end
 
-function Capacities.UnlockNextWorldMapAbility()
+function Capacities:UnlockNextWorldMapAbility()
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-    local abilities = Capacities.GetWorldMapAbilities()
+    local abilities = Capacities:GetWorldMapAbilities()
 
     for _, capacity in ipairs(WorldMapCapacities) do
         local row = abilities[capacity]
@@ -24,9 +25,9 @@ function Capacities.UnlockNextWorldMapAbility()
     end
 end
 
-function Capacities.UnlockSpecificCapacity(capacity_to_unlock)
+function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-    local abilities = Capacities.GetWorldMapAbilities()
+    local abilities = Capacities:GetWorldMapAbilities()
     local index = 0
     for i, capacity in ipairs(WorldMapCapacities) do
         if capacity == capacity_to_unlock then
@@ -40,7 +41,7 @@ function Capacities.UnlockSpecificCapacity(capacity_to_unlock)
     ExplorationProgression:UnlockWorldMapCapacities(t)
 end
 
-function Capacities.GetWorldMapAbilities()
+function Capacities:GetWorldMapAbilities()
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
 
     local result = {}
@@ -56,6 +57,31 @@ function Capacities.GetWorldMapAbilities()
    end
 
    return result
+end
+
+function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
+    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+
+    local index = -1
+    for i, value in ipairs(ExplorationCapacities) do
+        if value == capacity_to_unlock then
+            index = i
+        end
+    end
+
+    if index == -1 then
+        return
+    end
+
+    ExplorationProgression:SetExplorationCapacityUnlocked(index, true)
+end
+
+function Capacities:UnlockAllExplorationCapacities()
+    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+
+    for i, capacity in ipairs(ExplorationCapacities) do
+        ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+    end
 end
 
 return Capacities

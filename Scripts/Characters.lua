@@ -25,6 +25,12 @@ function Characters:AddCharacter(name)
     -- print(Dump(found))
 end
 
+function Characters:AddEveryone()
+    for _, char in ipairs(Characters_name) do
+        self:AddCharacter(char)
+    end
+end
+
 
 
 return Characters

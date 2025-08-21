@@ -1,23 +1,24 @@
 local Storage = {}
 Storage.initialized = false
 Storage.lastReceivedItemIndex = -1
+Storage.current_ticket = {}
 
 
-function Storage.Load()
-    local file = JSON.read_file(Storage.GetFilePath())
+function Storage:Load()
+    local file = JSON.read_file(Storage:GetFilePath())
 
     if file ~= nil then
         Storage.lastReceivedItemIndex = file["last_received"]
         Storage.lastSavedItemIndex = file["last_saved"]
     else
-        Storage.Update()
+        Storage:Update()
     end
 
     Storage.initialized = true
 end
 
 
-function Storage.Update()
+function Storage:Update()
     local player = Archipelago.GetPlayer()
 
     if not (player["seed"] and player["slot"]) then
@@ -28,10 +29,10 @@ function Storage.Update()
         last_received = Storage.lastReceivedItemIndex
     }
 
-    JSON.write_file(Storage.GetFilePath(), values)
+    JSON.write_file(Storage:GetFilePath(), values)
 end
 
-function Storage.GetFilePath()
+function Storage:GetFilePath()
     local player = Archipelago.GetPlayer()
 
     return player["seed"] .. "_" .. player["slot"] .. ".json"

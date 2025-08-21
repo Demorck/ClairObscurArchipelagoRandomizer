@@ -30,38 +30,7 @@ function PrintMessage()
 end
 
 function Debug_things()
-   local a = FindAllOf("BP_jRPG_Enemy_World_Base_Seamless_C")
-
-   local result = {}
-
-   for _, actor in ipairs(a) do
-    ---@cast actor ABP_jRPG_Enemy_World_Base_Seamless_C
-      if actor.SelectedEncounter ~= nil then
-         local rowName = actor.SelectedEncounter["RowName"]:ToString()
-         local actorName = actor:GetFName():ToString()
-
-         local cleanName = actorName:match("^BP_EnemyWorld_(.-)_C")
-
-         if result[rowName] == nil then
-               result[rowName] = {}
-         end
-
-         local alreadyPresent = false
-         for _, name in ipairs(result[rowName]) do
-               if name == cleanName then
-                  alreadyPresent = true
-                  break
-               end
-         end
-         if not alreadyPresent then
-               table.insert(result[rowName], cleanName)
-         end
-      end
-   end
-
-   for encounter, enemies in pairs(result) do
-      print(encounter .. " = [" .. table.concat(enemies, ", ") .. "]")
-   end
+   
 end
 
 
@@ -124,6 +93,46 @@ LoopAsync(33, function ()
 
    return false
 end)
+
+RegisterHook("/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened", function (context)
+   local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
+
+   for _, value in ipairs(buttons) do
+      local name = value:GetFName():ToString()
+      if name == "TeleportPlayerButton" then
+         value:SetVisibility(0)
+         local content = value.ButtonContent
+         if content ~= nil and content:IsValid() then
+            local overlay = content:GetContent() ---@cast overlay UOverlay
+            if overlay ~= nil and overlay:IsValid() then
+               local wrapping_text = overlay:GetChildAt(0) ---@cast wrapping_text UWBP_WrappingText_C
+                  if wrapping_text ~= nil and wrapping_text:IsValid() then
+                     wrapping_text.ContentText = FText("I'M STUCK ! (stepbro)")
+                     wrapping_text:UpdateText()
+               end
+            end
+         end
+      end
+   end
+end)
+
+RegisterHook("/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:UpdateActivitySubTaskStatus", function (self, objective_name, status)
+    local quest_system = self:get() ---@type UBP_QuestSystem_C
+    local objective_name_param = objective_name:get():ToString()
+    local status_param = status:get()
+    
+    if objective_name_param == "1_LumiereBeginning" and status_param == 2 then
+      InitSaveAfterLumiere()
+    elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
+      Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
+    end
+end)
+
+function InitSaveAfterLumiere()
+   Characters:AddEveryone()
+   Inventory:Adding999Recoat()
+   Capacities:UnlockAllExplorationCapacities()
+end
 
 -- RegisterHook("/Game/LevelTools/BP_jRPG_MapTeleportPoint.BP_jRPG_MapTeleportPoint_C:ProcessChangeMap", function(self)
 --    local mappoint = self:get() ---@type ABP_jRPG_MapTeleportPoint_C

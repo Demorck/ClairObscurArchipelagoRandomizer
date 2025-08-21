@@ -3,7 +3,7 @@ local Inventory = {}
 local InventoryBluePrintName = "AC_jRPG_InventoryManager_C"
 
 ---@return UAC_jRPG_InventoryManager_C | nil
-function Inventory.GetInventoryManager()
+function Inventory:GetInventoryManager()
     local playerInventory = FindFirstOf(InventoryBluePrintName) ---@cast playerInventory UAC_jRPG_InventoryManager_C
 
     if playerInventory:IsValid() then
@@ -15,16 +15,16 @@ end
 
 function Inventory.AddGold(amount)
     --- @class UAC_jRPG_InventoryManager_C
-    local playerInventory = Inventory.GetInventoryManager()
+    local playerInventory = Inventory:GetInventoryManager()
     if playerInventory ~= nil then
         playerInventory:ReceiveGold(amount, "")
     end
 end
 
 --- TODO: Modify lootcontext
-function Inventory.AddItem(itemName, amount)
+function Inventory:AddItem(itemName, amount)
     --- @class UAC_jRPG_InventoryManager_C
-    local playerInventory = Inventory.GetInventoryManager()
+    local playerInventory = Inventory:GetInventoryManager()
     if playerInventory ~= nil then
         local name = FName(itemName)
 
@@ -45,7 +45,7 @@ end
 
 function Inventory.RemoveItem(itemName, amount)
     --- @class UAC_jRPG_InventoryManager_C
-    local playerInventory = Inventory.GetInventoryManager()
+    local playerInventory = Inventory:GetInventoryManager()
     if playerInventory ~= nil then
         local name = FName(itemName)
         playerInventory:RemoveItemFromInventory(name, amount, false)
@@ -93,6 +93,10 @@ function Inventory.GetAmountOfItem(itemName)
             return value
         end
     end
+end
+
+function Inventory:Adding999Recoat()
+    Inventory:AddItem("Consumable_Respec", 999)
 end
 
 return Inventory
