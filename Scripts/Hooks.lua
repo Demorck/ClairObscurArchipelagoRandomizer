@@ -90,9 +90,23 @@ function Register_RemovePortalIfNoTickets()
     local function_name = "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:UpdateFeedbackParametersFromLoot"
 
     local preID, postID = RegisterHook(function_name, function(self, _)
-        
+        local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
+        local AP_Helper = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast AP_Helper ABP_ArchipelagoHelper_C
+
+        for _, tp in ipairs(interactible) do
+            local scene = tp.LevelDestination.RowName:ToString()
+            if Data.current_ticket[scene] == nil then
+                AP_Helper:RemoveInteractibleIfNoTicket(tp)
+            else
+                if scene == "OldLumiere" and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED then
+                    AP_Helper:RemoveInteractibleIfNoTicket(tp)
+                end
+            end
+        end
     end)
     
+
+    Hooks.TableIDs[function_name] = {preID, postID}
 end
 
 

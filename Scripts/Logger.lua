@@ -3,6 +3,8 @@ local Logger = {}
 
 local log_dir = "../../Content/Paks/LogicMods/ClairObscurRandomizer_data/Logs"
 local max_logs = 10
+local logFile = ""
+
 os.execute("mkdir \"" .. log_dir .. "\"") -- Create the log directory if it doesn't exist
 
 --- Create the name of the file
@@ -36,10 +38,6 @@ local function rotateLogs()
         end
     end
 end
-
-
-local logFile = makeLogName()
-rotateLogs()
 
 -- Write a line to the log
 local function writeLine(line)
@@ -115,6 +113,10 @@ function Logger:wrapTable(t, name)
 end
 
 
-Logger:info("Logger initialisé: " .. logFile)
+function Logger:initialize()
+    logFile = makeLogName()
+    rotateLogs()
+    Logger:info("Logger initialisé: " .. logFile)
+end
 
 return Logger

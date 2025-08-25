@@ -19,15 +19,7 @@ function TestSomeFunctions()
 end
 
 function PrintMessage()
-   local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
-   local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
-
-   for _, tp in ipairs(interactible) do
-         local scene = tp.LevelDestination
-
-
-         print(tp.LevelDestination.RowName:ToString())
-   end
+   
 end
 
 function Debug_things()

@@ -5,12 +5,13 @@ local CapacitiesBluePrintName = "BP_ExplorationProgressionSystem_C"
 local WorldMapCapacities = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" }
 local ExplorationCapacities = { "FreeAim", "AttackInWorld", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" }
 
-
+--- Unlock the ability to destroy painted rocks
 function Capacities:UnlockDestroyPaintedRock()
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName)---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     ExplorationProgression:UnlockFreeAimDamageLevel(1)
 end
 
+--- Unlock the next world map ability
 function Capacities:UnlockNextWorldMapAbility()
     Logger:info("Unlocking next world map ability...")
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
@@ -26,6 +27,8 @@ function Capacities:UnlockNextWorldMapAbility()
     end
 end
 
+--- Unlock a specific world map capacity
+---@param capacity_to_unlock string the internal name of capacity to unlock
 function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     local abilities = Capacities:GetWorldMapAbilities()

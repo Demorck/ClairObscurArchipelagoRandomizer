@@ -57,6 +57,7 @@ function AP_REF.Connect(self)
 
     if want_to_connect then
         Hooks.Register()
+        Logger:initialize()
     else 
         Hooks.Unregister()
         local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C

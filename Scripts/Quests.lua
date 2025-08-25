@@ -56,13 +56,29 @@ function Quests:SetObjectiveStatus(quest_name, objective_name, status)
     local quest_data = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
     quest_data.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:ForEach(function (key, value)
         local name = key:get():ToString()
-        Logger:info("Checking objective: " .. name)
         if name == objective_name then
+            Logger:info("Checking objective: " .. name)
             value:set(status)
         end
     end)
 
     Save:SaveGame()
-end 
+end
+
+function Quests:GetObjectiveStatus(quest_name, objective_name)
+    Logger:info("Getting objective status: " .. objective_name .. "(" .. quest_name .. ")")
+    local quest_system = FindFirstOf(BluePrintName) ---@cast quest_system UBP_QuestSystem_C
+
+    local fname = FName(quest_name)
+    local quest_data = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
+    local status = nil
+    status = quest_data.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Find(FName(objective_name)):get()
+
+    if status then
+        return QUEST_STATUS[status]
+    end
+
+    return nil
+end
 
 return Quests

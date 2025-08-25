@@ -1,8 +1,6 @@
 local Storage = {}
 Storage.initialized = false
 Storage.lastReceivedItemIndex = -1
-Storage.current_ticket = {}
-
 
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())

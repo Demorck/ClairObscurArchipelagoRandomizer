@@ -19,13 +19,14 @@ JSON = require("json")
 ---@class Data
 ---@field items ItemData[] | nil
 ---@field locations LocationData[] | nil
+---@field current_ticket table<string, boolean>
 local Data = {}
 
 
 Data.file_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/Archipelago33" -- need to change for relative path from the game when the mod is installed
 Data.items = {}
 Data.locations = {}
-
+Data.current_ticket = {}
 
 
 function Data.Load()
