@@ -41,6 +41,12 @@ end
 
 -- Write a line to the log
 local function writeLine(line)
+    if logFile == "" then
+        Debug.print(line)
+        return
+    end
+
+
     local file = io.open(logFile, "a")
     if file then
         file:write(os.date("[%d-%m-%Y %H:%M:%S] ") .. line .. "\n")

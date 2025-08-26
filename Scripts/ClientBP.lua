@@ -16,5 +16,15 @@ function ClientBP:PushNotification(item, player)
     helper:AddToLogger(tostring(item), tostring(player))
 end
 
+function ClientBP:FeetTrap()
+    local helper = FindFirstOf(BlueprintName) ---@type ABP_ArchipelagoHelper_C
+
+    if helper ~= nil and helper:IsValid() then
+        helper:FeetTrap()
+    else
+        Logger:error("Impossible to trap: ClientBP nil")
+    end
+end
+
 
 return ClientBP

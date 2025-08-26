@@ -2,6 +2,19 @@ local Inventory = {}
 
 local InventoryBluePrintName = "AC_jRPG_InventoryManager_C"
 
+local CONSUMABLE_ITEM = {
+    "PartyHealConsumable",
+    "Consumable_Revive_Level0",
+    "Consumable_Revive_Level1",
+    "Consumable_Revive_Level2",
+    "Consumable_Energy_Level0",
+    "Consumable_Energy_Level1",
+    "Consumable_Energy_Level2",
+    "Consumable_Health_Level0",
+    "Consumable_Health_Level1",
+    "Consumable_Health_Level2"
+}
+
 ---@return UAC_jRPG_InventoryManager_C | nil
 function Inventory:GetInventoryManager()
     local playerInventory = FindFirstOf(InventoryBluePrintName) ---@cast playerInventory UAC_jRPG_InventoryManager_C
@@ -44,7 +57,7 @@ function Inventory:AddItem(itemName, amount)
     return true
 end
 
-function Inventory.RemoveItem(itemName, amount)
+function Inventory:RemoveItem(itemName, amount)
     --- @class UAC_jRPG_InventoryManager_C
     local playerInventory = Inventory:GetInventoryManager()
     if playerInventory ~= nil then
@@ -85,7 +98,7 @@ function Inventory.HasItem(itemName)
     return false
 end
 
-function Inventory.GetAmountOfItem(itemName)
+function Inventory:GetAmountOfItem(itemName)
     if not Inventory.HasItem(itemName) then return 0 end
     
     local inventory_table = Inventory.GetInventory()
@@ -94,10 +107,31 @@ function Inventory.GetAmountOfItem(itemName)
             return value
         end
     end
+
+    return -1
 end
 
 function Inventory:Adding999Recoat()
     Inventory:AddItem("Consumable_Respec", 999)
+end
+
+function Inventory:SetItemQuantity(item_name, amount)
+    local current_amount = Inventory:GetAmountOfItem(item_name)
+    if current_amount < 0 then
+        return
+    end
+    
+    if current_amount < amount then
+        Inventory:AddItem(item_name, amount - current_amount)
+    elseif current_amount > amount then
+        Inventory:RemoveItem(item_name, current_amount - amount)
+    end
+end
+
+function Inventory:RemoveConsumable()
+    for _, consumable in ipairs(CONSUMABLE_ITEM) do
+        Inventory:SetItemQuantity(consumable, 0)
+    end
 end
 
 return Inventory

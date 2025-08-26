@@ -19,11 +19,13 @@ function TestSomeFunctions()
 end
 
 function PrintMessage()
-   
+   local inv = Inventory:GetInventoryManager()
+
+   print(Dump(Inventory:GetInventory()))
+   -- inv:Use
 end
 
 function Debug_things()
-   Inventory:AddItem("Consumable_Respec", 1)
 end
 
 
@@ -77,7 +79,7 @@ LoopAsync(33, function ()
 
    if Archipelago.waitingForSync then
          Archipelago.waitingForSync = false
-         Archipelago.Sync()
+         Archipelago:Sync()
    end
 
     if not Archipelago.waitingForSync then

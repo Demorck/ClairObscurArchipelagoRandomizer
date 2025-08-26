@@ -32,5 +32,20 @@ function Characters:AddEveryone()
 end
 
 
+function Characters:KillAll()
+    Logger:info("Killing all characters...")
+    self:SetHPAll(0)
+end
+
+function Characters:SetHPAll(hp)
+    Logger:info("Setting all characters' HP to " .. hp .. "...")
+    local helper = FindFirstOf(BluePrintName) ---@cast helper UAC_jRPG_CharactersManager_C
+
+    for _, char in ipairs(Characters_name) do
+        local fname = FName(char)
+        helper:SetCharacterHP(fname, hp)
+    end
+end
+
 
 return Characters

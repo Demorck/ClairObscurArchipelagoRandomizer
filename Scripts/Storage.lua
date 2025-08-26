@@ -17,7 +17,7 @@ end
 
 
 function Storage:Update()
-    local player = Archipelago.GetPlayer()
+    local player = Archipelago:GetPlayer()
 
     if not (player["seed"] and player["slot"]) then
         return
@@ -31,7 +31,7 @@ function Storage:Update()
 end
 
 function Storage:GetFilePath()
-    local player = Archipelago.GetPlayer()
+    local player = Archipelago:GetPlayer()
 
     return player["seed"] .. "_" .. player["slot"] .. ".json"
 end

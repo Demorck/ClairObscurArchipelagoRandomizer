@@ -13,17 +13,17 @@ Archipelago.waitingForSync = true
 Archipelago.itemsQueue = {}
 Archipelago.isProcessingItems = false -- this is set to true when the queue is being processed so we don't over-give
 
-function Archipelago.Init()
+function Archipelago:Init()
     if not Archipelago.isInit then
         Archipelago.isInit = true
     end
 end
 
-function Archipelago.IsConnected()
+function Archipelago:IsConnected()
     return AP_REF.APClient ~= nil and AP_REF.APClient:get_state() == AP_REF.AP.State.SLOT_CONNECTED
 end
 
-function Archipelago.GetPlayer()
+function Archipelago:GetPlayer()
     local player = {}
 
     if AP_REF.APClient == nil then
@@ -39,7 +39,7 @@ function Archipelago.GetPlayer()
     return player
 end
 
-function Archipelago.Sync()
+function Archipelago:Sync()
     if AP_REF.APClient == nil then
         return
     end
@@ -51,13 +51,13 @@ function APSlotConnectedHandler(slot_data)
     Archipelago.hasConnectedPrior = true
     print('Connected.')
 
-    return Archipelago.SlotDataHandler(slot_data)
+    return Archipelago:SlotDataHandler(slot_data)
 end
 AP_REF.on_slot_connected = APSlotConnectedHandler
 
 
-function Archipelago.SlotDataHandler(slot_data)
-    local player = Archipelago.GetPlayer()
+function Archipelago:SlotDataHandler(slot_data)
+    local player = Archipelago:GetPlayer()
 
     Archipelago.seed = player["seed"]
     Archipelago.slot = player["slot"]
@@ -70,13 +70,13 @@ function Archipelago.SlotDataHandler(slot_data)
 end
 
 function APItemsReceivedHandler(items_received)
-    return Archipelago.ItemsReceivedHandler(items_received)
+    return Archipelago:ItemsReceivedHandler(items_received)
 end
 AP_REF.on_items_received = APItemsReceivedHandler
 
 ---comment
 ---@param items_received table<integer, NetworkItem>
-function Archipelago.ItemsReceivedHandler(items_received)
+function Archipelago:ItemsReceivedHandler(items_received)
     local items = {}
 
     for _, row in pairs(items_received) do
@@ -84,7 +84,7 @@ function Archipelago.ItemsReceivedHandler(items_received)
             local item_data = GetItemFromAPData(row.item)
             if item_data ~= nil then
                 Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
-                if Archipelago.ReceiveItem(item_data["name"]) then
+                if Archipelago:ReceiveItem(item_data["name"]) then
                     -- ClientBP:PushNotification(item_data["name"], row.player)
                     Storage.lastReceivedItemIndex = row.index
                 else
@@ -103,13 +103,8 @@ end
 --- Receives an item and adds it to the inventory.
 ---@param item_name string
 ---@return boolean returns true if the item was successfully received, false otherwise
-function Archipelago.ReceiveItem(item_name)
+function Archipelago:ReceiveItem(item_name)
     local local_item_data = nil ---@type ItemData
-
-    if item_name == "Progressive Rock" then
-        Capacities:UnlockNextWorldMapAbility()
-        return true
-    end
 
     for _, item in pairs(Data.items) do
         if item.name == item_name then
@@ -131,6 +126,15 @@ function Archipelago.ReceiveItem(item_name)
         return true
     end
 
+    if local_item_data.type == "Exploration capacities" then
+        self:HandleCapacityItem(local_item_data)
+        return true
+    end
+
+    if local_item_data.type == "Trap" then
+        self:HandleTrapItem(local_item_data)
+    end
+
     if local_item_data ~= nil then
         if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity) then
             return true
@@ -143,15 +147,43 @@ function Archipelago.ReceiveItem(item_name)
     return false
 end
 
+--- Handles the reception of exploration capacity items.
+---@param item_data ItemData
+function Archipelago:HandleCapacityItem(item_data)
+    if item_data.name == "Progressive Rock" then
+        Capacities:UnlockNextWorldMapAbility()
+    elseif item_data.name == "Paint Break" then
+        Capacities:UnlockDestroyPaintedRock()
+    end
+end
 
-function Archipelago.CanReceiveItems()
-    return Archipelago.IsConnected()
+function Archipelago:HandleTrapItem(item_data)
+    Logger:info("Trap activated: " .. item_data.name .. " for player: " .. item_data.player)
+    
+    if item_data.name == "Feet Trap" then
+        ClientBP:FeetTrap()
+    end
+end
+
+function Archipelago:HandleDeathLink()
+    if Battle:InBattle() then
+        Logger:info("Death link receiving during battle.")
+        Characters:KillAll()
+    else
+        Logger:info("Death link receiving outside of battle.")
+        Inventory:RemoveConsumable()
+        Characters:SetHPAll(1)
+    end
+end
+
+function Archipelago:CanReceiveItems()
+    return Archipelago:IsConnected()
 end
 
 ---comment
 ---@param item_id integer
 function GetItemFromAPData(item_id)
-    local player = Archipelago.GetPlayer()
+    local player = Archipelago:GetPlayer()
     local item = {}
     
     item["name"] = AP_REF.APClient:get_item_name(item_id, player["game"])
@@ -170,8 +202,8 @@ function APLocationsCheckedHandler(locations_checked)
 end
 AP_REF.on_location_checked = APLocationsCheckedHandler
 
-function Archipelago.LocationsCheckedHandler(locations_checked)
-    local player = Archipelago.GetPlayer()
+function Archipelago:LocationsCheckedHandler(locations_checked)
+    local player = Archipelago:GetPlayer()
 
     for k, location_id in pairs(locations_checked) do
         local id = tonumber(location_id)
@@ -190,7 +222,7 @@ function Archipelago.LocationsCheckedHandler(locations_checked)
 end
 
 --- need to add location to storage to avoid redoing the same thing if a crash happens
-function Archipelago.SendLocationCheck(location_name)
+function Archipelago:SendLocationCheck(location_name)
     local location_data = GetLocationFromAPData(location_name)
     if location_data == nil then return end
 
@@ -208,7 +240,7 @@ function Archipelago.SendLocationCheck(location_name)
     ExecuteAsync(async)
 end
 
-function Archipelago.SendVictory()
+function Archipelago:SendVictory()
     AP_REF.APClient:StatusUpdate(AP_REF.AP.ClientStatus.GOAL)
 end
 

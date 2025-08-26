@@ -33,6 +33,20 @@ function Battle:IsBossNotGoal(encounter_name)
     return false
 end
 
+function Battle:InBattle()
+    local battle_manager = FindFirstOf(BluePrintName) ---@cast battle_manager UAC_jRPG_BattleManager_C
+
+    if battle_manager ~= nil and battle_manager:IsValid() then
+        return false
+    end
+
+    if battle_manager.EncounterName == nil then
+        return false
+    end
+
+    return true
+end
+
 RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory", function (self)
     if AP_REF.APClient == nil then return end
     local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
@@ -46,7 +60,7 @@ RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_
 
     if Battle:IsBossNotGoal(encounter_name) then
         Logger:info("Boss defeated but not a goal: " .. encounter_name)
-        Archipelago.SendLocationCheck(encounter_name)
+        Archipelago:SendLocationCheck(encounter_name)
     end
 end)
 

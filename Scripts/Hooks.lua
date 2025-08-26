@@ -29,7 +29,7 @@ function Register_AddItemsFromChestToInventory()
         local fname = chest_regular.ChestSetupHandle["RowName"] ---@type FName
         local name_of_chest = fname:ToString()
 
-        Archipelago.SendLocationCheck(name_of_chest)
+        Archipelago:SendLocationCheck(name_of_chest)
     end)
 
     Hooks.TableIDs[function_name] = {preID, postID}
