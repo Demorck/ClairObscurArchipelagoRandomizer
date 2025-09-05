@@ -109,5 +109,15 @@ function Register_RemovePortalIfNoTickets()
     Hooks.TableIDs[function_name] = {preID, postID}
 end
 
+function Register_CinematicStarted()
+    local function_name = ""
+
+    local preID, postID = RegisterHook(function_name, function (self, ...)
+        
+    end)
+
+    Hooks.TableIDs[function_name] = {preID, postID}
+end
+
 
 return Hooks

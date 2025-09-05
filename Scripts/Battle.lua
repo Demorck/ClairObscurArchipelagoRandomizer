@@ -6,7 +6,7 @@ local goals = {"L_Boss_Paintress_P1", "L_Boss_Curator_P1", "TowerBattle_33", "Bo
 ---Return true if the encounter defeated is the goal
 ---@param encounter_name any
 function Battle:IsEncounterGoal(encounter_name)
-    local goal = AP_REF.goal
+    local goal = Archipelago.options.goal
 
     if goal == 0 then
         return encounter_name == "L_Boss_Paintress_P1"

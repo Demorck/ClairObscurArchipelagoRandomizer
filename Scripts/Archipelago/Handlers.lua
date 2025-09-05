@@ -41,7 +41,6 @@ end
 function M.set_slot_connected_handler(callback)
     config.APClient:set_slot_connected_handler(function(slot_data)
         Debug.print("Slot Connected", "Archipelago.Handlers.set_slot_connected_handler")
-        config.goal = slot_data["goal"]
         callback(slot_data)
     end)
 end
@@ -78,6 +77,13 @@ function M.set_location_checked_handler(callback)
     config.APClient:set_location_checked_handler(function(locations)
         Debug.print("Locations checked", "Archipelago.Handlers.set_location_checked_handler")
         callback(locations)
+    end)
+end
+
+function M.set_bounced_handler(callback)
+    config.APClient:set_bounced_handler(function(json)
+        Debug.print("Bounced ! " .. json, "Archipelago.Handler.set_bounced_handler")
+        callback(json)
     end)
 end
 

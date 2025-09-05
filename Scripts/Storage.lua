@@ -1,6 +1,8 @@
 local Storage = {}
 Storage.initialized = false
 Storage.lastReceivedItemIndex = -1
+Storage.pictosIndex = -1
+Storage.weaponsIndex = -1
 
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
@@ -8,6 +10,8 @@ function Storage:Load()
     if file ~= nil then
         Storage.lastReceivedItemIndex = file["last_received"]
         Storage.lastSavedItemIndex = file["last_saved"]
+        Storage.pictosIndex = file["pictos_index"]
+        Storage.weaponsIndex = file["weapons_index"]
     else
         Storage:Update()
     end
@@ -24,7 +28,9 @@ function Storage:Update()
     end
 
     local values = {
-        last_received = Storage.lastReceivedItemIndex
+        last_received = Storage.lastReceivedItemIndex,
+        pictos_index = Storage.pictosIndex,
+        weapons_index = Storage.weaponsIndex
     }
 
     JSON.write_file(Storage:GetFilePath(), values)

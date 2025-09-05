@@ -1,15 +1,35 @@
+---@class ArchipelagoOptions
+---@field char_shuffle integer
+---@field gestral_shuffle integer
+---@field goal integer
+---@field gear_scaling integer
+---@field starting_char integer
+
+---@class Archipelago
+---@field options ArchipelagoOptions
+---@field weapons_data integer[]
+---@field pictos_data integer[]
+
 local Archipelago = {}
+
+
 
 Archipelago.seed = nil
 Archipelago.slot = nil
 
-Archipelago.death_link = false -- comes over in slot data
+Archipelago.options = {} -- comes over in slot data
+Archipelago.weapons_data = {}
+Archipelago.pictos_data = {}
+Archipelago.death_link = false
+
+
 Archipelago.hasConnectedPrior = false -- keeps track of whether the player has connected at all so players don't have to remove AP mod to play vanilla
 Archipelago.isInit = false -- keeps track of whether init things like handlers need to run
 Archipelago.waitingForSync = false -- randomizer calls APSync when "waiting for sync"; i.e., when you die
-Archipelago.canDeathLink = false 
-Archipelago.wasDeathLinked = false 
-Archipelago.waitingForSync = true 
+Archipelago.canDeathLink = false
+Archipelago.wasDeathLinked = false
+Archipelago.lastDeathLink = 0.0
+Archipelago.waitingForSync = true
 Archipelago.itemsQueue = {}
 Archipelago.isProcessingItems = false -- this is set to true when the queue is being processed so we don't over-give
 
@@ -65,7 +85,11 @@ function Archipelago:SlotDataHandler(slot_data)
     if slot_data.death_link ~= nil then
         Archipelago.death_link = slot_data.death_link
     end
-    
+
+    Archipelago.options = slot_data.options
+    Archipelago.pictos_data = slot_data.pictos_data or {}
+    Archipelago.weapons_data = slot_data.weapons_data or {}
+
     Data.Load()
 end
 
@@ -82,9 +106,10 @@ function Archipelago:ItemsReceivedHandler(items_received)
     for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
             local item_data = GetItemFromAPData(row.item)
+
             if item_data ~= nil then
                 Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
-                if Archipelago:ReceiveItem(item_data["name"]) then
+                if Archipelago:ReceiveItem(item_data) then
                     -- ClientBP:PushNotification(item_data["name"], row.player)
                     Storage.lastReceivedItemIndex = row.index
                 else
@@ -101,13 +126,13 @@ function Archipelago:ItemsReceivedHandler(items_received)
 end
 
 --- Receives an item and adds it to the inventory.
----@param item_name string
+---@param item_data table<string, any>
 ---@return boolean returns true if the item was successfully received, false otherwise
-function Archipelago:ReceiveItem(item_name)
+function Archipelago:ReceiveItem(item_data)
     local local_item_data = nil ---@type ItemData
 
     for _, item in pairs(Data.items) do
-        if item.name == item_name then
+        if item.name == item_data["name"] then
             local_item_data = item
         end
     end
@@ -136,15 +161,53 @@ function Archipelago:ReceiveItem(item_name)
     end
 
     if local_item_data ~= nil then
-        if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity) then
+        local level = self:GetLevelItem(local_item_data.type, item_data["id"])
+
+        if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level) then
             return true
         end
     else
-        Logger:error("Item not found in local data: " .. item_name)
+        Logger:error("Item not found in local data: " .. Dump(item_data))
         return false
     end
 
     return false
+end
+
+function Archipelago:GetLevelItem(type, id)
+    function FindIDinTable(t)
+        for _, v in ipairs(t) do
+            if id == v then
+                return math.ceil(33 * id / #t)
+            end
+
+            return 15
+        end
+    end
+    
+    local level = 15
+    if self.options.gear_scaling == 0 or self.options.gear_scaling == 2 then
+        if type == "Picto" then
+            level = FindIDinTable(self.pictos_data)
+        elseif type == "Weapon" then
+            level = FindIDinTable(self.weapons_data)
+        end
+    elseif self.options.gear_scaling == 1 then
+        local percent = 0
+        if type == "Picto" then
+            percent = Storage.pictosIndex / 190
+            Storage.pictosIndex = Storage.pictosIndex + 1
+        elseif type == "Weapons" then
+            percent = Storage.weaponsIndex / 100
+            Storage.weaponsIndex = Storage.weaponsIndex + 1
+        end
+        Storage:Update()
+        level = math.ceil(33 * percent)
+    elseif self.options.gear_scaling == 3 then
+        level = math.random(1, 33)
+    end
+
+    return level
 end
 
 --- Handles the reception of exploration capacity items.
@@ -157,6 +220,22 @@ function Archipelago:HandleCapacityItem(item_data)
     end
 end
 
+function APBounceHandler(json)
+    if type(json) == "string" then
+        json = JSON.decode(json)
+    end
+
+    local tags = json["tags"]
+    local data = json["data"]
+
+    for _, tag in ipairs(tags) do
+        if tag == "DeathLink" then
+            Archipelago:HandleDeathLink(data)
+        end
+    end
+end
+AP_REF.on_bounced = APBounceHandler
+
 function Archipelago:HandleTrapItem(item_data)
     Logger:info("Trap activated: " .. item_data.name .. " for player: " .. item_data.player)
     
@@ -165,15 +244,26 @@ function Archipelago:HandleTrapItem(item_data)
     end
 end
 
-function Archipelago:HandleDeathLink()
+function Archipelago:HandleDeathLink(data)
+    local lastDeathLink = self.lastDeathLink
+    local currentDeathLink = data["time"]
+    self.lastDeathLink = data["time"]
+    
+    if currentDeathLink - lastDeathLink < 10000 then
+        return
+    end 
+
     if Battle:InBattle() then
         Logger:info("Death link receiving during battle.")
+        Logger:info(data["cause"])
         Characters:KillAll()
     else
         Logger:info("Death link receiving outside of battle.")
+        Logger:info(data["cause"])
         Inventory:RemoveConsumable()
         Characters:SetHPAll(1)
     end
+
 end
 
 function Archipelago:CanReceiveItems()
@@ -242,6 +332,30 @@ end
 
 function Archipelago:SendVictory()
     AP_REF.APClient:StatusUpdate(AP_REF.AP.ClientStatus.GOAL)
+end
+
+function Archipelago:SendGommage()
+    
+end
+
+function Archipelago:SendDeathLink(msg, players_id, games, tags)
+    players_id = players_id or {}
+    games = games or {}
+    tags = tags or {}
+
+
+    local data = {}
+    data["time"] = os.time()
+
+    if not string.find(msg, AP_REF.APSlot) then
+        msg = AP_REF.APSlot .. " : " .. msg
+    end
+
+    data["cause"] = msg
+    data["source"] = AP_REF.APSlot
+
+    table.insert(tags, "DeathLink")
+    AP_REF.APClient:Bounce(data, games, players_id, tags)
 end
 
 
