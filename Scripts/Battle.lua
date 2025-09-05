@@ -48,10 +48,15 @@ function Battle:InBattle()
 end
 
 RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory", function (self)
-    if AP_REF.APClient == nil then return end
+    
     local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
 
     local encounter_name = current_context.EncounterName:ToString()
+
+    print(encounter_name)
+
+    
+    if AP_REF.APClient == nil then return end
 
     if Battle:IsEncounterGoal(encounter_name) then
         Logger:info("Goal achieved: " .. encounter_name .. " ! Bravo !")
@@ -61,6 +66,10 @@ RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_
     if Battle:IsBossNotGoal(encounter_name) then
         Logger:info("Boss defeated but not a goal: " .. encounter_name)
         Archipelago:SendLocationCheck(encounter_name)
+    end
+
+    if encounter_name == "SC_LampMaster" then
+        Characters:SaveCharacter("Frey")
     end
 end)
 

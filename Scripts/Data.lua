@@ -20,6 +20,7 @@ JSON = require("json")
 ---@field items ItemData[] | nil
 ---@field locations LocationData[] | nil
 ---@field current_ticket table<string, boolean>
+---@field local_variable table<string, any>
 local Data = {}
 
 
@@ -27,6 +28,7 @@ Data.file_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRan
 Data.items = {}
 Data.locations = {}
 Data.current_ticket = {}
+Data.local_variable = {}
 
 
 function Data.Load()

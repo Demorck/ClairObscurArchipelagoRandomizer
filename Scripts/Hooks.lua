@@ -10,11 +10,12 @@ function Hooks.Register()
 end
 
 function Hooks.Unregister()
-    for name, id_table in pairs(Hooks.TableIDs) do
+    for _, id_table in pairs(Hooks.TableIDs) do
         local preID = id_table[1]
         local postID = id_table[2]
+        local function_name = id_table[3]
 
-        UnregisterHook(name, preID, postID)
+        UnregisterHook(function_name, preID, postID)
     end
 end
 
@@ -32,7 +33,7 @@ function Register_AddItemsFromChestToInventory()
         Archipelago:SendLocationCheck(name_of_chest)
     end)
 
-    Hooks.TableIDs[function_name] = {preID, postID}
+    Hooks.TableIDs["AddItemsFromChestToInventory"] = {preID, postID, function_name}
 end
 
 ---This function is called when we roll chest items, ie when a level is loading.
@@ -51,7 +52,7 @@ function Register_AllChestsContentIsZero()
     end)
 
     
-    Hooks.TableIDs[function_name] = {preID, postID}
+    Hooks.TableIDs["AllChestsContentIsZero"] = {preID, postID, function_name}
 end
 
 ---This function is called when the player loot a chest. It used to change the color of the "dust" (can be cool for chest matches content)
@@ -83,13 +84,15 @@ function Register_UpdateFeedback()
         end
     end)
 
-    Hooks.TableIDs[function_name] = {preID, postID}
+    Hooks.TableIDs["UpdateFeedback"] = {preID, postID, function_name}
 end
 
 function Register_RemovePortalIfNoTickets()
     local function_name = "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:UpdateFeedbackParametersFromLoot"
 
     local preID, postID = RegisterHook(function_name, function(self, _)
+        if AP_REF.APClient == nil then return end
+
         local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
         local AP_Helper = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast AP_Helper ABP_ArchipelagoHelper_C
 
@@ -106,7 +109,22 @@ function Register_RemovePortalIfNoTickets()
     end)
     
 
-    Hooks.TableIDs[function_name] = {preID, postID}
+    Hooks.TableIDs["RemovePortalIfNoTickets"] = {preID, postID, function_name}
+end
+
+function Register_SaveGustave()
+    local function_name = "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:SaveGustave"
+
+    local preID, postID = RegisterHook(function_name, function(self)
+        if AP_REF.APClient == nil then return end
+
+        local chest = self:get() ---@type ABP_Chest_Regular_C
+        local player = Archipelago:GetPlayer()
+
+        AP_REF.APClient:SaveGustave(chest, player)
+    end)
+
+    Hooks.TableIDs["SaveGustave"] = {preID, postID, function_name}
 end
 
 function Register_CinematicStarted()

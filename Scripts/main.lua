@@ -14,18 +14,26 @@ ClientBP    = require "ClientBP"
 Battle      = require "Battle"
 local UEHelpers = require "UEHelpers"
 
+FREY_DATA = nil
+
 function TestSomeFunctions()
    AP_REF:Connect()
 end
 
 function PrintMessage()
-   local inv = Inventory:GetInventoryManager()
-
-   print(Dump(Inventory:GetInventory()))
-   -- inv:Use
+   Characters:SaveCharacter("Maelle")
 end
 
 function Debug_things()
+      local char_manager = FindFirstOf("BP_ArchipelagoHelper_C") ---@type ABP_ArchipelagoHelper_C
+      local out = {}
+   if FREY_DATA then
+      char_manager:AddCharacterToCollectionFromSaveState(FREY_DATA, true)
+   else
+      local out2 = {}
+      Logger:error("No FREY_DATA saved yet.")
+   end
+
 end
 
 
@@ -41,12 +49,32 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, 
    AP_REF:Connect()
 end)
 
-function Dump(o)
+function Dump(o, depth)
+   depth = depth or 0
+   local indent = string.rep('  ', depth * 4)
+
    if type(o) == 'table' then
-      local s = '{ '
+      local s = '{\n'
       for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. Dump(v) .. ','
+         if type(k) == "userdata" then k = k:get()  end
+         
+         if type(k) == 'string' then k = '"'..k..'"'
+         elseif type(k) == "number" then k = k
+         elseif string.find(tostring(k), "FName") then k = k:ToString()
+         else k = type(k)
+         end
+
+         if string.find(tostring(v), "FName") then v = v:ToString()
+         elseif type(v) == "userdata" then v = v:get() 
+            if string.find(tostring(v), "FName") then v = v:ToString()
+         end
+         
+         if type(v) == 'string' then v = '"'..v..'"'
+         elseif type(v) == "number" then v = v
+         else v = type(v) end
+         end
+         
+         s = s .. indent .. '['.. k .. '] = ' .. Dump(v, depth + 1) .. ',\n'
       end
       return s .. '} '
    else
@@ -112,15 +140,17 @@ RegisterHook("/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C
 end)
 
 RegisterHook("/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:UpdateActivitySubTaskStatus", function (self, objective_name, status)
-    local quest_system = self:get() ---@type UBP_QuestSystem_C
-    local objective_name_param = objective_name:get():ToString()
-    local status_param = status:get()
-    
-    if objective_name_param == "1_LumiereBeginning" and status_param == 2 then
-      InitSaveAfterLumiere()
-    elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
-      Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
-    end
+   if AP_REF.APClient == nil then return end
+   
+   local quest_system = self:get() ---@type UBP_QuestSystem_C
+   local objective_name_param = objective_name:get():ToString()
+   local status_param = status:get()
+   
+   if objective_name_param == "1_LumiereBeginning" and status_param == 2 then
+   InitSaveAfterLumiere()
+   elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
+   Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
+   end
 end)
 
 function InitSaveAfterLumiere()
