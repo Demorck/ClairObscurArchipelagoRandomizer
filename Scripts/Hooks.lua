@@ -2,14 +2,16 @@ local Hooks = {}
 
 Hooks.TableIDs = {}
 
-function Hooks.Register()
+function Hooks:Register()
     Logger:info("Registering hooks...")
     Register_AddItemsFromChestToInventory()
     Register_AllChestsContentIsZero()
     Register_UpdateFeedback()
+    Register_RemovePortalIfNoTickets()
+    Register_SaveCharacterFromAnUnvoidableDeath()
 end
 
-function Hooks.Unregister()
+function Hooks:Unregister()
     for _, id_table in pairs(Hooks.TableIDs) do
         local preID = id_table[1]
         local postID = id_table[2]
@@ -112,30 +114,53 @@ function Register_RemovePortalIfNoTickets()
     Hooks.TableIDs["RemovePortalIfNoTickets"] = {preID, postID, function_name}
 end
 
-function Register_SaveGustave()
-    local function_name = "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:SaveGustave"
+---Basically save Gustave at the end of Act 1
+function Register_SaveCharacterFromAnUnvoidableDeath()
+    local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:RemoveCharacterFromCollection"
 
-    local preID, postID = RegisterHook(function_name, function(self)
-        if AP_REF.APClient == nil then return end
+    local preID, postID = RegisterHook(function_name, function (self, data_param)
+        local data = data_param:get() ---@cast data UBP_CharacterData_C
 
-        local chest = self:get() ---@type ABP_Chest_Regular_C
-        local player = Archipelago:GetPlayer()
-
-        AP_REF.APClient:SaveGustave(chest, player)
+        if data.HardcodedNameID:ToString() == "Frey" then
+            local char_manager = FindFirstOf("BP_ArchipelagoHelper_C") ---@type ABP_ArchipelagoHelper_C
+            char_manager:AddCharacterToCollectionFromSaveState(data)
+        end
     end)
 
-    Hooks.TableIDs["SaveGustave"] = {preID, postID, function_name}
+    Hooks.TableIDs["SaveCharacterFromAnUnvoidableDeath"] = {preID, postID, function_name}
 end
 
-function Register_CinematicStarted()
-    local function_name = ""
-
-    local preID, postID = RegisterHook(function_name, function (self, ...)
+function Regiser_EnableTPButtonInWorldMap()
+    local function_name = "/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened"
         
+    local preID, postID = RegisterHook(function_name, function (context)
+        local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
+
+        for _, value in ipairs(buttons) do
+            local name = value:GetFName():ToString()
+            if name == "TeleportPlayerButton" then
+                value:SetVisibility(0)
+                local content = value.ButtonContent
+                if content ~= nil and content:IsValid() then
+                    local overlay = content:GetContent() ---@cast overlay UOverlay
+                    if overlay ~= nil and overlay:IsValid() then
+                    local wrapping_text = overlay:GetChildAt(0) ---@cast wrapping_text UWBP_WrappingText_C
+                        if wrapping_text ~= nil and wrapping_text:IsValid() then
+                            wrapping_text.ContentText = FText("I'M STUCK ! (stepbro)")
+                            wrapping_text:UpdateText()
+                    end
+                    end
+                end
+            end
+        end
     end)
 
-    Hooks.TableIDs[function_name] = {preID, postID}
+
+    Hooks.TableIDs["EnableTPButtonInWorldMap"] = {preID, postID, function_name}    
 end
+
+
+
 
 
 return Hooks

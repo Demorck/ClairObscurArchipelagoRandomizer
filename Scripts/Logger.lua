@@ -77,6 +77,9 @@ function Logger:safeCall(fn, ...)
     local ok, result = pcall(fn, ...)
     if not ok then
         Logger:error("Lua crash: " .. tostring(result))
+    else
+        Logger:info("OK ? " .. tostring(ok))
+
     end
     return result
 end
@@ -88,6 +91,7 @@ function Logger:callMethod(obj, method_name, ...)
         self:error("callMethod failed, " .. tostring(method_name) .. " is not a function")
         return
     end
+    self:info("Function " .. method_name .. " found")
     return self:safeCall(function()
         return fun(obj, table.unpack(args)) 
     end)

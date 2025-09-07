@@ -9,6 +9,7 @@
 ---@field options ArchipelagoOptions
 ---@field weapons_data integer[]
 ---@field pictos_data integer[]
+---@field totals integer[]
 
 local Archipelago = {}
 
@@ -18,6 +19,7 @@ Archipelago.seed = nil
 Archipelago.slot = nil
 
 Archipelago.options = {} -- comes over in slot data
+Archipelago.totals = {}
 Archipelago.weapons_data = {}
 Archipelago.pictos_data = {}
 Archipelago.death_link = false
@@ -87,8 +89,15 @@ function Archipelago:SlotDataHandler(slot_data)
     end
 
     Archipelago.options = slot_data.options
+    Archipelago.totals = slot_data.totals or {}
     Archipelago.pictos_data = slot_data.pictos_data or {}
     Archipelago.weapons_data = slot_data.weapons_data or {}
+
+    Logger:info("Receiving Slot Data: ")
+    Logger:info("Options: " .. Dump(Archipelago.options))
+    Logger:info("Totals: " .. Dump(Archipelago.totals))
+    Logger:info("Pictos data: " .. Dump(Archipelago.pictos_data))
+    Logger:info("Weapons data: " .. Dump(Archipelago.weapons_data))
 
     Data.Load()
 end
@@ -158,6 +167,10 @@ function Archipelago:ReceiveItem(item_data)
 
     if local_item_data.type == "Trap" then
         self:HandleTrapItem(local_item_data)
+    end
+
+    if local_item_data.type == "Character" then
+        Characters:AddCharacter(local_item_data.internal_name)
     end
 
     if local_item_data ~= nil then
@@ -294,8 +307,9 @@ AP_REF.on_location_checked = APLocationsCheckedHandler
 
 function Archipelago:LocationsCheckedHandler(locations_checked)
     local player = Archipelago:GetPlayer()
+    if locations_checked == nil then return end
 
-    for k, location_id in pairs(locations_checked) do
+    for k, location_id in ipairs(locations_checked) do
         local id = tonumber(location_id)
         if id == nil then
             error("Error when converting location_id to number: " .. location_id)

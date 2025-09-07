@@ -1,19 +1,6 @@
 local debug = {}
 local ENABLED = true
 
-local function Dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. Dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
-end
-
 --- Prints a debug message if debug is enabled.
 ---@param str string The message to print.
 ---@param from string | nil The prefix to print to know where the print comes from

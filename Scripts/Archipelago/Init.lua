@@ -56,10 +56,10 @@ function AP_REF.Connect(self)
     want_to_connect = not want_to_connect
 
     if want_to_connect then
-        Hooks.Register()
+        Hooks:Register()
         Logger:initialize()
     else 
-        Hooks.Unregister()
+        Hooks:Unregister()
         local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
         a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
     end

@@ -38,7 +38,8 @@ end
 function Inventory:AddItem(itemName, amount, item_level)
     --- @class UAC_jRPG_InventoryManager_C
     local playerInventory = Inventory:GetInventoryManager()
-    Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount)
+    local level = item_level or 45
+    Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount .. " with level " .. level)
     if playerInventory == nil then
         return false
     end
@@ -49,7 +50,7 @@ function Inventory:AddItem(itemName, amount, item_level)
     ---@class FS_LootContext
     --- It's the default level of pictos/weapon when looting. 99 is level 32 for example which is the max
     local lootContext = {
-        EncounterLevel_3_FF609CBA4F19C630FF9FF0B543BB3BAB = item_level * 3
+        EncounterLevel_3_FF609CBA4F19C630FF9FF0B543BB3BAB = level * 3
     }
     local returned = {}
 

@@ -1897,7 +1897,7 @@
     },
     {
         "internal_name": "Chest_Monolith_2",
-        "name": "Monolith: Tainted Meadows - After Aline memory",
+        "name": "Monolith: Tainted Cliffs - In front of bastard Mime room zipline",
         "location": "Monolith",
         "original_item": "ChromaPack_Large",
         "condition": {},
@@ -1905,7 +1905,7 @@
     },
     {
         "internal_name": "Chest_Monolith_3",
-        "name": "Monolith: Tainted Cliffs - Paint Cage",
+        "name": "Monolith: Tainted Meadows - Paint Cage",
         "location": "Monolith",
         "original_item": "ReviveTint_Shard",
         "condition": {},
@@ -1913,7 +1913,7 @@
     },
     {
         "internal_name": "Chest_Monolith_4",
-        "name": "Monolith: Tainted Cliffs - In front of bastard Mime room zipline",
+        "name": "Monolith: Tainted Meadows - After Aline memory",
         "location": "Monolith",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -2977,10 +2977,10 @@
     },
     {
         "internal_name": "Chest_SeaCliff_38",
-        "name": "Sea Cliff: Quest_HexgaRock",
+        "name": "Stone Wave Cliffs: White Hexga reward",
         "location": "Sea Cliff",
-        "original_item": "Quest_HexgaRock",
-        "condition": {},
+        "original_item": "AutoShell",
+        "condition": {"Rock Crystal":  3},
         "type": "Chest"
     },
     {
@@ -4721,7 +4721,7 @@
     },
     {
         "internal_name": "Chest_Generic_5xLuminaPoint",
-        "name": "World Map: Dive - Below Floating Sanctuary",
+        "name": "World Map: Dive - Below Floating Cemetery",
         "location": "World Map",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -5906,7 +5906,7 @@
         "original_item": "",
         "condition": {
             "Painted Power": 1,
-            "Character - Monoco": 1
+            "Monoco": 1
         },
         "type": "Boss",
         "boss_type": "Normal"
@@ -6142,90 +6142,72 @@
         "name": "Lost Gestral reward 1",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 1
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 2",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 2
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 3",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 3
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 4",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 4
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 5",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 5
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 6",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 6
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 7",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 7
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 8",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 8
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     },
     {
         "name": "Lost Gestral reward 9",
         "internal_name": "",
         "location": "Camp",
-        "condition": {
-            "Lost Gestral": 9
-        },
+        "condition": {},
         "original_item": "",
-        "type": "Quest reward"
+        "type": "Lost Gestral reward"
     }
 ]

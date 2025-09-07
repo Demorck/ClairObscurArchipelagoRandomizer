@@ -14,26 +14,12 @@ ClientBP    = require "ClientBP"
 Battle      = require "Battle"
 local UEHelpers = require "UEHelpers"
 
-FREY_DATA = nil
-
 function TestSomeFunctions()
-   AP_REF:Connect()
 end
-
 function PrintMessage()
-   Characters:SaveCharacter("Maelle")
 end
 
 function Debug_things()
-      local char_manager = FindFirstOf("BP_ArchipelagoHelper_C") ---@type ABP_ArchipelagoHelper_C
-      local out = {}
-   if FREY_DATA then
-      char_manager:AddCharacterToCollectionFromSaveState(FREY_DATA, true)
-   else
-      local out2 = {}
-      Logger:error("No FREY_DATA saved yet.")
-   end
-
 end
 
 
@@ -117,27 +103,7 @@ LoopAsync(33, function ()
    return false
 end)
 
-RegisterHook("/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened", function (context)
-   local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
 
-   for _, value in ipairs(buttons) do
-      local name = value:GetFName():ToString()
-      if name == "TeleportPlayerButton" then
-         value:SetVisibility(0)
-         local content = value.ButtonContent
-         if content ~= nil and content:IsValid() then
-            local overlay = content:GetContent() ---@cast overlay UOverlay
-            if overlay ~= nil and overlay:IsValid() then
-               local wrapping_text = overlay:GetChildAt(0) ---@cast wrapping_text UWBP_WrappingText_C
-                  if wrapping_text ~= nil and wrapping_text:IsValid() then
-                     wrapping_text.ContentText = FText("I'M STUCK ! (stepbro)")
-                     wrapping_text:UpdateText()
-               end
-            end
-         end
-      end
-   end
-end)
 
 RegisterHook("/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:UpdateActivitySubTaskStatus", function (self, objective_name, status)
    if AP_REF.APClient == nil then return end
@@ -147,41 +113,15 @@ RegisterHook("/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:Updat
    local status_param = status:get()
    
    if objective_name_param == "1_LumiereBeginning" and status_param == 2 then
-   InitSaveAfterLumiere()
+      InitSaveAfterLumiere()
    elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
-   Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
+      Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
    end
 end)
 
 function InitSaveAfterLumiere()
+   Logger:info("The festival ended...")
    Characters:AddEveryone()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
 end
-
--- RegisterHook("/Game/LevelTools/BP_jRPG_MapTeleportPoint.BP_jRPG_MapTeleportPoint_C:ProcessChangeMap", function(self)
---    local mappoint = self:get() ---@type ABP_jRPG_MapTeleportPoint_C
-
---    print(mappoint.DestinationAreaName:ToString())
--- end)
-
-RegisterHook("/Game/jRPGTemplate/Blueprints/Basics/FL_jRPG_CustomFunctionLibrary.FL_jRPG_CustomFunctionLibrary_C:GetCurrentLevelData", function (self, _worldContext, found, levelData, rowName)
-   --  local name = rowName:get()
-   --  local level = name:ToString() ---@type string
-
-   --  if level == "WorldMap" then
-   --    local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
-   --    if interactible == nil then
-   --       print("nullos")
-   --       return
-   --    end
-   --    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
-
-   --    for _, tp in ipairs(interactible) do
-   --          local scene = tp.LevelDestination
-
-
-   --          print(tp.LevelDestination.RowName:ToString())
-   --    end
-   --  end
-end)
