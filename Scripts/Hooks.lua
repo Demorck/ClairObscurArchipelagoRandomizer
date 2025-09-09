@@ -9,6 +9,8 @@ function Hooks:Register()
     Register_UpdateFeedback()
     Register_RemovePortalIfNoTickets()
     Register_SaveCharacterFromAnUnvoidableDeath()
+    Register_EnableTPButtonInWorldMap()
+    Register_UpdateSubquests()
 end
 
 function Hooks:Unregister()
@@ -47,10 +49,7 @@ function Register_AllChestsContentIsZero()
         if AP_REF.APClient == nil then return end
         
         local map = itemsToLoot:get() ---@type TMap<FName, int32>
-
-        map:ForEach(function (key, value)
-            map:Add(key:get(), 0)
-        end)
+        map:Empty()
     end)
 
     
@@ -63,7 +62,6 @@ function Register_UpdateFeedback()
 
     local preID, postID = RegisterHook(function_name, function(self)
         if AP_REF.APClient == nil then return end
-
         local chest = self:get() ---@type ABP_Chest_Regular_C   
         local colors = chest.ColorWhenOpening -- When you pick the item, there is some dust. That's this color 
         colors.R = 0
@@ -97,13 +95,14 @@ function Register_RemovePortalIfNoTickets()
 
         local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
         local AP_Helper = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast AP_Helper ABP_ArchipelagoHelper_C
+        if interactible == nil or AP_Helper == nil or not AP_Helper:IsValid() then return end
 
         for _, tp in ipairs(interactible) do
             local scene = tp.LevelDestination.RowName:ToString()
-            if Data.current_ticket[scene] == nil then
+            if Storage.tickets[scene] == false then
                 AP_Helper:RemoveInteractibleIfNoTicket(tp)
             else
-                if scene == "OldLumiere" and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED then
+                if tp.DestinationSpawnPointTag.TagName:ToString() == "Level.SpawnPoint.OldLumiere.EndPath" and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED then
                     AP_Helper:RemoveInteractibleIfNoTicket(tp)
                 end
             end
@@ -121,6 +120,7 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
     local preID, postID = RegisterHook(function_name, function (self, data_param)
         local data = data_param:get() ---@cast data UBP_CharacterData_C
 
+        print("wtf" .. data.HardcodedNameID:ToString())
         if data.HardcodedNameID:ToString() == "Frey" then
             local char_manager = FindFirstOf("BP_ArchipelagoHelper_C") ---@type ABP_ArchipelagoHelper_C
             char_manager:AddCharacterToCollectionFromSaveState(data)
@@ -130,12 +130,11 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
     Hooks.TableIDs["SaveCharacterFromAnUnvoidableDeath"] = {preID, postID, function_name}
 end
 
-function Regiser_EnableTPButtonInWorldMap()
+function Register_EnableTPButtonInWorldMap()
     local function_name = "/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened"
-        
+
     local preID, postID = RegisterHook(function_name, function (context)
         local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
-
         for _, value in ipairs(buttons) do
             local name = value:GetFName():ToString()
             if name == "TeleportPlayerButton" then
@@ -148,7 +147,7 @@ function Regiser_EnableTPButtonInWorldMap()
                         if wrapping_text ~= nil and wrapping_text:IsValid() then
                             wrapping_text.ContentText = FText("I'M STUCK ! (stepbro)")
                             wrapping_text:UpdateText()
-                    end
+                        end
                     end
                 end
             end
@@ -156,11 +155,29 @@ function Regiser_EnableTPButtonInWorldMap()
     end)
 
 
-    Hooks.TableIDs["EnableTPButtonInWorldMap"] = {preID, postID, function_name}    
+    Hooks.TableIDs["EnableTPButtonInWorldMap"] = {preID, postID, function_name}
 end
 
+function Register_UpdateSubquests()
+    local function_name = "/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:UpdateActivitySubTaskStatus"
 
 
+    local preID, postID = RegisterHook(function_name, function (self, objective_name, status)
+        if AP_REF.APClient == nil then return end
+        local quest_system = self:get() ---@type UBP_QuestSystem_C
+        local objective_name_param = objective_name:get():ToString()
+        local status_param = status:get()
+        
+        if not Storage.initialized_after_lumiere and objective_name_param == "2_SpringMeadow" and status_param == 2 then
+            InitSaveAfterLumiere()
+        elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
+            Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
+        end
+    end)
+
+    
+    Hooks.TableIDs["UpdateSubquests"] = {preID, postID, function_name}
+end
 
 
 return Hooks

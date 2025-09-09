@@ -74,12 +74,11 @@ function Logger:debug(msg)
 end
 
 function Logger:safeCall(fn, ...)
-    local ok, result = pcall(fn, ...)
+    local ok, result = xpcall(fn, debug.traceback, ...)
     if not ok then
         Logger:error("Lua crash: " .. tostring(result))
     else
         Logger:info("OK ? " .. tostring(ok))
-
     end
     return result
 end
@@ -87,6 +86,7 @@ end
 function Logger:callMethod(obj, method_name, ...)
     local args = {...} 
     local fun = obj[method_name]
+    print(method_name)
     if type(fun) ~= "function" and type(fun) ~= "userdata" then
         self:error("callMethod failed, " .. tostring(method_name) .. " is not a function")
         return

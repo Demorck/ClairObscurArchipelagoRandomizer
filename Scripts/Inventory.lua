@@ -54,7 +54,8 @@ function Inventory:AddItem(itemName, amount, item_level)
     }
     local returned = {}
 
-    Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
+    -- Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
+    playerInventory:AddItemToInventory(name, amount, lootContext, returned)
     return true
 end
 

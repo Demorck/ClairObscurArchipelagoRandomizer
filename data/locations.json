@@ -5527,7 +5527,7 @@
     },
     {
         "name": "Spring Meadows: Eveque",
-        "internal_name": "SM_Eveque*1",
+        "internal_name": "SM_Eveque_ShieldTutorial*1",
         "location": "Spring Meadows",
         "original_item": "",
         "condition": {},

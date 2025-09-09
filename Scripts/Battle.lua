@@ -24,7 +24,9 @@ end
 function Battle:IsBossNotGoal(encounter_name)
     local row = Data:FindEntry(Data.locations, encounter_name) ---@cast row LocationData | nil
 
-    if row == nil then return false end
+    if row == nil then 
+        Logger:warn("This encounter in IsBossNotGoal is nil: " .. encounter_name)
+        return false end
 
     if (row.type == "Boss" or row.type == "Tower") and not Battle:IsEncounterGoal(encounter_name) then
         return true

@@ -1,4 +1,5 @@
 JSON = require("json")
+AREA_NAMES = {"GoblusLair", "AncientSanctuary", "SideLevel_RedForest", "EsquieNest", "SideLevel_OrangeForest", "SideLevel_CleasFlyingHouse", "ForgottenBattlefield", "SidelLevel_FrozenHearts", "GestralVillage", "MonocoStation", "Lumiere", "Monolith_Interior_PaintressIntro", "OldLumiere", "SideLevel_Reacher", "SideLevel_AxonPath", "SeaCliff", "Sirene", "SideLevel_TwilightSanctuary", "Visages", "SideLevel_YellowForest", "SideLevel_CleasTower_Entrance"}
 
 ---@class ItemData
 ---@field type string Type of the item
@@ -19,7 +20,6 @@ JSON = require("json")
 ---@class Data
 ---@field items ItemData[] | nil
 ---@field locations LocationData[] | nil
----@field current_ticket table<string, boolean>
 ---@field local_variable table<string, any>
 local Data = {}
 
@@ -27,7 +27,6 @@ local Data = {}
 Data.file_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/Archipelago33" -- need to change for relative path from the game when the mod is installed
 Data.items = {}
 Data.locations = {}
-Data.current_ticket = {}
 Data.local_variable = {}
 
 
@@ -37,7 +36,6 @@ function Data.Load()
 
     local items_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/items.json"
     local locations_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/locations.json"
-    
     local content_items = JSON.read_file(items_path)
     local content_locations = JSON.read_file(locations_path)
 

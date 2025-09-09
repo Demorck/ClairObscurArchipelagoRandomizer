@@ -21,7 +21,8 @@ function Capacities:UnlockNextWorldMapAbility()
         local row = abilities[capacity]
         if not row.isUnlocked then
             local t = { row.enumerator }
-            Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
+            -- Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
+            ExplorationProgression:UnlockWorldMapCapacities(t)
             break
         end
     end
@@ -53,7 +54,8 @@ function Capacities:GetWorldMapAbilities()
 
    for key, value in ipairs(WorldMapCapacities) do
       local out = {}
-      Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
+    --   Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
+      ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
 
       result[value] = {
         enumerator = key,
@@ -79,7 +81,8 @@ function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
         return
     end
 
-    Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", index, true)
+    -- Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", index, true)
+    ExplorationProgression:SetExplorationCapacityUnlocked(index, true)
 end
 
 function Capacities:UnlockAllExplorationCapacities()
@@ -87,7 +90,8 @@ function Capacities:UnlockAllExplorationCapacities()
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
 
     for i, _ in ipairs(ExplorationCapacities) do
-        Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
+        -- Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
+        ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
     end
 end
 

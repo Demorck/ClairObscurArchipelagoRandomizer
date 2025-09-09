@@ -21,7 +21,8 @@ function Characters:AddCharacter(name)
     local found = {}
     local struct = {}
     local fname = FName(name)
-    Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)
+    -- Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)
+    helper:AddCharacterToCollectionFromHardcodedName(fname, found, struct)
 end
 
 function Characters:AddEveryone()

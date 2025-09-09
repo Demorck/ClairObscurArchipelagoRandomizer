@@ -103,20 +103,9 @@ LoopAsync(33, function ()
    return false
 end)
 
-
-
-RegisterHook("/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:UpdateActivitySubTaskStatus", function (self, objective_name, status)
-   if AP_REF.APClient == nil then return end
-   
-   local quest_system = self:get() ---@type UBP_QuestSystem_C
-   local objective_name_param = objective_name:get():ToString()
-   local status_param = status:get()
-   
-   if objective_name_param == "1_LumiereBeginning" and status_param == 2 then
-      InitSaveAfterLumiere()
-   elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
-      Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
-   end
+RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, NewPawn)
+      Hooks:Unregister()
+      Hooks:Register()
 end)
 
 function InitSaveAfterLumiere()
@@ -124,4 +113,7 @@ function InitSaveAfterLumiere()
    Characters:AddEveryone()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
+
+   Storage.initialized_after_lumiere = true
+   Storage:Update()
 end

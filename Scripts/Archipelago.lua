@@ -72,7 +72,7 @@ end
 function APSlotConnectedHandler(slot_data)
     Archipelago.hasConnectedPrior = true
     print('Connected.')
-
+    Storage:Load()
     return Archipelago:SlotDataHandler(slot_data)
 end
 AP_REF.on_slot_connected = APSlotConnectedHandler
@@ -130,7 +130,7 @@ function Archipelago:ItemsReceivedHandler(items_received)
             end
         end
     end
-    
+
     Storage:Update()
 end
 
@@ -147,7 +147,8 @@ function Archipelago:ReceiveItem(item_data)
     end
 
     if local_item_data.type == "Area" then
-        Data.current_ticket[local_item_data.internal_name] = true
+        Storage.tickets[local_item_data.internal_name] = true
+        Storage:Update()
 
         if local_item_data.name == "Area - Esquie's Nest" then
             Quests:SetObjectiveStatus("Main_GoldenPath", "6_EsquieNest", QUEST_STATUS.STARTED)
@@ -306,6 +307,7 @@ end
 AP_REF.on_location_checked = APLocationsCheckedHandler
 
 function Archipelago:LocationsCheckedHandler(locations_checked)
+    print("LocationsCheckedHandler")
     local player = Archipelago:GetPlayer()
     if locations_checked == nil then return end
 
@@ -327,6 +329,7 @@ end
 
 --- need to add location to storage to avoid redoing the same thing if a crash happens
 function Archipelago:SendLocationCheck(location_name)
+    print("SendLocationCheck")
     local location_data = GetLocationFromAPData(location_name)
     if location_data == nil then return end
 
