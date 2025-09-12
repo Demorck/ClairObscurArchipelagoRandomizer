@@ -104,8 +104,10 @@ LoopAsync(33, function ()
 end)
 
 RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, NewPawn)
-      Hooks:Unregister()
-      Hooks:Register()
+   if AP_REF.APClient == nil then return end
+
+   Hooks:Unregister()
+   Hooks:Register()
 end)
 
 function InitSaveAfterLumiere()
