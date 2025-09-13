@@ -1,6 +1,7 @@
 local Storage = {}
 Storage.initialized = false
 Storage.lastReceivedItemIndex = -1
+Storage.lastSavedItemIndex = -1
 Storage.pictosIndex = -1
 Storage.weaponsIndex = -1
 Storage.initialized_after_lumiere = false
@@ -28,16 +29,19 @@ Storage.tickets = {
     SideLevel_CleasTower_Entrance = false,
 }
 
+Storage.characters = {} --- Unfortunately, i can't add Sophie, Alicia and Julie
+
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
 
     if file ~= nil then
-        Storage.lastReceivedItemIndex = file["last_received"]
-        Storage.lastSavedItemIndex = file["last_saved"]
-        Storage.pictosIndex = file["pictos_index"]
-        Storage.weaponsIndex = file["weapons_index"]
+        Storage.lastReceivedItemIndex     = file["last_received"]
+        Storage.lastSavedItemIndex        = file["last_saved"]
+        Storage.pictosIndex               = file["pictos_index"]
+        Storage.weaponsIndex              = file["weapons_index"]
         Storage.initialized_after_lumiere = file["lumiere_done"]
-        Storage.tickets = file["tickets"]
+        Storage.tickets                   = file["tickets"]
+        Storage.characters                = file["characters"]
     else
         Storage:Update()
     end
@@ -55,10 +59,12 @@ function Storage:Update()
 
     local values = {
         last_received = Storage.lastReceivedItemIndex,
-        pictos_index = Storage.pictosIndex,
+        last_saved    = Storage.lastSavedItemIndex,
+        pictos_index  = Storage.pictosIndex,
         weapons_index = Storage.weaponsIndex,
-        lumiere_done = Storage.initialized,
-        tickets = Storage.tickets
+        lumiere_done  = Storage.initialized,
+        tickets       = Storage.tickets,
+        characters    = Storage.characters
     }
 
     JSON.write_file(Storage:GetFilePath(), values)

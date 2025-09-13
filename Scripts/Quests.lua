@@ -29,9 +29,21 @@ local QUESTS_NAME = {
     }
 }
 
+function Quests:GetManager()
+    local quest_system = FindFirstOf(BluePrintName) ---@cast quest_system UBP_QuestSystem_C
+    if quest_system ~= nil and quest_system:IsValid() then
+        Logger:info("Retrieving Quest manager succeeds")
+        return quest_system
+    else
+        Logger:error("Retrieving Quest manager fails")
+        return nil
+    end
+end
+
 function Quests:UnlockNextGestral()
     Logger:info("Unlocking next gestral...")
-    local quest_system = FindFirstOf(BluePrintName) ---@cast quest_system UBP_QuestSystem_C
+    local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C | nil
+    if quest_system == nil then return end
 
     local fname = FName(QUESTS_NAME.GESTRALS.Name)
     local objectives = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
@@ -50,7 +62,8 @@ end
 
 function Quests:SetObjectiveStatus(quest_name, objective_name, status)
     Logger:info("Setting objective status: " .. objective_name .. "(" .. quest_name .. ") to " .. status)
-    local quest_system = FindFirstOf(BluePrintName) ---@cast quest_system UBP_QuestSystem_C
+    local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C
+    if quest_system == nil then return end
 
     local fname = FName(quest_name)
     local quest_data = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
@@ -67,7 +80,8 @@ end
 
 function Quests:GetObjectiveStatus(quest_name, objective_name)
     Logger:info("Getting objective status: " .. objective_name .. "(" .. quest_name .. ")")
-    local quest_system = FindFirstOf(BluePrintName) ---@cast quest_system UBP_QuestSystem_C
+    local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C
+    if quest_system == nil then return end
 
     local fname = FName(quest_name)
     local quest_data = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData

@@ -5,16 +5,29 @@ local CapacitiesBluePrintName = "BP_ExplorationProgressionSystem_C"
 local WorldMapCapacities = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" }
 local ExplorationCapacities = { "FreeAim", "AttackInWorld", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" }
 
+function Capacities:GetManager()
+    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression ~= nil and ExplorationProgression:IsValid() then
+        Logger:info("Retrieving Exploration Progression manager succeeds")
+        return ExplorationProgression
+    else
+        Logger:error("Retrieving Exploration Progression manager fails")
+        return nil
+    end
+end
+
 --- Unlock the ability to destroy painted rocks
 function Capacities:UnlockDestroyPaintedRock()
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName)---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return end
     ExplorationProgression:UnlockFreeAimDamageLevel(1)
 end
 
 --- Unlock the next world map ability
 function Capacities:UnlockNextWorldMapAbility()
     Logger:info("Unlocking next world map ability...")
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return end
     local abilities = Capacities:GetWorldMapAbilities()
 
     for _, capacity in ipairs(WorldMapCapacities) do
@@ -31,7 +44,8 @@ end
 --- Unlock a specific world map capacity
 ---@param capacity_to_unlock string the internal name of capacity to unlock
 function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return end
     local abilities = Capacities:GetWorldMapAbilities()
     local index = 0
     for i, capacity in ipairs(WorldMapCapacities) do
@@ -48,8 +62,8 @@ end
 
 function Capacities:GetWorldMapAbilities()
     Logger:info("Getting world map abilities...")
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return {} end
     local result = {}
 
    for key, value in ipairs(WorldMapCapacities) do
@@ -68,8 +82,9 @@ end
 
 function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
     Logger:info("Unlocking exploration capacity: " .. capacity_to_unlock)
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return end
+    
     local index = -1
     for i, value in ipairs(ExplorationCapacities) do
         if value == capacity_to_unlock then
@@ -87,7 +102,8 @@ end
 
 function Capacities:UnlockAllExplorationCapacities()
     Logger:info("Unlocking all exploration capacities...")
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return end
 
     for i, _ in ipairs(ExplorationCapacities) do
         -- Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)

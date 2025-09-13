@@ -3,6 +3,18 @@ local Battle = {}
 local BluePrintName = "AC_jRPG_BattleManager_C"
 local goals = {"L_Boss_Paintress_P1", "L_Boss_Curator_P1", "TowerBattle_33", "Boss_SimonALPHA*1"}
 
+function Battle:GetManager()
+    local manager = FindFirstOf(BluePrintName)
+
+    if manager ~= nil and manager:IsValid() then
+        Logger:info("Retrieving Battle manager succeeds")
+        return manager
+    else
+        Logger:error("Retrieving Battle manager fails")
+        return nil
+    end
+end
+
 ---Return true if the encounter defeated is the goal
 ---@param encounter_name any
 function Battle:IsEncounterGoal(encounter_name)
@@ -36,7 +48,7 @@ function Battle:IsBossNotGoal(encounter_name)
 end
 
 function Battle:InBattle()
-    local battle_manager = FindFirstOf(BluePrintName) ---@cast battle_manager UAC_jRPG_BattleManager_C
+    local battle_manager = self:GetManager() ---@cast battle_manager UAC_jRPG_BattleManager_C | nil
 
     if battle_manager ~= nil and battle_manager:IsValid() then
         return false

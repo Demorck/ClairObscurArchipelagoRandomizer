@@ -107,10 +107,13 @@ function APItemsReceivedHandler(items_received)
 end
 AP_REF.on_items_received = APItemsReceivedHandler
 
+
 ---comment
 ---@param items_received table<integer, NetworkItem>
 function Archipelago:ItemsReceivedHandler(items_received)
-    local items = {}
+    if not self:CanReceiveItems() then
+        return
+    end
 
     for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
@@ -134,6 +137,7 @@ function Archipelago:ItemsReceivedHandler(items_received)
     Storage:Update()
 end
 
+
 --- Receives an item and adds it to the inventory.
 ---@param item_data table<string, any>
 ---@return boolean returns true if the item was successfully received, false otherwise
@@ -144,6 +148,11 @@ function Archipelago:ReceiveItem(item_data)
         if item.name == item_data["name"] then
             local_item_data = item
         end
+    end
+
+    if local_item_data == nil then
+        Logger:error("Item data nil when receiving item, here the item data received: " .. Dump(item_data))
+        return false
     end
 
     if local_item_data.type == "Area" then
@@ -168,10 +177,15 @@ function Archipelago:ReceiveItem(item_data)
 
     if local_item_data.type == "Trap" then
         self:HandleTrapItem(local_item_data)
+        return true
     end
 
     if local_item_data.type == "Character" then
-        Characters:AddCharacter(local_item_data.internal_name)
+        Characters:EnableCharacter(local_item_data.internal_name)
+        print(local_item_data.internal_name)
+        table.insert(Storage.characters, local_item_data.internal_name)
+        Storage:Update()
+        return true
     end
 
     if local_item_data ~= nil then
@@ -281,7 +295,12 @@ function Archipelago:HandleDeathLink(data)
 end
 
 function Archipelago:CanReceiveItems()
-    return Archipelago:IsConnected()
+    return Archipelago:IsConnected() and
+        ClientBP:IsInitialized() and
+        not ClientBP:IsMainMenu() and
+        not ClientBP:IsLumiereActI() and
+        ClientBP:InLevel() and
+        Quests:GetObjectiveStatus("Main_GoldenPath", "1_LumiereBeginning") == QUEST_STATUS.COMPLETED
 end
 
 ---comment

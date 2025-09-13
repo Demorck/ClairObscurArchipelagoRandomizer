@@ -94,7 +94,7 @@ function Register_RemovePortalIfNoTickets()
         if AP_REF.APClient == nil then return end
 
         local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
-        local AP_Helper = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast AP_Helper ABP_ArchipelagoHelper_C
+        local AP_Helper = ClientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
         if interactible == nil or AP_Helper == nil or not AP_Helper:IsValid() then return end
 
         for _, tp in ipairs(interactible) do
@@ -120,9 +120,9 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
     local preID, postID = RegisterHook(function_name, function (self, data_param)
         local data = data_param:get() ---@cast data UBP_CharacterData_C
 
-        print("wtf" .. data.HardcodedNameID:ToString())
         if data.HardcodedNameID:ToString() == "Frey" then
-            local char_manager = FindFirstOf("BP_ArchipelagoHelper_C") ---@type ABP_ArchipelagoHelper_C
+            local char_manager = ClientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
+            if char_manager == nil then return end
             char_manager:AddCharacterToCollectionFromSaveState(data)
         end
     end)
@@ -164,10 +164,13 @@ function Register_UpdateSubquests()
 
     local preID, postID = RegisterHook(function_name, function (self, objective_name, status)
         if AP_REF.APClient == nil then return end
+
+
         local quest_system = self:get() ---@type UBP_QuestSystem_C
         local objective_name_param = objective_name:get():ToString()
         local status_param = status:get()
         
+        -- print(objective_name_param)
         if not Storage.initialized_after_lumiere and objective_name_param == "2_SpringMeadow" and status_param == 2 then
             InitSaveAfterLumiere()
         elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then

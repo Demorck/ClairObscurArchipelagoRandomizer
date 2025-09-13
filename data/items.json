@@ -2647,6 +2647,13 @@
   },
   {
     "type": "Character",
+    "name": "Verso",
+    "internal_name": "Verso",
+    "quantity": 1,
+    "progressive": 1
+  },
+  {
+    "type": "Character",
     "name": "Monoco",
     "internal_name": "Monoco",
     "quantity": 1,

@@ -68,6 +68,10 @@ function Dump(o, depth)
    end
 end
 
+function Trim(s)
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 RegisterKeyBind(Key.F1, { ModifierKey.CONTROL }, function()
     ExecuteInGameThread(function()
         TestSomeFunctions()
@@ -106,16 +110,19 @@ end)
 RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, NewPawn)
    if AP_REF.APClient == nil then return end
 
-   Hooks:Unregister()
-   Hooks:Register()
+   -- Hooks:Unregister()
+   -- Hooks:Register()
 end)
 
 function InitSaveAfterLumiere()
    Logger:info("The festival ended...")
+   print("Ca init de fou là")
    Characters:AddEveryone()
+   Characters:EnableOnlyUnlockedCharacters()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
 
    Storage.initialized_after_lumiere = true
    Storage:Update()
+   Logger:info("Lumiere is done, ciao")
 end

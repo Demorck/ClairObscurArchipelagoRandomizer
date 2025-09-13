@@ -19,9 +19,11 @@ local CONSUMABLE_ITEM = {
 function Inventory:GetInventoryManager()
     local playerInventory = FindFirstOf(InventoryBluePrintName) ---@cast playerInventory UAC_jRPG_InventoryManager_C
 
-    if playerInventory:IsValid() then
+    if playerInventory ~= nil and playerInventory:IsValid() then
+        Logger:info("Retrieving Inventory manager succeeds")
         return playerInventory
     else 
+        Logger:error("Retrieving Inventory manager fails")
         return nil
     end
 end
