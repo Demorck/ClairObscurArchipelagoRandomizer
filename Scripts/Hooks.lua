@@ -239,7 +239,7 @@ function Register_SaveData()
 
         local flags = data.UnlockedSpawnPoints ---@type TArray<FS_LevelSpawnPointsData>
         local new = false
-        flags:ForEach(function (index, element)
+        flags:ForEach(function (_, element)
             local value = element:get() ---@type FS_LevelSpawnPointsData
 
             local level_name = value.LevelAssetName_7_D872F94549A7C2601ECF70AC3C4BAB27:ToString()
@@ -248,12 +248,14 @@ function Register_SaveData()
             end
 
             local points = value.SpawnPointTags_3_511D41A44873049B1F83559F7CCBA8D7 ---@type TArray<FGameplayTag>
-            points:ForEach(function (i, point)
+            points:ForEach(function (_, point)
                 local tag = point:get() ---@type FGameplayTag
                 local tagname = tag.TagName:ToString()
-                if Storage.flags[level_name][tagname] == nil then
-                    Storage.flags[level_name][tagname] = true
+                local last = tagname:match("([^%.]+)$")
+                if not Contains(Storage.flags[level_name], last) then
+                    table.insert(Storage.flags[level_name], last)
                     new = true
+                    Logger:info("New flag found: " .. level_name .. " - " .. last)
                 end
             end)
         end)
