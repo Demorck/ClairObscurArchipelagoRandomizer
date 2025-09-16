@@ -41,6 +41,7 @@ function M.connect()
     M.handlers.set_location_info_handler(AP_REF.on_location_info)
     M.handlers.set_location_checked_handler(AP_REF.on_location_checked)
     M.handlers.set_bounced_handler(AP_REF.on_bounced)
+    M.handlers.set_retrieved_handler(AP_REF.on_retrieved_data)
 end
 
 return M

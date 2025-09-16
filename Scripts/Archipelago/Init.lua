@@ -25,14 +25,14 @@ client.setup(AP_REF, AP, handlers)
 local want_to_connect = false
 
 --- Main async loop for polling or disconnecting the AP client.
-LoopAsync(33, function ()
+LoopAsync(333, function ()
     if want_to_connect then
         if AP_REF.APClient ~= nil then
             AP_REF.APClient:poll()
         else
             client.connect()
         end
-    else 
+    else
         if AP_REF.APClient ~= nil then
             Logger:info("Disconnecting from Archipelago server...")
             AP_REF.APClient = nil
@@ -56,7 +56,6 @@ function AP_REF.Connect(self)
     want_to_connect = not want_to_connect
 
     if want_to_connect then
-        Hooks:Register()
         Logger:initialize()
     else 
         Hooks:Unregister()

@@ -87,4 +87,11 @@ function M.set_bounced_handler(callback)
     end)
 end
 
+function M.set_retrieved_handler(callback)
+    config.APClient:set_retrieved_handler(function(map)
+        Debug.print("Retrieved data ! ", "Archipelago.Handler.set_retrieved_handler")
+        callback(map)
+    end)
+end
+
 return M

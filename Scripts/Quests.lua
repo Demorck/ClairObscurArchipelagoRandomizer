@@ -79,13 +79,17 @@ function Quests:SetObjectiveStatus(quest_name, objective_name, status)
 end
 
 function Quests:GetObjectiveStatus(quest_name, objective_name)
-    Logger:info("Getting objective status: " .. objective_name .. "(" .. quest_name .. ")")
     local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C
     if quest_system == nil then return end
 
     local fname = FName(quest_name)
     local quest_data = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
     local status = nil
+    if quest_data == nil then
+        Logger:error("Quest not found: " .. quest_name)
+        return nil
+    end
+
     status = quest_data.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Find(FName(objective_name)):get()
 
     if status then

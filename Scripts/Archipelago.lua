@@ -23,6 +23,8 @@ Archipelago.totals = {}
 Archipelago.weapons_data = {}
 Archipelago.pictos_data = {}
 Archipelago.death_link = false
+Archipelago.number_of_players = 0
+Archipelago.current_year_gommage = 34
 
 
 Archipelago.hasConnectedPrior = false -- keeps track of whether the player has connected at all so players don't have to remove AP mod to play vanilla
@@ -72,11 +74,11 @@ end
 function APSlotConnectedHandler(slot_data)
     Archipelago.hasConnectedPrior = true
     print('Connected.')
+    Hooks:Register()
     Storage:Load()
     return Archipelago:SlotDataHandler(slot_data)
 end
 AP_REF.on_slot_connected = APSlotConnectedHandler
-
 
 function Archipelago:SlotDataHandler(slot_data)
     local player = Archipelago:GetPlayer()
@@ -111,21 +113,16 @@ AP_REF.on_items_received = APItemsReceivedHandler
 ---comment
 ---@param items_received table<integer, NetworkItem>
 function Archipelago:ItemsReceivedHandler(items_received)
-    if not self:CanReceiveItems() then
-        return
-    end
-
     for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
             local item_data = GetItemFromAPData(row.item)
 
             if item_data ~= nil then
-                Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
                 if Archipelago:ReceiveItem(item_data) then
+                    Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
                     -- ClientBP:PushNotification(item_data["name"], row.player)
                     Storage.lastReceivedItemIndex = row.index
                 else
-                    Logger:error("Receiving an item but an error occurs: " .. item_data["name"])
                     break
                 end
             else
@@ -142,6 +139,12 @@ end
 ---@param item_data table<string, any>
 ---@return boolean returns true if the item was successfully received, false otherwise
 function Archipelago:ReceiveItem(item_data)
+    if not Archipelago:CanReceiveItems() then
+        Logger:info("Cannot receive items now, queuing item: " .. Dump(item_data))
+        table.insert(self.itemsQueue, item_data)
+        return false
+    end
+
     local local_item_data = nil ---@type ItemData
 
     for _, item in pairs(Data.items) do
@@ -182,7 +185,6 @@ function Archipelago:ReceiveItem(item_data)
 
     if local_item_data.type == "Character" then
         Characters:EnableCharacter(local_item_data.internal_name)
-        print(local_item_data.internal_name)
         table.insert(Storage.characters, local_item_data.internal_name)
         Storage:Update()
         return true
@@ -295,12 +297,39 @@ function Archipelago:HandleDeathLink(data)
 end
 
 function Archipelago:CanReceiveItems()
-    return Archipelago:IsConnected() and
-        ClientBP:IsInitialized() and
-        not ClientBP:IsMainMenu() and
-        not ClientBP:IsLumiereActI() and
-        ClientBP:InLevel() and
-        Quests:GetObjectiveStatus("Main_GoldenPath", "1_LumiereBeginning") == QUEST_STATUS.COMPLETED
+    if not Archipelago:IsConnected() then
+        Logger:info("Not connected to Archipelago.")
+        return false
+    end   
+
+    if not Storage.initialized_after_lumiere then
+        Logger:info("Lumiere beginning not completed.")
+        return false
+    end
+
+    if not ClientBP:IsInitialized() then
+        Logger:info("ClientBP not initialized.")
+        return false
+    end
+
+    if ClientBP:IsMainMenu() then
+        Logger:info("In main menu.")
+        return false
+    end
+
+    if ClientBP:IsLumiereActI() then
+        Logger:info("In Lumiere Act I.")
+        return false
+    end
+
+    if not ClientBP:InLevel() then
+        Logger:info("Not in a level.")
+        return false
+    end
+
+
+
+    return true
 end
 
 ---comment
@@ -320,13 +349,21 @@ function GetItemFromAPData(item_id)
     return item
 end
 
+function APRetrievedData(map)
+    return Archipelago:RetrieveData(map)
+end
+AP_REF.on_retrieved_data = APRetrievedData
+
+function Archipelago:RetrieveData(map)
+    print(Dump(map))
+end
+
 function APLocationsCheckedHandler(locations_checked)
     return Archipelago.LocationsCheckedHandler(locations_checked)
 end
 AP_REF.on_location_checked = APLocationsCheckedHandler
 
 function Archipelago:LocationsCheckedHandler(locations_checked)
-    print("LocationsCheckedHandler")
     local player = Archipelago:GetPlayer()
     if locations_checked == nil then return end
 
@@ -371,7 +408,15 @@ function Archipelago:SendVictory()
 end
 
 function Archipelago:SendGommage()
-    
+    if not Archipelago.canDeathLink then return end
+
+    local players_id = {}
+    for i = Archipelago.current_year_gommage, 3000, 1 do
+        table.insert(players_id, i)
+    end
+
+    Archipelago:SendDeathLink("The gommage happens for " .. Archipelago.current_year_gommage .. " years old", players_id, {}, {})
+    Archipelago.current_year_gommage = Archipelago.current_year_gommage - 1
 end
 
 function Archipelago:SendDeathLink(msg, players_id, games, tags)

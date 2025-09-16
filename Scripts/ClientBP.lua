@@ -6,7 +6,7 @@ local BlueprintName = "BP_ArchipelagoHelper_C"
 function ClientBP:GetHelper()
     local helper = FindFirstOf(BlueprintName) ---@type ABP_ArchipelagoHelper_C
 
-    if helper ~= nil and helper:IsValid() then
+    if helper:IsValid() then
         return helper
     end
 
@@ -55,7 +55,7 @@ end
 function ClientBP:GetLevelName()
     local a = self:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
 
-    if a == nil or not a:IsValid() then
+    if a == nil then
         return ""
     end
 
@@ -67,7 +67,15 @@ end
 
 function ClientBP:IsInitialized()
     local a = self:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-    return a ~= nil and a:IsValid()
+
+    return a ~= nil
+end
+
+function ClientBP:InCinematic()
+    local a = FindFirstOf("BP_CinematicSystem_C") ---@type UBP_CinematicSystem_C
+    if a == nil then return true end
+
+    return a.IsPlayingCinematic
 end
 
 return ClientBP

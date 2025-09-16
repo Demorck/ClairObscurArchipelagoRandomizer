@@ -39,6 +39,8 @@ end
 
 function Characters:AddEveryone()
     Logger:info("Adding everyone to party...")
+    local helper = ClientBP:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
+
     for _, char in ipairs(Characters_name) do
         self:AddCharacter(char)
     end
@@ -73,9 +75,11 @@ function Characters:EnableOnlyUnlockedCharacters()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
 
+    print(Dump(Storage.characters))
     for _, char in ipairs(char_data) do
-        local name = char.HardcodedNameID
+        local name = char.HardcodedNameID:ToString()
         if Storage.characters[name] ~= nil then
+            Logger:info("Enabling character: " .. name)
             self:EnableCharacter(name)
         end
     end

@@ -60,28 +60,3 @@ function Battle:InBattle()
 
     return true
 end
-
-RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory", function (self)
-    if AP_REF.APClient == nil then return end
-
-
-    local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
-
-    local encounter_name = current_context.EncounterName:ToString()
-
-    if Battle:IsEncounterGoal(encounter_name) then
-        Logger:info("Goal achieved: " .. encounter_name .. " ! Bravo !")
-        Archipelago:SendVictory()
-    end
-
-    if Battle:IsBossNotGoal(encounter_name) then
-        Logger:info("Boss defeated but not a goal: " .. encounter_name)
-        Archipelago:SendLocationCheck(encounter_name)
-    end
-end)
-
-RegisterHook("/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:RollBattleRewards", function (self, rewards)
-    if AP_REF.APClient == nil then return end
-    local battle_rewards = rewards:get() ---@cast battle_rewards FS_BattleRewards
-    battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:Empty()
-end)
