@@ -14,6 +14,7 @@ function Hooks:Register()
     Register_UpdateSubquests()
     Register_BattleEndVictory()
     Register_BattleRewards()
+    Register_SaveData()
 
     Logger:info("Hooks registered.")
 end
@@ -221,6 +222,53 @@ function Register_BattleRewards()
     end)
 
     Hooks.TableIDs["BattleRewards"] = {preID, postID, function_name}
+end
+
+function Register_SaveData()
+    local function_name = "/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:SaveGameToFile"
+
+    local preID, postID = RegisterHook(function_name, function(self, SaveName)
+       ---@cast self UBP_SaveManager_C
+       ---@cast SaveName FName
+
+        local data = FindFirstOf("BP_SaveGameData_C") ---@type UBP_SaveGameData_C
+        if data == nil or not data:IsValid() then
+            print("Impossible to save: SaveGameData nil")
+            return
+        end
+
+        local flags = data.UnlockedSpawnPoints ---@type TArray<FS_LevelSpawnPointsData>
+        local new = false
+        flags:ForEach(function (index, element)
+            local value = element:get() ---@type FS_LevelSpawnPointsData
+
+            local level_name = value.LevelAssetName_7_D872F94549A7C2601ECF70AC3C4BAB27:ToString()
+            if Storage.flags[level_name] == nil then
+                Storage.flags[level_name] = {}
+            end
+
+            local points = value.SpawnPointTags_3_511D41A44873049B1F83559F7CCBA8D7 ---@type TArray<FGameplayTag>
+            points:ForEach(function (i, point)
+                local tag = point:get() ---@type FGameplayTag
+                local tagname = tag.TagName:ToString()
+                if Storage.flags[level_name][tagname] == nil then
+                    Storage.flags[level_name][tagname] = true
+                    new = true
+                end
+            end)
+        end)
+
+        if new then
+            Storage:Update()
+            local operation = {
+                operation = "update",
+                value = Storage.flags
+            }
+            AP_REF.APClient:Set("flags", Storage.flags, false, {operation})
+        end
+    end)
+
+    Hooks.TableIDs["SaveData"] = {preID, postID, function_name}
 end
 
    
