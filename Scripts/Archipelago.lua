@@ -92,8 +92,8 @@ function Archipelago:SlotDataHandler(slot_data)
 
     Archipelago.options = slot_data.options
     Archipelago.totals = slot_data.totals or {}
-    Archipelago.pictos_data = slot_data.pictos_data or {}
-    Archipelago.weapons_data = slot_data.weapons_data or {}
+    Archipelago.pictos_data = slot_data.pictos or {}
+    Archipelago.weapons_data = slot_data.weapons or {}
 
     Logger:info("Receiving Slot Data: ")
     Logger:info("Options: " .. Dump(Archipelago.options))
