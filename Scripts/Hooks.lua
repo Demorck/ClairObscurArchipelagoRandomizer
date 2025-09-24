@@ -266,7 +266,7 @@ function Register_SaveData()
                 operation = "update",
                 value = Storage.flags
             }
-            AP_REF.APClient:Set("flags", Storage.flags, false, {operation})
+            AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-flags", Storage.flags, false, {operation})
         end
     end)
 
