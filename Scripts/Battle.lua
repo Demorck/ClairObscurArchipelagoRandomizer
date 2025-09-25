@@ -60,3 +60,5 @@ function Battle:InBattle()
 
     return true
 end
+
+return Battle

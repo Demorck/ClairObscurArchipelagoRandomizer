@@ -47,6 +47,14 @@ function Storage:Load()
         Storage:Update()
     end
 
+    Logger:info("Storage loaded from " .. Storage:GetFilePath())
+    Logger:info("Last received item index: " .. Storage.lastReceivedItemIndex)
+    Logger:info("Last saved item index: " .. Storage.lastSavedItemIndex)
+    Logger:info("Pictos index: " .. Storage.pictosIndex)
+    Logger:info("Weapons index: " .. Storage.weaponsIndex)
+    Logger:info("Lumiere done: " .. tostring(Storage.initialized_after_lumiere))
+    Logger:info("Tickets: " .. Dump(Storage.tickets))
+    Logger:info("Characters: " .. Dump(Storage.characters))
     Storage.initialized = true
 end
 
@@ -63,7 +71,7 @@ function Storage:Update()
         last_saved    = Storage.lastSavedItemIndex,
         pictos_index  = Storage.pictosIndex,
         weapons_index = Storage.weaponsIndex,
-        lumiere_done  = Storage.initialized,
+        lumiere_done  = Storage.initialized_after_lumiere,
         tickets       = Storage.tickets,
         characters    = Storage.characters
     }

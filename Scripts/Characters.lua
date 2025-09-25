@@ -34,6 +34,7 @@ function Characters:AddCharacter(name)
     local struct = {}
     local fname = FName(name)
     -- Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)
+    AddingCharacterFromArchipelago = true
     helper:AddCharacterToCollectionFromHardcodedName(fname, found, struct)
 end
 
@@ -52,6 +53,7 @@ function Characters:AddEveryone()
     for _, char in ipairs(char_data) do
         char:SetLevel(1)
         char.IsExcluded = true
+        self:RemoveCharacterFromParty(char.HardcodedNameID:ToString())
     end
 end
 
@@ -59,14 +61,16 @@ end
 function Characters:EnableCharacter(name)
     local maxlevel = Characters:GetMaxLevel()
     local level_char = maxlevel > 5 and maxlevel - 5 or maxlevel
+    local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
 
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
 
     for _, char in ipairs(char_data) do
-        if char.HardcodedNameID == name then
+        if char.HardcodedNameID:ToString() == name then
             char.IsExcluded = false
             char:SetLevel(level_char)
+            helper:AddCharacterToParty(FName(name))
         end
     end
 end
@@ -75,10 +79,9 @@ function Characters:EnableOnlyUnlockedCharacters()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
 
-    print(Dump(Storage.characters))
     for _, char in ipairs(char_data) do
         local name = char.HardcodedNameID:ToString()
-        if Storage.characters[name] ~= nil then
+        if Contains(Storage.characters, name) then
             Logger:info("Enabling character: " .. name)
             self:EnableCharacter(name)
         end

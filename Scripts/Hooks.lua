@@ -15,6 +15,7 @@ function Hooks:Register()
     Register_BattleEndVictory()
     Register_BattleRewards()
     Register_SaveData()
+    Register_AddCharacter()
 
     Logger:info("Hooks registered.")
 end
@@ -179,6 +180,9 @@ function Register_UpdateSubquests()
         -- print(objective_name_param)
         if not Storage.initialized_after_lumiere and objective_name_param == "2_SpringMeadow" and status_param == 2 then
             InitSaveAfterLumiere()
+        elseif objective_name_param == "1_LumiereBeginning" and status_param ~= 2 then
+            Storage.initialized_after_lumiere = false
+            Storage:Update()
         elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
             Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
         end
@@ -273,5 +277,29 @@ function Register_SaveData()
     Hooks.TableIDs["SaveData"] = {preID, postID, function_name}
 end
 
-   
+
+function Register_AddCharacter()
+    local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:AddNewCharacterToCollection"
+
+    local preID, postID = RegisterHook(function_name, function (self, CharacterSaveState)
+        if AP_REF.APClient == nil then return end
+        local save_state = CharacterSaveState:get() ---@cast save_state FS_jRPG_CharacterSaveState
+        if Archipelago.options.char_shuffle == 0 then
+            if not AddingCharacterFromArchipelago then
+                local name = save_state.CharacterHardcodedName_36_FB9BA9294D02CFB5AD3668B0C4FD85A5:ToString()
+                Logger:info("Character " .. name .. " added to collection, but char shuffle is off. Enable it.")
+                Characters:EnableCharacter(name)
+            end
+        end
+
+        if AddingCharacterFromArchipelago then
+            AddingCharacterFromArchipelago = false
+            return
+        end
+    end)
+
+    Hooks.TableIDs["AddCharacter"] = {preID, postID, function_name}
+end
+
+
 return Hooks

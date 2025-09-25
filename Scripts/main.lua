@@ -13,7 +13,9 @@ Archipelago = require "Archipelago"
 ClientBP    = require "ClientBP"
 Battle      = require "Battle"
 local UEHelpers = require "UEHelpers"
+
 RequestInitLumiere = false
+AddingCharacterFromArchipelago = false
 
 function TestSomeFunctions()
    AP_REF.APClient:Get({"flags"})
@@ -140,4 +142,5 @@ function InitSaveAfterLumiere()
    Storage.initialized_after_lumiere = true
    Storage:Update()
    Logger:info("Lumiere is done, ciao")
+   return true
 end

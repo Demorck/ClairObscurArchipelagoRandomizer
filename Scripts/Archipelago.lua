@@ -113,6 +113,10 @@ AP_REF.on_items_received = APItemsReceivedHandler
 ---comment
 ---@param items_received table<integer, NetworkItem>
 function Archipelago:ItemsReceivedHandler(items_received)
+    if not Archipelago:CanReceiveItems() then
+        return false
+    end
+
     for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
             local item_data = GetItemFromAPData(row.item)
@@ -139,11 +143,6 @@ end
 ---@param item_data table<string, any>
 ---@return boolean returns true if the item was successfully received, false otherwise
 function Archipelago:ReceiveItem(item_data)
-    if not Archipelago:CanReceiveItems() then
-        Logger:info("Cannot receive items now, queuing item: " .. Dump(item_data))
-        table.insert(self.itemsQueue, item_data)
-        return false
-    end
 
     local local_item_data = nil ---@type ItemData
 
@@ -206,9 +205,9 @@ end
 
 function Archipelago:GetLevelItem(type, id)
     function FindIDinTable(t)
-        for _, v in ipairs(t) do
+        for i, v in ipairs(t) do
             if id == v then
-                return math.ceil(33 * id / #t)
+                return math.ceil(33 * i / #t)
             end
 
             return 15
@@ -298,32 +297,26 @@ end
 
 function Archipelago:CanReceiveItems()
     if not Archipelago:IsConnected() then
-        Logger:info("Not connected to Archipelago.")
         return false
-    end   
+    end
 
     if not Storage.initialized_after_lumiere then
-        Logger:info("Lumiere beginning not completed.")
         return false
     end
 
     if not ClientBP:IsInitialized() then
-        Logger:info("ClientBP not initialized.")
         return false
     end
 
     if ClientBP:IsMainMenu() then
-        Logger:info("In main menu.")
         return false
     end
 
     if ClientBP:IsLumiereActI() then
-        Logger:info("In Lumiere Act I.")
         return false
     end
 
     if not ClientBP:InLevel() then
-        Logger:info("Not in a level.")
         return false
     end
 
