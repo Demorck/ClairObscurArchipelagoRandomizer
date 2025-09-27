@@ -127,6 +127,7 @@ function Archipelago:ItemsReceivedHandler(items_received)
                     Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
                     -- ClientBP:PushNotification(item_data["name"], row.player)
                     Storage.lastReceivedItemIndex = row.index
+                    Storage:Update("Archipelago:ItemsReceivedHandler")
                 else
                     break
                 end
@@ -136,7 +137,6 @@ function Archipelago:ItemsReceivedHandler(items_received)
         end
     end
 
-    Storage:Update("Archipelago:ItemsReceivedHandler")
 end
 
 
