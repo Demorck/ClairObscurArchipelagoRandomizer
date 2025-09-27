@@ -182,7 +182,7 @@ function Register_UpdateSubquests()
             InitSaveAfterLumiere()
         elseif objective_name_param == "1_LumiereBeginning" and status_param ~= QUEST_STATUS.COMPLETED then
             Storage.initialized_after_lumiere = false
-            Storage:Update()
+            Storage:Update("Hooks:UpdateSubquests - _LumiereBeginning")
         elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == QUEST_STATUS.STARTED then
             Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.COMPLETED)
         elseif string.find(objective_name_param, "FindLostGestral") and status_param == QUEST_STATUS.COMPLETED then
@@ -267,7 +267,7 @@ function Register_SaveData()
         end)
 
         if new then
-            Storage:Update()
+            Storage:Update("Hooks:SaveData - New flags")
             local operation = {
                 operation = "update",
                 value = Storage.flags

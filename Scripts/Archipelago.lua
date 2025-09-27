@@ -136,7 +136,7 @@ function Archipelago:ItemsReceivedHandler(items_received)
         end
     end
 
-    Storage:Update()
+    Storage:Update("Archipelago:ItemsReceivedHandler")
 end
 
 
@@ -160,7 +160,7 @@ function Archipelago:ReceiveItem(item_data)
 
     if local_item_data.type == "Area" then
         Storage.tickets[local_item_data.internal_name] = true
-        Storage:Update()
+        Storage:Update("Archipelago:ReceiveItem - Area")
 
         if local_item_data.name == "Area - Esquie's Nest" then
             Quests:SetObjectiveStatus("Main_GoldenPath", "6_EsquieNest", QUEST_STATUS.STARTED)
@@ -186,7 +186,7 @@ function Archipelago:ReceiveItem(item_data)
     if local_item_data.type == "Character" then
         Characters:EnableCharacter(local_item_data.internal_name)
         table.insert(Storage.characters, local_item_data.internal_name)
-        Storage:Update()
+        Storage:Update("Archipelago:ReceiveItem - Character")
         return true
     end
 
@@ -235,7 +235,7 @@ function Archipelago:GetLevelItem(gear_type, id)
             percent = Storage.weaponsIndex / 100
             Storage.weaponsIndex = Storage.weaponsIndex + 1
         end
-        Storage:Update()
+        Storage:Update("Archipelago:GetLevelItem")
         level = math.ceil(33 * percent)
     elseif self.options.gear_scaling == 3 then
         level = math.random(1, 33)

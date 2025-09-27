@@ -44,7 +44,7 @@ function Storage:Load()
         Storage.tickets                   = file["tickets"]
         Storage.characters                = file["characters"]
     else
-        Storage:Update()
+        Storage:Update("Storage:Load - New file")
     end
 
     Logger:info("Storage loaded from " .. Storage:GetFilePath())
@@ -59,7 +59,7 @@ function Storage:Load()
 end
 
 
-function Storage:Update()
+function Storage:Update(from)
     local player = Archipelago:GetPlayer()
 
     if not (player["seed"] and player["slot"]) then
@@ -67,6 +67,7 @@ function Storage:Update()
     end
 
     local values = {
+        from          = from or "Storage:Update",
         last_received = Storage.lastReceivedItemIndex,
         last_saved    = Storage.lastSavedItemIndex,
         pictos_index  = Storage.pictosIndex,

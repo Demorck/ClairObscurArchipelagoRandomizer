@@ -144,6 +144,6 @@ function InitSaveAfterLumiere()
    Capacities:UnlockAllExplorationCapacities()
 
    Storage.initialized_after_lumiere = true
-   Storage:Update()
+   Storage:Update("InitSaveAfterLumiere")
    Logger:info("Lumiere is done, ciao")
 end
