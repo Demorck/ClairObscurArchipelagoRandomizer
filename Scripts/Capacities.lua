@@ -107,7 +107,11 @@ function Capacities:UnlockAllExplorationCapacities()
 
     for i, _ in ipairs(ExplorationCapacities) do
         -- Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
-        ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+        if Archipelago.options.shuffle_free_aim == 1 and ExplorationCapacities[i] == "FreeAim" then
+            -- Do not unlock Free Aim if it's shuffled
+        else
+            ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+        end
     end
 end
 

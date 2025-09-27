@@ -178,13 +178,13 @@ function Register_UpdateSubquests()
         local status_param = status:get()
         
         -- print(objective_name_param)
-        if not Storage.initialized_after_lumiere and objective_name_param == "2_SpringMeadow" and status_param == 2 then
+        if not Storage.initialized_after_lumiere and objective_name_param == "2_SpringMeadow" and status_param == QUEST_STATUS.STARTED then
             InitSaveAfterLumiere()
-        elseif objective_name_param == "1_LumiereBeginning" and status_param ~= 2 then
+        elseif objective_name_param == "1_LumiereBeginning" and status_param ~= QUEST_STATUS.COMPLETED then
             Storage.initialized_after_lumiere = false
             Storage:Update()
-        elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == 1 then
-            Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED)
+        elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == QUEST_STATUS.STARTED then
+            Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.COMPLETED)
         end
     end)
 

@@ -5,11 +5,12 @@ local BluePrintName = "BP_QuestSystem_C"
 
 ---@enum
 QUEST_STATUS = {
-    NOT_STARTED = 0,
-    STARTED     = 1,
-    COMPLETED   = 2,
-    CANCELED    = 3,
-    FAILED      = 4
+    INVALID     = 0,
+    NOT_STARTED = 1,
+    STARTED     = 2,
+    COMPLETED   = 3,
+    CANCELED    = 4,
+    FAILED      = 5
 }
 
 local QUESTS_NAME = {

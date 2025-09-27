@@ -2,6 +2,7 @@ local Characters = {}
 
 local BluePrintName = "AC_jRPG_CharactersManager_C"
 local Characters_name = {"Frey", "Maelle", "Lune", "Sciel", "Verso", "Monoco" }
+local weapons_characters = {"Noahram", "Maellum", "Lunerim", "Scieleson", "Verleso", "Monocaro" }
 
 function Characters:GetManager()
     local manager = FindFirstOf(BluePrintName)
@@ -40,9 +41,9 @@ end
 
 function Characters:AddEveryone()
     Logger:info("Adding everyone to party...")
-    local helper = ClientBP:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
 
-    for _, char in ipairs(Characters_name) do
+    for i, char in ipairs(Characters_name) do
+        Inventory:AddItem(weapons_characters[i], 1, 1)
         self:AddCharacter(char)
     end
 
@@ -53,13 +54,13 @@ function Characters:AddEveryone()
     for _, char in ipairs(char_data) do
         char:SetLevel(1)
         char.IsExcluded = true
-        self:RemoveCharacterFromParty(char.HardcodedNameID:ToString())
     end
 end
 
 
 function Characters:EnableCharacter(name)
     local maxlevel = Characters:GetMaxLevel()
+    print("Max level is " .. maxlevel)
     local level_char = maxlevel > 5 and maxlevel - 5 or maxlevel
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
 
@@ -69,6 +70,7 @@ function Characters:EnableCharacter(name)
     for _, char in ipairs(char_data) do
         if char.HardcodedNameID:ToString() == name then
             char.IsExcluded = false
+            Logger:info("Setting character " .. name .. " to level " .. level_char)
             char:SetLevel(level_char)
             helper:AddCharacterToParty(FName(name))
         end
@@ -79,12 +81,46 @@ function Characters:EnableOnlyUnlockedCharacters()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
 
-    for _, char in ipairs(char_data) do
-        local name = char.HardcodedNameID:ToString()
-        if Contains(Storage.characters, name) then
-            Logger:info("Enabling character: " .. name)
-            self:EnableCharacter(name)
+    -- Do it twice because if the first char is in the party and the only one AND the it's the first in the list, it won't be removed
+    for i = 1, 2, 1 do
+        for _, char in ipairs(char_data) do
+            local name = char.HardcodedNameID:ToString()
+            if Contains(Storage.characters, name) then
+                self:EnableCharacter(name)
+            else
+                self:EnableInParty(name, false)
+            end
         end
+    end
+end
+
+function Characters:EnableCharactersInPartyOnlyUnlocked()
+    Logger:info("Enabling characters in party only if unlocked...")
+
+    for _, char in ipairs(Characters_name) do
+        if Contains(Storage.characters, char) then
+            self:EnableInParty(char, true)
+        end
+    end
+end
+
+function Characters:DisableEveryoneFromParty()
+    Logger:info("Disabling everyone from party...")
+
+    for _, char in ipairs(Characters_name) do
+        self:EnableInParty(char, false)
+    end
+end
+
+function Characters:EnableInParty(name, enable)
+    local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
+    if helper == nil then return end
+
+    local fname = FName(name)
+    if enable then
+        helper:AddCharacterToParty(fname)
+    else
+        helper:RemoveCharacterFromParty(fname)
     end
 end
 
@@ -120,7 +156,7 @@ function Characters:GetMaxLevel()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return 1 end
 
-    local max = 0;
+    local max = 1;
     for _, char in ipairs(char_data) do
         if char.IsExcluded then goto continue end
 

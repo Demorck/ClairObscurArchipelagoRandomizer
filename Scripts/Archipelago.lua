@@ -4,6 +4,7 @@
 ---@field goal integer
 ---@field gear_scaling integer
 ---@field starting_char integer
+---@field shuffle_free_aim integer
 
 ---@class Archipelago
 ---@field options ArchipelagoOptions
@@ -203,30 +204,34 @@ function Archipelago:ReceiveItem(item_data)
     return false
 end
 
-function Archipelago:GetLevelItem(type, id)
+--- Gets the level of an item based on its type and ID.
+---@param gear_type string
+---@param id integer
+---@return integer
+function Archipelago:GetLevelItem(gear_type, id)
     function FindIDinTable(t)
         for i, v in ipairs(t) do
             if id == v then
                 return math.ceil(33 * i / #t)
             end
-
-            return 15
         end
+
+        return 15
     end
     
     local level = 15
     if self.options.gear_scaling == 0 or self.options.gear_scaling == 2 then
-        if type == "Picto" then
+        if gear_type == "Picto" then
             level = FindIDinTable(self.pictos_data)
-        elseif type == "Weapon" then
+        elseif gear_type == "Weapon" then
             level = FindIDinTable(self.weapons_data)
         end
     elseif self.options.gear_scaling == 1 then
         local percent = 0
-        if type == "Picto" then
+        if gear_type == "Picto" then
             percent = Storage.pictosIndex / 190
             Storage.pictosIndex = Storage.pictosIndex + 1
-        elseif type == "Weapons" then
+        elseif gear_type == "Weapons" then
             percent = Storage.weaponsIndex / 100
             Storage.weaponsIndex = Storage.weaponsIndex + 1
         end
@@ -246,6 +251,8 @@ function Archipelago:HandleCapacityItem(item_data)
         Capacities:UnlockNextWorldMapAbility()
     elseif item_data.name == "Paint Break" then
         Capacities:UnlockDestroyPaintedRock()
+    elseif item_data.name == "Free Aim" then
+        Capacities:UnlockExplorationCapacity("FreeAim")
     end
 end
 

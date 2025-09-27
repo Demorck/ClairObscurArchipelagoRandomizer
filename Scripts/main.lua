@@ -18,7 +18,6 @@ RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 
 function TestSomeFunctions()
-   AP_REF.APClient:Get({"flags"})
 end
 function PrintMessage()
 end
@@ -133,14 +132,18 @@ RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, New
 end)
 
 function InitSaveAfterLumiere()
+   if Storage.initialized_after_lumiere then
+      return false
+   end
+
    Logger:info("The festival ended...")
    Characters:AddEveryone()
    Characters:EnableOnlyUnlockedCharacters()
+   Characters:EnableCharactersInPartyOnlyUnlocked()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
 
    Storage.initialized_after_lumiere = true
    Storage:Update()
    Logger:info("Lumiere is done, ciao")
-   return true
 end
