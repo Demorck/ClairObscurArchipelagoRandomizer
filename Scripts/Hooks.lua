@@ -185,6 +185,8 @@ function Register_UpdateSubquests()
             Storage:Update()
         elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == QUEST_STATUS.STARTED then
             Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.COMPLETED)
+        elseif string.find(objective_name_param, "FindLostGestral") and status_param == QUEST_STATUS.COMPLETED then
+            Quests:SendNextGestralReward(objective_name_param)
         end
     end)
 
