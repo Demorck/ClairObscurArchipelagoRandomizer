@@ -18,7 +18,7 @@ RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 
 function TestSomeFunctions()
-   Characters:ModifyPartyIfNeeded()
+   Hooks:Register()
 end
 function PrintMessage()
 end
@@ -27,14 +27,17 @@ function Debug_things()
 end
 
 
-RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, password)
+RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, password, deathlink, musicrando)
    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
    local host = host:get():ToString()
    local port = port:get():ToString()
    local slot = slot:get():ToString()
    local password = password:get():ToString()
+   local deathlink = deathlink:get()
+   local musicrando = musicrando:get()
 
-   AP_REF:set_config(host, port, slot, password)
+   print(deathlink, musicrando)
+   AP_REF:set_config(host, port, slot, password, deathlink)
 
    AP_REF:Connect()
 end)

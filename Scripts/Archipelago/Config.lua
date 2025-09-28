@@ -18,6 +18,7 @@ config.APHost = ""
 config.APSlot = "bebou"
 config.APPassword = ""
 config.Version = {0, 5, 4}
+config.deathlink = false
 
 config.clientEnabled = true
 config.clientDisabledMessage = ""
