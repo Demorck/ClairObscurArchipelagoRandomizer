@@ -122,22 +122,19 @@ end
 
 function Characters:ModifyPartyIfNeeded()
     local in_party_count, not_in_party_count = Characters:NumberOfCharactersInPartyEnabled()
-
-    print("In party count: " .. in_party_count .. ", not in party count: " .. not_in_party_count)
     
     if not_in_party_count > 0 then
-        print("There are excluded characters in party, removing them...")
+        Logger:info("There are " .. not_in_party_count .. " excluded characters in party... Need to fix it")
         if in_party_count > 0 then
-            print("There are also enabled characters in party, removing excluded ones only...")
+            Logger:info("There are also enabled characters in party, removing excluded ones only...")
             self:DisableInPartyExcludedCharacters()
         else
-            print("No enabled characters in party, enabling only unlocked ones...")
+            Logger:info("No enabled characters in party, enabling only unlocked ones...")
             self:EnableCharactersInPartyOnlyUnlocked()
         end
-    else 
-        print("No excluded characters in party...")
+    else
+        Logger:info("No excluded characters in party...")
         if in_party_count == 0 then
-            print("No enabled characters in party, enabling only unlocked ones...")
             self:EnableCharactersInPartyOnlyUnlocked()
         end
     end
