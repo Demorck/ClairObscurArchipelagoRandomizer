@@ -18,6 +18,7 @@ RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 
 function TestSomeFunctions()
+   Characters:ModifyPartyIfNeeded()
 end
 function PrintMessage()
 end
@@ -130,6 +131,7 @@ RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, New
    -- Hooks:Unregister()
    -- Hooks:Register()
 end)
+
 
 function InitSaveAfterLumiere()
    if Storage.initialized_after_lumiere then

@@ -274,6 +274,8 @@ function Register_SaveData()
             }
             AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-flags", Storage.flags, false, {operation})
         end
+
+        Characters:ModifyPartyIfNeeded()
     end)
 
     Hooks.TableIDs["SaveData"] = {preID, postID, function_name}

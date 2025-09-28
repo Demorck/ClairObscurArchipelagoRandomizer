@@ -77,12 +77,78 @@ function Characters:EnableCharacter(name)
     end
 end
 
+function Characters:NumberOfEnabledCharacters()
+    local enabled_count = 0
+    local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
+    if char_data == nil then return enabled_count end
+
+    for _, char in ipairs(char_data) do
+        if not char.IsExcluded then
+            enabled_count = enabled_count + 1
+        end
+    end
+
+    return enabled_count
+end
+
+function Characters:DisableInPartyExcludedCharacters()
+    local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
+    if char_data == nil then return end
+
+    for _, char in ipairs(char_data) do
+        if char.IsExcluded then
+            self:EnableInParty(char.HardcodedNameID:ToString(), false)
+        end
+    end
+end
+
+function Characters:NumberOfCharactersInPartyEnabled()
+    local in_party_count = 0
+    local not_in_party_count = 0
+    local char_data = FindAllOf("BP_CharacterData_C") ---@cast char_data UBP_CharacterData_C[]
+    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    if char_data == nil then return in_party_count end
+
+    for _, char in ipairs(char_data) do
+        if not char.IsExcluded and helper:IsCharacterInParty(char.HardcodedNameID) then
+            in_party_count = in_party_count + 1
+        elseif char.IsExcluded and helper:IsCharacterInParty(char.HardcodedNameID) then
+            not_in_party_count = not_in_party_count + 1
+        end
+    end
+
+    return in_party_count, not_in_party_count
+end
+
+function Characters:ModifyPartyIfNeeded()
+    local in_party_count, not_in_party_count = Characters:NumberOfCharactersInPartyEnabled()
+
+    print("In party count: " .. in_party_count .. ", not in party count: " .. not_in_party_count)
+    
+    if not_in_party_count > 0 then
+        print("There are excluded characters in party, removing them...")
+        if in_party_count > 0 then
+            print("There are also enabled characters in party, removing excluded ones only...")
+            self:DisableInPartyExcludedCharacters()
+        else
+            print("No enabled characters in party, enabling only unlocked ones...")
+            self:EnableCharactersInPartyOnlyUnlocked()
+        end
+    else 
+        print("No excluded characters in party...")
+        if in_party_count == 0 then
+            print("No enabled characters in party, enabling only unlocked ones...")
+            self:EnableCharactersInPartyOnlyUnlocked()
+        end
+    end
+end
+
 function Characters:EnableOnlyUnlockedCharacters()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
 
     -- Do it twice because if the first char is in the party and the only one AND the it's the first in the list, it won't be removed
-    for i = 1, 2, 1 do
+    for _ = 1, 2, 1 do
         for _, char in ipairs(char_data) do
             local name = char.HardcodedNameID:ToString()
             if Contains(Storage.characters, name) then
@@ -91,15 +157,19 @@ function Characters:EnableOnlyUnlockedCharacters()
                 self:EnableInParty(name, false)
             end
         end
-    end
+    end 
 end
 
 function Characters:EnableCharactersInPartyOnlyUnlocked()
     Logger:info("Enabling characters in party only if unlocked...")
 
-    for _, char in ipairs(Characters_name) do
-        if Contains(Storage.characters, char) then
-            self:EnableInParty(char, true)
+    for _ = 1, 2, 1 do
+        for _, char in ipairs(Characters_name) do
+            if Contains(Storage.characters, char) then
+                self:EnableInParty(char, true)
+            else
+                self:EnableInParty(char, false)
+            end
         end
     end
 end
