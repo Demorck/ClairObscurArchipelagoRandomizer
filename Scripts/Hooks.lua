@@ -15,6 +15,7 @@ function Hooks:Register()
     Register_BattleEndVictory()
     Register_BattleRewards()
     Register_SaveData()
+    Register_CurrentLocation()
     Register_AddCharacter()
 
     Logger:info("Hooks registered.")
@@ -279,6 +280,40 @@ function Register_SaveData()
     end)
 
     Hooks.TableIDs["SaveData"] = {preID, postID, function_name}
+end
+
+function Register_CurrentLocation()
+    local function_name = "/Game/jRPGTemplate/Blueprints/Basics/FL_jRPG_CustomFunctionLibrary.FL_jRPG_CustomFunctionLibrary_C:GetCurrentLevelData"
+
+    local preID, postID = RegisterHook(function_name, function (self, _worldContext, found, levelData, rowName)
+
+        local name = rowName:get()
+        local level = name:ToString()
+        local new = false
+
+        --Logger:info("Current location changed to "..level)
+
+        if Storage.currentLocation ~= level and level ~= "None" then
+
+            print("Hook CurrentLocation called")
+            print("Current Location in storage is "..Storage.currentLocation)
+            print("Level is "..level)
+
+            Storage.currentLocation = level
+            new = true
+        end
+
+        if new then
+            --Storage:Update("Hooks:SaveData - Current Location")
+            local operation = {
+                operation = "replace",
+                value = Storage.currentLocation
+            }
+            AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-currentLocation", Storage.currentLocation, false, {operation})
+        end
+    end)
+
+    Hooks.TableIDs["CurrentLocation"] = {preID, postID, function_name}
 end
 
 
