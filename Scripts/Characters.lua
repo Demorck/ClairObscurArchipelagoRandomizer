@@ -1,11 +1,14 @@
+---@class Characters
 local Characters = {}
 
 local BluePrintName = "AC_jRPG_CharactersManager_C"
 local Characters_name = {"Frey", "Maelle", "Lune", "Sciel", "Verso", "Monoco" }
 local weapons_characters = {"Noahram", "Maellum", "Lunerim", "Scieleson", "Verleso", "Monocaro" }
 
+--- Return the Characters manager
+---@return UAC_jRPG_CharactersManager_C | nil
 function Characters:GetManager()
-    local manager = FindFirstOf(BluePrintName)
+    local manager = FindFirstOf(BluePrintName) ---@cast manager UAC_jRPG_CharactersManager_C
 
     if manager ~= nil and manager:IsValid() then
         Logger:info("Retrieving Characters manager succeeds")
@@ -16,6 +19,8 @@ function Characters:GetManager()
     end
 end
 
+--- Remove a character from the party
+---@param name any
 function Characters:RemoveCharacterFromParty(name)
     ---@class UAC_jRPG_CharactersManager_C
     local manager = self:GetManager() ---@cast manager UAC_jRPG_CharactersManager_C
@@ -26,7 +31,8 @@ function Characters:RemoveCharacterFromParty(name)
     manager:RemoveCharacterFromParty(fname)
 end
 
-
+--- Add a character to the collection
+---@param name any
 function Characters:AddCharacter(name)
     Logger:info("Adding character to party: " .. name)
     local helper = ClientBP:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
@@ -57,7 +63,8 @@ function Characters:AddEveryone()
     end
 end
 
-
+--- Enable a character when receiving it (remove the exclusion and set its level to maxlevel-5 or 1)
+---@param name string
 function Characters:EnableCharacter(name)
     local maxlevel = Characters:GetMaxLevel()
     print("Max level is " .. maxlevel)
@@ -77,6 +84,8 @@ function Characters:EnableCharacter(name)
     end
 end
 
+--- Count the number of enabled characters (not excluded)
+---@return integer 
 function Characters:NumberOfEnabledCharacters()
     local enabled_count = 0
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
@@ -91,6 +100,7 @@ function Characters:NumberOfEnabledCharacters()
     return enabled_count
 end
 
+--- Removing from battle team all excluded characters
 function Characters:DisableInPartyExcludedCharacters()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
@@ -102,12 +112,16 @@ function Characters:DisableInPartyExcludedCharacters()
     end
 end
 
+--- Count the number of characters in battle team, separated by enabled and excluded
+--- TODO: Renaming function
+---@return integer 
+---@return integer
 function Characters:NumberOfCharactersInPartyEnabled()
     local in_party_count = 0
     local not_in_party_count = 0
     local char_data = FindAllOf("BP_CharacterData_C") ---@cast char_data UBP_CharacterData_C[]
     local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
-    if char_data == nil then return in_party_count end
+    if char_data == nil then return 0, 0 end
 
     for _, char in ipairs(char_data) do
         if not char.IsExcluded and helper:IsCharacterInParty(char.HardcodedNameID) then
@@ -120,6 +134,7 @@ function Characters:NumberOfCharactersInPartyEnabled()
     return in_party_count, not_in_party_count
 end
 
+--- Ensure that the battle team is correct: no excluded characters, at least one enabled character
 function Characters:ModifyPartyIfNeeded()
     local in_party_count, not_in_party_count = Characters:NumberOfCharactersInPartyEnabled()
     
@@ -140,6 +155,8 @@ function Characters:ModifyPartyIfNeeded()
     end
 end
 
+--- Enable only the characters that are unlocked
+--- @deprecated i guess
 function Characters:EnableOnlyUnlockedCharacters()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
@@ -157,6 +174,8 @@ function Characters:EnableOnlyUnlockedCharacters()
     end 
 end
 
+
+--- Enable in party only the characters that are unlocked
 function Characters:EnableCharactersInPartyOnlyUnlocked()
     Logger:info("Enabling characters in party only if unlocked...")
 
@@ -171,6 +190,7 @@ function Characters:EnableCharactersInPartyOnlyUnlocked()
     end
 end
 
+--- Disable everyone from the party
 function Characters:DisableEveryoneFromParty()
     Logger:info("Disabling everyone from party...")
 
@@ -179,6 +199,9 @@ function Characters:DisableEveryoneFromParty()
     end
 end
 
+--- Enable or disable a specific character in the party
+--- @param name string the internal name of the character
+--- @param enable boolean true to enable, false to disable
 function Characters:EnableInParty(name, enable)
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
     if helper == nil then return end
@@ -191,11 +214,14 @@ function Characters:EnableInParty(name, enable)
     end
 end
 
+--- Kill all characters (set their HP to 0)
 function Characters:KillAll()
     Logger:info("Killing all characters...")
     self:SetHPAll(0)
 end
 
+--- Set the HP of all characters to a specific value
+---@param hp integer the HP value to set
 function Characters:SetHPAll(hp)
     Logger:info("Setting all characters' HP to " .. hp .. "...")
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
@@ -207,6 +233,8 @@ function Characters:SetHPAll(hp)
     end
 end
 
+--- Get the mean level of all characters
+---@return integer
 function Characters:GetMeanLevel()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return 1 end
@@ -219,6 +247,8 @@ function Characters:GetMeanLevel()
     return math.ceil(s / #char_data)
 end
 
+--- Get the max level of all characters
+--- @return integer
 function Characters:GetMaxLevel()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return 1 end

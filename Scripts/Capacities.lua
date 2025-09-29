@@ -5,6 +5,8 @@ local CapacitiesBluePrintName = "BP_ExplorationProgressionSystem_C"
 local WorldMapCapacities = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" }
 local ExplorationCapacities = { "FreeAim", "AttackInWorld", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" }
 
+---Return the Exploration Progression manager
+---@return UBP_ExplorationProgressionSystem_C | nil
 function Capacities:GetManager()
     local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression ~= nil and ExplorationProgression:IsValid() then
@@ -46,7 +48,7 @@ end
 function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression == nil then return end
-    local abilities = Capacities:GetWorldMapAbilities()
+    
     local index = 0
     for i, capacity in ipairs(WorldMapCapacities) do
         if capacity == capacity_to_unlock then
@@ -60,6 +62,8 @@ function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
     ExplorationProgression:UnlockWorldMapCapacities(t)
 end
 
+--- Get the status of all world map abilities
+---@return table<string, {enumerator: integer, is_unlocked: boolean}>
 function Capacities:GetWorldMapAbilities()
     Logger:info("Getting world map abilities...")
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
@@ -80,6 +84,8 @@ function Capacities:GetWorldMapAbilities()
    return result
 end
 
+---Unlock a specific exploration capacity
+---@param capacity_to_unlock string the internal name of capacity to unlock
 function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
     Logger:info("Unlocking exploration capacity: " .. capacity_to_unlock)
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
@@ -100,6 +106,7 @@ function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
     ExplorationProgression:SetExplorationCapacityUnlocked(index, true)
 end
 
+---Unlock all exploration capacities, except Free Aim if it's shuffled
 function Capacities:UnlockAllExplorationCapacities()
     Logger:info("Unlocking all exploration capacities...")
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C

@@ -62,6 +62,8 @@ function Quests:UnlockNextGestral()
 end
 
 function Quests:SendNextGestralReward(objective_name)
+    if Archipelago.options.gestral_shuffle == 0 then return end
+
     Logger:info("Sending reward for gestral: " .. objective_name)
     local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C | nil
     if quest_system == nil then return end

@@ -95,6 +95,9 @@ function Register_UpdateFeedback()
     Hooks.TableIDs["UpdateFeedback"] = {preID, postID, function_name}
 end
 
+--- This hook is called when the player is loaded into a new map.
+--- Only in the worldmap has a MapTeleportPoint_Interactible actor, so we check if we are in the worldmap
+--- Then, we check all the teleport points. If the player doesn't have the ticket for the destination, we remove the portal with the blueprint mod.
 function Register_RemovePortalIfNoTickets()
     local function_name = "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:UpdateFeedbackParametersFromLoot"
 
@@ -122,6 +125,7 @@ function Register_RemovePortalIfNoTickets()
 end
 
 ---Basically save Gustave at the end of Act 1
+--- If we don't test if it's Frey (Gustave internal name), we can save Sophie at the end of prologue and Alicia from the act 3.
 function Register_SaveCharacterFromAnUnvoidableDeath()
     local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:RemoveCharacterFromCollection"
 
@@ -138,6 +142,8 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
     Hooks.TableIDs["SaveCharacterFromAnUnvoidableDeath"] = {preID, postID, function_name}
 end
 
+--- Enable the teleport button. 
+--- TODO: Changing the button to enable it only in world map
 function Register_EnableTPButtonInWorldMap()
     local function_name = "/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened"
 
@@ -166,6 +172,11 @@ function Register_EnableTPButtonInWorldMap()
     Hooks.TableIDs["EnableTPButtonInWorldMap"] = {preID, postID, function_name}
 end
 
+--- This function is called when a subquest is updated (started, completed, etc)
+--- We use it to:
+--- * Initialize the save after Lumiere (so the APWorld starts)
+--- * Mark the forced camp after spring meadows as completed when starting it (Because Lune wants to camp)
+--- * Send the location gestral reward when finding a lost gestral
 function Register_UpdateSubquests()
     local function_name = "/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:UpdateActivitySubTaskStatus"
 
@@ -173,12 +184,9 @@ function Register_UpdateSubquests()
     local preID, postID = RegisterHook(function_name, function (self, objective_name, status)
         if AP_REF.APClient == nil then return end
 
-
-        local quest_system = self:get() ---@type UBP_QuestSystem_C
         local objective_name_param = objective_name:get():ToString()
         local status_param = status:get()
         
-        -- print(objective_name_param)
         if not Storage.initialized_after_lumiere and objective_name_param == "2_SpringMeadow" and status_param == QUEST_STATUS.STARTED then
             InitSaveAfterLumiere()
         elseif objective_name_param == "1_LumiereBeginning" and status_param ~= QUEST_STATUS.COMPLETED then
@@ -195,6 +203,9 @@ function Register_UpdateSubquests()
     Hooks.TableIDs["UpdateSubquests"] = {preID, postID, function_name}
 end
 
+--- This hook is called when a battle ends with a victory.
+--- We check if the encounter defeated is the goal, and if yes, we send a victory
+--- If it's a boss but not the goal, we send a location check 
 function Register_BattleEndVictory()
     local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory"
 
@@ -220,6 +231,8 @@ function Register_BattleEndVictory()
     Hooks.TableIDs["BattleEndVictory"] = {preID, postID, function_name}
 end
 
+--- Called when rolling battle rewards, at the start of the battle.
+--- We empty the rolled loot, so the player doesn't receive anything from battles.
 function Register_BattleRewards()
     local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:RollBattleRewards"
     local preID, postID = RegisterHook(function_name, function (self, rewards)
@@ -231,6 +244,10 @@ function Register_BattleRewards()
     Hooks.TableIDs["BattleRewards"] = {preID, postID, function_name}
 end
 
+--- This function is called when the game is saved.
+--- We use it to:
+--- * Update the flags (for poptracker)
+--- * Update the battle team (if it's not valid anymore)
 function Register_SaveData()
     local function_name = "/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:SaveGameToFile"
 
@@ -282,6 +299,8 @@ function Register_SaveData()
     Hooks.TableIDs["SaveData"] = {preID, postID, function_name}
 end
 
+--- This function is called when the current location is changing (loading a new level)
+--- We use it to update the current location in poptracker for autotab
 function Register_CurrentLocation()
     local function_name = "/Game/jRPGTemplate/Blueprints/Basics/FL_jRPG_CustomFunctionLibrary.FL_jRPG_CustomFunctionLibrary_C:GetCurrentLevelData"
 
@@ -295,10 +314,7 @@ function Register_CurrentLocation()
 
         if Storage.currentLocation ~= level and level ~= "None" then
 
-            print("Hook CurrentLocation called")
-            print("Current Location in storage is "..Storage.currentLocation)
-            print("Level is "..level)
-
+            Logger:info("Changing level. New level is: " .. level)
             Storage.currentLocation = level
             new = true
         end
@@ -316,7 +332,8 @@ function Register_CurrentLocation()
     Hooks.TableIDs["CurrentLocation"] = {preID, postID, function_name}
 end
 
-
+--- This function is called when a character is added to the collection 
+--- If char rando is on, don't do anything. Otherwise, enable the character added.
 function Register_AddCharacter()
     local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:AddNewCharacterToCollection"
 
