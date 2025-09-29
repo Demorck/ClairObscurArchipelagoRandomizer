@@ -31,6 +31,7 @@ Storage.tickets = {
 
 Storage.characters = {} --- Unfortunately, i can't add Sophie, Alicia and Julie
 Storage.flags = {}
+Storage.currentLocation = "None"
 
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
