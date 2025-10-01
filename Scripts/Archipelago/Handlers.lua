@@ -11,22 +11,22 @@ function M.socket_connected()
     Debug.print("Socket connected", "Archipelago.Handlers.socket_connected")
     local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
     a:ChangeAPTextConnect(E_CLIENT_INFOS.CONNECTED)
+    a:SetConnection(true)
 end
 
 --- called when connect or a ping failed - no action required, reconnect is automatic.
 --- @param msg string
-function M.socket_error_handler(msg)
-    Debug.print("Socket error", "Archipelago.Handlers.socket_error_handler", warn)
-    Debug.print(msg, "Archipelago.Handlers.socket_error_handler", warn)
+function M.set_socket_error_handler(msg)
     local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
     a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
+    a:SetConnection(false)
 end
 
 --- called when the socket gets disconnected - no action required, reconnect is automatic.
-function M.socket_disconnected_handler()
-    Debug.print("Socket disconnected", "Archipelago.Handlers.socket_disconnected_handler")
+function M.set_socket_disconnected_handler()
     local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
     a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
+    a:SetConnection(false)
 end
 
 --- called when the server sent room info. send ConnectSlot from this callback.

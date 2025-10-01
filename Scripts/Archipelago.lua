@@ -164,6 +164,8 @@ function Archipelago:ReceiveItem(item_data)
 
         if local_item_data.name == "Area - Esquie's Nest" then
             Quests:SetObjectiveStatus("Main_GoldenPath", "6_EsquieNest", QUEST_STATUS.STARTED)
+        elseif local_item_data.name == "Area - Stone Wave Cliffs" then
+            Quests:SetObjectiveStatus("Main_ForcedCamps", "4_ForcedCamp_PostEsquieNest", QUEST_STATUS.COMPLETED)
         elseif local_item_data.name == "Area - The Monolith" then
             Quests:SetObjectiveStatus("Main_GoldenPath", "12_Axon2", QUEST_STATUS.COMPLETED)
             Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.STARTED)
@@ -253,6 +255,8 @@ function Archipelago:HandleCapacityItem(item_data)
         Capacities:UnlockDestroyPaintedRock()
     elseif item_data.name == "Free Aim" then
         Capacities:UnlockExplorationCapacity("FreeAim")
+        Storage.free_aim_unlocked = true
+        Storage:Update("Archipelago:HandleCapacityItem - Free Aim")
     end
 end
 

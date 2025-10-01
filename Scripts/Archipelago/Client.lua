@@ -30,8 +30,6 @@ function M.connect()
     a:ChangeAPTextConnect(E_CLIENT_INFOS.TRYING_TO_CONNECT)
 
     M.AP_REF.APClient:set_socket_connected_handler(M.handlers.socket_connected)
-    M.AP_REF.APClient:set_socket_error_handler(M.handlers.socket_error_handler)
-    M.AP_REF.APClient:set_socket_disconnected_handler(M.handlers.socket_disconnected_handler)
     M.AP_REF.APClient:set_room_info_handler(M.handlers.room_info_handler)
     M.AP_REF.APClient:set_slot_refused_handler(M.handlers.slot_refused_handler)
 
@@ -42,6 +40,18 @@ function M.connect()
     M.handlers.set_location_checked_handler(AP_REF.on_location_checked)
     M.handlers.set_bounced_handler(AP_REF.on_bounced)
     M.handlers.set_retrieved_handler(AP_REF.on_retrieved_data)
+    M.handlers.set_socket_error_handler(AP_REF.on_socket_error)
+    M.handlers.set_socket_disconnected_handler(AP_REF.on_socket_disconnected)
+
+    function APSocketDisconnected()
+        a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
+        a:SetConnection(false)
+    end
+
+    AP_REF.on_socket_error = APSocketDisconnected
+    AP_REF.on_socket_disconnected = APSocketDisconnected
 end
+
+
 
 return M

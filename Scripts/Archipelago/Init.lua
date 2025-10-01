@@ -30,7 +30,9 @@ LoopAsync(333, function ()
         if AP_REF.APClient ~= nil then
             AP_REF.APClient:poll()
             local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-            -- a.Connected = true
+            if a ~= nil and a:IsValid() then
+                a:SetConnection(true)
+            end
         else
             client.connect()
         end
@@ -39,7 +41,9 @@ LoopAsync(333, function ()
             Logger:info("Disconnecting from Archipelago server...")
             AP_REF.APClient = nil
             local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-            -- a.Connected = false
+            if a ~= nil and a:IsValid() then
+                a:SetConnection(false)
+            end
             collectgarbage("collect")
         end
     end
@@ -55,7 +59,9 @@ function AP_REF:set_config(host, port, slot, password, deathlink)
     Archipelago.death_link = deathlink
     config.deathlink = deathlink
     if deathlink then
-        table.insert(config.APTags, "DeathLink")
+        if not Contains(config.APTags, "DeathLink") then
+            table.insert(config.APTags, "DeathLink")
+        end
     else
         for index, value in ipairs(config.APTags) do
             if value == "DeathLink" then
@@ -74,7 +80,7 @@ function AP_REF.Connect(self)
 
     if want_to_connect then
         Logger:initialize()
-    else 
+    else
         Hooks:Unregister()
         local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
         a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)

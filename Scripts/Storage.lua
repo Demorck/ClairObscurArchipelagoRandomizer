@@ -32,6 +32,7 @@ Storage.tickets = {
 Storage.characters = {} --- Unfortunately, i can't add Sophie, Alicia and Julie
 Storage.flags = {}
 Storage.currentLocation = "None"
+Storage.free_aim_unlocked = false
 
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
@@ -44,6 +45,7 @@ function Storage:Load()
         Storage.initialized_after_lumiere = file["lumiere_done"]
         Storage.tickets                   = file["tickets"]
         Storage.characters                = file["characters"]
+        Storage.free_aim_unlocked         = file["free_aim_unlocked"]
     else
         Storage:Update("Storage:Load - New file")
     end
@@ -56,6 +58,7 @@ function Storage:Load()
     Logger:info("Lumiere done: " .. tostring(Storage.initialized_after_lumiere))
     Logger:info("Tickets: " .. Dump(Storage.tickets))
     Logger:info("Characters: " .. Dump(Storage.characters))
+    Logger:info("Free Aim unlocked: " .. tostring(Storage.free_aim_unlocked))
     Storage.initialized = true
 end
 
@@ -75,7 +78,8 @@ function Storage:Update(from)
         weapons_index = Storage.weaponsIndex,
         lumiere_done  = Storage.initialized_after_lumiere,
         tickets       = Storage.tickets,
-        characters    = Storage.characters
+        characters    = Storage.characters,
+        free_aim_unlocked = Storage.free_aim_unlocked
     }
 
     JSON.write_file(Storage:GetFilePath(), values)

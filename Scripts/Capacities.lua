@@ -38,6 +38,11 @@ function Capacities:UnlockNextWorldMapAbility()
             local t = { row.enumerator }
             -- Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
             ExplorationProgression:UnlockWorldMapCapacities(t)
+
+            if capacity == "Base" then
+                local t = { row.enumerator + 1 }
+                ExplorationProgression:UnlockWorldMapCapacities(t)
+            end
             break
         end
     end
@@ -116,8 +121,19 @@ function Capacities:UnlockAllExplorationCapacities()
         if Archipelago.options.shuffle_free_aim == 1 and ExplorationCapacities[i] == "FreeAim" then
             -- Do not unlock Free Aim if it's shuffled
         else
+            Storage.free_aim_unlocked = true
             ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
         end
+    end
+end
+
+function Capacities:DisableFreeAimIfNeeded()
+    if Archipelago.options.shuffle_free_aim == 1 and not Storage.free_aim_unlocked then
+        Logger:info("Disabling Free Aim...")
+        local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+        if ExplorationProgression == nil then return end
+        
+        ExplorationProgression:SetExplorationCapacityUnlocked(1, false)
     end
 end
 

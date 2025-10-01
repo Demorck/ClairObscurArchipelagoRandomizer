@@ -294,6 +294,8 @@ function Register_SaveData()
         end
 
         Characters:ModifyPartyIfNeeded()
+        Capacities:DisableFreeAimIfNeeded()
+        Save:ModifyGPEIfNeeded(data)
     end)
 
     Hooks.TableIDs["SaveData"] = {preID, postID, function_name}
