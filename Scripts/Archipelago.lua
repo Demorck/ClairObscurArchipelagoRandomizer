@@ -277,7 +277,7 @@ end
 AP_REF.on_bounced = APBounceHandler
 
 function Archipelago:HandleTrapItem(item_data)
-    Logger:info("Trap activated: " .. item_data.name .. " for player: " .. item_data.player)
+    Logger:info("Trap activated: " .. item_data.name)
     
     if item_data.name == "Feet Trap" then
         ClientBP:FeetTrap()
@@ -443,9 +443,54 @@ function Archipelago:SendDeathLink(msg, players_id, games, tags)
     AP_REF.APClient:Bounce(data, games, players_id, tags)
 end
 
+---Handle multiple locations
+---@param locations_data table<LocationData>
+---@return LocationData
+function HandleMultipleLocations(location_name, locations_data)
+    local level_name = ClientBP:GetLevelName()
+    if level_name == nil then
+        return locations_data[1]
+    end
+
+    function HandleGenericChroma()
+        local predicate = {
+            ["World Map"] = "Level_WorldMap_Main_V2",
+            ["Spring Meadows"] = "Level_SpringMeadows_Main_V2",
+            ["The Monolith"] = "Level_Monolith_Interior_Climb_Main",
+            ["Esquies Nest"] = "LevelMain_EsquieNest",
+        }
+
+        for _, loc in pairs(locations_data) do
+            local region = loc["location"]
+            if predicate[region] ~= nil and predicate[region] == level_name then
+                return loc
+            end
+        end
+    end
+
+    function HandleDiveItems()
+        local res = locations_data[Storage.dive_items + 1]
+        Storage.dive_items = Storage.dive_items + 1
+        Storage:Update("HandleMultipleLocations - Dive items")
+        return res
+    end
+
+    local res = nil
+    if location_name == "Chest_Generic_Chroma" then
+        res = HandleGenericChroma()
+    elseif location_name == "Chest_Generic_5xLuminaPoint" then
+        res = HandleDiveItems()
+    end
+
+    return res or locations_data[1]
+end
 
 function GetLocationFromAPData(location_name)
-    local location_data = Data:FindEntry(Data.locations, location_name) ---@cast location_data LocationData | nil
+    local location_data = Data:FindEntry(Data.locations, location_name) ---@cast location_data LocationData | table<LocationData> | nil
+    if type(location_data) == "table" and #location_data > 1 then
+        local res = HandleMultipleLocations(location_name, location_data)
+        location_data = res
+    end
     local location = {}
 
     if location_data == nil then

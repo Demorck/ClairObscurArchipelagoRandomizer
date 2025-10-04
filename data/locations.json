@@ -4156,7 +4156,7 @@
         "name": "World Map: First Continent - Paint spike outside Gestral Village rock wall",
         "location": "World Map",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -4969,7 +4969,7 @@
         "internal_name": "MF_BoucheclierALPHA",
         "location": "Isle of the Eyes",
         "original_item": "",
-        "condition": {},
+        "condition": {"Free Aim": 1},
         "type": "Boss",
         "boss_type": "Chromatic"
     },
@@ -4978,7 +4978,7 @@
         "internal_name": "MF_ChapelieALPHA",
         "location": "The Crows",
         "original_item": "",
-        "condition": {},
+        "condition": {"Free Aim": 1},
         "type": "Boss",
         "boss_type": "Chromatic"
     },

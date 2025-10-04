@@ -33,6 +33,7 @@ Storage.characters = {} --- Unfortunately, i can't add Sophie, Alicia and Julie
 Storage.flags = {}
 Storage.currentLocation = "None"
 Storage.free_aim_unlocked = false
+Storage.dive_items = 0
 
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
@@ -46,6 +47,7 @@ function Storage:Load()
         Storage.tickets                   = file["tickets"]
         Storage.characters                = file["characters"]
         Storage.free_aim_unlocked         = file["free_aim_unlocked"]
+        Storage.dive_items                = file["dive_items"]
     else
         Storage:Update("Storage:Load - New file")
     end
@@ -79,7 +81,8 @@ function Storage:Update(from)
         lumiere_done  = Storage.initialized_after_lumiere,
         tickets       = Storage.tickets,
         characters    = Storage.characters,
-        free_aim_unlocked = Storage.free_aim_unlocked
+        free_aim_unlocked = Storage.free_aim_unlocked,
+        dive_items    = Storage.dive_items
     }
 
     JSON.write_file(Storage:GetFilePath(), values)

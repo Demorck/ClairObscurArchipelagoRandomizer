@@ -261,6 +261,17 @@ function Register_SaveData()
             return
         end
 
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
+        local a = data.InteractedObjects;
+        local count = 0;
+        a:ForEach(function (_, _)
+            count = count + 1
+        end)
+        print("Number of interacted objects: " .. count)
+
         local flags = data.UnlockedSpawnPoints ---@type TArray<FS_LevelSpawnPointsData>
         local new = false
         flags:ForEach(function (_, element)

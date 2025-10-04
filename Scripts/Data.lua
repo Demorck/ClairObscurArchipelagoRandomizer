@@ -51,14 +51,25 @@ function Data.Load()
 end
 
 ---Return an entry if find it Data
----@param table ItemData[] | LocationData[]
+---@param search_table ItemData[] | LocationData[]
 ---@param internal_name string
----@return ItemData | LocationData | nil
-function Data:FindEntry(table, internal_name)
-    for _, row in pairs(table) do
+---@return ItemData | LocationData | table<ItemData> | table<LocationData> | nil
+function Data:FindEntry(search_table, internal_name)
+    local count = 0;
+    local res = {}
+    for _, row in pairs(search_table) do
         if row.internal_name == internal_name then
-            return row
+            count = count + 1
+            table.insert(res, row)
         end
+    end
+
+    if count == 1 then
+        return res[1]
+    end
+
+    if count > 1 then
+        return res
     end
 
     Logger:warn("Entry not found in Data: " .. internal_name)

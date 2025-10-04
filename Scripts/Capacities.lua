@@ -118,8 +118,12 @@ function Capacities:UnlockAllExplorationCapacities()
     if ExplorationProgression == nil then return end
 
     for i, _ in ipairs(ExplorationCapacities) do
-        if Archipelago.options.shuffle_free_aim == 1 and ExplorationCapacities[i] == "FreeAim" then
-            -- Do not unlock Free Aim if it's shuffled
+        if Archipelago.options.shuffle_free_aim == 1 then
+            if ExplorationCapacities[i] ~= "FreeAim" then
+                ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+            else
+                Storage.free_aim_unlocked = false
+            end
         else
             Storage.free_aim_unlocked = true
             ExplorationProgression:SetExplorationCapacityUnlocked(i, true)

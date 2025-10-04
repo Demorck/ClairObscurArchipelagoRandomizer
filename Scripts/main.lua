@@ -18,7 +18,7 @@ RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 
 function TestSomeFunctions()
-   Hooks:Register()
+   local a = ClientBP:GetLevelName();
 end
 function PrintMessage()
 end
