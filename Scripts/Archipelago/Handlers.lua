@@ -16,17 +16,23 @@ end
 
 --- called when connect or a ping failed - no action required, reconnect is automatic.
 --- @param msg string
-function M.set_socket_error_handler(msg)
+function M.socket_error(msg)
     local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
     a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
     a:SetConnection(false)
+    if not Archipelago.trying_to_connect then
+        WANT_TO_CONNECT = false
+    end
 end
 
 --- called when the socket gets disconnected - no action required, reconnect is automatic.
-function M.set_socket_disconnected_handler()
+function M.socket_disconnected()
     local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
     a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
     a:SetConnection(false)
+    if not Archipelago.trying_to_connect then
+        WANT_TO_CONNECT = false
+    end
 end
 
 --- called when the server sent room info. send ConnectSlot from this callback.

@@ -22,7 +22,10 @@ end
 function Capacities:UnlockDestroyPaintedRock()
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression == nil then return end
+
+    table.insert(TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
     ExplorationProgression:UnlockFreeAimDamageLevel(1)
+    Remove(TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
 end
 
 --- Unlock the next world map ability

@@ -26,6 +26,7 @@ Archipelago.pictos_data = {}
 Archipelago.death_link = false
 Archipelago.number_of_players = 0
 Archipelago.current_year_gommage = 34
+Archipelago.trying_to_connect = false
 
 
 Archipelago.hasConnectedPrior = false -- keeps track of whether the player has connected at all so players don't have to remove AP mod to play vanilla
@@ -74,7 +75,8 @@ end
 
 function APSlotConnectedHandler(slot_data)
     Archipelago.hasConnectedPrior = true
-    print('Connected.')
+    Archipelago.trying_to_connect = false
+    
     Hooks:Register()
     Storage:Load()
     return Archipelago:SlotDataHandler(slot_data)
@@ -389,7 +391,6 @@ end
 
 --- need to add location to storage to avoid redoing the same thing if a crash happens
 function Archipelago:SendLocationCheck(location_name)
-    print("SendLocationCheck")
     local location_data = GetLocationFromAPData(location_name)
     if location_data == nil then return end
 

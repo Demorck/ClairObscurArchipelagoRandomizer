@@ -12,10 +12,10 @@ Save        = require "Save"
 Archipelago = require "Archipelago"
 ClientBP    = require "ClientBP"
 Battle      = require "Battle"
-local UEHelpers = require "UEHelpers"
 
 RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
+TABLE_CURRENT_AP_FUNCTION = {}
 
 function TestSomeFunctions()
    local a = ClientBP:GetLevelName();
@@ -83,6 +83,15 @@ function Contains(table, val)
       end
    end
    return false
+end
+
+function Remove(table, val)
+   for i=1,#table do
+      if table[i] == val then
+         table.remove(table, i)
+         return
+      end
+   end
 end
 
 function Trim(s)

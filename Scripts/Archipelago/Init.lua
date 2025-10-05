@@ -22,15 +22,15 @@ AP_REF.AP = AP
 client.setup(AP_REF, AP, handlers)
 
 -- Just for now, to connect and disconnect easily
-local want_to_connect = false
+WANT_TO_CONNECT = false
 
 --- Main async loop for polling or disconnecting the AP client.
 LoopAsync(333, function ()
-    if want_to_connect then
+    if WANT_TO_CONNECT then
         if AP_REF.APClient ~= nil then
             AP_REF.APClient:poll()
             local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-            if a ~= nil and a:IsValid() then
+            if a ~= nil and a:IsValid() and not Archipelago.trying_to_connect then
                 a:SetConnection(true)
             end
         else
@@ -41,9 +41,10 @@ LoopAsync(333, function ()
             Logger:info("Disconnecting from Archipelago server...")
             AP_REF.APClient = nil
             local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-            if a ~= nil and a:IsValid() then
+            if a ~= nil and a:IsValid() and not Archipelago.trying_to_connect then
                 a:SetConnection(false)
             end
+            Hooks:Unregister()
             collectgarbage("collect")
         end
     end
@@ -76,9 +77,9 @@ end
 --- Toggles the connection to the Archipelago server.
 ---@param self any Ignored (used for method call syntax).
 function AP_REF.Connect(self)
-    want_to_connect = not want_to_connect
+    WANT_TO_CONNECT = not WANT_TO_CONNECT
 
-    if want_to_connect then
+    if WANT_TO_CONNECT then
         Logger:initialize()
     else
         Hooks:Unregister()
