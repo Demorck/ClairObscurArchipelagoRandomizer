@@ -101,8 +101,8 @@ function Archipelago:SlotDataHandler(slot_data)
     Logger:info("Receiving Slot Data: ")
     Logger:info("Options: " .. Dump(Archipelago.options))
     Logger:info("Totals: " .. Dump(Archipelago.totals))
-    Logger:info("Pictos data: " .. Dump(Archipelago.pictos_data))
-    Logger:info("Weapons data: " .. Dump(Archipelago.weapons_data))
+    -- Logger:info("Pictos data: " .. Dump(Archipelago.pictos_data))
+    -- Logger:info("Weapons data: " .. Dump(Archipelago.weapons_data))
 
     Data.Load()
 end

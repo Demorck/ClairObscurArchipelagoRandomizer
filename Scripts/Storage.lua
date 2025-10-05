@@ -48,19 +48,20 @@ function Storage:Load()
         Storage.characters                = file["characters"]
         Storage.free_aim_unlocked         = file["free_aim_unlocked"]
         Storage.dive_items                = file["dive_items"]
+
+        Logger:info("Storage loaded from " .. Storage:GetFilePath())
+        Logger:info("Last received item index: " .. Storage.lastReceivedItemIndex)
+        Logger:info("Last saved item index: " .. Storage.lastSavedItemIndex)
+        Logger:info("Pictos index: " .. Storage.pictosIndex)
+        Logger:info("Weapons index: " .. Storage.weaponsIndex)
+        Logger:info("Lumiere done: " .. tostring(Storage.initialized_after_lumiere))
+        Logger:info("Tickets: " .. Dump(Storage.tickets))
+        Logger:info("Characters: " .. Dump(Storage.characters))
+        Logger:info("Free Aim unlocked: " .. tostring(Storage.free_aim_unlocked))
     else
         Storage:Update("Storage:Load - New file")
     end
 
-    Logger:info("Storage loaded from " .. Storage:GetFilePath())
-    Logger:info("Last received item index: " .. Storage.lastReceivedItemIndex)
-    Logger:info("Last saved item index: " .. Storage.lastSavedItemIndex)
-    Logger:info("Pictos index: " .. Storage.pictosIndex)
-    Logger:info("Weapons index: " .. Storage.weaponsIndex)
-    Logger:info("Lumiere done: " .. tostring(Storage.initialized_after_lumiere))
-    Logger:info("Tickets: " .. Dump(Storage.tickets))
-    Logger:info("Characters: " .. Dump(Storage.characters))
-    Logger:info("Free Aim unlocked: " .. tostring(Storage.free_aim_unlocked))
     Storage.initialized = true
 end
 

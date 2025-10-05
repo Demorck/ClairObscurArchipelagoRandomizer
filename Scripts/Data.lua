@@ -24,7 +24,6 @@ AREA_NAMES = {"GoblusLair", "AncientSanctuary", "SideLevel_RedForest", "EsquieNe
 local Data = {}
 
 
-Data.file_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/Archipelago33" -- need to change for relative path from the game when the mod is installed
 Data.items = {}
 Data.locations = {}
 Data.local_variable = {}
@@ -34,8 +33,8 @@ function Data.Load()
     if #Data.items > 0 then return end
     Logger:info("Loading data...")
 
-    local items_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/items.json"
-    local locations_path = "F:/Project/UE4SS/Expedition 33/Mods/ClairObscureArchipelagoRandomizer/data/locations.json"
+    local items_path = "ue4ss/Mods/COE33AP/data/items.json"
+    local locations_path = "ue4ss/Mods/COE33AP/data/locations.json"
     local content_items = JSON.read_file(items_path)
     local content_locations = JSON.read_file(locations_path)
 
