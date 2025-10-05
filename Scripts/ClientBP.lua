@@ -34,7 +34,7 @@ function ClientBP:IsMainMenu()
 end
 
 function ClientBP:IsLumiereActI()
-    return self:IsLevel("Level_Lumiere_Main_V2")
+    return self:IsLevel("Level_Lumiere_Main_V2") and Storage.initialized_after_lumiere == false
 end
 
 function ClientBP:InLevel()

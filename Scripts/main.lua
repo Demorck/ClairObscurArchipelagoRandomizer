@@ -19,6 +19,7 @@ AddingCharacterFromArchipelago = false
 
 function TestSomeFunctions()
    local a = ClientBP:GetLevelName();
+   print("Level name is: ", a)
 end
 function PrintMessage()
 end

@@ -119,7 +119,6 @@ function Register_RemovePortalIfNoTickets()
             end
         end
     end)
-    
 
     Hooks.TableIDs["RemovePortalIfNoTickets"] = {preID, postID, function_name}
 end
@@ -305,6 +304,7 @@ function Register_SaveData()
         end
 
         Characters:ModifyPartyIfNeeded()
+        Characters:EnableCharactersInCollectionOnlyUnlocked()
         Capacities:DisableFreeAimIfNeeded()
         Save:ModifyGPEIfNeeded(data)
     end)

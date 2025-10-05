@@ -189,6 +189,20 @@ function Characters:EnableCharactersInPartyOnlyUnlocked()
         end
     end
 end
+function Characters:EnableCharactersInCollectionOnlyUnlocked()
+    local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
+    if char_data == nil then return end
+    Logger:info("Enabling characters in collection only if unlocked...")
+
+    for _, char in ipairs(char_data) do
+        local char_name = char.HardcodedNameID:ToString()
+        if Contains(Storage.characters, char_name) then
+            char.IsExcluded = false
+        else
+            char.IsExcluded = true
+        end
+    end
+end
 
 --- Disable everyone from the party
 function Characters:DisableEveryoneFromParty()
