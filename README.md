@@ -1,6 +1,11 @@
 # ClairObscurArchipelagoRandomizer
 A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system
 
+# APWorld
+
+[Here](https://github.com/Demorck/ClairObscur_APWorld/releases)
+
+
 # Setup Guide
 
 ### Two mods for the client ?
