@@ -1,7 +1,0 @@
-Progression flags:
-    Lot of folder in Game/Content/Gameplay/ProgressionFlags
-
-
-Levels:
-    - XP needed to levelup: Game/Content/jRPGTemplate/DataTables/DT_jRPG_Levels
-    - Stats scaling : Game/Content/Gameplay/CharacterData/AttributeScalingTables/
