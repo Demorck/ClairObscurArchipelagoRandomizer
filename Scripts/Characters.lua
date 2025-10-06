@@ -28,7 +28,7 @@ function Characters:RemoveCharacterFromParty(name)
     if manager == nil then return end
 
     local fname = FName(name)
-    manager:RemoveCharacterFromParty(fname)
+    Logger:callMethod(manager, "RemoveCharacterFromParty", fname)
 end
 
 --- Add a character to the collection
@@ -40,9 +40,8 @@ function Characters:AddCharacter(name)
     local found = {}
     local struct = {}
     local fname = FName(name)
-    -- Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)
     AddingCharacterFromArchipelago = true
-    helper:AddCharacterToCollectionFromHardcodedName(fname, found, struct)
+    Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)
 end
 
 function Characters:AddEveryone()
@@ -58,7 +57,7 @@ function Characters:AddEveryone()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
     for _, char in ipairs(char_data) do
-        char:SetLevel(1)
+        Logger:callMethod(char, "SetLevel", 1)
         char.IsExcluded = true
     end
 end
@@ -78,8 +77,10 @@ function Characters:EnableCharacter(name)
         if char.HardcodedNameID:ToString() == name then
             char.IsExcluded = false
             Logger:info("Setting character " .. name .. " to level " .. level_char)
-            char:SetLevel(level_char)
-            helper:AddCharacterToParty(FName(name))
+            Logger:callMethod(char, "SetLevel", level_char)
+            -- char:SetLevel(level_char)
+            Logger:callMethod(helper, "AddCharacterToParty", FName(name))
+            -- helper:AddCharacterToParty(FName(name))
         end
     end
 end
@@ -124,9 +125,10 @@ function Characters:NumberOfCharactersInPartyEnabled()
     if char_data == nil then return 0, 0 end
 
     for _, char in ipairs(char_data) do
-        if not char.IsExcluded and helper:IsCharacterInParty(char.HardcodedNameID) then
+        local in_party = Logger:callMethod(helper, "IsCharacterInParty", char.HardcodedNameID)
+        if not char.IsExcluded and in_party then
             in_party_count = in_party_count + 1
-        elseif char.IsExcluded and helper:IsCharacterInParty(char.HardcodedNameID) then
+        elseif char.IsExcluded and in_party then
             not_in_party_count = not_in_party_count + 1
         end
     end
@@ -192,6 +194,8 @@ end
 function Characters:EnableCharactersInCollectionOnlyUnlocked()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
+    if not Characters:HasExcludedCharactersInCollection() then return end
+
     Logger:info("Enabling characters in collection only if unlocked...")
 
     for _, char in ipairs(char_data) do
@@ -202,6 +206,20 @@ function Characters:EnableCharactersInCollectionOnlyUnlocked()
             char.IsExcluded = true
         end
     end
+end
+
+function Characters:HasExcludedCharactersInCollection()
+    local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
+    if char_data == nil then return false end
+
+    for _, char in ipairs(char_data) do
+        local char_name = char.HardcodedNameID:ToString()
+        if char.IsExcluded and not Contains(Storage.characters, char_name) then
+            return true
+        end
+    end
+
+    return false
 end
 
 --- Disable everyone from the party
@@ -222,9 +240,11 @@ function Characters:EnableInParty(name, enable)
 
     local fname = FName(name)
     if enable then
-        helper:AddCharacterToParty(fname)
+        Logger:callMethod(helper, "AddCharacterToParty", fname)
+        -- helper:AddCharacterToParty(fname)
     else
-        helper:RemoveCharacterFromParty(fname)
+        Logger:callMethod(helper, "RemoveCharacterFromParty", fname)
+        -- helper:RemoveCharacterFromParty(fname)
     end
 end
 
@@ -243,7 +263,8 @@ function Characters:SetHPAll(hp)
 
     for _, char in ipairs(Characters_name) do
         local fname = FName(char)
-        helper:SetCharacterHP(fname, hp)
+        Logger:callMethod(helper, "SetCharacterHP", fname, hp)
+        -- helper:SetCharacterHP(fname, hp)
     end
 end
 

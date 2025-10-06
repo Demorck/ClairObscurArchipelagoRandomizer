@@ -26,7 +26,8 @@ function ClientBP:FeetTrap()
     local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
     if helper == nil then return end
 
-    helper:FeetTrap()
+    Logger:callMethod(helper, "FeetTrap")
+    -- helper:FeetTrap()
 end
 
 function ClientBP:IsMainMenu()
@@ -60,6 +61,7 @@ function ClientBP:GetLevelName()
     end
 
     local out = {}
+    
     a:GetLevelName(out)
 
     return Trim(out["LevelName"]:ToString())

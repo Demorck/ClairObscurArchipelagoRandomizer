@@ -32,7 +32,8 @@ function Inventory.AddGold(amount)
     --- @class UAC_jRPG_InventoryManager_C
     local playerInventory = Inventory:GetInventoryManager()
     if playerInventory ~= nil then
-        playerInventory:ReceiveGold(amount, "")
+        -- playerInventory:ReceiveGold(amount, "")
+        Logger:callMethod(playerInventory, "ReceiveGold", amount, "")
     end
 end
 
@@ -57,7 +58,8 @@ function Inventory:AddItem(itemName, amount, item_level)
     local returned = {}
 
     -- Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
-    playerInventory:AddItemToInventory(name, amount, lootContext, returned)
+    -- playerInventory:AddItemToInventory(name, amount, lootContext, returned)
+    Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     return true
 end
 
@@ -66,7 +68,8 @@ function Inventory:RemoveItem(itemName, amount)
     local playerInventory = Inventory:GetInventoryManager()
     if playerInventory ~= nil then
         local name = FName(itemName)
-        playerInventory:RemoveItemFromInventory(name, amount, false)
+        -- playerInventory:RemoveItemFromInventory(name, amount, false)
+        Logger:callMethod(playerInventory, "RemoveItemFromInventory", name, amount, false)
     end
 end
 

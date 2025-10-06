@@ -37,7 +37,7 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, 
    local deathlink = deathlink:get()
    local musicrando = musicrando:get()
 
-   print(deathlink, musicrando)
+   -- print(deathlink, musicrando)
    AP_REF:set_config(host, port, slot, password, deathlink)
 
    AP_REF:Connect()
@@ -153,6 +153,11 @@ function InitSaveAfterLumiere()
 
    Logger:info("The festival ended...")
    Characters:AddEveryone()
+
+   if Archipelago.options.char_shuffle == 0 then
+      table.insert(Storage.characters, "Frey")
+   end
+
    Characters:EnableOnlyUnlockedCharacters()
    Characters:EnableCharactersInPartyOnlyUnlocked()
    Inventory:Adding999Recoat()

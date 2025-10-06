@@ -90,7 +90,7 @@ function Logger:callMethod(obj, method_name, ...)
         self:error("callMethod failed, " .. tostring(method_name) .. " is not a function")
         return
     end
-    self:info("Function " .. method_name .. " found")
+    self:info(method_name .. " called with " .. tostring(#args) .. " arguments")
     return self:safeCall(function()
         return fun(obj, table.unpack(args)) 
     end)

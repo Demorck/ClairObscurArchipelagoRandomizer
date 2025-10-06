@@ -24,7 +24,8 @@ function Capacities:UnlockDestroyPaintedRock()
     if ExplorationProgression == nil then return end
 
     table.insert(TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
-    ExplorationProgression:UnlockFreeAimDamageLevel(1)
+    -- ExplorationProgression:UnlockFreeAimDamageLevel(1)
+    Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", 1)
     Remove(TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
 end
 
@@ -39,12 +40,13 @@ function Capacities:UnlockNextWorldMapAbility()
         local row = abilities[capacity]
         if not row.isUnlocked then
             local t = { row.enumerator }
-            -- Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-            ExplorationProgression:UnlockWorldMapCapacities(t)
+            -- ExplorationProgression:UnlockWorldMapCapacities(t)
+            Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
 
             if capacity == "Base" then
                 local t = { row.enumerator + 1 }
-                ExplorationProgression:UnlockWorldMapCapacities(t)
+                -- ExplorationProgression:UnlockWorldMapCapacities(t)
+                Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
             end
             break
         end
@@ -67,7 +69,8 @@ function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
     if index == 0 then return end
 
     local t = { index }
-    ExplorationProgression:UnlockWorldMapCapacities(t)
+    -- ExplorationProgression:UnlockWorldMapCapacities(t)
+    Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
 end
 
 --- Get the status of all world map abilities
@@ -81,7 +84,8 @@ function Capacities:GetWorldMapAbilities()
    for key, value in ipairs(WorldMapCapacities) do
       local out = {}
     --   Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
-      ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
+    --   ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
+      Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
 
       result[value] = {
         enumerator = key,
@@ -110,8 +114,8 @@ function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
         return
     end
 
-    -- Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", index, true)
-    ExplorationProgression:SetExplorationCapacityUnlocked(index, true)
+    Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", index, true)
+    -- ExplorationProgression:SetExplorationCapacityUnlocked(index, true)
 end
 
 ---Unlock all exploration capacities, except Free Aim if it's shuffled
@@ -123,13 +127,15 @@ function Capacities:UnlockAllExplorationCapacities()
     for i, _ in ipairs(ExplorationCapacities) do
         if Archipelago.options.shuffle_free_aim == 1 then
             if ExplorationCapacities[i] ~= "FreeAim" then
-                ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+                -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+                Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
             else
                 Storage.free_aim_unlocked = false
             end
         else
             Storage.free_aim_unlocked = true
-            ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+            -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
+            Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
         end
     end
 end
@@ -140,7 +146,8 @@ function Capacities:DisableFreeAimIfNeeded()
         local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
         if ExplorationProgression == nil then return end
         
-        ExplorationProgression:SetExplorationCapacityUnlocked(1, false)
+        -- ExplorationProgression:SetExplorationCapacityUnlocked(1, false)
+        Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", 1, false)
     end
 end
 

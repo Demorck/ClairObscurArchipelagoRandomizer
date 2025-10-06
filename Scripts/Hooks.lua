@@ -134,7 +134,8 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
         if data.HardcodedNameID:ToString() == "Frey" then
             local char_manager = ClientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
             if char_manager == nil then return end
-            char_manager:AddCharacterToCollectionFromSaveState(data)
+            Logger:callMethod(char_manager, "AddCharacterToCollectionFromSaveState", data)
+            -- char_manager:AddCharacterToCollectionFromSaveState(data)
         end
     end)
 
@@ -264,13 +265,6 @@ function Register_SaveData()
             return
         end
 
-        local a = data.InteractedObjects;
-        local count = 0;
-        a:ForEach(function (_, _)
-            count = count + 1
-        end)
-        print("Number of interacted objects: " .. count)
-
         local flags = data.UnlockedSpawnPoints ---@type TArray<FS_LevelSpawnPointsData>
         local new = false
         flags:ForEach(function (_, element)
@@ -358,6 +352,8 @@ function Register_AddCharacter()
                 local name = save_state.CharacterHardcodedName_36_FB9BA9294D02CFB5AD3668B0C4FD85A5:ToString()
                 Logger:info("Character " .. name .. " added to collection, but char shuffle is off. Enable it.")
                 Characters:EnableCharacter(name)
+                table.insert(Storage.characters, name)
+                Storage:Update("Hooks:AddCharacter - Char added: " .. name)
             end
         end
 
