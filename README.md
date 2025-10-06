@@ -21,9 +21,19 @@ The release will have all theses three things. If you understand this, it can be
 
 You will need the last version of the [release](https://github.com/Demorck/ClairObscurArchipelagoRandomizer/releases).
 
-Extract it in the game folders:
+There are 2 folders in the release: **Lua mod** and **Blueprint mod** and their content needs to be in two folders.
 
-- **Steam**: `<Your steam directory>\steamapps\common\Expedition 33\`
+#### **Steam**
+1. Content of **Lua mod** need to be in `Expedition 33\Sandfall\Binaries\Win64\` so *ue4ss*, *dwmapi.dll* and *lua-apclientpp.dll* is in `Expedition 33\Sandfall\Binaries\Win64\`
+2. Content of **Blueprint mod** need to be in `\Expedition 33\Sandfall\Content\Paks\LogicMods`. If *LogicMods* doesn't exist, create it. So *ClairObscurRandomizer.pak, .ucas, .utoc* is in `\Expedition 33\Sandfall\Content\Paks\LogicMods`
+3. ???
+4. Profit
+
+### Gamepass
+1. Content of **Lua mod** need to be in `Clair Obscur- Expedition 33\Content\Sandfall\Binaries\WinGDK` so *ue4ss*, *dwmapi.dll* and *lua-apclientpp.dll* is in `Clair Obscur- Expedition 33\Content\Sandfall\Binaries\WinGDK`
+2. Content of **Blueprint mod** need to be in `Clair Obscur- Expedition 33\Content\Sandfall\Content\Paks\LogicMods`. If *LogicMods* doesn't exist, create it. So *ClairObscurRandomizer.pak, .ucas, .utoc* is in `Clair Obscur- Expedition 33\Content\Sandfall\Content\Paks\LogicMods`
+3. ???
+4. Profit
 
 ### Recommended mods
 - [**Minimap mod**](https://www.nexusmods.com/clairobscurexpedition33/mods/383) by paboyafx. 
