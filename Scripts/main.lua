@@ -85,10 +85,10 @@ function Contains(table, val)
    return false
 end
 
-function Remove(table, val)
-   for i=1,#table do
-      if table[i] == val then
-         table.remove(table, i)
+function Remove(t, val)
+   for i=1,#t do
+      if t[i] == val then
+         table.remove(t, i)
          return
       end
    end
@@ -143,6 +143,13 @@ RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, New
 
    -- Hooks:Unregister()
    -- Hooks:Register()
+end)
+
+NotifyOnNewObject("/Game/Content/LevelTools/BP_jRPG_MapTeleportPoint_Interactible.BP_jRPG_MapTeleportPoint_Interactible_C", function(obj)
+   local a = obj ---@cast a ABP_jRPG_MapTeleportPoint_Interactible_C
+   if a == nil or not a:IsValid() then return end
+
+   print(tp.LevelDestination.RowName:ToString())
 end)
 
 
