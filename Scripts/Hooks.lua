@@ -344,8 +344,8 @@ function Register_SaveData()
             AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-flags", Storage.flags, false, {operation})
         end
 
-        -- Characters:ModifyPartyIfNeeded()
-        -- Characters:EnableCharactersInCollectionOnlyUnlocked()
+        Characters:ModifyPartyIfNeeded()
+        Characters:EnableCharactersInCollectionOnlyUnlocked()
         Capacities:DisableFreeAimIfNeeded()
         Save:ModifyGPEIfNeeded(data)
     end)
