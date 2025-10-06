@@ -36,15 +36,16 @@ function Capacities:UnlockNextWorldMapAbility()
     if ExplorationProgression == nil then return end
     local abilities = Capacities:GetWorldMapAbilities()
 
-    for _, capacity in ipairs(WorldMapCapacities) do
+    for i, capacity in ipairs(WorldMapCapacities) do
         local row = abilities[capacity]
-        if not row.isUnlocked then
-            local t = { row.enumerator }
+        if not row.is_unlocked then
+            local t = { i }
             -- ExplorationProgression:UnlockWorldMapCapacities(t)
             Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
 
             if capacity == "Base" then
-                local t = { row.enumerator + 1 }
+                local t = { i + 1 }
+                print("Also unlocking HardenLands")
                 -- ExplorationProgression:UnlockWorldMapCapacities(t)
                 Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
             end
