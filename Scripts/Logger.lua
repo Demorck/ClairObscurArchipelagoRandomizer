@@ -77,8 +77,6 @@ function Logger:safeCall(fn, ...)
     local ok, result = xpcall(fn, debug.traceback, ...)
     if not ok then
         Logger:error("Lua crash: " .. tostring(result))
-    else
-        Logger:info("OK ? " .. tostring(ok))
     end
     return result
 end

@@ -29,10 +29,12 @@ LoopAsync(333, function ()
     if WANT_TO_CONNECT then
         if AP_REF.APClient ~= nil then
             AP_REF.APClient:poll()
-            local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-            if a ~= nil and a:IsValid() and not Archipelago.trying_to_connect then
-                a:SetConnection(true)
-            end
+            ExecuteInGameThread(function ()
+                local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
+                if a ~= nil and a:IsValid() and not Archipelago.trying_to_connect then
+                    a:SetConnection(true)
+                end
+            end)
         else
             client.connect()
         end
@@ -40,10 +42,12 @@ LoopAsync(333, function ()
         if AP_REF.APClient ~= nil then
             Logger:info("Disconnecting from Archipelago server...")
             AP_REF.APClient = nil
-            local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-            if a ~= nil and a:IsValid() and not Archipelago.trying_to_connect then
-                a:SetConnection(false)
-            end
+            ExecuteInGameThread(function ()
+                local a = ClientBP:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
+                if a ~= nil and a:IsValid() and not Archipelago.trying_to_connect then
+                    a:SetConnection(false)
+                end
+            end)
             Hooks:Unregister()
             collectgarbage("collect")
         end

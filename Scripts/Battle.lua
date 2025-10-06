@@ -70,4 +70,40 @@ function Battle:InBattle()
     return true
 end
 
+--- Check if the battle can unlock a character
+---@param encounter_name string
+function Battle:IsBattleCanUnlockCharacter(encounter_name)
+
+    -- Lune
+    if encounter_name == "SM_FirstPortier_NoTuto*1" or encounter_name == "SM_FirstPortier*1" then
+        return true, "Lune"
+    end
+
+    -- Maelle
+    if encounter_name == "GO_Curator_JumpTutorial*1" or encounter_name == "GO_Curator_JumpTutorial_NoTuto*1" then
+        return true, "Maelle"
+    end
+
+
+    -- Sciel
+    if encounter_name == "GV_Sciel*1" then
+        return true, "Sciel"
+    end
+
+    -- Monoco
+    if encounter_name == "MM_Stalact_GradientAttackTutorial*1" then
+        return true, "Monoco"
+    end
+
+    -- Verso
+    if encounter_name == "SC_LampMaster" then
+        return true, "Verso"
+    end
+
+    -- if encounter == Renoir just kill Gustave because he's so weak.
+
+    return false, nil
+
+end
+
 return Battle

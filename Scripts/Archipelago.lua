@@ -117,7 +117,7 @@ AP_REF.on_items_received = APItemsReceivedHandler
 ---@param items_received table<integer, NetworkItem>
 function Archipelago:ItemsReceivedHandler(items_received)
     if not Archipelago:CanReceiveItems() then
-        return false
+        return
     end
 
     for _, row in pairs(items_received) do
@@ -125,20 +125,19 @@ function Archipelago:ItemsReceivedHandler(items_received)
             local item_data = GetItemFromAPData(row.item)
 
             if item_data ~= nil then
-                if Archipelago:ReceiveItem(item_data) then
-                    Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
-                    -- ClientBP:PushNotification(item_data["name"], row.player)
-                    Storage.lastReceivedItemIndex = row.index
-                    Storage:Update("Archipelago:ItemsReceivedHandler")
-                else
-                    break
-                end
+                ExecuteInGameThread(function ()
+                    if Archipelago:ReceiveItem(item_data) then
+                        Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
+                        -- ClientBP:PushNotification(item_data["name"], row.player)
+                        Storage.lastReceivedItemIndex = row.index
+                        Storage:Update("Archipelago:ItemsReceivedHandler")
+                    end
+                end)
             else
                 Logger:error("Item data is nil for item: " .. row.item)
             end
         end
     end
-
 end
 
 
@@ -270,11 +269,14 @@ function APBounceHandler(json)
     local tags = json["tags"]
     local data = json["data"]
 
-    for _, tag in ipairs(tags) do
-        if tag == "DeathLink" then
-            Archipelago:HandleDeathLink(data)
+    if tags ~= nil then
+        for _, tag in ipairs(tags) do
+            if tag == "DeathLink" then
+                Archipelago:HandleDeathLink(data)
+            end
         end
     end
+    
 end
 AP_REF.on_bounced = APBounceHandler
 

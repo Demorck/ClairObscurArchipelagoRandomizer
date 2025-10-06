@@ -16,7 +16,7 @@ function Hooks:Register()
     Register_BattleRewards()
     Register_SaveData()
     Register_CurrentLocation()
-    Register_AddCharacter()
+    -- Register_AddCharacter()
 
     Logger:info("Hooks registered.")
 end
@@ -37,6 +37,10 @@ function Register_AddItemsFromChestToInventory()
 
     local preID, postID = RegisterHook(function_name, function (Context)
         if AP_REF.APClient == nil then return end
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
         
         local chest_regular = Context:get() ---@type ABP_Chest_Regular_C
         local fname = chest_regular.ChestSetupHandle["RowName"] ---@type FName
@@ -55,6 +59,10 @@ function Register_AllChestsContentIsZero()
 
     local preID, postID = RegisterHook(function_name, function(self, lootContext, itemsToLoot)
         if AP_REF.APClient == nil then return end
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
         
         local map = itemsToLoot:get() ---@type TMap<FName, int32>
         map:Empty()
@@ -70,6 +78,10 @@ function Register_UpdateFeedback()
 
     local preID, postID = RegisterHook(function_name, function(self)
         if AP_REF.APClient == nil then return end
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
         local chest = self:get() ---@type ABP_Chest_Regular_C   
         local colors = chest.ColorWhenOpening -- When you pick the item, there is some dust. That's this color 
         colors.R = 0
@@ -103,6 +115,10 @@ function Register_RemovePortalIfNoTickets()
 
     local preID, postID = RegisterHook(function_name, function(self, _)
         if AP_REF.APClient == nil then return end
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
 
         local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
         local AP_Helper = ClientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
@@ -129,6 +145,10 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
     local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:RemoveCharacterFromCollection"
 
     local preID, postID = RegisterHook(function_name, function (self, data_param)
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
         local data = data_param:get() ---@cast data UBP_CharacterData_C
 
         if data.HardcodedNameID:ToString() == "Frey" then
@@ -148,6 +168,10 @@ function Register_EnableTPButtonInWorldMap()
     local function_name = "/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened"
 
     local preID, postID = RegisterHook(function_name, function (context)
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
         local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
         for _, value in ipairs(buttons) do
             local name = value:GetFName():ToString()
@@ -183,6 +207,9 @@ function Register_UpdateSubquests()
 
     local preID, postID = RegisterHook(function_name, function (self, objective_name, status)
         if AP_REF.APClient == nil then return end
+        if not Storage.initialized_after_lumiere then
+            return
+        end
 
         local objective_name_param = objective_name:get():ToString()
         local status_param = status:get()
@@ -211,7 +238,9 @@ function Register_BattleEndVictory()
 
     local preID, postID = RegisterHook(function_name, function (self)
         if AP_REF.APClient == nil then return end
-
+        if not Storage.initialized_after_lumiere then
+            return
+        end
 
         local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
 
@@ -226,6 +255,19 @@ function Register_BattleEndVictory()
             Logger:info("Boss defeated but not a goal: " .. encounter_name)
             Archipelago:SendLocationCheck(encounter_name)
         end
+
+        if Archipelago.options.char_shuffle == 0 then
+            local can_unlock, char_name = Battle:IsBattleCanUnlockCharacter(encounter_name)
+            if can_unlock and char_name ~= nil then
+                if not Contains(Storage.characters, char_name) then
+                    Logger:info("Unlocking character " .. char_name .. " from battle " .. encounter_name)
+                    AddingCharacterFromArchipelago = true
+                    Characters:EnableCharacter(char_name)
+                    table.insert(Storage.characters, char_name)
+                    Storage:Update("Hooks:BattleEndVictory - Char unlocked: " .. char_name)
+                end
+            end
+        end
     end)
 
     Hooks.TableIDs["BattleEndVictory"] = {preID, postID, function_name}
@@ -237,6 +279,11 @@ function Register_BattleRewards()
     local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:RollBattleRewards"
     local preID, postID = RegisterHook(function_name, function (self, rewards)
         if AP_REF.APClient == nil then return end
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
+
         local battle_rewards = rewards:get() ---@cast battle_rewards FS_BattleRewards
         battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:Empty()
     end)
@@ -297,8 +344,8 @@ function Register_SaveData()
             AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-flags", Storage.flags, false, {operation})
         end
 
-        Characters:ModifyPartyIfNeeded()
-        Characters:EnableCharactersInCollectionOnlyUnlocked()
+        -- Characters:ModifyPartyIfNeeded()
+        -- Characters:EnableCharactersInCollectionOnlyUnlocked()
         Capacities:DisableFreeAimIfNeeded()
         Save:ModifyGPEIfNeeded(data)
     end)
@@ -312,6 +359,9 @@ function Register_CurrentLocation()
     local function_name = "/Game/jRPGTemplate/Blueprints/Basics/FL_jRPG_CustomFunctionLibrary.FL_jRPG_CustomFunctionLibrary_C:GetCurrentLevelData"
 
     local preID, postID = RegisterHook(function_name, function (self, _worldContext, found, levelData, rowName)
+        if not Storage.initialized_after_lumiere then
+            return
+        end
 
         local name = rowName:get()
         local level = name:ToString()
@@ -341,12 +391,20 @@ end
 
 --- This function is called when a character is added to the collection 
 --- If char rando is on, don't do anything. Otherwise, enable the character added.
+--- @deprecated Never called
 function Register_AddCharacter()
     local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:AddNewCharacterToCollection"
 
     local preID, postID = RegisterHook(function_name, function (self, CharacterSaveState)
         if AP_REF.APClient == nil then return end
+        print(Storage.initialized_after_lumiere)
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
         local save_state = CharacterSaveState:get() ---@cast save_state FS_jRPG_CharacterSaveState
+        print(Archipelago.options.char_shuffle)
+        print(AddingCharacterFromArchipelago)
         if Archipelago.options.char_shuffle == 0 then
             if not AddingCharacterFromArchipelago then
                 local name = save_state.CharacterHardcodedName_36_FB9BA9294D02CFB5AD3668B0C4FD85A5:ToString()

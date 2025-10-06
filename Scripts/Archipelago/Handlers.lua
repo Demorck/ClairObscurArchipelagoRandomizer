@@ -88,7 +88,14 @@ end
 
 function M.set_bounced_handler(callback)
     config.APClient:set_bounced_handler(function(json)
-        Debug.print("Bounced ! " .. json, "Archipelago.Handler.set_bounced_handler")
+        -- if type(json) == "string" then
+        --     Debug.print("Bounced ! " .. json, "Archipelago.Handler.set_bounced_handler")
+        -- elseif type(json) == "table" then
+        --     Debug.print("Bounced ! " .. Dump(json), "Archipelago.Handler.set_bounced_handler")
+        -- else
+        --     Debug.print("Bounced ! (unknown type)", "Archipelago.Handler.set_bounced_handler")
+        -- end
+        
         callback(json)
     end)
 end
