@@ -4632,7 +4632,7 @@
         "type": "Chest"
     },
     {
-        "internal_name": "Chest_Generic_Lumina",
+        "internal_name": "Chest_Generic_LuminaPoint",
         "name": "Camp: Gestrals - Break Paint Spike",
         "location": "Camps",
         "original_item": "Consumable_LuminaPoint",

@@ -40,6 +40,7 @@ function Register_AddItemsFromChestToInventory()
         if not Storage.initialized_after_lumiere then
             return
         end
+        Logger:StartIGT()
 
         
         local chest_regular = Context:get() ---@type ABP_Chest_Regular_C
@@ -47,6 +48,7 @@ function Register_AddItemsFromChestToInventory()
         local name_of_chest = fname:ToString()
 
         Archipelago:SendLocationCheck(name_of_chest)
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["AddItemsFromChestToInventory"] = {preID, postID, function_name}
@@ -63,9 +65,10 @@ function Register_AllChestsContentIsZero()
             return
         end
 
-        
+        Logger:StartIGT()
         local map = itemsToLoot:get() ---@type TMap<FName, int32>
         map:Empty()
+        Logger:EndIGT()
     end)
 
     
@@ -81,6 +84,8 @@ function Register_UpdateFeedback()
         if not Storage.initialized_after_lumiere then
             return
         end
+
+        Logger:StartIGT()
 
         local chest = self:get() ---@type ABP_Chest_Regular_C   
         local colors = chest.ColorWhenOpening -- When you pick the item, there is some dust. That's this color 
@@ -102,6 +107,7 @@ function Register_UpdateFeedback()
                 
             chest:UpdateVisuals()
         end
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["UpdateFeedback"] = {preID, postID, function_name}
@@ -119,6 +125,7 @@ function Register_RemovePortalIfNoTickets()
             return
         end
 
+        Logger:StartIGT()
 
         local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
         local AP_Helper = ClientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
@@ -134,6 +141,8 @@ function Register_RemovePortalIfNoTickets()
                 end
             end
         end
+
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["RemovePortalIfNoTickets"] = {preID, postID, function_name}
@@ -148,6 +157,7 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
         if not Storage.initialized_after_lumiere then
             return
         end
+        Logger:StartIGT()
 
         local data = data_param:get() ---@cast data UBP_CharacterData_C
 
@@ -157,6 +167,8 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
             Logger:callMethod(char_manager, "AddCharacterToCollectionFromSaveState", data)
             -- char_manager:AddCharacterToCollectionFromSaveState(data)
         end
+
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["SaveCharacterFromAnUnvoidableDeath"] = {preID, postID, function_name}
@@ -172,6 +184,7 @@ function Register_EnableTPButtonInWorldMap()
             return
         end
 
+        Logger:StartIGT()
         local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
         for _, value in ipairs(buttons) do
             local name = value:GetFName():ToString()
@@ -190,6 +203,7 @@ function Register_EnableTPButtonInWorldMap()
                 end
             end
         end
+        Logger:EndIGT()
     end)
 
 
@@ -207,10 +221,8 @@ function Register_UpdateSubquests()
 
     local preID, postID = RegisterHook(function_name, function (self, objective_name, status)
         if AP_REF.APClient == nil then return end
-        if not Storage.initialized_after_lumiere then
-            return
-        end
 
+        Logger:StartIGT()
         local objective_name_param = objective_name:get():ToString()
         local status_param = status:get()
         
@@ -224,6 +236,7 @@ function Register_UpdateSubquests()
         elseif string.find(objective_name_param, "FindLostGestral") and status_param == QUEST_STATUS.COMPLETED then
             Quests:SendNextGestralReward(objective_name_param)
         end
+        Logger:EndIGT()
     end)
 
     
@@ -241,6 +254,8 @@ function Register_BattleEndVictory()
         if not Storage.initialized_after_lumiere then
             return
         end
+
+        Logger:StartIGT()
 
         local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
 
@@ -268,6 +283,8 @@ function Register_BattleEndVictory()
                 end
             end
         end
+
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["BattleEndVictory"] = {preID, postID, function_name}
@@ -283,9 +300,10 @@ function Register_BattleRewards()
             return
         end
 
-
+        Logger:StartIGT()
         local battle_rewards = rewards:get() ---@cast battle_rewards FS_BattleRewards
         battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:Empty()
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["BattleRewards"] = {preID, postID, function_name}
@@ -299,7 +317,11 @@ function Register_SaveData()
     local function_name = "/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:SaveGameToFile"
 
     local preID, postID = RegisterHook(function_name, function(self, SaveName)
-       ---@cast self UBP_SaveManager_C
+        local manager = self:get() ---@cast manager UBP_SaveManager_C
+        if AP_REF.APClient == nil or manager == nil or not manager:IsValid() then return end
+
+        local a = manager.LastRequestReason
+        print(a:ToString())
        ---@cast SaveName FName
 
         local data = FindFirstOf("BP_SaveGameData_C") ---@type UBP_SaveGameData_C
@@ -311,6 +333,8 @@ function Register_SaveData()
         if not Storage.initialized_after_lumiere then
             return
         end
+
+        Logger:StartIGT()
 
         local flags = data.UnlockedSpawnPoints ---@type TArray<FS_LevelSpawnPointsData>
         local new = false
@@ -347,7 +371,8 @@ function Register_SaveData()
         Characters:ModifyPartyIfNeeded()
         Characters:EnableCharactersInCollectionOnlyUnlocked()
         Capacities:DisableFreeAimIfNeeded()
-        Save:ModifyGPEIfNeeded(data)
+
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["SaveData"] = {preID, postID, function_name}
@@ -363,6 +388,7 @@ function Register_CurrentLocation()
             return
         end
 
+        Logger:StartIGT()
         local name = rowName:get()
         local level = name:ToString()
         local new = false
@@ -384,6 +410,8 @@ function Register_CurrentLocation()
             }
             AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-currentLocation", Storage.currentLocation, false, {operation})
         end
+
+        Logger:EndIGT()
     end)
 
     Hooks.TableIDs["CurrentLocation"] = {preID, postID, function_name}
@@ -397,7 +425,6 @@ function Register_AddCharacter()
 
     local preID, postID = RegisterHook(function_name, function (self, CharacterSaveState)
         if AP_REF.APClient == nil then return end
-        print(Storage.initialized_after_lumiere)
         if not Storage.initialized_after_lumiere then
             return
         end

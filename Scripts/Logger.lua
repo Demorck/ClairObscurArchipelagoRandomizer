@@ -94,6 +94,13 @@ function Logger:callMethod(obj, method_name, ...)
     end)
 end
 
+function Logger:StartIGT()
+    Logger:info("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+end
+
+function Logger:EndIGT()
+    Logger:info("ɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅ")
+end
 
 
 --- Wrap a table with logging

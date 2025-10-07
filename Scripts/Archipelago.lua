@@ -116,23 +116,26 @@ AP_REF.on_items_received = APItemsReceivedHandler
 ---comment
 ---@param items_received table<integer, NetworkItem>
 function Archipelago:ItemsReceivedHandler(items_received)
-    if not Archipelago:CanReceiveItems() then
-        return
-    end
-
     for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
             local item_data = GetItemFromAPData(row.item)
 
             if item_data ~= nil then
                 ExecuteInGameThread(function ()
+                    if Storage.initialized_after_lumiere and not Archipelago:CanReceiveItems() then
+                        return
+                    end
+                    
+                    Logger:StartIGT()
                     if Archipelago:ReceiveItem(item_data) then
                         Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
                         -- ClientBP:PushNotification(item_data["name"], row.player)
                         Storage.lastReceivedItemIndex = row.index
                         Storage:Update("Archipelago:ItemsReceivedHandler")
                     end
+                    Logger:EndIGT()
                 end)
+
             else
                 Logger:error("Item data is nil for item: " .. row.item)
             end
@@ -312,10 +315,6 @@ end
 
 function Archipelago:CanReceiveItems()
     if not Archipelago:IsConnected() then
-        return false
-    end
-
-    if not Storage.initialized_after_lumiere then
         return false
     end
 
