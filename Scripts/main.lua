@@ -136,14 +136,14 @@ LoopAsync(333, function ()
    return false
 end)
 
-RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, NewPawn)
-   if AP_REF.APClient == nil then return end
+-- RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self, NewPawn)
+--    if AP_REF.APClient == nil then return end
 
-   -- Hooks:Unregister()
-   -- Hooks:Register()
-end)
+--    -- Hooks:Unregister()
+--    -- Hooks:Register()
+-- end)
 
-NotifyOnNewObject("/Game/Content/LevelTools/BP_jRPG_MapTeleportPoint_Interactible.BP_jRPG_MapTeleportPoint_Interactible_C", function(obj)
+NotifyOnNewObject("/Game/LevelTools/BP_jRPG_MapTeleportPoint_Interactible.BP_jRPG_MapTeleportPoint_Interactible_C", function(obj)
    local a = obj ---@cast a ABP_jRPG_MapTeleportPoint_Interactible_C
    if a == nil or not a:IsValid() then return end
 
