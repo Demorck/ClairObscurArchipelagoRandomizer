@@ -19,7 +19,7 @@ local Archipelago = {}
 Archipelago.seed = nil
 Archipelago.slot = nil
 
-Archipelago.options = {} -- comes over in slot data
+Archipelago.options = {} ---@type ArchipelagoOptions -- comes over in slot data
 Archipelago.totals = {}
 Archipelago.weapons_data = {}
 Archipelago.pictos_data = {}
@@ -116,31 +116,31 @@ AP_REF.on_items_received = APItemsReceivedHandler
 ---comment
 ---@param items_received table<integer, NetworkItem>
 function Archipelago:ItemsReceivedHandler(items_received)
+    if Storage.initialized_after_lumiere and not Archipelago:CanReceiveItems() then
+        return
+    end
+
     for _, row in pairs(items_received) do
         if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
+            Logger:StartIGT("ItemsReceivedHandler")
             local item_data = GetItemFromAPData(row.item)
 
             if item_data ~= nil then
-                ExecuteInGameThread(function ()
-                    if Storage.initialized_after_lumiere and not Archipelago:CanReceiveItems() then
-                        return
-                    end
-                    
-                    Logger:StartIGT()
-                    if Archipelago:ReceiveItem(item_data) then
-                        Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
-                        -- ClientBP:PushNotification(item_data["name"], row.player)
-                        Storage.lastReceivedItemIndex = row.index
-                        Storage:Update("Archipelago:ItemsReceivedHandler")
-                    end
-                    Logger:EndIGT()
-                end)
-
+                if Archipelago:ReceiveItem(item_data) then
+                    Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
+                    -- ClientBP:PushNotification(item_data["name"], row.player)
+                    Storage.lastReceivedItemIndex = row.index
+                    Storage:Update("Archipelago:ItemsReceivedHandler")
+                end
             else
                 Logger:error("Item data is nil for item: " .. row.item)
             end
+
+            
+            Logger:EndIGT("ItemsReceivedHandler")
         end
     end
+
 end
 
 
@@ -148,7 +148,6 @@ end
 ---@param item_data table<string, any>
 ---@return boolean returns true if the item was successfully received, false otherwise
 function Archipelago:ReceiveItem(item_data)
-
     local local_item_data = nil ---@type ItemData
 
     for _, item in pairs(Data.items) do
@@ -333,9 +332,7 @@ function Archipelago:CanReceiveItems()
     if not ClientBP:InLevel() then
         return false
     end
-
-
-
+    
     return true
 end
 
@@ -477,11 +474,36 @@ function HandleMultipleLocations(location_name, locations_data)
         return res
     end
 
+    function HandlePetank()
+        local predicate = {
+            ["Sirene"] = "Level_Sirene_Main_V2",
+            ["Ancient Sanctuary"] = "Level_AncientSanctuary_Main_V2",
+            ["Frozen Hearts"] = "Level_Side_FrozenHeart",
+            ["The Monolith"] = "Level_Monolith_Interior_Climb_Main",
+            ["Isle of the Eyes"] = "SmallLevel_MF_Zone_01",
+            ["Stone Wave Cliffs"] = "ConceptLevel_SeaCliff_V1",
+            ["Flying Manor"] = "Level_CleaFlyingHouse_Main",
+            ["Forgotten Battlefield"] = "Level_Main_ForgottenBattlefield_V2",
+            ["Endless Night Sanctuary"] = "Level_Side_TwilightSanctuary",
+            ["Esquie’s Nest"] = "LevelMain_EsquieNest",
+            ["The Reacher"] = "Level_Reacher_Main_V2"
+        }
+
+        for _, loc in pairs(locations_data) do
+            local region = loc["location"]
+            if predicate[region] ~= nil and predicate[region] == level_name then
+                return loc
+            end
+        end
+    end
+
     local res = nil
     if location_name == "Chest_Generic_Chroma" then
         res = HandleGenericChroma()
     elseif location_name == "Chest_Generic_5xLuminaPoint" then
         res = HandleDiveItems()
+    elseif string.find(location_name, "^Petank") then
+        res = HandlePetank()
     end
 
     return res or locations_data[1]

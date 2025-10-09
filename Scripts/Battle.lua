@@ -3,6 +3,8 @@ local Battle = {}
 local BluePrintName = "AC_jRPG_BattleManager_C"
 local goals = {"L_Boss_Paintress_P1", "L_Boss_Curator_P1", "TowerBattle_33", "Boss_SimonPhase2*1"}
 
+
+
 ---Return the Battle manager
 ---@return UAC_jRPG_BattleManager_C | nil
 function Battle:GetManager()
@@ -40,7 +42,7 @@ end
 ---@param encounter_name string
 ---@return boolean
 function Battle:IsBossNotGoal(encounter_name)
-    local row = Data:FindEntry(Data.locations, encounter_name) ---@cast row LocationData | nil
+    local row = Data:FindEntry(Data.locations, encounter_name) ---@cast row LocationData | table<LocationData> | nil
 
     if row == nil then 
         Logger:warn("This encounter in IsBossNotGoal is nil: " .. encounter_name)

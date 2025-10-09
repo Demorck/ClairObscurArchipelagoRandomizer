@@ -59,7 +59,10 @@ function Inventory:AddItem(itemName, amount, item_level)
 
     -- Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     -- playerInventory:AddItemToInventory(name, amount, lootContext, returned)
+    table.insert(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
     Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
+    Remove(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
+    
     return true
 end
 

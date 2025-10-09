@@ -1,6 +1,8 @@
 local Hooks = {}
 
 Hooks.TableIDs = {}
+Hooks.AddingButtonHook = false
+Hooks.AddingGestralHook = false
 
 function Hooks:Register()
     Logger:info("Registering hooks...")
@@ -8,7 +10,6 @@ function Hooks:Register()
     Register_AddItemsFromChestToInventory()
     Register_AllChestsContentIsZero()
     Register_UpdateFeedback()
-    -- Register_RemovePortalIfNoTickets()
     Register_SaveCharacterFromAnUnvoidableDeath()
     Register_EnableTPButtonInWorldMap()
     Register_UpdateSubquests()
@@ -16,8 +17,7 @@ function Hooks:Register()
     Register_BattleRewards()
     Register_SaveData()
     Register_CurrentLocation()
-    Register_AddingButtonSavePoint()
-    -- Register_AddCharacter()
+    Register_AddItemToInventory()
 
     Logger:info("Hooks registered.")
 end
@@ -108,39 +108,6 @@ function Register_UpdateFeedback()
     Hooks.TableIDs["UpdateFeedback"] = {preID, postID, function_name}
 end
 
---- This hook is called when the player is loaded into a new map.
---- Only in the worldmap has a MapTeleportPoint_Interactible actor, so we check if we are in the worldmap
---- Then, we check all the teleport points. If the player doesn't have the ticket for the destination, we remove the portal with the blueprint mod.
-function Register_RemovePortalIfNoTickets()
-    local function_name = "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:UpdateFeedbackParametersFromLoot"
-
-    local preID, postID = RegisterHook(function_name, function(self, _)
-        if AP_REF.APClient == nil then return end
-        if not Storage.initialized_after_lumiere then
-            return
-        end
-
-
-        local interactible = FindAllOf("BP_jRPG_MapTeleportPoint_Interactible_C") ---@cast interactible ABP_jRPG_MapTeleportPoint_Interactible_C[]
-        local AP_Helper = ClientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
-        if interactible == nil or AP_Helper == nil or not AP_Helper:IsValid() then return end
-
-        for _, tp in ipairs(interactible) do
-            local scene = tp.LevelDestination.RowName:ToString()
-            if Storage.tickets[scene] == false then
-                AP_Helper:RemoveInteractibleIfNoTicket(tp)
-            else
-                if tp.DestinationSpawnPointTag.TagName:ToString() == "Level.SpawnPoint.OldLumiere.EndPath" and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED then
-                    AP_Helper:RemoveInteractibleIfNoTicket(tp)
-                end
-            end
-        end
-
-    end)
-
-    Hooks.TableIDs["RemovePortalIfNoTickets"] = {preID, postID, function_name}
-end
-
 ---Basically save Gustave at the end of Act 1
 --- If we don't test if it's Frey (Gustave internal name), we can save Sophie at the end of prologue and Alicia from the act 3.
 function Register_SaveCharacterFromAnUnvoidableDeath()
@@ -214,6 +181,7 @@ function Register_UpdateSubquests()
         local objective_name_param = objective_name:get():ToString()
         local status_param = status:get()
         
+        Logger:info("Game change subquest: " .. objective_name_param .. " to " .. status_param)
         if not Storage.initialized_after_lumiere and objective_name_param == "2_SpringMeadow" and status_param == QUEST_STATUS.STARTED then
             InitSaveAfterLumiere()
         elseif objective_name_param == "1_LumiereBeginning" and status_param ~= QUEST_STATUS.COMPLETED then
@@ -222,7 +190,9 @@ function Register_UpdateSubquests()
         elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == QUEST_STATUS.STARTED then
             Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.COMPLETED)
         elseif string.find(objective_name_param, "FindLostGestral") and status_param == QUEST_STATUS.COMPLETED then
-            Quests:SendNextGestralReward(objective_name_param)
+            if Archipelago.options.gestral_shuffle == 1 then 
+                Archipelago:SendLocationCheck(objective_name_param)
+             end
         end
     end)
 
@@ -286,7 +256,14 @@ function Register_BattleRewards()
         end
 
         local battle_rewards = rewards:get() ---@cast battle_rewards FS_BattleRewards
-        battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:Empty()
+        battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:ForEach(function (_, entry)
+            entry = entry:get() ---@cast entry FS_RolledLootEntry
+            if not string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "foot") and not string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "Merchant") then
+                entry.Quantity_5_6316FB3244212C5481CB6E8C09995EF0 = 0
+            else
+
+            end
+        end)
     end)
 
     Hooks.TableIDs["BattleRewards"] = {preID, postID, function_name}
@@ -311,6 +288,11 @@ function Register_SaveData()
 
         if not Storage.initialized_after_lumiere then
             return
+        end
+
+        if not Hooks.AddingButtonHook then
+            Register_AddingButtonSavePoint()
+            Hooks.AddingButtonHook = true
         end
 
 
@@ -360,16 +342,70 @@ end
 function Register_CurrentLocation()
     local function_name = "/Game/jRPGTemplate/Blueprints/Basics/FL_jRPG_CustomFunctionLibrary.FL_jRPG_CustomFunctionLibrary_C:GetCurrentLevelData"
 
+    function RemovePortals()
+        local a = FindFirstOf("BP_WorldInfoComponent_C") ---@cast a UBP_WorldInfoComponent_C
+        if a == nil or not a:IsValid() then return end
+
+        Logger:StartIGT("RemovePortals")
+        local portal_array = a.WorldTeleportPoints
+        local a = {
+            Rotation = {
+                X = 0,
+                Y = 0,
+                Z = 0,
+                W = 0
+            },
+
+            Translation = {
+                X = 0,
+                Y = -1000,
+                Z = 0,
+            },
+
+            Scale3D = {
+                X = 0,
+                Y = 0,
+                Z = 0,
+            },
+        } ---@type FTransform
+        portal_array:ForEach(function (_, portal)
+            portal = portal:get()
+            ---@cast portal ABP_jRPG_MapTeleportPoint_C
+            if portal == nil or not portal:IsValid() then return end
+
+            local class_name = portal:GetClass():GetFName():ToString()
+            if class_name ~= "BP_jRPG_MapTeleportPoint_Interactible_C" then return end
+
+            local scene = portal.LevelDestination.RowName:ToString()
+            if Storage.tickets[scene] == false then
+
+                portal:K2_SetActorRelativeTransform(a, false, {}, true)
+            else
+                if portal.DestinationSpawnPointTag.TagName:ToString() == "Level.SpawnPoint.OldLumiere.EndPath" and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED then
+                    portal:K2_SetActorRelativeTransform(a, false, {}, true)
+                end
+            end
+        end)
+        Logger:EndIGT("RemovePortals")
+    end
+
     local preID, postID = RegisterHook(function_name, function (self, _worldContext, found, levelData, rowName)
         if not Storage.initialized_after_lumiere then
             return
         end
 
+        Logger:StartIGT("GetCurrentLevelData")
+
         local name = rowName:get()
         local level = name:ToString()
         local new = false
 
-        
+        if level == "WorldMap" then
+            RemovePortals()
+        elseif level == "Camps" and not Hooks.AddingGestralHook then
+            Register_GetGestralCount()
+            Hooks.AddingGestralHook = true
+        end
 
         if Storage.currentLocation ~= level and level ~= "None" then
 
@@ -388,6 +424,9 @@ function Register_CurrentLocation()
             AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-currentLocation", Storage.currentLocation, false, {operation})
         end
 
+        
+        Logger:EndIGT("GetCurrentLevelData")
+
     end)
 
     Hooks.TableIDs["CurrentLocation"] = {preID, postID, function_name}
@@ -404,6 +443,44 @@ function Register_AddingButtonSavePoint()
     end)
 
     Hooks.TableIDs["AddingButtonSavePoint"] = {preID, postID, function_name}
+end
+
+function Register_AddItemToInventory()
+    local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_InventoryManager.AC_jRPG_InventoryManager_C:AddItemToInventory"
+
+    local preID, postID = RegisterHook(function_name, function (context, ItemHardcodedName, Amount, LootContext, GeneratedItem)
+        if not Storage.initialized_after_lumiere then return end
+        if Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then return end
+
+        local item_name = ItemHardcodedName:get():ToString()
+        local inv_manager = context:get() ---@cast inv_manager UAC_jRPG_InventoryManager_C
+        if item_name == "LostGestral" then
+            if Archipelago.options.char_shuffle == 1 then
+                Storage.gestral_found = Storage.gestral_found + 1
+                inv_manager:RemoveItemFromInventory(FName(item_name), 1, true)
+                Storage:Update("AddItemToInventory - LostGestral")
+            end
+        end
+    end)
+
+    Hooks.TableIDs["AddItemToInventory"] = {preID, postID, function_name}
+end
+
+function Register_GetGestralCount()
+    local function_name = "/Game/Narrative/Dialogs/LevelsDialogs/Camp/BP_Dialogue_Quest_LostGestralChief.BP_Dialogue_Quest_LostGestralChief_C:GetFoundLostGestralCount"
+
+    local preID, postID = RegisterHook(function_name, function (self)
+        if AP_REF.APClient == nil then return end
+
+        if Archipelago.options.gestral_shuffle == 0 then return end
+
+        for i = 1, Storage.gestral_found do
+            Archipelago:SendLocationCheck("Lost Gestral reward " .. tostring(i))
+        end
+    end)
+
+    
+    Hooks.TableIDs["GetGestralCount"] = {preID, postID, function_name}
 end
 
 

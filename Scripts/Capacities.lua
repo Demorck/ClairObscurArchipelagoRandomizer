@@ -36,6 +36,7 @@ function Capacities:UnlockNextWorldMapAbility()
     if ExplorationProgression == nil then return end
     local abilities = Capacities:GetWorldMapAbilities()
 
+    local new = false
     for i, capacity in ipairs(WorldMapCapacities) do
         local row = abilities[capacity]
         if not row.is_unlocked then
@@ -45,12 +46,17 @@ function Capacities:UnlockNextWorldMapAbility()
 
             if capacity == "Base" then
                 local t = { i + 1 }
-                print("Also unlocking HardenLands")
                 -- ExplorationProgression:UnlockWorldMapCapacities(t)
                 Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
             end
+
+            new = true
             break
         end
+    end
+
+    if not new then
+        Save:WriteFlagByID("NID_EsquieUnderwaterUnlocked", true)
     end
 end
 

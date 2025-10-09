@@ -38,4 +38,19 @@ function Save:ModifyGPEIfNeeded(save_data)
     -- end
 end
 
+function Save:WriteFlagByID(flag_id, boolean_value)
+    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    if helper == nil or not helper:IsValid() then return end
+
+    local flags = {}
+    helper:GetPersistentFlags(flags)
+    for k, v in ipairs(flags) do
+        local value = v:get() ---@cast value UNamedID
+        local name = value.Name:ToString()
+        if name == flag_id then
+            helper:WritePersistentFlag(value, boolean_value)
+        end
+    end
+end
+
 return Save

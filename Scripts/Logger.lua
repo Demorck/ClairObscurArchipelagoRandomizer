@@ -94,12 +94,12 @@ function Logger:callMethod(obj, method_name, ...)
     end)
 end
 
-function Logger:StartIGT()
-    Logger:info("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+function Logger:StartIGT(name)
+    Logger:info("VVVVVVVVVVVVVVV  " .. name .. "  VVVVVVVVVVVVVVV")
 end
 
-function Logger:EndIGT()
-    Logger:info("ɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅ")
+function Logger:EndIGT(name)
+    Logger:info("ɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅ  " .. name .. "  ɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅ")
 end
 
 

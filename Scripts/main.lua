@@ -17,8 +17,18 @@ RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 TABLE_CURRENT_AP_FUNCTION = {}
 function TestSomeFunctions()
+   Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED);
 end
 function PrintMessage()
+   local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory"
+
+   RegisterHook(function_name, function (self)
+      local helper = self:get() ---@cast helper UAC_jRPG_BattleManager_C
+
+
+      local encounter_name = helper.EncounterName:ToString()
+      Logger:info("Battle ended: " .. encounter_name)
+   end)
 end
 
 function Debug_things()
@@ -128,7 +138,7 @@ LoopAsync(333, function ()
          -- end
    end
 
-    if not Archipelago.waitingForSync then
+   if not Archipelago.waitingForSync then
       Archipelago.waitingForSync = true
    end
 

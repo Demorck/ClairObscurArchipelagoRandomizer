@@ -61,34 +61,6 @@ function Quests:UnlockNextGestral()
     Save:SaveGame()
 end
 
-function Quests:SendNextGestralReward(objective_name)
-    if Archipelago.options.gestral_shuffle == 0 then return end
-
-    Logger:info("Sending reward for gestral: " .. objective_name)
-    local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C | nil
-    if quest_system == nil then return end
-
-    if objective_name == "FindLostGestral_1" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 1")
-    elseif objective_name == "FindLostGestral_2" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 2")
-    elseif objective_name == "FindLostGestral_3" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 3")
-    elseif objective_name == "FindLostGestral_4" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 4")
-    elseif objective_name == "FindLostGestral_5" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 5")
-    elseif objective_name == "FindLostGestral_6" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 6")
-    elseif objective_name == "FindLostGestral_7" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 7")
-    elseif objective_name == "FindLostGestral_8" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 8")
-    elseif objective_name == "FindLostGestral_9" then
-        Archipelago:SendLocationCheck("Lost Gestral reward 9")
-    end
-end
-
 function Quests:SetObjectiveStatus(quest_name, objective_name, status)
     Logger:info("Setting objective status: " .. objective_name .. "(" .. quest_name .. ") to " .. status)
     local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C
@@ -96,13 +68,7 @@ function Quests:SetObjectiveStatus(quest_name, objective_name, status)
 
     local fname = FName(quest_name)
     local quest_data = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
-    quest_data.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:ForEach(function (key, value)
-        local name = key:get():ToString()
-        if name == objective_name then
-            Logger:info("Checking objective: " .. name)
-            value:set(status)
-        end
-    end)
+    quest_data.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Add(FName(objective_name), status)
 
     Save:SaveGame()
 end
