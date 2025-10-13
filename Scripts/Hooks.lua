@@ -398,30 +398,35 @@ function Register_CurrentLocation()
 
         local name = rowName:get()
         local level = name:ToString()
-        local new = false
 
-        if level == "WorldMap" then
-            RemovePortals()
-        elseif level == "Camps" and not Hooks.AddingGestralHook then
-            Register_GetGestralCount()
-            Hooks.AddingGestralHook = true
-        end
+        if Storage.currentLocation ~= level then
 
-        if Storage.currentLocation ~= level and level ~= "None" then
+            print("Level changed to: "..level)
+            
+            local new = false
 
-            Logger:info("Changing level. New level is: " .. level)
-            Storage.currentLocation = level
-            new = true
-        end
+            if level == "WorldMap" then
+                RemovePortals()
+            elseif level == "Camps" and not Hooks.AddingGestralHook then
+                Register_GetGestralCount()
+                Hooks.AddingGestralHook = true
+            end
 
-        if new then
-            Logger:info("Current location changed to "..level)
-            --Storage:Update("Hooks:SaveData - Current Location")
-            local operation = {
-                operation = "replace",
-                value = Storage.currentLocation
-            }
-            AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-currentLocation", Storage.currentLocation, false, {operation})
+            if level ~= "None" then
+                Logger:info("Changing level. New level is: " .. level)
+                Storage.currentLocation = level
+                new = true
+            end
+
+            if new then
+                Logger:info("Current location changed to "..level)
+                --Storage:Update("Hooks:SaveData - Current Location")
+                local operation = {
+                    operation = "replace",
+                    value = Storage.currentLocation
+                }
+                AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-currentLocation", Storage.currentLocation, false, {operation})
+            end
         end
 
         
