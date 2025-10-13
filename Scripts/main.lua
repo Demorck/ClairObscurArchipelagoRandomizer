@@ -125,7 +125,7 @@ RegisterKeyBind(Key.F3, { ModifierKey.CONTROL }, function()
 end)
 
 
-LoopAsync(333, function ()
+LoopAsync(1000, function ()
    if AP_REF.APClient == nil then return false end
 
    if Archipelago.waitingForSync then
