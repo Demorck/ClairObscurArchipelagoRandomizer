@@ -70,7 +70,7 @@ function Archipelago:Sync()
         return
     end
 
-    AP_REF.APClient:Sync()
+    -- AP_REF.APClient:Sync()
 end
 
 function APSlotConnectedHandler(slot_data)

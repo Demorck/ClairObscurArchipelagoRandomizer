@@ -73,10 +73,10 @@ function Logger:debug(msg)
     writeLine("[DEBUG] " .. tostring(msg))
 end
 
-function Logger:safeCall(fn, ...)
+function Logger:safeCall(fn, method_name, ...)
     local ok, result = xpcall(fn, debug.traceback, ...)
     if not ok then
-        Logger:error("Lua crash: " .. tostring(result))
+        self:error("Lua crash: " .. tostring(result))
     end
     return result
 end

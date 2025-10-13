@@ -46,12 +46,21 @@ function Battle:IsBossNotGoal(encounter_name)
 
     if row == nil then 
         Logger:warn("This encounter in IsBossNotGoal is nil: " .. encounter_name)
-        return false end
+        return false 
+    end
+
+    if type(row) == "table" then
+        for _, r in ipairs(row) do
+            if (r.type == "Boss" or r.type == "Tower") and not Battle:IsEncounterGoal(encounter_name) then
+                return true
+            end
+        end
+    end
 
     if (row.type == "Boss" or row.type == "Tower") and not Battle:IsEncounterGoal(encounter_name) then
         return true
     end
-
+    
     return false
 end
 

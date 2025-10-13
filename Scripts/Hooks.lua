@@ -216,7 +216,6 @@ function Register_BattleEndVictory()
         local current_context = self:get() ---@cast current_context UAC_jRPG_BattleManager_C
 
         local encounter_name = current_context.EncounterName:ToString()
-
         if Battle:IsEncounterGoal(encounter_name) then
             Logger:info("Goal achieved: " .. encounter_name .. " ! Bravo !")
             Archipelago:SendVictory()
@@ -256,14 +255,24 @@ function Register_BattleRewards()
         end
 
         local battle_rewards = rewards:get() ---@cast battle_rewards FS_BattleRewards
+        local rewards = {} ---@type table<FS_RolledLootEntry>
         battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:ForEach(function (_, entry)
             entry = entry:get() ---@cast entry FS_RolledLootEntry
-            if not string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "foot") and not string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "Merchant") then
-                entry.Quantity_5_6316FB3244212C5481CB6E8C09995EF0 = 0
-            else
-
+            if string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "Foot") or string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "Merchant") then
+                print(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString())
+                local struct = {}
+                struct.ItemID_2_FDDBE5744EC164155E4C959474052581                 = entry.ItemID_2_FDDBE5744EC164155E4C959474052581
+                struct.LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7 = entry.LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7
+                struct.Quantity_5_6316FB3244212C5481CB6E8C09995EF0               = entry.Quantity_5_6316FB3244212C5481CB6E8C09995EF0
+                table.insert(rewards, struct)
             end
         end)
+
+        battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:Empty()
+        for i, reward in ipairs(rewards) do
+            print(reward.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString())
+            battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883[i] = reward
+        end
     end)
 
     Hooks.TableIDs["BattleRewards"] = {preID, postID, function_name}
@@ -394,13 +403,13 @@ function Register_CurrentLocation()
             return
         end
 
-        Logger:StartIGT("GetCurrentLevelData")
 
         local name = rowName:get()
         local level = name:ToString()
 
         if Storage.currentLocation ~= level then
 
+            Logger:StartIGT("GetCurrentLevelData")
             print("Level changed to: "..level)
             
             local new = false
@@ -427,11 +436,11 @@ function Register_CurrentLocation()
                 }
                 AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-currentLocation", Storage.currentLocation, false, {operation})
             end
+
+            Logger:EndIGT("GetCurrentLevelData")
         end
 
-        
-        Logger:EndIGT("GetCurrentLevelData")
-
+    
     end)
 
     Hooks.TableIDs["CurrentLocation"] = {preID, postID, function_name}

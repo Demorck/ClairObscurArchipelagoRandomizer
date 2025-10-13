@@ -125,26 +125,6 @@ RegisterKeyBind(Key.F3, { ModifierKey.CONTROL }, function()
 end)
 
 
-LoopAsync(1000, function ()
-   if AP_REF.APClient == nil then return false end
-
-   if Archipelago.waitingForSync then
-         Archipelago.waitingForSync = false
-         Archipelago:Sync()
-
-         -- if RequestInitLumiere and Archipelago:CanReceiveItems() and not Storage.initialized_after_lumiere then
-         --    RequestInitLumiere = false
-         --    InitSaveAfterLumiere()
-         -- end
-   end
-
-   if not Archipelago.waitingForSync then
-      Archipelago.waitingForSync = true
-   end
-
-   return false
-end)
-
 function InitSaveAfterLumiere()
    if Storage.initialized_after_lumiere then
       return false
