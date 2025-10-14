@@ -41,15 +41,22 @@ function Capacities:UnlockNextWorldMapAbility()
         local row = abilities[capacity]
         if not row.is_unlocked then
             local t = { i }
+
+            
+            table.insert(TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
             -- ExplorationProgression:UnlockWorldMapCapacities(t)
             Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
+            table.insert(Storage.capacities, i)
 
             if capacity == "Base" then
                 local t = { i + 1 }
                 -- ExplorationProgression:UnlockWorldMapCapacities(t)
                 Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
+                table.insert(Storage.capacities, i + 1)
             end
 
+            Storage:Update("UnlockSpecificWorldMapCapacity")
+            Remove(TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
             new = true
             break
         end
@@ -58,26 +65,6 @@ function Capacities:UnlockNextWorldMapAbility()
     if not new then
         Save:WriteFlagByID("NID_EsquieUnderwaterUnlocked", true)
     end
-end
-
---- Unlock a specific world map capacity
----@param capacity_to_unlock string the internal name of capacity to unlock
-function Capacities:UnlockSpecificWorldMapCapacity(capacity_to_unlock)
-    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-    if ExplorationProgression == nil then return end
-    
-    local index = 0
-    for i, capacity in ipairs(WorldMapCapacities) do
-        if capacity == capacity_to_unlock then
-            index = i
-        end
-    end
-
-    if index == 0 then return end
-
-    local t = { index }
-    -- ExplorationProgression:UnlockWorldMapCapacities(t)
-    Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
 end
 
 --- Get the status of all world map abilities

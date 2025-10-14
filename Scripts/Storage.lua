@@ -35,6 +35,7 @@ Storage.currentLocation = "None"
 Storage.free_aim_unlocked = false
 Storage.dive_items = 0
 Storage.gestral_found = 0
+Storage.capacities = {}
 
 local Default_storage = {}
 Default_storage.initialized = false
@@ -73,6 +74,8 @@ Default_storage.currentLocation = "None"
 Default_storage.free_aim_unlocked = false
 Default_storage.dive_items = 0
 Default_storage.gestral_found = 0
+Default_storage.capacities = {}
+
 
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
@@ -88,6 +91,7 @@ function Storage:Load()
         Storage.free_aim_unlocked         = file["free_aim_unlocked"] or Default_storage.free_aim_unlocked 
         Storage.dive_items                = file["dive_items"] or Default_storage.dive_items
         Storage.gestral_found             = file["gestral_found"] or Default_storage.gestral_found
+        Storage.capacities                = file["capacities"] or Default_storage.capacities
 
         Logger:info("Storage loaded from " .. Storage:GetFilePath())
         Logger:info("Last received item index: " .. Storage.lastReceivedItemIndex)
@@ -125,7 +129,8 @@ function Storage:Update(from)
         characters        = Storage.characters,
         free_aim_unlocked = Storage.free_aim_unlocked,
         dive_items        = Storage.dive_items,
-        gestral_found     = Storage.gestral_found
+        gestral_found     = Storage.gestral_found,
+        capacities        = Storage.capacities
     }
 
     JSON.write_file(Storage:GetFilePath(), values)

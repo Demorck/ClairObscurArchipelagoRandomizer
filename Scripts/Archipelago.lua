@@ -169,6 +169,8 @@ function Archipelago:ReceiveItem(item_data)
             Quests:SetObjectiveStatus("Main_GoldenPath", "6_EsquieNest", QUEST_STATUS.STARTED)
         elseif local_item_data.name == "Area - Stone Wave Cliffs" then
             Quests:SetObjectiveStatus("Main_ForcedCamps", "4_ForcedCamp_PostEsquieNest", QUEST_STATUS.COMPLETED)
+        elseif local_item_data.name == "Area - Old Lumiere" then
+            Quests:SetObjectiveStatus("Main_GoldenPath", "10_OldLumiere", QUEST_STATUS.STARTED)
         elseif local_item_data.name == "Area - The Monolith" then
             Quests:SetObjectiveStatus("Main_GoldenPath", "12_Axon2", QUEST_STATUS.COMPLETED)
             Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.STARTED)

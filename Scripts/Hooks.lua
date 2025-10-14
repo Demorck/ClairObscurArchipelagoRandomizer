@@ -18,6 +18,7 @@ function Hooks:Register()
     Register_SaveData()
     Register_CurrentLocation()
     Register_AddItemToInventory()
+    Register_WorldMapCapacities()
 
     Logger:info("Hooks registered.")
 end
@@ -120,9 +121,16 @@ function Register_SaveCharacterFromAnUnvoidableDeath()
 
         local data = data_param:get() ---@cast data UBP_CharacterData_C
 
-        if data.HardcodedNameID:ToString() == "Frey" then
+        local predicate =   data.HardcodedNameID:ToString() == "Frey" or
+                            data.HardcodedNameID:ToString() == "Lune"or
+                            data.HardcodedNameID:ToString() == "Maelle"or
+                            data.HardcodedNameID:ToString() == "Sciel"or
+                            data.HardcodedNameID:ToString() == "Verso"or
+                            data.HardcodedNameID:ToString() == "Monoco"
+        if predicate then
             local char_manager = ClientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
             if char_manager == nil then return end
+
             Logger:callMethod(char_manager, "AddCharacterToCollectionFromSaveState", data)
             -- char_manager:AddCharacterToCollectionFromSaveState(data)
         end
@@ -189,6 +197,8 @@ function Register_UpdateSubquests()
             Storage:Update("Hooks:UpdateSubquests - _LumiereBeginning")
         elseif objective_name_param == "1_ForcedCamp_PostSpringMeadows" and status_param == QUEST_STATUS.STARTED then
             Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.COMPLETED)
+        elseif objective_name_param == "10_ForcedCamp_PostLumiereAttack" and status_param == QUEST_STATUS.STARTED then
+            Quests:SetObjectiveStatus("Main_ForcedCamps", "10_ForcedCamp_PostLumiereAttack", QUEST_STATUS.COMPLETED)
         elseif string.find(objective_name_param, "FindLostGestral") and status_param == QUEST_STATUS.COMPLETED then
             if Archipelago.options.gestral_shuffle == 1 then 
                 Archipelago:SendLocationCheck(objective_name_param)
@@ -226,6 +236,11 @@ function Register_BattleEndVictory()
             Archipelago:SendLocationCheck(encounter_name)
         end
 
+        if encounter_name == "L_Boss_Paintress_P1" then
+            Inventory:AddItem("Quest_MaellePainterSkillsUnlock", 1, 1)
+            Quests:SetObjectiveStatus("Main_ForcedCamps", "10_ForcedCamp_PostLumiereAttack", QUEST_STATUS.COMPLETED)
+        end
+
         if Archipelago.options.char_shuffle == 0 then
             local can_unlock, char_name = Battle:IsBattleCanUnlockCharacter(encounter_name)
             if can_unlock and char_name ~= nil then
@@ -259,7 +274,6 @@ function Register_BattleRewards()
         battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:ForEach(function (_, entry)
             entry = entry:get() ---@cast entry FS_RolledLootEntry
             if string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "Foot") or string.find(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString(), "Merchant") then
-                print(entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString())
                 local struct = {}
                 struct.ItemID_2_FDDBE5744EC164155E4C959474052581                 = entry.ItemID_2_FDDBE5744EC164155E4C959474052581
                 struct.LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7 = entry.LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7
@@ -270,7 +284,6 @@ function Register_BattleRewards()
 
         battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:Empty()
         for i, reward in ipairs(rewards) do
-            print(reward.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString())
             battle_rewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883[i] = reward
         end
     end)
@@ -410,7 +423,6 @@ function Register_CurrentLocation()
         if Storage.currentLocation ~= level then
 
             Logger:StartIGT("GetCurrentLevelData")
-            print("Level changed to: "..level)
             
             local new = false
 
@@ -495,6 +507,26 @@ function Register_GetGestralCount()
 
     
     Hooks.TableIDs["GetGestralCount"] = {preID, postID, function_name}
+end
+
+
+function Register_WorldMapCapacities()
+    local function_name = "/Game/Gameplay/Exploration/BP_ExplorationProgressionSystem.BP_ExplorationProgressionSystem_C:SaveState"
+
+    local preID, postID = RegisterHook(function_name, function (self, state)
+        local st = state:get() ---@type FFExplorationProgression_SaveState
+
+        st.WorldMapCapacities_18_A3C2B46042CDC1AD2B027BB41415D062:Empty()
+
+        for i, value in ipairs(Storage.capacities) do
+            st.WorldMapCapacities_18_A3C2B46042CDC1AD2B027BB41415D062[i] = value
+        end
+
+        state:set(st)
+    end)
+
+    
+    Hooks.TableIDs["WorldMapCapacities"] = {preID, postID, function_name}
 end
 
 

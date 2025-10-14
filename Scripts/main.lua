@@ -12,28 +12,21 @@ Save        = require "Save"
 Archipelago = require "Archipelago"
 ClientBP    = require "ClientBP"
 Battle      = require "Battle"
+CONSTANTS   = require "ClientConstants"
 
 RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 TABLE_CURRENT_AP_FUNCTION = {}
 function TestSomeFunctions()
-   Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.STARTED);
+   Save:SaveGame()
 end
 function PrintMessage()
-   local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory"
-
-   RegisterHook(function_name, function (self)
-      local helper = self:get() ---@cast helper UAC_jRPG_BattleManager_C
-
-
-      local encounter_name = helper.EncounterName:ToString()
-      Logger:info("Battle ended: " .. encounter_name)
-   end)
 end
 
 function Debug_things()
 end
 
+-- And maybe the party issues in act 3 ? there is one iirc
 
 RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, password, deathlink, musicrando)
    local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
@@ -141,6 +134,9 @@ function InitSaveAfterLumiere()
    Characters:EnableCharactersInPartyOnlyUnlocked()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
+
+   Save:WriteFlagByID("NID_ForgottenBattlefield_GradientCounterTutorial", true)
+   Save:WriteFlagByID("NID_Goblu_JumpTutorial", true)
 
    Storage.initialized_after_lumiere = true
    Storage:Update("InitSaveAfterLumiere")

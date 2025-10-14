@@ -44,12 +44,41 @@ function Save:WriteFlagByID(flag_id, boolean_value)
 
     local flags = {}
     helper:GetPersistentFlags(flags)
-    for k, v in ipairs(flags) do
+    local found = false
+    local struct = {}
+    for _, v in ipairs(flags) do
         local value = v:get() ---@cast value UNamedID
         local name = value.Name:ToString()
         if name == flag_id then
             helper:WritePersistentFlag(value, boolean_value)
+            found = true
         end
+
+        struct = value
+    end
+
+    if not found then
+        local GUID = nil
+        if flag_id == "NID_EsquieUnderwaterUnlocked" then
+            GUID = CONSTANTS.NID.DIVE_GUID
+        elseif flag_id == "NID_ForgottenBattlefield_GradientCounterTutorial" then
+            GUID = CONSTANTS.NID.FB_GRADIENT_TUTORIAL
+        elseif flag_id == "NID_Goblu_JumpTutorial" then
+            GUID = CONSTANTS.NID.FW_JUMP_TUTORIAL
+        end
+
+        if GUID == nil then
+            Logger:error("No GUID found with " .. flag_id)
+            return
+        end
+
+        struct.Guid.A = GUID.A
+        struct.Guid.B = GUID.B
+        struct.Guid.C = GUID.C
+        struct.Guid.D = GUID.D
+        struct.Name = FName(flag_id)
+
+        helper:WritePersistentFlag(struct, boolean_value)
     end
 end
 

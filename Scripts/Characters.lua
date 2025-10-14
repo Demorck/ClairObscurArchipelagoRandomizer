@@ -66,7 +66,6 @@ end
 ---@param name string
 function Characters:EnableCharacter(name)
     local maxlevel = Characters:GetMaxLevel()
-    print("Max level is " .. maxlevel)
     local level_char = maxlevel > 5 and maxlevel - 5 or maxlevel
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
 
@@ -194,7 +193,7 @@ end
 function Characters:EnableCharactersInCollectionOnlyUnlocked()
     local char_data = FindAllOf("BP_CharacterData_C") ---@type UBP_CharacterData_C[]
     if char_data == nil then return end
-    if not Characters:HasExcludedCharactersInCollection() then return end
+    if Characters:HasExcludedCharactersInCollection() then return end
 
     Logger:info("Enabling characters in collection only if unlocked...")
 
@@ -214,12 +213,16 @@ function Characters:HasExcludedCharactersInCollection()
 
     for _, char in ipairs(char_data) do
         local char_name = char.HardcodedNameID:ToString()
-        if char.IsExcluded and not Contains(Storage.characters, char_name) then
-            return true
+        if char.IsExcluded and Contains(Storage.characters, char_name) then
+            return false
+        end
+
+        if not char.IsExcluded and not Contains(Storage.characters, char_name) then
+            return false
         end
     end
 
-    return false
+    return true
 end
 
 --- Disable everyone from the party
