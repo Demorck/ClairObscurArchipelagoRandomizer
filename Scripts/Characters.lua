@@ -254,7 +254,9 @@ end
 --- Kill all characters (set their HP to 0)
 function Characters:KillAll()
     Logger:info("Killing all characters...")
-    self:SetHPAll(0)
+    local bm = Battle:GetManager() --- @cast bm UAC_jRPG_BattleManager_C
+    
+    bm:ForceBattleEnd(2)
 end
 
 --- Set the HP of all characters to a specific value

@@ -36,6 +36,7 @@ Storage.free_aim_unlocked = false
 Storage.dive_items = 0
 Storage.gestral_found = 0
 Storage.capacities = {}
+Storage.transition_lumiere = false
 
 local Default_storage = {}
 Default_storage.initialized = false

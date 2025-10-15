@@ -74,7 +74,7 @@ function Battle:InBattle()
         return false
     end
 
-    if battle_manager.EncounterName == nil then
+    if battle_manager.EncounterName == nil or battle_manager.EncounterName:ToString() == "None" then
         return false
     end
 

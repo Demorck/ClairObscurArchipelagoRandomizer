@@ -17,10 +17,12 @@ CONSTANTS   = require "ClientConstants"
 RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 TABLE_CURRENT_AP_FUNCTION = {}
+
 function TestSomeFunctions()
    Save:SaveGame()
 end
 function PrintMessage()
+   Archipelago:Sync()
 end
 
 function Debug_things()
@@ -122,7 +124,6 @@ function InitSaveAfterLumiere()
    if Storage.initialized_after_lumiere then
       return false
    end
-
    Logger:info("The festival ended...")
    Characters:AddEveryone()
 
@@ -141,4 +142,7 @@ function InitSaveAfterLumiere()
    Storage.initialized_after_lumiere = true
    Storage:Update("InitSaveAfterLumiere")
    Logger:info("Lumiere is done, ciao")
+
+   Storage.transition_lumiere = true
+   -- Archipelago:Sync()
 end

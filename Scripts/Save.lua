@@ -23,19 +23,6 @@ function Save:ModifyGPEIfNeeded(save_data)
     local found_boulder = false
 
     gpe:Add(FName("ObjectID_Destructible_Level_Camp_Main_BP_BoulderBreak_Lvl1_C_0B3D65ED4ACB6050879EEE869B749856"), true)
-    -- gpe:ForEach(function (key, value)
-    --     local gpe_name = key:get():ToString()
-    --     local gpe_value = value:get()
-
-    --     if gpe_name == "ObjectID_Destructible_Level_Camp_Main_BP_BoulderBreak_Lvl1_C_0B3D65ED4ACB6050879EEE869B749856" and gpe_value == false then
-    --         gpe:Add(FName(gpe_name), true)
-    --         found_boulder = true
-    --     end
-    -- end)
-
-    -- if not found_boulder then
-    --     gpe:Add(FName("ObjectID_Destructible_Level_Camp_Main_BP_BoulderBreak_Lvl1_C_0B3D65ED4ACB6050879EEE869B749856"), true)
-    -- end
 end
 
 function Save:WriteFlagByID(flag_id, boolean_value)
@@ -54,6 +41,11 @@ function Save:WriteFlagByID(flag_id, boolean_value)
             found = true
         end
 
+        -- use for retrieve the data for ClientConstants.
+        if name == "" then
+            print(string.format("%x, %x, %x, %x", value.Guid.A, value.Guid.B, value.Guid.C, value.Guid.D))
+        end
+
         struct = value
     end
 
@@ -65,6 +57,8 @@ function Save:WriteFlagByID(flag_id, boolean_value)
             GUID = CONSTANTS.NID.FB_GRADIENT_TUTORIAL
         elseif flag_id == "NID_Goblu_JumpTutorial" then
             GUID = CONSTANTS.NID.FW_JUMP_TUTORIAL
+        elseif flag_id == "NID_MaelleRelationshipLvl6_Quest" then
+            GUID = CONSTANTS.NID.REACHER_LVL6_MAELLE
         end
 
         if GUID == nil then

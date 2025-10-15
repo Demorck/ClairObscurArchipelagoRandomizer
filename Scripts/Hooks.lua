@@ -433,6 +433,11 @@ function Register_CurrentLocation()
                 Hooks.AddingGestralHook = true
             end
 
+            if level == "SpringMeadows" and Storage.transition_lumiere then
+                Storage.transition_lumiere = false
+                Archipelago:Sync()
+            end
+
             if level ~= "None" then
                 Logger:info("Changing level. New level is: " .. level)
                 Storage.currentLocation = level
@@ -476,14 +481,15 @@ function Register_AddItemToInventory()
 
     local preID, postID = RegisterHook(function_name, function (context, ItemHardcodedName, Amount, LootContext, GeneratedItem)
         if not Storage.initialized_after_lumiere then return end
-        if Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then return end
 
         local item_name = ItemHardcodedName:get():ToString()
         local inv_manager = context:get() ---@cast inv_manager UAC_jRPG_InventoryManager_C
         if item_name == "LostGestral" then
             if Archipelago.options.char_shuffle == 1 then
-                Storage.gestral_found = Storage.gestral_found + 1
-                inv_manager:RemoveItemFromInventory(FName(item_name), 1, true)
+                if not Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
+                    Storage.gestral_found = Storage.gestral_found + 1
+                    inv_manager:RemoveItemFromInventory(FName(item_name), 1, true)
+                end
                 Storage:Update("AddItemToInventory - LostGestral")
             end
         end
@@ -522,7 +528,7 @@ function Register_WorldMapCapacities()
             st.WorldMapCapacities_18_A3C2B46042CDC1AD2B027BB41415D062[i] = value
         end
 
-        state:set(st)
+        -- state:set(st)
     end)
 
     

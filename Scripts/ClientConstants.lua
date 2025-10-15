@@ -17,6 +17,12 @@ local CONST = {
             B = 0x493bf6fd,
             C = 0xfffffffff260549a,
             D = 0xfffffffff74ea0db,
+        },
+        REACHER_LVL6_MAELLE = {  -- NID_MaelleRelationshipLvl6_Quest
+            A = 0xffffffffe3367623,
+            B = 0x40bcb33c,
+            C = 0x788d9cb7,
+            D = 0xffffffffffe1b656
         }
     }
 }
