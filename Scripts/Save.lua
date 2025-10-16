@@ -61,7 +61,7 @@ function Save:WriteFlagByID(flag_id, boolean_value)
             GUID = CONSTANTS.NID.REACHER_LVL6_MAELLE
         end
 
-        if GUID == nil then
+        if GUID == nil or struct.Guid == nil then
             Logger:error("No GUID found with " .. flag_id)
             return
         end

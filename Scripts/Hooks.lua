@@ -487,9 +487,10 @@ function Register_AddItemToInventory()
         if item_name == "LostGestral" then
             if Archipelago.options.char_shuffle == 1 then
                 if not Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
-                    Storage.gestral_found = Storage.gestral_found + 1
                     inv_manager:RemoveItemFromInventory(FName(item_name), 1, true)
                 end
+                
+                Storage.gestral_found = Storage.gestral_found + 1
                 Storage:Update("AddItemToInventory - LostGestral")
             end
         end

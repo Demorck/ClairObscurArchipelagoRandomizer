@@ -116,7 +116,7 @@ AP_REF.on_items_received = APItemsReceivedHandler
 ---comment
 ---@param items_received table<integer, NetworkItem>
 function Archipelago:ItemsReceivedHandler(items_received)
-    if not Storage.initialized_after_lumiere and not Archipelago:CanReceiveItems() then
+    if not Storage.initialized_after_lumiere or not Archipelago:CanReceiveItems() then
         return
     end
 
@@ -295,11 +295,9 @@ function Archipelago:HandleTrapItem(item_data)
 end
 
 function Archipelago:HandleDeathLink(data)
-    local lastDeathLink = self.lastDeathLink
     local currentDeathLink = data["time"]
-    self.lastDeathLink = data["time"]
     
-    if currentDeathLink - lastDeathLink < 10000 then
+    if currentDeathLink - self.lastDeathLink < 10000 then
         return
     end 
 
@@ -314,6 +312,7 @@ function Archipelago:HandleDeathLink(data)
         Characters:SetHPAll(1)
     end
 
+    self.lastDeathLink = currentDeathLink
 end
 
 function Archipelago:CanReceiveItems()
