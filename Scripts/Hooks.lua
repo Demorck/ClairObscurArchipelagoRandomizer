@@ -19,6 +19,7 @@ function Hooks:Register()
     Register_CurrentLocation()
     Register_AddItemToInventory()
     Register_WorldMapCapacities()
+    Register_OnAllHeroesKilled()
 
     Logger:info("Hooks registered.")
 end
@@ -259,6 +260,23 @@ function Register_BattleEndVictory()
     Hooks.TableIDs["BattleEndVictory"] = {preID, postID, function_name}
 end
 
+function Register_OnAllHeroesKilled()
+    local function_name = "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnAllHeroesKilled"
+    local preID, postID = RegisterHook(function_name, function (self)
+        if AP_REF.APClient == nil then return end
+        if not Storage.initialized_after_lumiere then
+            return
+        end
+
+        local bm = self:get() ---@type UAC_jRPG_BattleManager_C
+        if Archipelago.death_link and not bm:CanSendReserveTeam() then
+            Archipelago:SendDeathLink("can't parry even single attack")
+        end
+    end)
+
+    Hooks.TableIDs["OnAllHeroesKilled"] = {preID, postID, function_name}
+end
+
 --- Called when rolling battle rewards, at the start of the battle.
 --- We empty the rolled loot, so the player doesn't receive anything from battles.
 function Register_BattleRewards()
@@ -353,7 +371,8 @@ function Register_SaveData()
         Characters:ModifyPartyIfNeeded()
         Characters:EnableCharactersInCollectionOnlyUnlocked()
         Capacities:DisableFreeAimIfNeeded()
-
+        Storage.lastSavedItemIndex = Storage.lastReceivedItemIndex
+        Storage:Update("Save")
     end)
 
     Hooks.TableIDs["SaveData"] = {preID, postID, function_name}
@@ -368,7 +387,6 @@ function Register_CurrentLocation()
         local a = FindFirstOf("BP_WorldInfoComponent_C") ---@cast a UBP_WorldInfoComponent_C
         if a == nil or not a:IsValid() then return end
 
-        Logger:StartIGT("RemovePortals")
         local portal_array = a.WorldTeleportPoints
         local a = {
             Rotation = {
@@ -408,7 +426,6 @@ function Register_CurrentLocation()
                 end
             end
         end)
-        Logger:EndIGT("RemovePortals")
     end
 
     local preID, postID = RegisterHook(function_name, function (self, _worldContext, found, levelData, rowName)
@@ -421,8 +438,6 @@ function Register_CurrentLocation()
         local level = name:ToString()
 
         if Storage.currentLocation ~= level then
-
-            Logger:StartIGT("GetCurrentLevelData")
             
             local new = false
 
@@ -453,8 +468,6 @@ function Register_CurrentLocation()
                 }
                 AP_REF.APClient:Set(AP_REF.APClient:get_player_number().."-coe33-currentLocation", Storage.currentLocation, false, {operation})
             end
-
-            Logger:EndIGT("GetCurrentLevelData")
         end
 
     
@@ -488,10 +501,12 @@ function Register_AddItemToInventory()
             if Archipelago.options.char_shuffle == 1 then
                 if not Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
                     inv_manager:RemoveItemFromInventory(FName(item_name), 1, true)
+                else
+                    Storage.gestral_found = Storage.gestral_found + 1
                 end
-                
-                Storage.gestral_found = Storage.gestral_found + 1
                 Storage:Update("AddItemToInventory - LostGestral")
+            else
+                Storage.gestral_found = Storage.gestral_found + 1
             end
         end
     end)

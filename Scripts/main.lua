@@ -26,6 +26,9 @@ function PrintMessage()
 end
 
 function Debug_things()
+   local  bm = Battle:GetManager() ---@type UAC_jRPG_BattleManager_C
+   local b = bm:CanSendReserveTeam()
+   print(b)
 end
 
 -- And maybe the party issues in act 3 ? there is one iirc

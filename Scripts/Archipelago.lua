@@ -35,7 +35,6 @@ Archipelago.waitingForSync = false -- randomizer calls APSync when "waiting for 
 Archipelago.canDeathLink = false
 Archipelago.wasDeathLinked = false
 Archipelago.lastDeathLink = 0.0
-Archipelago.waitingForSync = true
 Archipelago.itemsQueue = {}
 Archipelago.isProcessingItems = false -- this is set to true when the queue is being processed so we don't over-give
 
@@ -66,19 +65,25 @@ function Archipelago:GetPlayer()
 end
 
 function Archipelago:Sync()
-    if AP_REF.APClient == nil then
+    if AP_REF.APClient == nil or not Archipelago:CanReceiveItems() then
         return
     end
 
     AP_REF.APClient:Sync()
+    Archipelago.waitingForSync = false
 end
 
 function APSlotConnectedHandler(slot_data)
     Archipelago.hasConnectedPrior = true
     Archipelago.trying_to_connect = false
-    
+
     Hooks:Register()
     Storage:Load()
+    
+    if not Archipelago:CanReceiveItems() then
+        Archipelago.waitingForSync = true
+    end
+    
     return Archipelago:SlotDataHandler(slot_data)
 end
 AP_REF.on_slot_connected = APSlotConnectedHandler
@@ -121,8 +126,7 @@ function Archipelago:ItemsReceivedHandler(items_received)
     end
 
     for _, row in pairs(items_received) do
-        if row.index ~= nil and row.index > Storage.lastReceivedItemIndex then
-            Logger:StartIGT("ItemsReceivedHandler")
+        if row.index ~= nil and row.index > Storage.lastSavedItemIndex then
             local item_data = GetItemFromAPData(row.item)
 
             if item_data ~= nil then
@@ -136,8 +140,6 @@ function Archipelago:ItemsReceivedHandler(items_received)
                 Logger:error("Item data is nil for item: " .. row.item)
             end
 
-            
-            Logger:EndIGT("ItemsReceivedHandler")
         end
     end
 
@@ -221,7 +223,7 @@ function Archipelago:GetLevelItem(gear_type, id)
     function FindIDinTable(t)
         for i, v in ipairs(t) do
             if id == v then
-                return math.ceil(33 * i / #t)
+                return math.ceil(CONSTANTS.MAX_LEVEL_GEAR * i / #t)
             end
         end
 
@@ -238,16 +240,16 @@ function Archipelago:GetLevelItem(gear_type, id)
     elseif self.options.gear_scaling == 1 then
         local percent = 0
         if gear_type == "Picto" then
-            percent = Storage.pictosIndex / 190
+            percent = Storage.pictosIndex / CONSTANTS.NUMBER_OF_PICTOS
             Storage.pictosIndex = Storage.pictosIndex + 1
         elseif gear_type == "Weapons" then
-            percent = Storage.weaponsIndex / 100
+            percent = Storage.weaponsIndex / CONSTANTS.NUMBER_OF_WEAPONS
             Storage.weaponsIndex = Storage.weaponsIndex + 1
         end
         Storage:Update("Archipelago:GetLevelItem")
-        level = math.ceil(33 * percent)
+        level = math.ceil(CONSTANTS.MAX_LEVEL_GEAR * percent)
     elseif self.options.gear_scaling == 3 then
-        level = math.random(1, 33)
+        level = math.random(1, CONSTANTS.MAX_LEVEL_GEAR)
     end
 
     return level
@@ -297,9 +299,11 @@ end
 function Archipelago:HandleDeathLink(data)
     local currentDeathLink = data["time"]
     
+    Logger:info("DeathLink Received with data: " .. Dump(data))
     if currentDeathLink - self.lastDeathLink < 10000 then
         return
-    end 
+    end
+    Logger:info("Last received in: " .. self.lastDeathLink)
 
     if Battle:InBattle() then
         Logger:info("Death link receiving during battle.")
@@ -406,6 +410,7 @@ function Archipelago:SendLocationCheck(location_name)
         AP_REF.APClient:LocationChecks(location_to_send)
     end
 
+    Logger:info("Location: \"" .. location_name .. "\" checked !")
     ExecuteAsync(async)
 end
 
@@ -427,15 +432,15 @@ end
 
 function Archipelago:SendDeathLink(msg, players_id, games, tags)
     players_id = players_id or {}
-    games = games or {}
-    tags = tags or {}
-
+    games      = games or {}
+    tags       = tags or {}
+    msg        = msg or {}
 
     local data = {}
-    data["time"] = os.time()
+    data["time"] =  math.floor(AP_REF.APClient:get_server_time())
 
     if not string.find(msg, AP_REF.APSlot) then
-        msg = AP_REF.APSlot .. " : " .. msg
+        msg = AP_REF.APSlot .. " " .. msg
     end
 
     data["cause"] = msg
@@ -443,6 +448,7 @@ function Archipelago:SendDeathLink(msg, players_id, games, tags)
 
     table.insert(tags, "DeathLink")
     AP_REF.APClient:Bounce(data, games, players_id, tags)
+    Logger:info("Sending DeathLink with cause: " .. msg .. " from source: " .. AP_REF.APSlot)
 end
 
 ---Handle multiple locations
