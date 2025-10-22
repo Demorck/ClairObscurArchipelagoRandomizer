@@ -52,7 +52,7 @@ You will need the last version of the [release](https://github.com/Demorck/Clair
 
 # I found a bug
 ### Who i need to ping ?
-Yes, it's common. The client is currently in alpha. You can ping me (Demorck) in the AP Dark Server in [this channel](https://discord.com/channels/1085716850370957462/1371907053626593301).
+Yes, it's common. The client is currently in alpha. You can ping me (Demorck) in the AP Dark Server in [this channel](https://discord.com/channels/1085716850370957462/1371907053626593301) on [this server](https://discord.gg/Sbhy4ykUKn).
 There are also logs here: `\Expedition 33\Sandfall\Content\Paks\LogicMods\ClairObscurRandomizer_data\Logs`
 
 ### The game crashes
