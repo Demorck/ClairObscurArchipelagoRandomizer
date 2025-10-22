@@ -231,7 +231,8 @@ function Archipelago:GetLevelItem(gear_type, id)
     end
     
     local level = 15
-    if self.options.gear_scaling == 0 or self.options.gear_scaling == 2 then
+    if  self.options.gear_scaling == CONSTANTS.OPTIONS.GEAR_SCALING.SPHERE_PLACEMENT or
+        self.options.gear_scaling == CONSTANTS.OPTIONS.GEAR_SCALING.BALANCED_RANDOM then
         if gear_type == "Picto" then
             level = FindIDinTable(self.pictos_data)
         elseif gear_type == "Weapon" then
@@ -239,11 +240,10 @@ function Archipelago:GetLevelItem(gear_type, id)
         end
     elseif self.options.gear_scaling == 1 then
         local percent = 0
+        percent = (Storage.pictosIndex + Storage.weaponsIndex) / (CONSTANTS.NUMBER_OF_PICTOS + CONSTANTS.NUMBER_OF_WEAPONS)
         if gear_type == "Picto" then
-            percent = Storage.pictosIndex / CONSTANTS.NUMBER_OF_PICTOS
             Storage.pictosIndex = Storage.pictosIndex + 1
-        elseif gear_type == "Weapons" then
-            percent = Storage.weaponsIndex / CONSTANTS.NUMBER_OF_WEAPONS
+        elseif gear_type == "Weapon" then
             Storage.weaponsIndex = Storage.weaponsIndex + 1
         end
         Storage:Update("Archipelago:GetLevelItem")
@@ -300,9 +300,9 @@ function Archipelago:HandleDeathLink(data)
     local currentDeathLink = data["time"]
     
     Logger:info("DeathLink Received with data: " .. Dump(data))
-    if currentDeathLink - self.lastDeathLink < 10000 then
-        return
-    end
+    -- if currentDeathLink - self.lastDeathLink < 10000 then
+    --     return
+    -- end
     Logger:info("Last received in: " .. self.lastDeathLink)
 
     if Battle:InBattle() then

@@ -18,7 +18,7 @@ function Hooks:Register()
     Register_SaveData()
     Register_CurrentLocation()
     Register_AddItemToInventory()
-    Register_WorldMapCapacities()
+    -- Register_WorldMapCapacities()
     Register_OnAllHeroesKilled()
 
     Logger:info("Hooks registered.")

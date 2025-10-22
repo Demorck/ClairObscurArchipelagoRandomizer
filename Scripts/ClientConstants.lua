@@ -2,6 +2,14 @@ local CONST = {
     MAX_LEVEL_GEAR = 33,
     NUMBER_OF_PICTOS = 190,
     NUMBER_OF_WEAPONS = 100,
+    OPTIONS = {
+        GEAR_SCALING = {
+            SPHERE_PLACEMENT = 0,
+            ORDER_RECEIVED   = 1,
+            BALANCED_RANDOM  = 2,
+            FULL_RANDOM      = 3
+        }
+    },
     NID = {
         DIVE_GUID = { -- NID_EsquieUnderwaterUnlocked
             A = 0xffffffffc6049eb0,
@@ -26,6 +34,18 @@ local CONST = {
             B = 0x40bcb33c,
             C = 0x788d9cb7,
             D = 0xffffffffffe1b656
+        },
+        RELATION_LVL6_LUNE = { -- NID_LuneRelationshipLvl6_Quest
+            A = 0x2a55f5a4,
+            B = 0x4ef0b15c,
+            C = 0x7b4d53b6,
+            D = 0xfffffffff3e5cc39
+        },
+        RELATION_LVL6_MONOCO = { -- NID_Monoco_RelationshipLvl6_Quest
+            A = 0xffffffffa73a9b68,
+            B = 0x4aceacd1,
+            C = 0x721bcb90,
+            D = 0x1f428538
         }
     },
     QUESTS = {

@@ -141,6 +141,8 @@ function InitSaveAfterLumiere()
 
    Save:WriteFlagByID("NID_ForgottenBattlefield_GradientCounterTutorial", true)
    Save:WriteFlagByID("NID_Goblu_JumpTutorial", true)
+   Save:WriteFlagByID("NID_LuneRelationshipLvl6_Quest", true)
+   Save:WriteFlagByID("NID_Monoco_RelationshipLvl6_Quest", true)
 
    Storage.initialized_after_lumiere = true
    Storage:Update("InitSaveAfterLumiere")
