@@ -33,6 +33,8 @@ function Battle:IsEncounterGoal(encounter_name)
         return encounter_name == "TowerBattle_33"
     elseif goal == 3 then
         return encounter_name == "Boss_SimonPhase2*1"
+    elseif goal == 4 then
+        return encounter_name == "CFH_Boss_Clea"
     else
         return false
     end
