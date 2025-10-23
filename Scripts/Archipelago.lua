@@ -102,6 +102,7 @@ function Archipelago:SlotDataHandler(slot_data)
     Archipelago.totals = slot_data.totals or {}
     Archipelago.pictos_data = slot_data.pictos or {}
     Archipelago.weapons_data = slot_data.weapons or {}
+    CONSTANTS.MAX_LEVEL_GEAR = slot_data.max_gear_level or CONSTANTS.DEFAULT_MAX_LEVEL_GEAR
 
     Logger:info("Receiving Slot Data: ")
     Logger:info("Options: " .. Dump(Archipelago.options))
