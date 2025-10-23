@@ -437,6 +437,11 @@ function Register_CurrentLocation()
         local name = rowName:get()
         local level = name:ToString()
 
+        if level == "SpringMeadows" and Storage.transition_lumiere then
+            Storage.transition_lumiere = false
+            Archipelago:Sync()
+        end
+
         if Storage.currentLocation ~= level then
             
             local new = false
@@ -448,10 +453,7 @@ function Register_CurrentLocation()
                 Hooks.AddingGestralHook = true
             end
 
-            if level == "SpringMeadows" and Storage.transition_lumiere then
-                Storage.transition_lumiere = false
-                Archipelago:Sync()
-            end
+            
 
             if level ~= "None" then
                 Logger:info("Changing level. New level is: " .. level)

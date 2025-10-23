@@ -42,9 +42,9 @@ function Save:WriteFlagByID(flag_id, boolean_value)
         end
 
         -- use for retrieve the data for ClientConstants.
-        if name == "" then
-            print(string.format("%x, %x, %x, %x", value.Guid.A, value.Guid.B, value.Guid.C, value.Guid.D))
-        end
+        -- if name == "" then
+        --     print(string.format("%x, %x, %x, %x", value.Guid.A, value.Guid.B, value.Guid.C, value.Guid.D))
+        -- end
 
         struct = value
     end
@@ -59,6 +59,10 @@ function Save:WriteFlagByID(flag_id, boolean_value)
             GUID = CONSTANTS.NID.FW_JUMP_TUTORIAL
         elseif flag_id == "NID_MaelleRelationshipLvl6_Quest" then
             GUID = CONSTANTS.NID.REACHER_LVL6_MAELLE
+        elseif flag_id == "NID_LuneRelationshipLvl6_Quest" then
+            GUID = CONSTANTS.NID.RELATION_LVL6_LUNE
+        elseif flag_id == "NID_Monoco_RelationshipLvl6_Quest" then
+            GUID = CONSTANTS.NID.RELATION_LVL6_MONOCO
         end
 
         if GUID == nil or struct.Guid == nil then
