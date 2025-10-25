@@ -127,6 +127,8 @@ function InitSaveAfterLumiere()
    if Storage.initialized_after_lumiere then
       return false
    end
+
+   
    Logger:info("The festival ended...")
    Characters:AddEveryone()
 

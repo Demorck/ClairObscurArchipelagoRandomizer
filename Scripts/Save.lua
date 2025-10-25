@@ -35,6 +35,13 @@ function Save:WriteFlagByID(flag_id, boolean_value)
     local struct = {}
     for _, v in ipairs(flags) do
         local value = v:get() ---@cast value UNamedID
+        if value == nil or not value:IsValid() then
+            goto continue
+        end
+
+        if value.Name == nil then
+            goto continue
+        end
         local name = value.Name:ToString()
         if name == flag_id then
             helper:WritePersistentFlag(value, boolean_value)
@@ -47,6 +54,7 @@ function Save:WriteFlagByID(flag_id, boolean_value)
         -- end
 
         struct = value
+        ::continue::
     end
 
     if not found then
