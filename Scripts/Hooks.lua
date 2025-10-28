@@ -500,16 +500,17 @@ function Register_AddItemToInventory()
         local item_name = ItemHardcodedName:get():ToString()
         local inv_manager = context:get() ---@cast inv_manager UAC_jRPG_InventoryManager_C
         if item_name == "LostGestral" then
-            if Archipelago.options.char_shuffle == 1 then
+            if Archipelago.options.gestral_shuffle == 1 then
                 if not Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
                     inv_manager:RemoveItemFromInventory(FName(item_name), 1, true)
                 else
                     Storage.gestral_found = Storage.gestral_found + 1
                 end
-                Storage:Update("AddItemToInventory - LostGestral")
             else
                 Storage.gestral_found = Storage.gestral_found + 1
             end
+            
+            Storage:Update("AddItemToInventory - LostGestral")
         end
     end)
 
