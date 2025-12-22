@@ -1067,7 +1067,7 @@
     },
     {
         "internal_name": "Chest_FrozenHearts_25",
-        "name": "Frozen Hearts: Icebound Train Station - Under dead Grandis",
+        "name": "Frozen Hearts: Iced Heart - Under dead Grandis",
         "location": "Frozen Hearts",
         "original_item": "ChromaPack_Regular",
         "condition": {},
@@ -1166,7 +1166,7 @@
         "name": "Gestral Village: In paint spike room 1",
         "location": "Gestral Village",
         "original_item": "Betelim",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -1174,7 +1174,7 @@
         "name": "Gestral Village: In paint spike room 2",
         "location": "Gestral Village",
         "original_item": "FreeAimPowerful",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -1731,7 +1731,7 @@
     },
     {
         "internal_name": "Chest_Lumiere_40",
-        "name": "Lumiere (Act 3): Opera House - Near Chromatic miniboss",
+        "name": "Lumiere (Act 3): Shattered Alley - Near Chromatic miniboss",
         "location": "Lumiere",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -1747,7 +1747,7 @@
     },
     {
         "internal_name": "Chest_Lumiere_42",
-        "name": "Lumiere (Act 3): Lumiere's Garden - Right side up stairs",
+        "name": "Lumiere (Act 3): Lumiere's Garden - Left before Chromatic Miniboss",
         "location": "Lumiere",
         "original_item": "ChromaPack_Regular",
         "condition": {},
@@ -1846,7 +1846,7 @@
         "name": "Manor: Renoir's Atelier",
         "location": "Manor",
         "original_item": "SkinMaelle_Alicia",
-        "condition": {},
+        "condition": {"Manor Family Canvas": 1},
         "type": "Chest"
     },
     {
@@ -2977,18 +2977,18 @@
     },
     {
         "internal_name": "Chest_SeaCliff_37",
-        "name": "Stone Wave Cliffs: Old Farm - Near Chromatic miniboss",
-        "location": "Sea Cliff",
-        "original_item": "AutoShell",
-        "condition": {"Paint Break": 1},
-        "type": "Chest"
-    },
-    {
-        "internal_name": "Chest_SeaCliff_38",
         "name": "Stone Wave Cliffs: White Hexga reward",
         "location": "Sea Cliff",
         "original_item": "AutoShell",
         "condition": {"Rock Crystal":  3},
+        "type": "Chest"
+    },
+    {
+        "internal_name": "Chest_SeaCliff_38",
+        "name": "Stone Wave Cliffs: Rock Crystal",
+        "location": "Sea Cliff",
+        "original_item": "AutoShell",
+        "condition": {},
         "type": "Chest"
     },
     {
@@ -3452,7 +3452,9 @@
         "name": "Ancient Gestral City item",
         "location": "Mini Levels",
         "original_item": "MusicRecord_16",
-        "condition": {},
+        "condition": {
+            "Progressive Rock": 1
+        },
         "type": "Chest"
     },
     {
@@ -3484,7 +3486,7 @@
         "name": "Twilight Quarry item",
         "location": "Mini Levels",
         "original_item": "MusicRecord_11",
-        "condition": {},
+        "condition": {"Progressive Rock": 1},
         "type": "Chest"
     },
     {
@@ -3612,7 +3614,7 @@
         "name": "Spring Meadows: Abandoned Expeditioner Camp - On cliff behind paint spike 2",
         "location": "Spring Meadows",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -3620,7 +3622,7 @@
         "name": "Spring Meadows: Abandoned Expeditioner Camp - On cliff behind paint spike 1",
         "location": "Spring Meadows",
         "original_item": "AegisRevival",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -3660,7 +3662,7 @@
         "name": "Spring Meadows: Abandoned Expeditioner Camp - Between paint spikes",
         "location": "Spring Meadows",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -4036,7 +4038,9 @@
         "name": "World Map: First Continent - Outside Ancient Gestral City",
         "location": "World Map",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {
+            "Progressive Rock": 1
+        },
         "type": "Chest"
     },
     {
@@ -4084,7 +4088,7 @@
         "name": "World Map: First Continent - Outside Twilight Quarry 1",
         "location": "World Map",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {"Progressive Rock": 1},
         "type": "Chest"
     },
     {
@@ -4092,7 +4096,7 @@
         "name": "World Map: First Continent - Outside Twilight Quarry 2",
         "location": "World Map",
         "original_item": "ChromaPack_Large",
-        "condition": {},
+        "condition": {"Progressive Rock": 1},
         "type": "Chest"
     },
     {
@@ -4124,7 +4128,7 @@
         "name": "World Map: First Continent - Past bourgeon outside Stone Wave Cliffs",
         "location": "World Map",
         "original_item": "HealingParry",
-        "condition": {},
+        "condition": {"Progressive Rock": 1},
         "type": "Chest"
     },
     {
@@ -4132,7 +4136,7 @@
         "name": "World Map: First Continent - Past blue spikes leading to Stone Wave Cliffs",
         "location": "World Map",
         "original_item": "ChromaPack_Large",
-        "condition": {},
+        "condition": {"Progressive Rock": 1},
         "type": "Chest"
     },
     {
@@ -4140,7 +4144,7 @@
         "name": "World Map: First Continent - Arc de Triomphe on the north beach",
         "location": "World Map",
         "original_item": "InitialAp+1A",
-        "condition": {},
+        "condition": {"Progressive Rock": 1},
         "type": "Chest"
     },
     {
@@ -4180,7 +4184,10 @@
         "name": "World Map: First Continent - Paint spike outside Yellow Harvest",
         "location": "World Map",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {"Paint Break": 1},
+        "condition": {
+            "Paint Break": 1,
+            "Progressive Rock": 1
+        },
         "type": "Chest"
     },
     {
@@ -4244,7 +4251,7 @@
         "name": "World Map: First Continent Sea - Paint spike outside Stone Wave Cliffs Cave",
         "location": "World Map",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -4436,7 +4443,7 @@
         "name": "World Map: North Sea - Paint spike on beach east of Sirene island",
         "location": "World Map",
         "original_item": "ChromaPack_Large",
-        "condition": {},
+        "condition": {"Paint Break":  1},
         "type": "Chest"
     },
     {
@@ -4492,7 +4499,7 @@
         "name": "World Map: North Sea - Paint spike on yellow beach",
         "location": "World Map",
         "original_item": "BreakDamageOnCrit",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -4524,7 +4531,7 @@
         "name": "World Map: First Continent - Plateau with paint spikes",
         "location": "World Map",
         "original_item": "BreakDamageOnSlow",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -4556,7 +4563,7 @@
         "name": "World Map: Southeast valley - Paint spike",
         "location": "World Map",
         "original_item": "APOnShell",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "type": "Chest"
     },
     {
@@ -4641,7 +4648,7 @@
     },
     {
         "internal_name": "Chest_Generic_Chroma",
-        "name": "Monolith: Tower Peak - Left before Expedition Flag (This might be in the void)",
+        "name": "Monolith: Tainted Lumiere - Left before Expedition Flag",
         "location": "The Monolith",
         "original_item": "ChromaPack_Large",
         "condition": {},
@@ -6218,5 +6225,396 @@
         "condition": {"Lost Gestral": 9},
         "original_item": "",
         "type": "Lost Gestral reward"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - Behind the waterfall",
+        "internal_name": "Chest_SideLevel_VersosDraft_1",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "Quest_ToyBoat",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Esquie statue in the forest",
+        "internal_name": "Chest_SideLevel_VersosDraft_2",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - In hut near the flag",
+        "internal_name": "Chest_SideLevel_VersosDraft_3",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Waterfall near 2 Esquies",
+        "internal_name": "Chest_SideLevel_VersosDraft_4",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - On the edge of the cliff near the merchant",
+        "internal_name": "Chest_SideLevel_VersosDraft_5",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Next to the treehouse piano",
+        "internal_name": "Chest_SideLevel_VersosDraft_6",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - On the treehouse roof",
+        "internal_name": "Chest_SideLevel_VersosDraft_7",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - In candy jars at the carnival",
+        "internal_name": "Chest_SideLevel_VersosDraft_8",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Paint cage in the forest",
+        "internal_name": "Chest_SideLevel_VersosDraft_9",
+        "location": "Verso's Drafts",
+        "condition": {"Free Aim": 1},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Open Playground - By the blue Licornes in the bath",
+        "internal_name": "Chest_SideLevel_VersosDraft_10",
+        "location": "Verso's Drafts",
+        "condition": {"Free Aim": 1},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Across the Esquie platforms in the forest",
+        "internal_name": "Chest_SideLevel_VersosDraft_11",
+        "location": "Verso's Drafts",
+        "condition": {"Free Aim": 1},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: In candy jar across from the cake door",
+        "internal_name": "Chest_SideLevel_VersosDraft_12",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - On the diving board",
+        "internal_name": "Chest_SideLevel_VersosDraft_13",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Behind the crowded slide",
+        "internal_name": "Chest_SideLevel_VersosDraft_14",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Open Playground - Paint cage",
+        "internal_name": "15",
+        "location": "Verso's Drafts",
+        "condition": {"Free Aim": 1},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: On the train tracks through the door",
+        "internal_name": "Chest_SideLevel_VersosDraft_16",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: On a box through the door",
+        "internal_name": "Chest_SideLevel_VersosDraft_17",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - Through the blue tunnel by the Open Playground entrance",
+        "internal_name": "Chest_SideLevel_VersosDraft_18",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - Guarded by Barbasucettes near the flag",
+        "internal_name": "Chest_SideLevel_VersosDraft_19",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - In jar near carnival exit",
+        "internal_name": "Chest_SideLevel_VersosDraft_20",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - Behind Very Very Cool Gestral",
+        "internal_name": "Chest_SideLevel_VersosDraft_21",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - Behind Chromatic Franctale",
+        "internal_name": "Chest_SideLevel_VersosDraft_22",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - Edge of the water before the carnival",
+        "internal_name": "Chest_SideLevel_VersosDraft_23",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - Cross the beams",
+        "internal_name": "Chest_SideLevel_VersosDraft_24",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Beside balloon gestral",
+        "internal_name": "Chest_SideLevel_VersosDraft_25",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - In candy jar before carnival entrance",
+        "internal_name": "Chest_SideLevel_VersosDraft_26",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - Up the climbing holds",
+        "internal_name": "Chest_SideLevel_VersosDraft_27",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - Behind giant blocks near xylophone bridge",
+        "internal_name": "Chest_SideLevel_VersosDraft_28",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - In a jar by the Open Playground entrance",
+        "internal_name": "Chest_SideLevel_VersosDraft_29",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - In a jar by the blue tunnel",
+        "internal_name": "Chest_SideLevel_VersosDraft_30",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Hopscotch by the flag",
+        "internal_name": "Chest_SideLevel_VersosDraft_31",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Hopscotch in the seesaw bath",
+        "internal_name": "Chest_SideLevel_VersosDraft_32",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Candy land - Hopscotch in the cave",
+        "internal_name": "Chest_SideLevel_VersosDraft_33",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Gestral Baths - Hopscotch in the forest",
+        "internal_name": "Chest_SideLevel_VersosDraft_34",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Reverie Path - In train car with a Licorne",
+        "internal_name": "Chest_SideLevel_VersosDraft_35",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Chest"
+    },
+    {
+        "name": "Verso's Drafts: Chromatic Licorne",
+        "internal_name": "VD_LicorneAlpha*1",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Chromatic"
+    },
+    {
+        "name": "Verso's Drafts: Chromatic Machinapieds",
+        "internal_name": "VD_MachinapiedsAlpha*1",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Chromatic"
+    },
+    {
+        "name": "Verso's Drafts: Chromatic Franctale",
+        "internal_name": "VD_Franctale_Alpha*1",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Chromatic"
+    },
+    {
+        "name": "Verso's Drafts: Chromatic Barbasucette",
+        "internal_name": "VD_BarbasucetteAlpha*1",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Chromatic"
+    },
+    {
+        "name": "Verso's Drafts: Half-baked Gestral",
+        "internal_name": "VD_GestralBalloon*1",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Normal"
+    },
+    {
+        "name": "Verso's Drafts: Licornapieds",
+        "internal_name": "VD_licornapieds*1",
+        "location": "Verso's Drafts",
+        "condition": {
+            "Toy Boat": 1
+        },
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Normal"
+    },
+    {
+        "name": "Root of All Evil: Osquio",
+        "internal_name": "VD_Osquio*1",
+        "location": "Root of All Evil",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Area"
+    },
+    {
+        "name": "Endless Tower: Duollistes",
+        "internal_name": "Boss_Duolliste_P1",
+        "location": "Endless Tower",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Normal",
+        "pictos_level": 32
+    },
+    {
+        "name": "Endless Tower: Chromatic Lampmaster",
+        "internal_name": "Boss_LampmasterALPHA",
+        "location": "Endless Tower",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Chromatic",
+        "pictos_level": 32
+    },
+    {
+        "name": "Endless Tower: Clea Unleashed",
+        "internal_name": "Boss_Clea_ALPHA",
+        "location": "Endless Tower",
+        "condition": {
+            "Area - Flying Manor": 1
+        },
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Area",
+        "pictos_level": 32
+    },
+    {
+        "name": "Endless Tower: Simon, the Divergent Star",
+        "internal_name": "Boss_SimonALPHA*1",
+        "location": "Endless Tower",
+        "condition": {
+            "Area - Renoir's Drafts": 1,
+            "Progressive Rock": 5
+        },
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Area",
+        "pictos_level": 32
     }
+
 ]
