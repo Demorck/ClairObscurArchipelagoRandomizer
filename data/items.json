@@ -2732,7 +2732,7 @@
   {
     "type": "Area",
     "name": "Area - The Monolith",
-    "internal_name": "Level_PaintressIntro_Main",
+    "internal_name": "Monolith_Interior_PaintressIntro",
     "quantity": 1,
     "progressive": 1
   },
