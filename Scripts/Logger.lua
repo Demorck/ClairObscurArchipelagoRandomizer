@@ -1,3 +1,4 @@
+---@class Logger
 local Logger = {}
 
 

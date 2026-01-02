@@ -1,25 +1,10 @@
----@class ArchipelagoOptions
----@field char_shuffle integer
----@field gestral_shuffle integer
----@field goal integer
----@field gear_scaling integer
----@field starting_char integer
----@field shuffle_free_aim integer
-
 ---@class Archipelago
----@field options ArchipelagoOptions
----@field weapons_data integer[]
----@field pictos_data integer[]
----@field totals integer[]
-
 local Archipelago = {}
 
-
-
+-- State variables (for compatibility for now)
 Archipelago.seed = nil
 Archipelago.slot = nil
-
-Archipelago.options = {} ---@type ArchipelagoOptions -- comes over in slot data
+Archipelago.options = {}
 Archipelago.totals = {}
 Archipelago.weapons_data = {}
 Archipelago.pictos_data = {}
@@ -27,140 +12,82 @@ Archipelago.death_link = false
 Archipelago.number_of_players = 0
 Archipelago.current_year_gommage = 34
 Archipelago.trying_to_connect = false
-
-
-Archipelago.hasConnectedPrior = false -- keeps track of whether the player has connected at all so players don't have to remove AP mod to play vanilla
-Archipelago.isInit = false -- keeps track of whether init things like handlers need to run
-Archipelago.waitingForSync = false -- randomizer calls APSync when "waiting for sync"; i.e., when you die
+Archipelago.hasConnectedPrior = false
+Archipelago.waitingForSync = false
 Archipelago.canDeathLink = false
 Archipelago.wasDeathLinked = false
 Archipelago.lastDeathLink = 0.0
-Archipelago.itemsQueue = {}
-Archipelago.isProcessingItems = false -- this is set to true when the queue is being processed so we don't over-give
 
-function Archipelago:Init()
-    if not Archipelago.isInit then
-        Archipelago.isInit = true
-    end
-end
+-- AP reference but initialize later
+Archipelago.apSystem = nil
 
 function Archipelago:IsConnected()
-    return AP_REF.APClient ~= nil and AP_REF.APClient:get_state() == AP_REF.AP.State.SLOT_CONNECTED
+    if not self.apSystem then
+        return false
+    end
+    return self.apSystem:IsConnected()
 end
 
 function Archipelago:GetPlayer()
-    local player = {}
-
-    if AP_REF.APClient == nil then
+    if not self.apSystem then
         return {}
     end
-
-    player["slot"] = AP_REF.APClient:get_slot()
-    player["seed"] = AP_REF.APClient:get_seed()
-    player["number"] = AP_REF.APClient:get_player_number()
-    player["alias"] = AP_REF.APClient:get_player_alias(player['number'])
-    player["game"] = AP_REF.APClient:get_player_game(player['number'])
-
-    return player
+    
+    return self.apSystem:GetClient():GetPlayerInfo()
 end
 
 function Archipelago:Sync()
-    if AP_REF.APClient == nil or not Archipelago:CanReceiveItems() then
+    if not self:CanReceiveItems() then
         return
     end
-
-    AP_REF.APClient:Sync()
-    Archipelago.waitingForSync = false
-end
-
-function APSlotConnectedHandler(slot_data)
-    Archipelago.hasConnectedPrior = true
-    Archipelago.trying_to_connect = false
-
-    Hooks:Register()
-    Storage:Load()
     
-    if not Archipelago:CanReceiveItems() then
-        Archipelago.waitingForSync = true
-    end
-    
-    return Archipelago:SlotDataHandler(slot_data)
-end
-AP_REF.on_slot_connected = APSlotConnectedHandler
-
-function Archipelago:SlotDataHandler(slot_data)
-    local player = Archipelago:GetPlayer()
-
-    Archipelago.seed = player["seed"]
-    Archipelago.slot = player["slot"]
-
-    if slot_data.death_link ~= nil then
-        Archipelago.death_link = slot_data.death_link
-    end
-
-    Archipelago.options = slot_data.options
-    Archipelago.totals = slot_data.totals or {}
-    Archipelago.pictos_data = slot_data.pictos or {}
-    Archipelago.weapons_data = slot_data.weapons or {}
-    CONSTANTS.MAX_LEVEL_GEAR = slot_data.max_gear_level or CONSTANTS.DEFAULT_MAX_LEVEL_GEAR
-
-    Logger:info("Receiving Slot Data: ")
-    Logger:info("Options: " .. Dump(Archipelago.options))
-    Logger:info("Totals: " .. Dump(Archipelago.totals))
-    -- Logger:info("Pictos data: " .. Dump(Archipelago.pictos_data))
-    -- Logger:info("Weapons data: " .. Dump(Archipelago.weapons_data))
-
-    Data.Load()
-end
-
-function APItemsReceivedHandler(items_received)
-    return Archipelago:ItemsReceivedHandler(items_received)
-end
-AP_REF.on_items_received = APItemsReceivedHandler
-
-
----comment
----@param items_received table<integer, NetworkItem>
-function Archipelago:ItemsReceivedHandler(items_received)
-    if not Storage.initialized_after_lumiere or not Archipelago:CanReceiveItems() then
+    if not self.apSystem then
         return
     end
-
-    for _, row in pairs(items_received) do
-        if row.index ~= nil and row.index > Storage.lastSavedItemIndex then
-            local item_data = GetItemFromAPData(row.item)
-
-            if item_data ~= nil then
-                if Archipelago:ReceiveItem(item_data) then
-                    Logger:info("Received item: " .. item_data["name"] .. " (" .. row.item .. ") at index: " .. row.index .. " for player: " .. row.player)
-                    -- ClientBP:PushNotification(item_data["name"], row.player)
-                    Storage.lastReceivedItemIndex = row.index
-                    Storage:Update("Archipelago:ItemsReceivedHandler")
-                end
-            else
-                Logger:error("Item data is nil for item: " .. row.item)
-            end
-
-        end
-    end
-
+    
+    self.apSystem:GetClient():Sync()
+    self.waitingForSync = false
 end
 
+function Archipelago:CanReceiveItems()
+    if not self:IsConnected() then
+        return false
+    end
 
---- Receives an item and adds it to the inventory.
----@param item_data table<string, any>
----@return boolean returns true if the item was successfully received, false otherwise
+    if not ClientBP:IsInitialized() then
+        return false
+    end
+
+    if ClientBP:IsMainMenu() then
+        return false
+    end
+
+    if ClientBP:IsLumiereActI() then
+        return false
+    end
+
+    if not ClientBP:InLevel() then
+        return false
+    end
+    
+    return true
+end
+
+--- Receive an item
+---@param item_data table
+---@return boolean
 function Archipelago:ReceiveItem(item_data)
     local local_item_data = nil ---@type ItemData
 
     for _, item in pairs(Data.items) do
         if item.name == item_data["name"] then
             local_item_data = item
+            break
         end
     end
 
     if local_item_data == nil then
-        Logger:error("Item data nil when receiving item, here the item data received: " .. Dump(item_data))
+        Logger:error("Item data nil when receiving item: " .. Dump(item_data))
         return false
     end
 
@@ -221,13 +148,12 @@ end
 ---@param id integer
 ---@return integer
 function Archipelago:GetLevelItem(gear_type, id)
-    function FindIDinTable(t)
+    local function FindIDinTable(t)
         for i, v in ipairs(t) do
             if id == v then
                 return math.ceil(CONSTANTS.MAX_LEVEL_GEAR * i / #t)
             end
         end
-
         return 15
     end
     
@@ -270,25 +196,6 @@ function Archipelago:HandleCapacityItem(item_data)
     end
 end
 
-function APBounceHandler(json)
-    if type(json) == "string" then
-        json = JSON.decode(json)
-    end
-
-    local tags = json["tags"]
-    local data = json["data"]
-
-    if tags ~= nil then
-        for _, tag in ipairs(tags) do
-            if tag == "DeathLink" then
-                Archipelago:HandleDeathLink(data)
-            end
-        end
-    end
-    
-end
-AP_REF.on_bounced = APBounceHandler
-
 function Archipelago:HandleTrapItem(item_data)
     Logger:info("Trap activated: " .. item_data.name)
     
@@ -301,9 +208,6 @@ function Archipelago:HandleDeathLink(data)
     local currentDeathLink = data["time"]
     
     Logger:info("DeathLink Received with data: " .. Dump(data))
-    -- if currentDeathLink - self.lastDeathLink < 10000 then
-    --     return
-    -- end
     Logger:info("Last received in: " .. self.lastDeathLink)
 
     if Battle:InBattle() then
@@ -320,95 +224,23 @@ function Archipelago:HandleDeathLink(data)
     self.lastDeathLink = currentDeathLink
 end
 
-function Archipelago:CanReceiveItems()
-    if not Archipelago:IsConnected() then
-        return false
-    end
-
-    if not ClientBP:IsInitialized() then
-        return false
-    end
-
-    if ClientBP:IsMainMenu() then
-        return false
-    end
-
-    if ClientBP:IsLumiereActI() then
-        return false
-    end
-
-    if not ClientBP:InLevel() then
-        return false
-    end
-    
-    return true
-end
-
----comment
----@param item_id integer
-function GetItemFromAPData(item_id)
-    local player = Archipelago:GetPlayer()
-    local item = {}
-    
-    item["name"] = AP_REF.APClient:get_item_name(item_id, player["game"])
-
-    if not item["name"] then
-        return nil
-    end
-
-    item["id"] = item_id
-
-    return item
-end
-
-function APRetrievedData(map)
-    return Archipelago:RetrieveData(map)
-end
-AP_REF.on_retrieved_data = APRetrievedData
-
-function Archipelago:RetrieveData(map)
-    print(Dump(map))
-end
-
-function APLocationsCheckedHandler(locations_checked)
-    return Archipelago.LocationsCheckedHandler(locations_checked)
-end
-AP_REF.on_location_checked = APLocationsCheckedHandler
-
-function Archipelago:LocationsCheckedHandler(locations_checked)
-    local player = Archipelago:GetPlayer()
-    if locations_checked == nil then return end
-
-    for k, location_id in ipairs(locations_checked) do
-        local id = tonumber(location_id)
-        if id == nil then
-            error("Error when converting location_id to number: " .. location_id)
-        end
-        local location_name = AP_REF.APClient:get_location_name(id, player['game'])
-
-        for k, loc in pairs(Data.locations) do
-            if loc['name'] == location_name then
-                loc['sent'] = true
-                break
-            end
-        end
-    end
-end
-
---- need to add location to storage to avoid redoing the same thing if a crash happens
+--- Send a location check
+---@param location_name string
 function Archipelago:SendLocationCheck(location_name)
     local location_data = GetLocationFromAPData(location_name)
     if location_data == nil then return end
 
-    local location_to_send = {} -- LocationChecks need an array
+    local location_to_send = {}
     location_to_send[1] = location_data["id"]
     
     if not location_data then
         return
     end
     
-    local function async() -- needed otherwise it crashes
-        AP_REF.APClient:LocationChecks(location_to_send)
+    local function async()
+        if self.apSystem then
+            self.apSystem:GetClient():GetClient():LocationChecks(location_to_send)
+        end
     end
 
     Logger:info("Location: \"" .. location_name .. "\" checked !")
@@ -416,40 +248,48 @@ function Archipelago:SendLocationCheck(location_name)
 end
 
 function Archipelago:SendVictory()
-    AP_REF.APClient:StatusUpdate(AP_REF.AP.ClientStatus.GOAL)
+    if not self.apSystem then return end
+    
+    self.apSystem:GetClient():SendCompletion()
 end
 
 function Archipelago:SendGommage()
-    if not Archipelago.canDeathLink then return end
+    if not self.canDeathLink then return end
 
     local players_id = {}
-    for i = Archipelago.current_year_gommage, 3000, 1 do
+    for i = self.current_year_gommage, 3000, 1 do
         table.insert(players_id, i)
     end
 
-    Archipelago:SendDeathLink("The gommage happens for " .. Archipelago.current_year_gommage .. " years old", players_id, {}, {})
-    Archipelago.current_year_gommage = Archipelago.current_year_gommage - 1
+    self:SendDeathLink("The gommage happens for " .. self.current_year_gommage .. " years old", players_id, {}, {})
+    self.current_year_gommage = self.current_year_gommage - 1
 end
 
 function Archipelago:SendDeathLink(msg, players_id, games, tags)
+    if not self.apSystem then return end
+    
     players_id = players_id or {}
     games      = games or {}
     tags       = tags or {}
     msg        = msg or {}
 
     local data = {}
-    data["time"] =  math.floor(AP_REF.APClient:get_server_time())
+    data["time"] = math.floor(self.apSystem:GetClient():GetServerTime())
 
-    if not string.find(msg, AP_REF.APSlot) then
-        msg = AP_REF.APSlot .. " " .. msg
+    local playerInfo = self:GetPlayer()
+    local slotName = playerInfo.alias or "Unknown"
+    
+    if not string.find(msg, slotName) then
+        msg = slotName .. " " .. msg
     end
 
     data["cause"] = msg
-    data["source"] = AP_REF.APSlot
+    data["source"] = slotName
 
     table.insert(tags, "DeathLink")
-    AP_REF.APClient:Bounce(data, games, players_id, tags)
-    Logger:info("Sending DeathLink with cause: " .. msg .. " from source: " .. AP_REF.APSlot)
+    
+    self.apSystem:GetClient():Bounce(data, games, players_id, tags)
+    Logger:info("Sending DeathLink with cause: " .. msg .. " from source: " .. slotName)
 end
 
 ---Handle multiple locations
@@ -461,7 +301,7 @@ function HandleMultipleLocations(location_name, locations_data)
         return locations_data[1]
     end
 
-    function HandleGenericChroma()
+    local function HandleGenericChroma()
         local predicate = {
             ["World Map"] = "Level_WorldMap_Main_V2",
             ["Spring Meadows"] = "Level_SpringMeadows_Main_V2",
@@ -477,14 +317,14 @@ function HandleMultipleLocations(location_name, locations_data)
         end
     end
 
-    function HandleDiveItems()
+    local function HandleDiveItems()
         local res = locations_data[Storage.dive_items + 1]
         Storage.dive_items = Storage.dive_items + 1
         Storage:Update("HandleMultipleLocations - Dive items")
         return res
     end
 
-    function HandlePetank()
+    local function HandlePetank()
         local predicate = {
             ["Sirene"] = "Level_Sirene_Main_V2",
             ["Ancient Sanctuary"] = "Level_AncientSanctuary_Main_V2",
@@ -495,7 +335,7 @@ function HandleMultipleLocations(location_name, locations_data)
             ["Flying Manor"] = "Level_CleaFlyingHouse_Main",
             ["Forgotten Battlefield"] = "Level_Main_ForgottenBattlefield_V2",
             ["Endless Night Sanctuary"] = "Level_Side_TwilightSanctuary",
-            ["Esquie’s Nest"] = "LevelMain_EsquieNest",
+            ["Esquie's Nest"] = "LevelMain_EsquieNest",
             ["The Reacher"] = "Level_Reacher_Main_V2"
         }
 
@@ -520,19 +360,25 @@ function HandleMultipleLocations(location_name, locations_data)
 end
 
 function GetLocationFromAPData(location_name)
-    local location_data = Data:FindEntry(Data.locations, location_name) ---@cast location_data LocationData | table<LocationData> | nil
+    local location_data = Data:FindEntry(Data.locations, location_name)
+    
     if type(location_data) == "table" and #location_data > 1 then
         local res = HandleMultipleLocations(location_name, location_data)
         location_data = res
     end
+    
     local location = {}
 
     if location_data == nil then
-        Debug.print("Location_data is nul. Name of location: " .. location_name)
+        Debug.print("Location_data is nil. Name of location: " .. location_name)
         return nil
     end
 
-    location["id"] = AP_REF.APClient:get_location_id(location_data.name)
+    if not Archipelago.apSystem then
+        return nil
+    end
+    
+    location["id"] = Archipelago.apSystem:GetClient():GetLocationId(location_data.name)
 
     if not location["id"] then
         return nil
@@ -541,7 +387,25 @@ function GetLocationFromAPData(location_name)
     location["name"] = location_data.name
 
     return location
+end
+
+function GetItemFromAPData(item_id)
+    local player = Archipelago:GetPlayer()
+    local item = {}
     
+    if not Archipelago.apSystem then
+        return nil
+    end
+    
+    item["name"] = Archipelago.apSystem:GetClient():GetItemName(item_id, player["game"])
+
+    if not item["name"] then
+        return nil
+    end
+
+    item["id"] = item_id
+
+    return item
 end
 
 return Archipelago
