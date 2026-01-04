@@ -54,7 +54,6 @@ function ItemsHandler:Handle(items)
 
     -- Process each item individually
     for _, item in ipairs(items) do
-        print(Dump(item))
         self:ProcessItem(item)
     end
 end
@@ -75,7 +74,6 @@ function ItemsHandler:ProcessItem(item)
         return
     end
 
-    print(self.archipelago)
     if self.archipelago and self.archipelago:ReceiveItem(itemData) then
         self.logger:info(string.format(
             "Received item: %s (%d) at index: %d for player: %d",
