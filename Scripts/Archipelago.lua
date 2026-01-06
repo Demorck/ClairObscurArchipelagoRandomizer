@@ -151,15 +151,15 @@ function Archipelago:GetLevelItem(gear_type, id)
     local function FindIDinTable(t)
         for i, v in ipairs(t) do
             if id == v then
-                return math.ceil(CONSTANTS.MAX_LEVEL_GEAR * i / #t)
+                return math.ceil(CONSTANTS.CONFIG.MAX_LEVEL_GEAR * i / #t)
             end
         end
         return 15
     end
     
     local level = 15
-    if  self.options.gear_scaling == CONSTANTS.OPTIONS.GEAR_SCALING.SPHERE_PLACEMENT or
-        self.options.gear_scaling == CONSTANTS.OPTIONS.GEAR_SCALING.BALANCED_RANDOM then
+    if  self.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.SPHERE_PLACEMENT or
+        self.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.BALANCED_RANDOM then
         if gear_type == "Picto" then
             level = FindIDinTable(self.pictos_data)
         elseif gear_type == "Weapon" then
@@ -167,7 +167,7 @@ function Archipelago:GetLevelItem(gear_type, id)
         end
     elseif self.options.gear_scaling == 1 then
         local percent = 0
-        percent = (Storage.pictosIndex + Storage.weaponsIndex) / (CONSTANTS.NUMBER_OF_PICTOS + CONSTANTS.NUMBER_OF_WEAPONS)
+        percent = (Storage.pictosIndex + Storage.weaponsIndex) / (CONSTANTS.CONFIG.NUMBER_OF_PICTOS + CONSTANTS.CONFIG.NUMBER_OF_WEAPONS)
         if gear_type == "Picto" then
             Storage.pictosIndex = Storage.pictosIndex + 1
         elseif gear_type == "Weapon" then

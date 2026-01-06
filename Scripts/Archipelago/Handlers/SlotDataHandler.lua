@@ -97,7 +97,7 @@ function SlotDataHandler:ProcessSlotData(slotData)
 
     -- Max gear level
     if CONSTANTS then
-        CONSTANTS.MAX_LEVEL_GEAR = slotData.max_gear_level or CONSTANTS.DEFAULT_MAX_LEVEL_GEAR
+        CONSTANTS.CONFIG.MAX_LEVEL_GEAR = slotData.max_gear_level or CONSTANTS.CONFIG.DEFAULT_MAX_LEVEL_GEAR
     end
 
     -- Log received data
