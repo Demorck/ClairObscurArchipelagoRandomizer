@@ -10,6 +10,8 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
+    local a = require("Tests.StorageTest")
+    
 end
 
 function DebugCommands:RegisterKeybinds()
@@ -31,3 +33,6 @@ function DebugCommands:RegisterKeybinds()
         end)
     end)
 end
+
+
+return DebugCommands

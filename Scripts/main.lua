@@ -2,7 +2,7 @@ Logger     = require "Logger"
 Hooks      = require "Hooks.index"
 Data       = require "Data"
 Debug      = require "Archipelago.Debug"
-Storage    = require "Storage"
+Storage    = require "Storage.index"
 Inventory  = require "Game.Inventory"
 Capacities = require "Game.Capacities"
 Characters = require "Game.Characters"
@@ -12,6 +12,7 @@ ClientBP   = require "Game.ClientBP"
 Battle     = require "Game.Battle"
 CONSTANTS  = require "Constants.index"
 Utils      = require "Utils.index"
+Commands   = require "Commands"
 
 Dump = Utils.TableHelper.Dump
 Contains = Utils.TableHelper.Contains
@@ -21,6 +22,8 @@ Trim = Utils.StringHelper.Trim
 Archipelago          = require "Archipelago"
 ArchipelagoSystem    = require "Archipelago.Init"
 Archipelago.apSystem = ArchipelagoSystem
+
+Commands:RegisterKeybinds()
 
 -- Just for compatbility for now
 AP_REF               = {

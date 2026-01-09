@@ -6,7 +6,7 @@ local BattleHooks = {}
 ---@param hookManager HookManager
 ---@param dependencies table
 function BattleHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
+    local archipelago = dependencies.archipelago ---@type Archipelago
     local storage = dependencies.storage
     local logger = dependencies.logger
     local battle = dependencies.battle
