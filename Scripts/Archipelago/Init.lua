@@ -1,99 +1,156 @@
---
-local config = require("Archipelago.Config")
-local handlers = require("Archipelago.Handlers")
-local client = require("Archipelago.Client")
+local Config = require "Archipelago.Core.Config"
+local APClient = require "Archipelago.Core.APClient"
+local EventDispatcher = require "Archipelago.Core.EventDispatcher"
+local Handlers = require "Archipelago.Handlers.index"
 
+-- Connection states
 E_CLIENT_INFOS = {
     DISCONNECTED = 0,
     TRYING_TO_CONNECT = 1,
     CONNECTED = 2
 }
 
-local AP = require "lua-apclientpp"
-if AP == nil then
-    error("lua-apclientpp not found! Abort")
-    return
+local ArchipelagoSystem = {}
+
+function ArchipelagoSystem:Initialize()
+    -- Initialize config
+    local config = Config
+    config:Init()
+
+    -- Create event dispatcher
+    local eventDispatcher = EventDispatcher:New({
+        logger = Logger
+    })
+
+    -- Create AP client
+    local apClient = APClient:New({
+        logger = Logger,
+        config = config,
+        eventDispatcher = eventDispatcher
+    })
+
+    -- Create handlers
+    local slotDataHandler = Handlers.SlotDataHandler:New({
+        logger = Logger,
+        storage = Storage,
+        apClient = apClient
+    })
+
+    local itemsHandler = Handlers.ItemsHandler:New({
+        logger = Logger,
+        storage = Storage,
+        apClient = apClient
+    })
+
+    local locationsHandler = Handlers.LocationsHandler:New({
+        logger = Logger,
+        apClient = apClient
+    })
+
+    local deathLinkHandler = Handlers.DeathLinkHandler:New({
+        logger = Logger
+    })
+
+    -- Set archipelago reference (for legacy compatibility)
+    slotDataHandler:SetArchipelago(Archipelago)
+    itemsHandler:SetArchipelago(Archipelago)
+    deathLinkHandler:SetArchipelago(Archipelago)
+
+    -- Register handlers with dispatcher
+    eventDispatcher:RegisterHandler("slotConnected", function(data)
+        slotDataHandler:Handle(data)
+    end)
+
+    eventDispatcher:RegisterHandler("itemsReceived", function(data)
+        itemsHandler:Handle(data)
+    end)
+
+    eventDispatcher:RegisterHandler("locationsChecked", function(data)
+        locationsHandler:Handle(data)
+    end)
+
+    eventDispatcher:RegisterHandler("bounced", function(data)
+        deathLinkHandler:Handle(data)
+    end)
+
+
+    -- Store references
+    self.config = config
+    self.apClient = apClient
+    self.eventDispatcher = eventDispatcher
+
+    -- Setup polling loop
+    self:SetupPollingLoop()
+
+    Logger:info("Archipelago system initialized")
+
+    return self
 end
 
-local AP_REF = config
-AP_REF.APClient = nil ---@type APClient
-AP_REF.AP = AP
+function ArchipelagoSystem:SetupPollingLoop()
+    LoopAsync(1000, function()
+        if self.apClient.wantToConnect then
+            if self.apClient.client then
+                self.apClient:Poll()
 
-client.setup(AP_REF, AP, handlers)
-
--- Just for now, to connect and disconnect easily
-WANT_TO_CONNECT = false
-local Connection = false
-
---- Main async loop for polling or disconnecting the AP client.
-LoopAsync(1000, function ()
-    if WANT_TO_CONNECT then
-        if AP_REF.APClient ~= nil then
-            local ok, err = pcall(function ()
-                AP_REF.APClient:poll()
-            end)
-
-            if Archipelago.waitingForSync then
-                Archipelago:Sync()
+                -- Sync if waiting
+                if Archipelago and Archipelago.waitingForSync then
+                    self.apClient:Sync()
+                    Archipelago.waitingForSync = false
+                end
+            else
+                self.apClient:Connect()
             end
-
-            if not ok then
-                print("[ERROR] - " .. err)
-            end
-        else
-            client.connect()
         end
-    else
-        if AP_REF.APClient ~= nil then
-            Logger:info("Disconnecting from Archipelago server...")
-            AP_REF.APClient = nil
+
+        return false
+    end)
+end
+
+--- Set connection configuration
+---@param host string
+---@param port string
+---@param slot string
+---@param password string
+---@param deathlink boolean
+function ArchipelagoSystem:SetConnectionConfig(host, port, slot, password, deathlink)
+    self.config:SetConnection(host, port, slot, password, deathlink)
+
+    -- Update Archipelago legacy reference
+    if Archipelago then
+        Archipelago.death_link = deathlink
+    end
+end
+
+--- Toggle connection
+function ArchipelagoSystem:ToggleConnection()
+    if self.apClient.wantToConnect then
+        Logger:info("Disconnecting...")
+        self.apClient:Disconnect()
+
+        if Hooks then
             Hooks:Unregister()
-            collectgarbage("collect")
-        end
-    end
-    return false
-end)
-
-
-function AP_REF:set_config(host, port, slot, password, deathlink)
-    config.APHost = host .. ":" .. port
-    config.APSlot = slot
-    config.APPassword = password
-
-    Archipelago.death_link = deathlink
-    config.deathlink = deathlink
-    if deathlink then
-        if not Contains(config.APTags, "DeathLink") then
-            table.insert(config.APTags, "DeathLink")
         end
     else
-        for index, value in ipairs(config.APTags) do
-            if value == "DeathLink" then
-                table.remove(config.APTags, index)
-                break
-            end
-        end
-    end
-end
-
-
---- Toggles the connection to the Archipelago server.
----@param self any Ignored (used for method call syntax).
-function AP_REF.Connect(self)
-    WANT_TO_CONNECT = not WANT_TO_CONNECT
-
-    if WANT_TO_CONNECT then
+        Logger:info("Connecting...")
         Logger:initialize()
-    else
-        Hooks:Unregister()
-        local a = FindFirstOf("BP_ArchipelagoHelper_C") ---@cast a ABP_ArchipelagoHelper_C
-        a:ChangeAPTextConnect(E_CLIENT_INFOS.DISCONNECTED)
+        self.apClient:Connect()
     end
-
 end
 
-function AP_REF:IsConnected()
-    return AP_REF.APClient ~= nil
+--- Check if connected
+---@return boolean
+function ArchipelagoSystem:IsConnected()
+    return self.apClient:IsConnected()
 end
 
-return AP_REF
+--- Get AP client
+---@return APClient
+function ArchipelagoSystem:GetClient()
+    return self.apClient
+end
+
+-- Initialize and return
+local system = ArchipelagoSystem:Initialize()
+
+return system

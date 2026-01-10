@@ -1,5 +1,4 @@
-JSON = require("json")
-AREA_NAMES = {"GoblusLair", "AncientSanctuary", "SideLevel_RedForest", "EsquieNest", "SideLevel_OrangeForest", "SideLevel_CleasFlyingHouse", "ForgottenBattlefield", "SidelLevel_FrozenHearts", "GestralVillage", "MonocoStation", "Lumiere", "Monolith_Interior_PaintressIntro", "OldLumiere", "SideLevel_Reacher", "SideLevel_AxonPath", "SeaCliff", "Sirene", "SideLevel_TwilightSanctuary", "Visages", "SideLevel_YellowForest", "SideLevel_CleasTower_Entrance"}
+JSON = require("Utils.json")
 
 ---@class ItemData
 ---@field type string Type of the item
