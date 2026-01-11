@@ -2,7 +2,7 @@ Logger     = require "Logger"
 Hooks      = require "Hooks.index"
 Data       = require "Data"
 Debug      = require "Archipelago.Debug"
-Storage    = require "Storage.index"
+Storage    = require "Storage.index" ---@type Storage
 Inventory  = require "Game.Inventory"
 Capacities = require "Game.Capacities"
 Characters = require "Game.Characters"
@@ -17,6 +17,7 @@ Commands   = require "Commands"
 Dump = Utils.TableHelper.Dump
 Contains = Utils.TableHelper.Contains
 Trim = Utils.StringHelper.Trim
+Remove = Utils.TableHelper.Remove
 
 
 Archipelago          = require "Archipelago"
@@ -73,10 +74,9 @@ function InitSaveAfterLumiere()
    Characters:AddEveryone()
 
    if Archipelago.options.char_shuffle == 0 then
-      table.insert(Storage.characters, "Frey")
+      Storage:UnlockCharacter("Frey")
    end
 
-   Characters:EnableOnlyUnlockedCharacters()
    Characters:EnableCharactersInPartyOnlyUnlocked()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
@@ -86,10 +86,10 @@ function InitSaveAfterLumiere()
    Save:WriteFlagByID("NID_LuneRelationshipLvl6_Quest", true)
    Save:WriteFlagByID("NID_Monoco_RelationshipLvl6_Quest", true)
 
-   Storage.initialized_after_lumiere = true
+   Storage:Set("initialized_after_lumiere", true)
    Storage:Update("InitSaveAfterLumiere")
    Logger:info("Lumiere is done, ciao")
 
    Storage.transition_lumiere = true
-   -- Archipelago:Sync()
+   Archipelago:Sync()
 end

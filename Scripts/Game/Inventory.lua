@@ -22,7 +22,7 @@ function Inventory:GetInventoryManager()
     if playerInventory ~= nil and playerInventory:IsValid() then
         Logger:info("Retrieving Inventory manager succeeds")
         return playerInventory
-    else 
+    else
         Logger:error("Retrieving Inventory manager fails")
         return nil
     end
@@ -62,7 +62,7 @@ function Inventory:AddItem(itemName, amount, item_level)
     table.insert(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
     Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     Remove(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
-    
+
     return true
 end
 
@@ -88,7 +88,7 @@ function Inventory.GetInventory()
         local name = item.ItemStaticData_9_59CF465348F5D7696BDFE68CB4071486.Item_HardcodedName_90_C7F763B74AAB28EF890A66854D7D95AA:ToString()
         local amount = item.StacksAmount_2_9F82380C4167D3E4C37234817EF904DC
         items[name] = amount
-        
+
         index = index + 1
     end
 
@@ -110,7 +110,7 @@ end
 
 function Inventory:GetAmountOfItem(itemName)
     if not Inventory.HasItem(itemName) then return 0 end
-    
+
     local inventory_table = Inventory.GetInventory()
     for key, value in pairs(inventory_table) do
         if key == itemName then
@@ -130,7 +130,7 @@ function Inventory:SetItemQuantity(item_name, amount)
     if current_amount < 0 then
         return
     end
-    
+
     if current_amount < amount then
         Inventory:AddItem(item_name, amount - current_amount)
     elseif current_amount > amount then

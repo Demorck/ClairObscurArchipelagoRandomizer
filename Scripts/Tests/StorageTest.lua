@@ -95,13 +95,8 @@ local function runTests()
     assert_true(retrievedTickets.Lumiere, "tickets.Lumiere should be true")
 
     print("\n--- Test 7: Characters Table ---")
-    local characters = {"Frey", "Maelle", "Sophie"}
-    success = Storage:Set("characters", characters)
-    assert_true(success, "Setting characters array should succeed")
-
-    local retrievedChars = Storage:Get("characters")
-    assert_equal(#retrievedChars, 3, "Characters array should have 3 elements")
-    assert_equal(retrievedChars[1], "Frey", "First character should be Frey")
+    assert_true(Storage:UnlockCharacter("Frey"), "Gustave unlocked in storage")
+    assert_true(Storage:IsCharacterUnlocked("Frey"), "Gustave unlocked in storage")
 
     print("\n--- Test 8: Unknown Field Handling ---")
     local value = Storage:Get("nonexistent_field")

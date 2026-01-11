@@ -7,5 +7,6 @@ local Constants = {}
 Constants.NID = require "Constants.NIDConstants"
 Constants.CONFIG = require "Constants.ConfigConstants"
 Constants.QUEST = require "Constants.QuestConstants"
+Constants.BLUEPRINT = require "Constants.BlueprintConstants"
 
 return Constants

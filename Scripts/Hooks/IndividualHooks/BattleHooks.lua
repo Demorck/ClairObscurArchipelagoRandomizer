@@ -46,11 +46,11 @@ function BattleHooks:Register(hookManager, dependencies)
             if archipelago.options.char_shuffle == 0 then
                 local canUnlock, charName = battle:IsBattleCanUnlockCharacter(encounterName)
                 if canUnlock and charName then
-                    if not Contains(storage.characters, charName) then
+                    if not Storage:IsCharacterUnlocked(charName) then
                         logger:info("Unlocking character: " .. charName)
                         AddingCharacterFromArchipelago = true
                         characters:EnableCharacter(charName)
-                        table.insert(storage.characters, charName)
+                        Storage:UnlockCharacter(charName)
                         storage:Update("BattleHooks:OnBattleEndVictory")
                     end
                 end

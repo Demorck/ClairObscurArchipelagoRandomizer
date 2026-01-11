@@ -7,7 +7,7 @@ local QuestHooks = {}
 ---@param dependencies table
 function QuestHooks:Register(hookManager, dependencies)
     local archipelago = dependencies.archipelago
-    local storage = dependencies.storage
+    local storage = dependencies.storage ---@type Storage
     local logger = dependencies.logger
     local quests = dependencies.quests
 
@@ -21,17 +21,22 @@ function QuestHooks:Register(hookManager, dependencies)
 
             logger:info("Game change subquest: " .. objectiveName .. " to " .. statusValue)
 
+            print("Status value : " .. statusValue)
+            print("objective : " .. objectiveName)
+            print("constants : " .. QUEST_STATUS.STARTED)
+            print("Storage : " .. tostring(storage:Get("initialized_after_lumiere")))
             -- Initialize after Lumiere
-            if not storage.initialized_after_lumiere and
+            if not storage:Get("initialized_after_lumiere") and
                objectiveName == "2_SpringMeadow" and
                statusValue == QUEST_STATUS.STARTED then
+                print("oui ?")
                 InitSaveAfterLumiere()
                 return
             end
 
             -- Reset on Lumiere beginning
             if objectiveName == "1_LumiereBeginning" and statusValue ~= QUEST_STATUS.COMPLETED then
-                storage.initialized_after_lumiere = false
+                storage:Set("initialized_after_lumiere", false)
                 storage:Update("QuestHooks:UpdateActivitySubTaskStatus")
                 return
             end

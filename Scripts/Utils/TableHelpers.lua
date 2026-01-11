@@ -106,6 +106,8 @@ function TableHelpers.Dump(o, depth)
                 k = '"' .. k .. '"'
             elseif type(k) == "number" then
                 k = k
+            elseif type(k) == "boolean" then
+                k = tostring(k)
             elseif string.find(tostring(k), "FName") then
                 k = k:ToString()
             else
@@ -125,6 +127,8 @@ function TableHelpers.Dump(o, depth)
                 v = '"' .. v .. '"'
             elseif type(v) == "number" then
                 v = v
+            elseif type(v) == "boolean" then
+                v = tostring(v)
             else
                 v = type(v)
             end

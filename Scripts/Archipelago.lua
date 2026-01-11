@@ -27,6 +27,7 @@ end
 
 ---Sync with AP server
 function Archipelago:Sync()
+    self.waitingForSync = true
     if not self:CanReceiveItems() then
         return
     end

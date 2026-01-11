@@ -61,7 +61,7 @@ end
 ---@param item_data ItemData
 ---@return boolean success
 function ItemReceiver:HandleAreaItem(item_data)
-    Storage.tickets[item_data.internal_name] = true
+    Storage:UnlockArea(item_data.internal_name)
     Storage:Update("ItemReceiver:HandleAreaItem")
 
     -- Handle specific area unlocks
@@ -87,8 +87,12 @@ end
 ---@param item_data ItemData
 ---@return boolean success
 function ItemReceiver:HandleCharacterItem(item_data)
-    Characters:EnableCharacter(item_data.internal_name)
-    table.insert(Storage.characters, item_data.internal_name)
+    local internal_name = item_data.internal_name
+    Characters:EnableCharacter(internal_name)
+    local ok = Storage:UnlockCharacter(internal_name)
+
+    if not ok then Logger:error("ItemReceiver:HandleCharacterItem when trying to unlock " .. internal_name) end
+
     Storage:Update("ItemReceiver:HandleCharacterItem")
     return true
 end

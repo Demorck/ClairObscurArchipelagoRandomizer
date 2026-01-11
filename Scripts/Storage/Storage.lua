@@ -76,6 +76,78 @@ function Storage:GetAll()
     return self.data
 end
 
+---Unlock an area (set to true)
+---@param ticketName string Ticket name ("GoblusLair", "Lumiere")
+---@return boolean success True if area was unlocked
+function Storage:UnlockArea(ticketName)
+    local tickets = self:Get("tickets")
+    if tickets[ticketName] == nil then
+        Logger:error("Unknown ticket: " .. ticketName)
+        return false
+    end
+
+    tickets[ticketName] = true
+    return self:Set("tickets", tickets)
+end
+
+---Lock an area (set to false)
+---@param ticketName string Ticket name
+---@return boolean success True if area was locked
+function Storage:LockArea(ticketName)
+    local tickets = self:Get("tickets")
+    if tickets[ticketName] == nil then
+        Logger:error("Unknown ticket: " .. ticketName)
+        return false
+    end
+
+    tickets[ticketName] = false
+    return self:Set("tickets", tickets)
+end
+
+---Check if an area is unlocked
+---@param ticketName string Ticket name
+---@return boolean unlocked True if area is unlocked
+function Storage:IsAreaUnlocked(ticketName)
+    local tickets = self:Get("tickets")
+    return tickets[ticketName] == true
+end
+
+---Unlock a character (set to true)
+---@param characterName string Character name ("Frey", "Maelle")
+---@return boolean success True if character was unlocked
+function Storage:UnlockCharacter(characterName)
+    local characters = self:Get("characters")
+    if characters[characterName] == nil then
+        Logger:error("Unknown character: " .. characterName)
+        return false
+    end
+
+    characters[characterName] = true
+    return self:Set("characters", characters)
+end
+
+---Lock a character (set to false)
+---@param characterName string Character name
+---@return boolean success True if character was locked
+function Storage:LockCharacter(characterName)
+    local characters = self:Get("characters")
+    if characters[characterName] == nil then
+        Logger:error("Unknown character: " .. characterName)
+        return false
+    end
+
+    characters[characterName] = false
+    return self:Set("characters", characters)
+end
+
+---Check if a character is unlocked
+---@param characterName string Character name
+---@return boolean unlocked True if character is unlocked
+function Storage:IsCharacterUnlocked(characterName)
+    local characters = self:Get("characters")
+    return characters[characterName] == true
+end
+
 ---Load storage from JSON file
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
