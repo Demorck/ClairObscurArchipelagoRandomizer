@@ -1,14 +1,10 @@
+---@class Capacities
 local Capacities = {}
-local CapacitiesBluePrintName = "BP_ExplorationProgressionSystem_C"
-
-
-local WorldMapCapacities = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" }
-local ExplorationCapacities = { "FreeAim", "AttackInWorld", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" }
 
 ---Return the Exploration Progression manager
 ---@return UBP_ExplorationProgressionSystem_C | nil
 function Capacities:GetManager()
-    local ExplorationProgression = FindFirstOf(CapacitiesBluePrintName) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    local ExplorationProgression = FindFirstOf(CONSTANTS.BLUEPRINT.EXPLORATION_SYSTEM) ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression ~= nil and ExplorationProgression:IsValid() then
         Logger:info("Retrieving Exploration Progression manager succeeds")
         return ExplorationProgression
@@ -37,7 +33,7 @@ function Capacities:UnlockNextWorldMapAbility()
     local abilities = Capacities:GetWorldMapAbilities()
 
     local new = false
-    for i, capacity in ipairs(WorldMapCapacities) do
+    for i, capacity in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
         local row = abilities[capacity]
         if not row.is_unlocked then
             local t = { i }
@@ -118,9 +114,9 @@ function Capacities:UnlockAllExplorationCapacities()
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression == nil then return end
 
-    for i, _ in ipairs(ExplorationCapacities) do
+    for i, _ in ipairs(CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES) do
         if Archipelago.options.shuffle_free_aim == 1 then
-            if ExplorationCapacities[i] ~= "FreeAim" then
+            if CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES[i] ~= "FreeAim" then
                 -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
                 Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
             else

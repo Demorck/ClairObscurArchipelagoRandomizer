@@ -1,23 +1,9 @@
+---@class Inventory
 local Inventory = {}
-
-local InventoryBluePrintName = "AC_jRPG_InventoryManager_C"
-
-local CONSUMABLE_ITEM = {
-    "PartyHealConsumable",
-    "Consumable_Revive_Level0",
-    "Consumable_Revive_Level1",
-    "Consumable_Revive_Level2",
-    "Consumable_Energy_Level0",
-    "Consumable_Energy_Level1",
-    "Consumable_Energy_Level2",
-    "Consumable_Health_Level0",
-    "Consumable_Health_Level1",
-    "Consumable_Health_Level2"
-}
 
 ---@return UAC_jRPG_InventoryManager_C | nil
 function Inventory:GetInventoryManager()
-    local playerInventory = FindFirstOf(InventoryBluePrintName) ---@cast playerInventory UAC_jRPG_InventoryManager_C
+    local playerInventory = FindFirstOf(CONSTANTS.BLUEPRINT.INVENTORY_MANAGER) ---@cast playerInventory UAC_jRPG_InventoryManager_C
 
     if playerInventory ~= nil and playerInventory:IsValid() then
         Logger:info("Retrieving Inventory manager succeeds")
@@ -139,7 +125,7 @@ function Inventory:SetItemQuantity(item_name, amount)
 end
 
 function Inventory:RemoveConsumable()
-    for _, consumable in ipairs(CONSUMABLE_ITEM) do
+    for _, consumable in ipairs(CONSTANTS.CONFIG.CONSUMABLE_ITEM) do
         Inventory:SetItemQuantity(consumable, 0)
     end
 end

@@ -26,6 +26,20 @@ local CONFIG = {
             BALANCED_RANDOM  = 2,
             FULL_RANDOM      = 3
         }
+    },
+
+
+    CONSUMABLE_ITEM = {
+        "PartyHealConsumable",
+        "Consumable_Revive_Level0",
+        "Consumable_Revive_Level1",
+        "Consumable_Revive_Level2",
+        "Consumable_Energy_Level0",
+        "Consumable_Energy_Level1",
+        "Consumable_Energy_Level2",
+        "Consumable_Health_Level0",
+        "Consumable_Health_Level1",
+        "Consumable_Health_Level2"
     }
 }
 

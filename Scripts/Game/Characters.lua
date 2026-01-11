@@ -1,9 +1,6 @@
 ---@class Characters
 local Characters = {}
 
-local Characters_name = {"Frey", "Maelle", "Lune", "Sciel", "Verso", "Monoco" }
-local weapons_characters = {"Noahram", "Maellum", "Lunerim", "Scieleson", "Verleso", "Monocaro" }
-
 --- Return the Characters manager
 ---@return UAC_jRPG_CharactersManager_C | nil
 function Characters:GetManager()
@@ -46,14 +43,14 @@ end
 function Characters:AddEveryone()
     Logger:info("Adding everyone to party...")
 
-    for i, char in ipairs(Characters_name) do
-        Inventory:AddItem(weapons_characters[i], 1, 1)
+    for i, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
+        Inventory:AddItem(CONSTANTS.GAME.TABLE.CHARACTERS_WEAPONS[i], 1, 1)
         self:AddCharacter(char)
     end
 
 
     Logger:info("Setting everyone to level 1...")
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
     for _, char in ipairs(char_data) do
         Logger:callMethod(char, "SetLevel", 1)
@@ -68,7 +65,7 @@ function Characters:EnableCharacter(name)
     local level_char = maxlevel > 5 and maxlevel - 5 or maxlevel
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
 
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
 
     for _, char in ipairs(char_data) do
@@ -85,7 +82,7 @@ end
 ---@return integer 
 function Characters:NumberOfEnabledCharacters()
     local enabled_count = 0
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return enabled_count end
 
     for _, char in ipairs(char_data) do
@@ -99,7 +96,7 @@ end
 
 --- Removing from battle team all excluded characters
 function Characters:DisableInPartyExcludedCharacters()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
 
     for _, char in ipairs(char_data) do
@@ -156,7 +153,7 @@ end
 --- Enable only the characters that are unlocked
 --- @deprecated i guess
 function Characters:EnableOnlyUnlockedCharacters()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
 
     -- Do it twice because if the first char is in the party and the only one AND the it's the first in the list, it won't be removed
@@ -178,7 +175,7 @@ function Characters:EnableCharactersInPartyOnlyUnlocked()
     Logger:info("Enabling characters in party only if unlocked...")
 
     for _ = 1, 2, 1 do
-        for _, char in ipairs(Characters_name) do
+        for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
             if Storage:IsCharacterUnlocked(char) then
                 self:EnableInParty(char, true)
             else
@@ -188,7 +185,7 @@ function Characters:EnableCharactersInPartyOnlyUnlocked()
     end
 end
 function Characters:EnableCharactersInCollectionOnlyUnlocked()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
     if Characters:HasExcludedCharactersInCollection() then return end
 
@@ -205,7 +202,7 @@ function Characters:EnableCharactersInCollectionOnlyUnlocked()
 end
 
 function Characters:HasExcludedCharactersInCollection()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return false end
 
     for _, char in ipairs(char_data) do
@@ -226,7 +223,7 @@ end
 function Characters:DisableEveryoneFromParty()
     Logger:info("Disabling everyone from party...")
 
-    for _, char in ipairs(Characters_name) do
+    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
         self:EnableInParty(char, false)
     end
 end
@@ -263,7 +260,7 @@ function Characters:SetHPAll(hp)
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
     if helper == nil then return end
 
-    for _, char in ipairs(Characters_name) do
+    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
         local fname = FName(char)
         Logger:callMethod(helper, "SetCharacterHP", fname, hp)
         -- helper:SetCharacterHP(fname, hp)
@@ -273,7 +270,7 @@ end
 --- Get the mean level of all characters
 ---@return integer
 function Characters:GetMeanLevel()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return 1 end
 
     local s = 0;
@@ -287,7 +284,7 @@ end
 --- Get the max level of all characters
 --- @return integer
 function Characters:GetMaxLevel()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@type UBP_CharacterData_C[]
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return 1 end
 
     local max = 1;

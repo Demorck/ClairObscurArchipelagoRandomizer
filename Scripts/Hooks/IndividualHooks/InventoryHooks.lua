@@ -1,5 +1,5 @@
 ---Inventory-related hooks
----@class UIHooks
+---@class InventoryHooks
 local InventoryHooks = {}
 
 ---Register all inventory hooks

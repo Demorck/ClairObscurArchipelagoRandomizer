@@ -1,3 +1,4 @@
+---@class Battle
 local Battle = {}
 
 local BluePrintName = "AC_jRPG_BattleManager_C"
