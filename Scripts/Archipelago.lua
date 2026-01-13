@@ -15,6 +15,10 @@ function Archipelago:IsConnected()
     return self.apSystem:IsConnected()
 end
 
+function Archipelago:IsInitialized()
+    return self:IsConnected() and Storage:Get("initialized_after_lumiere")
+end
+
 ---Get player information
 ---@return table playerInfo Player information from AP
 function Archipelago:GetPlayer()

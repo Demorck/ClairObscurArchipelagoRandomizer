@@ -136,9 +136,12 @@ StorageSchema.fields = {
         }
     },
 
-    capacities = {
-        type = "table",
-        default = {}
+    progressive_rock = {
+        type = "number",
+        default = 0,
+        validator = function (value)
+            return value >= 0 and value <= 5
+        end
     },
 }
 

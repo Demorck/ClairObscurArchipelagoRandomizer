@@ -42,17 +42,48 @@ function Capacities:UnlockNextWorldMapAbility()
             table.insert(TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
             -- ExplorationProgression:UnlockWorldMapCapacities(t)
             Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-            table.insert(Storage.capacities, i)
 
             if capacity == "Base" then
                 local t = { i + 1 }
                 -- ExplorationProgression:UnlockWorldMapCapacities(t)
                 Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-                table.insert(Storage.capacities, i + 1)
             end
 
             Storage:Update("UnlockSpecificWorldMapCapacity")
             Remove(TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
+            new = true
+            break
+        end
+    end
+
+    if not new then
+        Save:WriteFlagByID("NID_EsquieUnderwaterUnlocked", true)
+    end
+end
+
+function Capacities:a()
+    Logger:info("Unlocking next world map ability...")
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return end
+    local abilities = Capacities:GetWorldMapAbilities()
+
+    local new = false
+    for i, capacity in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
+        local row = abilities[capacity]
+        if not row.is_unlocked then
+            local t = { i }
+
+            
+            -- ExplorationProgression:UnlockWorldMapCapacities(t)
+            Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
+
+            if capacity == "Base" then
+                local t = { i + 1 }
+                -- ExplorationProgression:UnlockWorldMapCapacities(t)
+                Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
+            end
+
+            Storage:Update("UnlockSpecificWorldMapCapacity")
             new = true
             break
         end
@@ -71,7 +102,7 @@ function Capacities:GetWorldMapAbilities()
     if ExplorationProgression == nil then return {} end
     local result = {}
 
-   for key, value in ipairs(WorldMapCapacities) do
+   for key, value in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
       local out = {}
     --   Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
     --   ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
@@ -94,7 +125,7 @@ function Capacities:UnlockExplorationCapacity(capacity_to_unlock)
     if ExplorationProgression == nil then return end
     
     local index = -1
-    for i, value in ipairs(ExplorationCapacities) do
+    for i, value in ipairs(CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES) do
         if value == capacity_to_unlock then
             index = i
         end

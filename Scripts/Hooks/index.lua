@@ -1,12 +1,13 @@
-local HookManager = require "Hooks.Core.HookManager"
-local ChestHook = require "Hooks.IndividualHooks.ChestHooks"
-local BattleHooks = require "Hooks.IndividualHooks.BattleHooks"
-local SaveHooks = require "Hooks.IndividualHooks.SaveHooks"
-local QuestHooks = require "Hooks.IndividualHooks.QuestHooks"
-local LocationHooks = require "Hooks.IndividualHooks.LocationHooks"
+local HookManager    = require "Hooks.Core.HookManager"
+local ChestHook      = require "Hooks.IndividualHooks.ChestHooks"
+local BattleHooks    = require "Hooks.IndividualHooks.BattleHooks"
+local SaveHooks      = require "Hooks.IndividualHooks.SaveHooks"
+local QuestHooks     = require "Hooks.IndividualHooks.QuestHooks"
+local LocationHooks  = require "Hooks.IndividualHooks.LocationHooks"
 local CharacterHooks = require "Hooks.IndividualHooks.CharacterHooks"
 local InventoryHooks = require "Hooks.IndividualHooks.InventoryHooks"
-local UIHooks = require "Hooks.IndividualHooks.UIHooks"
+local UIHooks        = require "Hooks.IndividualHooks.UIHooks"
+local CapacityHook   = require "Hooks.IndividualHooks.CapacityHook"
 
 
 local Hooks = {}
@@ -46,6 +47,7 @@ function Hooks:Register()
     CharacterHooks:Register(hookManager, dependencies)
     InventoryHooks:Register(hookManager, dependencies)
     UIHooks:Register(hookManager, dependencies)
+    CapacityHook:Register(hookManager, dependencies)
 
     Logger:info("Hooks registered successfully")
 end

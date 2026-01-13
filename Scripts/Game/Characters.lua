@@ -69,7 +69,7 @@ function Characters:EnableCharacter(name)
     if char_data == nil then return end
 
     for _, char in ipairs(char_data) do
-        if char.HardcodedNameID:ToString() == name then
+        if char.HardcodedNameID:ToString() == name and char.IsExcluded then
             char.IsExcluded = false
             Logger:info("Setting character " .. name .. " to level " .. level_char)
             Logger:callMethod(char, "SetLevel", level_char)

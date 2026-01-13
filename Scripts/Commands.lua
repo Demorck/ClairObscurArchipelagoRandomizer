@@ -10,8 +10,9 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
-    local a = require("Tests.StorageTest")
-    
+end
+
+function DebugCommands:DebugFunction4()
 end
 
 function DebugCommands:RegisterKeybinds()
@@ -30,6 +31,12 @@ function DebugCommands:RegisterKeybinds()
     RegisterKeyBind(Key.F3, { ModifierKey.CONTROL }, function()
         ExecuteInGameThread(function()
             self:DebugFunction3()
+        end)
+    end)
+
+    RegisterKeyBind(Key.F4, { ModifierKey.CONTROL }, function()
+        ExecuteInGameThread(function()
+            self:DebugFunction4()
         end)
     end)
 end

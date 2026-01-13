@@ -12,7 +12,7 @@ function InventoryHooks:Register(hookManager, dependencies)
 
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_InventoryManager.AC_jRPG_InventoryManager_C:AddItemToInventory",
-        function(context, ItemHardcodedName, Amount, LootContext, GeneratedItem)
+        function(context, ItemHardcodedName, _, _, _)
             if not storage.initialized_after_lumiere then return end
 
             local itemName = ItemHardcodedName:get():ToString()
@@ -31,6 +31,11 @@ function InventoryHooks:Register(hookManager, dependencies)
                 end
 
                 storage:Update("InventoryHooks:AddItemToInventory - LostGestral")
+
+            --- Hidden Gestral Arena
+            elseif (itemName == "LastStandCritical" or itemName == "LastStandSpeed" or itemName == "LastStandPowerful" or itemName == "LastStandShell" or itemName == "SoloFighter") and
+                   not Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
+                    invManager:RemoveItemFromInventory(FName(itemName), 1, true)
             end
         end,
         "Inventory - Add Item"

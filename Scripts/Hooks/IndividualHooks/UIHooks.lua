@@ -12,7 +12,7 @@ function UIHooks:Register(hookManager, dependencies)
 
     hookManager:Register(
         "/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened",
-        function (context)
+        function (_)
             if not Storage.initialized_after_lumiere then
                 return
             end

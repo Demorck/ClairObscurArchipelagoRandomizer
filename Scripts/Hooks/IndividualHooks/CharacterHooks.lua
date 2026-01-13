@@ -13,7 +13,7 @@ function CharacterHooks:Register(hookManager, dependencies)
     -- Save characters from unavoidable death
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:RemoveCharacterFromCollection",
-        function(self, data_param)
+        function(_, data_param)
             if not storage.initialized_after_lumiere then
                 return
             end

@@ -21,15 +21,10 @@ function QuestHooks:Register(hookManager, dependencies)
 
             logger:info("Game change subquest: " .. objectiveName .. " to " .. statusValue)
 
-            print("Status value : " .. statusValue)
-            print("objective : " .. objectiveName)
-            print("constants : " .. QUEST_STATUS.STARTED)
-            print("Storage : " .. tostring(storage:Get("initialized_after_lumiere")))
             -- Initialize after Lumiere
             if not storage:Get("initialized_after_lumiere") and
                objectiveName == "2_SpringMeadow" and
                statusValue == QUEST_STATUS.STARTED then
-                print("oui ?")
                 InitSaveAfterLumiere()
                 return
             end
@@ -43,10 +38,21 @@ function QuestHooks:Register(hookManager, dependencies)
 
             -- Auto-complete forced camps
             --TODO: Seems to not work for Post SM
-            if objectiveName == "1_ForcedCamp_PostSpringMeadows" and statusValue == QUEST_STATUS.STARTED then
-                quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.COMPLETED)
-            elseif objectiveName == "10_ForcedCamp_PostLumiereAttack" and statusValue == QUEST_STATUS.STARTED then
-                quests:SetObjectiveStatus("Main_ForcedCamps", "10_ForcedCamp_PostLumiereAttack", QUEST_STATUS.COMPLETED)
+            if objectiveName == CONSTANTS.QUEST.FORCED_CAMPS.POST_SPRING_MEADOWS and statusValue == QUEST_STATUS.STARTED then
+                quests:SetObjectiveStatus(CONSTANTS.QUEST.FORCED_CAMPS.QUEST_NAME,
+                                          CONSTANTS.QUEST.FORCED_CAMPS.POST_SPRING_MEADOWS,
+                                          QUEST_STATUS.COMPLETED)
+            elseif objectiveName == CONSTANTS.QUEST.FORCED_CAMPS.POST_LUMIERE_ATTACK and statusValue == QUEST_STATUS.STARTED then
+                quests:SetObjectiveStatus(CONSTANTS.QUEST.FORCED_CAMPS.QUEST_NAME,
+                                          CONSTANTS.QUEST.FORCED_CAMPS.POST_LUMIERE_ATTACK,
+                                          QUEST_STATUS.COMPLETED)
+            elseif objectiveName == CONSTANTS.QUEST.FORCED_CAMPS.POST_AXON_2 and statusValue == QUEST_STATUS.STARTED then
+                quests:SetObjectiveStatus(CONSTANTS.QUEST.FORCED_CAMPS.QUEST_NAME,
+                                          CONSTANTS.QUEST.FORCED_CAMPS.POST_SPRING_MEADOWS,
+                                          QUEST_STATUS.COMPLETED)
+                quests:SetObjectiveStatus(CONSTANTS.QUEST.FORCED_CAMPS.QUEST_NAME,
+                                          CONSTANTS.QUEST.FORCED_CAMPS.POST_LUMIERE_ATTACK,
+                                          QUEST_STATUS.COMPLETED)
             end
 
             -- Gestral rewards
