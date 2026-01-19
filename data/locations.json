@@ -3507,7 +3507,7 @@
     },
     {
         "internal_name": "Chest_SmallLevel_TheCarrousel_1",
-        "name": "Carousel: In boxes",
+        "name": "Carousel: Left of Expedition Flag",
         "location": "Small Level The Carrousel",
         "original_item": "MusicRecord_12",
         "condition": {},
@@ -3515,7 +3515,7 @@
     },
     {
         "internal_name": "Chest_SmallLevel_TheCarrousel_2",
-        "name": "Carousel: Left of Expedition Flag",
+        "name": "Carousel: In boxes",
         "location": "Small Level The Carrousel",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -6350,7 +6350,9 @@
         "name": "Verso's Drafts: On the train tracks through the door",
         "internal_name": "Chest_SideLevel_VersosDraft_16",
         "location": "Verso's Drafts",
-        "condition": {},
+        "condition": {
+            "Toy Boat": 1
+        },
         "original_item": "",
         "type": "Chest"
     },
@@ -6358,7 +6360,9 @@
         "name": "Verso's Drafts: On a box through the door",
         "internal_name": "Chest_SideLevel_VersosDraft_17",
         "location": "Verso's Drafts",
-        "condition": {},
+        "condition": {
+            "Toy Boat": 1
+        },
         "original_item": "",
         "type": "Chest"
     },
@@ -6615,6 +6619,56 @@
         "type": "Boss",
         "boss_type": "Area",
         "pictos_level": 32
+    },
+    {
+        "name": "Verso's Drafts: Mime",
+        "internal_name": "VD_Mime*1",
+        "location": "Verso's Drafts",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Mime"
+    },
+    {
+        "name": "World Map: Bourgeon near Stone Wave Cliffs",
+        "internal_name": "WM_Bourgeon_Volester_Gault",
+        "location": "World Map",
+        "condition": {
+            "Progressive Rock": 1
+        },
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Bourgeon",
+        "pictos_level": 8
+    },
+    {
+        "name": "World Map: Bourgeon near The Meadows",
+        "internal_name": "WM_Bourgeon_Rocher_Potier",
+        "location": "World Map",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Bourgeon",
+        "pictos_level": 10
+    },
+    {
+        "name": "World Map: Bourgeon near Forgotten Battlefield",
+        "internal_name": "WM_Bourgeon_Benisseur_OrphelinNailBig",
+        "location": "World Map",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Bourgeon",
+        "pictos_level": 24
+    },
+    {
+        "name": "World Map: Second Continent - Bourgeon far west",
+        "internal_name": "WM_Bourgeon_Ramasseur_Danseuse",
+        "location": "World Map",
+        "condition": {},
+        "original_item": "",
+        "type": "Boss",
+        "boss_type": "Bourgeon",
+        "pictos_level": 9
     }
-
 ]
