@@ -10,6 +10,9 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
+    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+
+    helper:GetAllNamedIDs({})
 end
 
 function DebugCommands:DebugFunction4()

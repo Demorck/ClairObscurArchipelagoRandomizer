@@ -61,6 +61,10 @@ function DeathLinkHandler:HandleDeathLink(data)
     self.logger:info("DeathLink received: " .. Dump(data))
     self.logger:info("Last received at: " .. self.archipelago.lastDeathLink)
 
+    if data.cause == nil then
+        data.cause = data.source
+    end
+
     -- Process death link
     if Battle and Battle:InBattle() then
         self.logger:info("DeathLink during battle: " .. data.cause)

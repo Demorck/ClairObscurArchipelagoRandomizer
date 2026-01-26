@@ -25,6 +25,14 @@ function Save:ModifyGPEIfNeeded(save_data)
     gpe:Add(FName("ObjectID_Destructible_Level_Camp_Main_BP_BoulderBreak_Lvl1_C_0B3D65ED4ACB6050879EEE869B749856"), true)
 end
 
+---This function calls just GetAllNamedIDs and the hook function will do the rest.
+---@param flag_name string
+---@param boolean_value boolean
+function Save:WriteFlagByName(flag_name, boolean_value)
+    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    helper:GetAllNamedIDs({})
+end
+
 function Save:WriteFlagByID(flag_id, boolean_value)
     local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
     if helper == nil or not helper:IsValid() then return end

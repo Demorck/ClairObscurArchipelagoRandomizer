@@ -18,7 +18,7 @@ function SaveHooks:Register(hookManager, dependencies)
         "/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:SaveGameToFile",
         function(self, SaveName)
             local manager = self:get() ---@type UBP_SaveManager_C
-            if not archipelago.apSystem or not manager or not manager:IsValid() then
+            if not Archipelago:IsInitialized() or not manager or not manager:IsValid() then
                 return
             end
 
@@ -88,6 +88,15 @@ function SaveHooks:Register(hookManager, dependencies)
             characters:EnableCharactersInCollectionOnlyUnlocked()
             capacities:DisableFreeAimIfNeeded()
 
+            ---@type FGuid
+            local test = { 
+                A = CONSTANTS.NID.FW_JUMP_TUTORIAL.A,
+                B = CONSTANTS.NID.FW_JUMP_TUTORIAL.B,
+                C = CONSTANTS.NID.FW_JUMP_TUTORIAL.C,
+                D = CONSTANTS.NID.FW_JUMP_TUTORIAL.D
+            }
+            data.NamedIDsStates:Add(test, true)
+
             storage.lastSavedItemIndex = storage.lastReceivedItemIndex
             storage:Update("SaveHooks:SaveGameToFile")
         end,
@@ -95,6 +104,28 @@ function SaveHooks:Register(hookManager, dependencies)
     )
 
     logger:info("Save hooks registered")
+end
+
+function SaveHooks:AddNamedID()
+    return function(ctx, ids)
+        local ctx = ctx:get() ---@type UBP_jRPG_GI_Custom_C
+        local namedID = ids:get() ---@type TArray<UNamedID>
+
+        namedID:ForEach(function (index, element)
+            local value = element:get() ---@type UNamedID
+            local name = value.Name:ToString()
+
+            local found = false
+            for _, need_to_add in ipairs(NAMEDID_TO_BE_ADDED) do
+                if name == need_to_add then
+                    ctx:WritePersistentFlag(value, true)
+                    found = true
+                end
+            end
+
+            if found then Remove(NAMEDID_TO_BE_ADDED, name) end
+        end)
+   end
 end
 
 return SaveHooks

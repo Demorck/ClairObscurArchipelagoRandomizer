@@ -2,6 +2,7 @@
 ---@class CharacterHooks
 local CharacterHooks = {}
 
+
 ---Register all character hooks
 ---@param hookManager HookManager
 ---@param dependencies table
@@ -37,6 +38,28 @@ function CharacterHooks:Register(hookManager, dependencies)
             end
         end,
         "Character - Save from Death"
+    )
+
+    hookManager:Register(
+        "/Game/Gameplay/GameActionsSystem/ReplaceCharacter/BP_GameActionInstance_ReplaceCharacter.BP_GameActionInstance_ReplaceCharacter_C:GetReplaceCharacterParameters",
+        function(ctx, parameters)
+            if (Contains(TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")) then return end
+
+            local ctx = ctx:get() ---@cast ctx UBP_GameActionInstance_ReplaceCharacter_C
+            local char_data = Characters:GetCharacterDataByID("Verso")
+            if char_data == nil then
+                Logger:warn("AAAAAAAAA")
+                return
+            end
+
+            ctx.OldCharacterData = char_data
+            ctx.NewCharacterData = char_data
+
+            table.insert(TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")
+            ctx:ComputeNewCharacterSaveState()
+            Remove(TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")
+        end,
+        "Character - Save Verso being remplaced"
     )
 
     logger:info("Character hooks registered")

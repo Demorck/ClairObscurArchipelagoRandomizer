@@ -46,6 +46,7 @@ setmetatable(AP_REF, {
 RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
 TABLE_CURRENT_AP_FUNCTION = {}
+NAMEDID_TO_BE_ADDED = {}
 
 -- And maybe the party issues in act 3 ? there is one iirc
 
@@ -93,3 +94,32 @@ function InitSaveAfterLumiere()
    Storage.transition_lumiere = true
    Archipelago:Sync()
 end
+
+RegisterHook("/Game/Gameplay/GameActionsSystem/ReplaceCharacter/BP_GameActionInstance_ReplaceCharacter.BP_GameActionInstance_ReplaceCharacter_C:GetReplaceCharacterParameters", 
+   function(ctx, param)
+      local param = param:get() ---@cast param FS_ReplaceCharacterParameters
+      
+      param.TransferLumina_7_347621E5466692025EF4B2A21AA8E631 = false
+      param.TransferLevel_11_1EDF1E544B7806EACF12E8968EE240CA = false
+      param.TransferPictos_16_F3ADFDAC4F0D8D09C20CB9B1B6415108 = false
+      param.TransferWeapon_18_3B0D73CF4D925EE41C43C3A35B759EE7 = false
+      param.TransferAttributePoints_13_005710C0425DE39B3D97B78BAE5C34E6 = false
+   end
+)
+
+RegisterHook("/Game/jRPGTemplate/Blueprints/Basics/BP_jRPG_GI_Custom.BP_jRPG_GI_Custom_C:GetAllNamedIDs",
+   function(self, ids)
+      local ctx = self:get() ---@type UBP_jRPG_GI_Custom_C
+      local namedID = ids:get() ---@type TArray<UNamedID>
+
+
+      namedID:ForEach(function (index, element)
+         local value = element:get() ---@type UNamedID
+
+         print(value.Name:ToString())
+         if (value.Name:ToString() == CONSTANTS.NID.FW_JUMP_TUTORIAL.Name) then
+            ctx:WritePersistentFlag(value, true)
+         end
+      end)
+   end
+)

@@ -132,7 +132,7 @@ end
 --- Ensure that the battle team is correct: no excluded characters, at least one enabled character
 function Characters:ModifyPartyIfNeeded()
     local in_party_count, not_in_party_count = Characters:NumberOfCharactersInPartyEnabled()
-    
+
     if not_in_party_count > 0 then
         Logger:info("There are " .. not_in_party_count .. " excluded characters in party... Need to fix it")
         if in_party_count > 0 then
@@ -166,7 +166,7 @@ function Characters:EnableOnlyUnlockedCharacters()
                 self:EnableInParty(name, false)
             end
         end
-    end 
+    end
 end
 
 
@@ -249,7 +249,7 @@ end
 function Characters:KillAll()
     Logger:info("Killing all characters...")
     local bm = Battle:GetManager() --- @cast bm UAC_jRPG_BattleManager_C
-    
+
     bm:ForceBattleEnd(2)
 end
 
@@ -295,12 +295,27 @@ function Characters:GetMaxLevel()
         if current_level > max then
             max = current_level
         end
-        
+
         ::continue::
     end
 
     return max
 end
 
+--- Return the characterdata from the internal ID
+---@param name string The internal name of the character
+---@return UBP_CharacterData_C | nil
+function Characters:GetCharacterDataByID(name)
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
+    if char_data == nil then return nil end
+
+    for _, char in ipairs(char_data) do
+        if char.HardcodedNameID:ToString() == name then
+            return char
+        end
+    end
+
+    return nil
+end
 
 return Characters
