@@ -23,7 +23,6 @@ function ItemReceiver:ReceiveItem(item_data)
         return false
     end
 
-    print(Dump(local_item_data))
     -- Handle different item types
     if local_item_data.type == "Area" then
         return self:HandleAreaItem(local_item_data)

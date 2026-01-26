@@ -94,7 +94,7 @@ function ArchipelagoSystem:SetupPollingLoop()
                 self.apClient:Poll()
 
                 -- Sync if waiting
-                if Archipelago and Archipelago.waitingForSync then
+                if Archipelago and Archipelago.waitingForSync and Archipelago:CanReceiveItems() then
                     self.apClient:Sync()
                     Archipelago.waitingForSync = false
                 end

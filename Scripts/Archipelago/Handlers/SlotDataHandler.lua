@@ -55,9 +55,9 @@ function SlotDataHandler:Handle(slotData)
     end
 
     -- Check if can receive items
-    if not self:CanReceiveItems() then
+    if not self.archipelago:CanReceiveItems() then
         if self.archipelago then
-            self.archipelago.waitingForSync = true
+            self.archipelago:Sync()
         end
     end
 
