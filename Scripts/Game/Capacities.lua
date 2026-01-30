@@ -19,10 +19,10 @@ function Capacities:UnlockDestroyPaintedRock()
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression == nil then return end
 
-    table.insert(TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
+    table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
     -- ExplorationProgression:UnlockFreeAimDamageLevel(1)
     Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", 1)
-    Remove(TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
+    Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
 end
 
 --- Unlock the next world map ability
@@ -39,7 +39,7 @@ function Capacities:UnlockNextWorldMapAbility()
             local t = { i }
 
             
-            table.insert(TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
+            table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
             -- ExplorationProgression:UnlockWorldMapCapacities(t)
             Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
 
@@ -50,47 +50,14 @@ function Capacities:UnlockNextWorldMapAbility()
             end
 
             Storage:Update("UnlockSpecificWorldMapCapacity")
-            Remove(TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
+            Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
             new = true
             break
         end
     end
 
     if not new then
-        Save:WriteFlagByID("NID_EsquieUnderwaterUnlocked", true)
-    end
-end
-
-function Capacities:a()
-    Logger:info("Unlocking next world map ability...")
-    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
-    if ExplorationProgression == nil then return end
-    local abilities = Capacities:GetWorldMapAbilities()
-
-    local new = false
-    for i, capacity in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
-        local row = abilities[capacity]
-        if not row.is_unlocked then
-            local t = { i }
-
-            
-            -- ExplorationProgression:UnlockWorldMapCapacities(t)
-            Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-
-            if capacity == "Base" then
-                local t = { i + 1 }
-                -- ExplorationProgression:UnlockWorldMapCapacities(t)
-                Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-            end
-
-            Storage:Update("UnlockSpecificWorldMapCapacity")
-            new = true
-            break
-        end
-    end
-
-    if not new then
-        Save:WriteFlagByID("NID_EsquieUnderwaterUnlocked", true)
+        Save:WriteFlagByName(CONSTANTS.NID.DIVE_GUID.NAME, true)
     end
 end
 

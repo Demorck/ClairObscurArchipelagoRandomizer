@@ -45,8 +45,6 @@ setmetatable(AP_REF, {
 
 RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
-TABLE_CURRENT_AP_FUNCTION = {}
-NAMEDID_TO_BE_ADDED = {}
 
 -- And maybe the party issues in act 3 ? there is one iirc
 
@@ -82,10 +80,11 @@ function InitSaveAfterLumiere()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
 
-   Save:WriteFlagByID("NID_ForgottenBattlefield_GradientCounterTutorial", true)
-   Save:WriteFlagByID("NID_Goblu_JumpTutorial", true)
-   Save:WriteFlagByID("NID_LuneRelationshipLvl6_Quest", true)
-   Save:WriteFlagByID("NID_Monoco_RelationshipLvl6_Quest", true)
+   Save:WriteFlagByName(CONSTANTS.NID.FB_GRADIENT_TUTORIAL.NAME, true)
+   Save:WriteFlagByName(CONSTANTS.NID.FW_JUMP_TUTORIAL.NAME, true)
+   Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE.NAME, true)
+   Save:WriteFlagByName(CONSTANTS.NID.RELATION_LVL6_LUNE.NAME, true)
+   Save:WriteFlagByName(CONSTANTS.NID.RELATION_LVL6_MONOCO.NAME, true)
 
    Storage:Set("initialized_after_lumiere", true)
    Storage:Update("InitSaveAfterLumiere")
@@ -104,22 +103,5 @@ RegisterHook("/Game/Gameplay/GameActionsSystem/ReplaceCharacter/BP_GameActionIns
       param.TransferPictos_16_F3ADFDAC4F0D8D09C20CB9B1B6415108 = false
       param.TransferWeapon_18_3B0D73CF4D925EE41C43C3A35B759EE7 = false
       param.TransferAttributePoints_13_005710C0425DE39B3D97B78BAE5C34E6 = false
-   end
-)
-
-RegisterHook("/Game/jRPGTemplate/Blueprints/Basics/BP_jRPG_GI_Custom.BP_jRPG_GI_Custom_C:GetAllNamedIDs",
-   function(self, ids)
-      local ctx = self:get() ---@type UBP_jRPG_GI_Custom_C
-      local namedID = ids:get() ---@type TArray<UNamedID>
-
-
-      namedID:ForEach(function (index, element)
-         local value = element:get() ---@type UNamedID
-
-         print(value.Name:ToString())
-         if (value.Name:ToString() == CONSTANTS.NID.FW_JUMP_TUTORIAL.Name) then
-            ctx:WritePersistentFlag(value, true)
-         end
-      end)
    end
 )

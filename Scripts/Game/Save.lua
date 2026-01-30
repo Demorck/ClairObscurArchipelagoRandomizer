@@ -30,6 +30,7 @@ end
 ---@param boolean_value boolean
 function Save:WriteFlagByName(flag_name, boolean_value)
     local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    CONSTANTS.RUNTIME.NAMEDID_TO_BE_ADDED[flag_name] = boolean_value
     helper:GetAllNamedIDs({})
 end
 

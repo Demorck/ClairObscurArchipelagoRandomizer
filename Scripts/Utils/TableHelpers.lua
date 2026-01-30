@@ -141,4 +141,8 @@ function TableHelpers.Dump(o, depth)
     end
 end
 
+function TableHelpers.GetRandomElement(table)
+    return table[math.random(#table)]
+end
+
 return TableHelpers

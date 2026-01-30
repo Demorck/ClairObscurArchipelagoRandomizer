@@ -10,9 +10,8 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
-    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
-
-    helper:GetAllNamedIDs({})
+    Save:WriteFlagByName(CONSTANTS.NID.FB_GRADIENT_TUTORIAL.NAME, true)
+    Save:WriteFlagByName(CONSTANTS.NID.FW_JUMP_TUTORIAL.NAME, true)
 end
 
 function DebugCommands:DebugFunction4()

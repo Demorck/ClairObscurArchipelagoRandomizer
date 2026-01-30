@@ -11,5 +11,6 @@ Constants.CONFIG = require "Constants.ConfigConstants"
 Constants.QUEST = require "Constants.QuestConstants"
 Constants.BLUEPRINT = require "Constants.BlueprintConstants"
 Constants.GAME = require "Constants.GameConstants"
+Constants.RUNTIME = require "Constants.RuntimeConstants"
 
 return Constants

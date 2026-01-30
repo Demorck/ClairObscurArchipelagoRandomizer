@@ -21,7 +21,7 @@ function InventoryHooks:Register(hookManager, dependencies)
             if itemName == "LostGestral" then
                 if archipelago.options.gestral_shuffle == 1 then
                     -- Remove gestral if shuffled
-                    if not Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
+                    if not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
                         invManager:RemoveItemFromInventory(FName(itemName), 1, true)
                     else
                         storage.gestral_found = storage.gestral_found + 1
@@ -34,7 +34,7 @@ function InventoryHooks:Register(hookManager, dependencies)
 
             --- Hidden Gestral Arena
             elseif (itemName == "LastStandCritical" or itemName == "LastStandSpeed" or itemName == "LastStandPowerful" or itemName == "LastStandShell" or itemName == "SoloFighter") and
-                   not Contains(TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
+                   not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
                     invManager:RemoveItemFromInventory(FName(itemName), 1, true)
             end
         end,

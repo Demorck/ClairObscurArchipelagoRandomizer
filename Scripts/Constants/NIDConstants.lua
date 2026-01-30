@@ -3,7 +3,7 @@
 ---@field B number
 ---@field C number
 ---@field D number
----@field Name string
+---@field NAME string
 
 ---@class NID_Constants
 ---@field DIVE_GUID NID
@@ -18,42 +18,42 @@ local NID = {
         B = 0x4851b254,
         C = 0xffffffffe484769a,
         D = 0xffffffffb9f84714,
-        Name = ""
+        NAME = "NID_EsquieUnderwaterUnlocked"
     },
     FB_GRADIENT_TUTORIAL = { -- NID_ForgottenBattlefield_GradientCounterTutorial (A=820155502,B=1127002344,C=910086808,D=290946608)
         A = 0x30e2946e,
         B = 0x432cb0e8,
         C = 0x363ed298,
         D = 0x11577e30,
-        Name = "NID_ForgottenBattlefield_GradientCounterTutorial"
+        NAME = "NID_ForgottenBattlefield_GradientCounterTutorial"
     },
     FW_JUMP_TUTORIAL = { -- NID_Goblu_JumpTutorial
         A = 0xffffffff8e3263a7,
         B = 0x493bf6fd,
         C = 0xfffffffff260549a,
         D = 0xfffffffff74ea0db,
-        Name = "NID_Goblu_JumpTutorial"
+        NAME = "NID_Goblu_JumpTutorial"
     },
     REACHER_LVL6_MAELLE = {  -- NID_MaelleRelationshipLvl6_Quest
         A = 0xffffffffe3367623,
         B = 0x40bcb33c,
         C = 0x788d9cb7,
         D = 0xffffffffffe1b656,
-        Name = ""
+        NAME = "NID_MaelleRelationshipLvl6_Quest"
     },
     RELATION_LVL6_LUNE = { -- NID_LuneRelationshipLvl6_Quest
         A = 0x2a55f5a4,
         B = 0x4ef0b15c,
         C = 0x7b4d53b6,
         D = 0xfffffffff3e5cc39,
-        Name = ""
+        NAME = "NID_LuneRelationshipLvl6_Quest"
     },
     RELATION_LVL6_MONOCO = { -- NID_Monoco_RelationshipLvl6_Quest
         A = 0xffffffffa73a9b68,
         B = 0x4aceacd1,
         C = 0x721bcb90,
         D = 0x1f428538,
-        Name = ""
+        NAME = "NID_Monoco_RelationshipLvl6_Quest"
     }
 }
 

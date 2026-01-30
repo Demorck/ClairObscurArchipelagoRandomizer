@@ -18,7 +18,7 @@ function CapacityHook:Register(hookManager, dependencies)
             end
 
             local manager = ctx:get() ---@type UBP_ExplorationProgressionSystem_C
-            if not Contains(TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities") then
+            if not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities") then
                 manager:ResetState()
                 Capacities:UnlockAllExplorationCapacities()
                 for i = 1, storage:Get("progressive_rock"), 1 do

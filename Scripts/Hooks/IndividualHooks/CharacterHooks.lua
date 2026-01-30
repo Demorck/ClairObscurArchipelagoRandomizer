@@ -43,7 +43,7 @@ function CharacterHooks:Register(hookManager, dependencies)
     hookManager:Register(
         "/Game/Gameplay/GameActionsSystem/ReplaceCharacter/BP_GameActionInstance_ReplaceCharacter.BP_GameActionInstance_ReplaceCharacter_C:GetReplaceCharacterParameters",
         function(ctx, parameters)
-            if (Contains(TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")) then return end
+            if (Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")) then return end
 
             local ctx = ctx:get() ---@cast ctx UBP_GameActionInstance_ReplaceCharacter_C
             local char_data = Characters:GetCharacterDataByID("Verso")
@@ -55,9 +55,9 @@ function CharacterHooks:Register(hookManager, dependencies)
             ctx.OldCharacterData = char_data
             ctx.NewCharacterData = char_data
 
-            table.insert(TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")
+            table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")
             ctx:ComputeNewCharacterSaveState()
-            Remove(TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")
+            Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "ComputeNewCharacterSaveState")
         end,
         "Character - Save Verso being remplaced"
     )
