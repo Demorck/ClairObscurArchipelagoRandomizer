@@ -1,0 +1,17 @@
+Skill graph:
+Sandfall/Content/Gameplay/SkillTree/Content/Maelle/DA_SkillGraph_Maelle.uasset
+    Nodes:
+        UnlockCost
+        IsStartingSkill
+        IsSecret (for stendhal, etc)
+        Position2D
+    Edges:
+        From 
+        To
+
+Individual skill:
+Sandfall/Content/Gameplay/SkillTree/Content/Maelle/Skills/DA_Skill_Maelle_LastChance.uasset
+    APCost
+    Name/Description/etc
+    Script/Tags
+    Mechanic (like Maelle, maybe switch to another stance)
