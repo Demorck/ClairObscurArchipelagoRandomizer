@@ -20,6 +20,7 @@ function EventDispatcher:New(dependencies)
             locationsChecked = function() end,
             bounced = function() end,
             retrieved = function() end,
+            json = function() end,
         }
     }
 
@@ -97,6 +98,15 @@ function EventDispatcher:OnRetrieved(data)
     local ok, err = pcall(self.handlers.retrieved, data)
     if not ok then
         self.logger:error("Error in retrieved handler: " .. tostring(err))
+    end
+end
+
+function EventDispatcher:OnPrintJson(data)
+    self.logger:debug("Retrieved json event received")
+
+    local ok, err = pcall(self.handlers.json, data)
+    if not ok then
+        self.logger:error("Error in retrieved handler json: " .. tostring(err))
     end
 end
 

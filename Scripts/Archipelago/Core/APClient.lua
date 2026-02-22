@@ -167,6 +167,10 @@ function APClient:SetupHandlers()
     self.client:set_retrieved_handler(function(data)
         self.eventDispatcher:OnRetrieved(data)
     end)
+
+    self.client:set_print_json_handler(function (data)
+        self.eventDispatcher:OnPrintJson(data)
+    end)
 end
 
 ---Socket connected callback
@@ -341,6 +345,17 @@ function APClient:GetPlayerInfo()
     }
 end
 
+---Get player alias from ID
+---@param player_id number Player's id
+---@return string | nil player_alias The player alias
+function APClient:GetPlayerNameFromID(player_id)
+    if not self:IsConnected() then
+        return nil
+    end
+
+    return self.client:get_player_alias(player_id)
+end
+
 ---Get item name from item ID
 ---@param itemId number The item ID
 ---@param game string The game name
@@ -353,6 +368,20 @@ function APClient:GetItemName(itemId, game)
     return self.client:get_item_name(itemId, game)
 end
 
+---Get Item name from item_id and player_id
+---@param item_id number
+---@param player_id number
+---@return string | nil itemName The item name or nil if not found or not conntected
+function APClient:GetItemNameFromPlayerID(item_id, player_id)
+    if not self:IsConnected() then
+        return nil
+    end
+
+    local game_name = self.client:get_player_game(player_id)
+
+    return self:GetItemName(item_id, game_name)
+end
+
 ---Get location name from location ID
 ---@param locationId number The location ID
 ---@param game string The game name
@@ -363,6 +392,20 @@ function APClient:GetLocationName(locationId, game)
     end
 
     return self.client:get_location_name(locationId, game)
+end
+
+---Get Location name from location_id and player_id
+---@param location_id number
+---@param player_id number
+---@return string | nil locationName location name or nil if not found
+function APClient:GetLocationNameFromPlayerID(location_id, player_id)
+    if not self:IsConnected() then
+        return nil
+    end
+
+    local game_name = self.client:get_player_game(player_id)
+
+    return self:GetLocationName(location_id, game_name)
 end
 
 ---Get location ID from location name

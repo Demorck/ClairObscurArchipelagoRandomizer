@@ -112,11 +112,6 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
     end
 end
 
-
-RegisterHook("", function (ctx)
-    
-end)
-
 function SaveHooks:SaveNotificationUI()
     return function(ctx)
         local a = ctx:get() ---@cast a UWBP_FullScreenNotificationContainer_C

@@ -1,4 +1,4 @@
----@class LocationsHandlerDependencieis
+---@class LocationsHandlerDependencies
 ---@field logger Logger Logger instance for logging item reception events
 ---@field apClient APClient AP client for getting item names and player info
 
@@ -8,7 +8,7 @@
 local LocationsHandler = {}
 
 ---Create a new LocationsHandler instance
----@param dependencies LocationsHandlerDependencieis Required dependencies
+---@param dependencies LocationsHandlerDependencies Required dependencies
 ---@return LocationsHandler handler New LocationsHandler instance
 function LocationsHandler:New(dependencies)
     local instance = {

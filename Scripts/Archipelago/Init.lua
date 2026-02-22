@@ -51,6 +51,11 @@ function ArchipelagoSystem:Initialize()
         logger = Logger
     })
 
+    local jsonHandler = Handlers.JSONHandler:New({
+        logger = Logger,
+        apClient = apClient
+    })
+
     -- Set archipelago reference (for legacy compatibility)
     slotDataHandler:SetArchipelago(Archipelago)
     itemsHandler:SetArchipelago(Archipelago)
@@ -71,6 +76,10 @@ function ArchipelagoSystem:Initialize()
 
     eventDispatcher:RegisterHandler("bounced", function(data)
         deathLinkHandler:Handle(data)
+    end)
+
+    eventDispatcher:RegisterHandler("json", function (data)
+        jsonHandler:Handle(data)
     end)
 
 

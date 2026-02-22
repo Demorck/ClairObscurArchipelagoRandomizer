@@ -10,11 +10,11 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
-    Save:WriteFlagByName(CONSTANTS.NID.FB_GRADIENT_TUTORIAL.NAME, true)
-    Save:WriteFlagByName(CONSTANTS.NID.FW_JUMP_TUTORIAL.NAME, true)
+    ClientBP:PushToLogger("TEST")
 end
 
 function DebugCommands:DebugFunction4()
+    ClientBP:ToggleConsole()
 end
 
 function DebugCommands:RegisterKeybinds()

@@ -14,12 +14,11 @@ function ClientBP:GetHelper()
 end
 
 --- Not used yet
----@param item integer
----@param player integer
-function ClientBP:PushNotification(item, player)
+---@param message string The styled string
+function ClientBP:PushToLogger(message)
     local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
     if helper == nil then return end
-    helper:AddToLogger(tostring(item), tostring(player))
+    helper:AddToLogger(message)
 end
 
 function ClientBP:FeetTrap()
@@ -78,6 +77,12 @@ function ClientBP:InCinematic()
     if a == nil then return true end
 
     return a.IsPlayingCinematic
+end
+
+function ClientBP:ToggleConsole()
+    local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
+
+    helper:ToggleConsole()
 end
 
 return ClientBP
