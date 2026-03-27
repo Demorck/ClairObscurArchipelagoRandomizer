@@ -29,6 +29,12 @@ function SaveHooks:Register(hookManager, dependencies)
         "Save - Get All Named ID"
     )
 
+    hookManager:Register(
+        "/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:GetNewGameData",
+        self:SetSpringMeadowsSpawnpointWhenNewSave(),
+        "Save - Set Spawn point in SM when New Save"
+    )
+
     logger:info("Save hooks registered")
 end
 
@@ -106,7 +112,7 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
         Characters:EnableCharactersInCollectionOnlyUnlocked()
         Capacities:DisableFreeAimIfNeeded()
 
-        local lastReceived = Storage:Get("lastSavedItemIndex")
+        local lastReceived = Storage:Get("lastReceivedItemIndex")
         Storage:Set("lastSavedItemIndex", lastReceived)
         Storage:Update("SaveHooks:SaveGameToFile")
     end
@@ -146,6 +152,15 @@ function SaveHooks:AddNamedID()
             if found then Remove(CONSTANTS.RUNTIME.NAMEDID_TO_BE_ADDED, name) end
         end)
    end
+end
+
+function SaveHooks:SetSpringMeadowsSpawnpointWhenNewSave()
+    return function(_, _, LevelAssetName, SpawnPointTag)
+        LevelAssetName:set(FName("Level_SpringMeadows_Main_V2"))
+        local spawnpoint = SpawnPointTag:get() ---@cast spawnpoint FGameplayTag
+        spawnpoint.TagName = FName("Level.SpawnPoint.SpringMeadows.Entry")
+        InitSaveAfterLumiere()
+    end
 end
 
 return SaveHooks

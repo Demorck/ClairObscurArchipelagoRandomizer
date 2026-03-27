@@ -105,3 +105,11 @@ end
 --       param.TransferAttributePoints_13_005710C0425DE39B3D97B78BAE5C34E6 = false
 --    end
 -- )
+
+
+--- GetNewGameData
+--- InitializeLevelForNewGame
+--- StartNewGame
+---Function /Game/Gameplay/GameFlow/ProjectConfiguration/BP_DataAsset_ProjectConfiguration.BP_DataAsset_ProjectConfiguration_C:GetNewGameLevel
+---
+---

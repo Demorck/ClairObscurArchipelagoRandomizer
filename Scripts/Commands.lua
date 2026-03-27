@@ -10,11 +10,13 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
-    ClientBP:PushToLogger("TEST")
 end
 
 function DebugCommands:DebugFunction4()
-    ClientBP:ToggleConsole()
+end
+
+function DebugCommands:ToggleConsole()
+    ArchipelagoSystem:ToggleConnection()
 end
 
 function DebugCommands:RegisterKeybinds()
@@ -39,6 +41,12 @@ function DebugCommands:RegisterKeybinds()
     RegisterKeyBind(Key.F4, { ModifierKey.CONTROL }, function()
         ExecuteInGameThread(function()
             self:DebugFunction4()
+        end)
+    end)
+
+    RegisterKeyBind(Key.F5, { ModifierKey.CONTROL }, function()
+        ExecuteInGameThread(function()
+            self:ToggleConsole()
         end)
     end)
 end

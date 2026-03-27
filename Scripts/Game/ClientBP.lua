@@ -1,6 +1,7 @@
 local ClientBP = {}
 
 local BlueprintName = "BP_ArchipelagoHelper_C"
+local last_logs = {}
 
 
 function ClientBP:GetHelper()
@@ -19,6 +20,10 @@ function ClientBP:PushToLogger(message)
     local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
     if helper == nil then return end
     helper:AddToLogger(message)
+    table.insert(last_logs, message)
+    if #last_logs > 10 then
+        table.remove(last_logs, 1)
+    end
 end
 
 function ClientBP:FeetTrap()
@@ -84,5 +89,14 @@ function ClientBP:ToggleConsole()
 
     helper:ToggleConsole()
 end
+
+
+RegisterCustomEvent("ModLoader_Initiation", function(ctx)
+   if Archipelago:IsInitialized() then
+        for _, message in ipairs(last_logs) do
+            ClientBP:PushToLogger(message)
+        end
+   end
+end)
 
 return ClientBP

@@ -53,7 +53,7 @@ function JSONHandler:Handle(json_data)
             -- flags are for item type (progressive, useful, nothing or trap)
             string_build = string_build .. location_name
         elseif value.type == "player_id" then
-            local player_id = tonumber(value.player) or 0
+            local player_id = tonumber(value.text) or 0 
             string_build = string_build .. self:GetStyledPlayer(player_id)
         end
     end
