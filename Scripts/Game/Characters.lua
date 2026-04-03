@@ -267,6 +267,17 @@ function Characters:SetHPAll(hp)
     end
 end
 
+function Characters:HealEveryone()
+    Logger:info("Healing every characters...")
+    local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
+    if helper == nil then return end
+
+    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
+        local fname = FName(char)
+        Logger:callMethod(helper, "RestoreHP", fname, 9999999)
+    end
+end
+
 --- Get the mean level of all characters
 ---@return integer
 function Characters:GetMeanLevel()

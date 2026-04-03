@@ -71,6 +71,7 @@ function InitSaveAfterLumiere()
 
    Logger:info("The festival ended...")
    Characters:AddEveryone()
+   Characters:HealEveryone()
 
    if Archipelago.options.char_shuffle == 0 then
       Storage:UnlockCharacter("Frey")

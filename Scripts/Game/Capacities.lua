@@ -118,10 +118,10 @@ function Capacities:UnlockAllExplorationCapacities()
                 -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
                 Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
             else
-                Storage.free_aim_unlocked = false
+                Storage:Set("free_aim_unlocked", false)
             end
         else
-            Storage.free_aim_unlocked = true
+            Storage:Set("free_aim_unlocked", true)
             -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
             Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
         end
@@ -129,7 +129,7 @@ function Capacities:UnlockAllExplorationCapacities()
 end
 
 function Capacities:DisableFreeAimIfNeeded()
-    if Archipelago.options.shuffle_free_aim == 1 and not Storage.free_aim_unlocked then
+    if Archipelago.options.shuffle_free_aim == 1 and not Storage:Get("free_aim_unlocked") then
         Logger:info("Disabling Free Aim...")
         local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
         if ExplorationProgression == nil then return end
