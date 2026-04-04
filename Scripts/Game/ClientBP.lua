@@ -1,3 +1,4 @@
+---@class ClientBP
 local ClientBP = {}
 
 local BlueprintName = "BP_ArchipelagoHelper_C"
@@ -38,10 +39,6 @@ function ClientBP:IsMainMenu()
     return self:IsLevel("Level_MainMenu")
 end
 
-function ClientBP:IsLumiereActI()
-    return self:IsLevel("Level_Lumiere_Main_V2") and Storage.initialized_after_lumiere == false
-end
-
 function ClientBP:InLevel()
     return self:GetLevelName() ~= ""
 end
@@ -67,7 +64,8 @@ function ClientBP:GetLevelName()
     local out = {}
     
     a:GetLevelName(out)
-
+    
+    if not out then return "" end
     return Trim(out["LevelName"]:ToString())
 end
 

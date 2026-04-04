@@ -1,3 +1,9 @@
+---@class CharacterDependencies
+---@field archipelago Archipelago
+---@field storage Storage
+---@field logger Logger
+---@field clientBP ClientBP
+
 ---Character-related hooks
 ---@class CharacterHooks
 local CharacterHooks = {}
@@ -5,8 +11,9 @@ local CharacterHooks = {}
 
 ---Register all character hooks
 ---@param hookManager HookManager
----@param dependencies table
+---@param dependencies CharacterDependencies
 function CharacterHooks:Register(hookManager, dependencies)
+    local archipelago = dependencies.archipelago
     local storage = dependencies.storage
     local logger = dependencies.logger
     local clientBP = dependencies.clientBP
@@ -15,9 +22,7 @@ function CharacterHooks:Register(hookManager, dependencies)
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:RemoveCharacterFromCollection",
         function(_, data_param)
-            if not storage.initialized_after_lumiere then
-                return
-            end
+            if not archipelago:IsInitialized() then return end
 
             local data = data_param:get() ---@cast data UBP_CharacterData_C
             local charName = data.HardcodedNameID:ToString()

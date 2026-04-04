@@ -16,7 +16,7 @@ function Archipelago:IsConnected()
 end
 
 function Archipelago:IsInitialized()
-    return self:IsConnected() and Storage:Get("initialized_after_lumiere")
+    return self:CanReceiveItems() and Storage:Get("initialized")
 end
 
 ---Get player information
@@ -51,15 +51,15 @@ function Archipelago:CanReceiveItems()
         return false
     end
 
+    if not ClientBP then
+        return false
+    end
+
     if not ClientBP:IsInitialized() then
         return false
     end
 
     if ClientBP:IsMainMenu() then
-        return false
-    end
-
-    if ClientBP:IsLumiereActI() then
         return false
     end
 

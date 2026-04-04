@@ -118,7 +118,6 @@ function SlotDataHandler:CanReceiveItems()
 
     return ClientBP:IsInitialized() and
            not ClientBP:IsMainMenu() and
-           not ClientBP:IsLumiereActI() and
            ClientBP:InLevel()
 end
 

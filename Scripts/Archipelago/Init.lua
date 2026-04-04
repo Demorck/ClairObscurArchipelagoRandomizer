@@ -107,6 +107,11 @@ function ArchipelagoSystem:SetupPollingLoop()
                     self.apClient:Sync()
                     Archipelago.waitingForSync = false
                 end
+
+                if Archipelago and NEEDED_TO_INIT and Archipelago:IsInitialized()  then
+                    InitSaveAfterLumiere()
+                    NEEDED_TO_INIT = false
+                end
             else
                 self.apClient:Connect()
             end

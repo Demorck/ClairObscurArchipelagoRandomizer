@@ -1,3 +1,9 @@
+---@class LocationDependencies
+---@field archipelago Archipelago
+---@field storage Storage
+---@field logger Logger
+---@field clientBP ClientBP
+
 ---Location/level-related hooks
 ---@class LocationHooks
 local LocationHooks = {}
@@ -49,7 +55,7 @@ end
 
 ---Register all location hooks
 ---@param hookManager HookManager
----@param dependencies table
+---@param dependencies LocationDependencies
 function LocationHooks:Register(hookManager, dependencies)
     local archipelago = dependencies.archipelago
     local storage = dependencies.storage
@@ -60,18 +66,10 @@ function LocationHooks:Register(hookManager, dependencies)
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Basics/FL_jRPG_CustomFunctionLibrary.FL_jRPG_CustomFunctionLibrary_C:GetCurrentLevelData",
         function(self, _worldContext, found, levelData, rowName)
-            if not storage.initialized_after_lumiere then
-                return
-            end
+            if not archipelago:IsInitialized() then return end
 
             local name = rowName:get()
             local level = name:ToString()
-
-            -- Handle transition from Lumiere
-            if level == "SpringMeadows" and storage.transition_lumiere then
-                storage.transition_lumiere = false
-                archipelago:Sync()
-            end
 
             -- Update current location
             if storage.currentLocation ~= level and level ~= "None" then

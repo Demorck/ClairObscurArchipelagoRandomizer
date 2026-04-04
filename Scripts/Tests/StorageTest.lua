@@ -54,13 +54,6 @@ local function runTests()
     assert_true(success, "Setting number to number field should succeed")
     assert_equal(Storage:Get("lastReceivedItemIndex"), 69, "Value should be updated")
 
-    success = Storage:Set("initialized_after_lumiere", "not a boolean")
-    assert_false(success, "Setting string to boolean field should fail")
-
-    success = Storage:Set("initialized_after_lumiere", true)
-    assert_true(success, "Setting boolean to boolean field should succeed")
-    assert_true(Storage:Get("initialized_after_lumiere"), "Boolean value should be updated")
-
     print("\n--- Test 4: Custom Validators ---")
     success = Storage:Set("lastReceivedItemIndex", -5)
     assert_false(success, "Setting negative value (< -1) should fail validation")
@@ -108,7 +101,6 @@ local function runTests()
     print("\n--- Test 9: Schema JSON Key Mapping ---")
     local schema = Storage.schema
     assert_equal(schema:GetJsonKey("lastReceivedItemIndex"), "last_received", "JSON key mapping for lastReceivedItemIndex")
-    assert_equal(schema:GetJsonKey("initialized_after_lumiere"), "lumiere_done", "JSON key mapping for initialized_after_lumiere")
     assert_equal(schema:GetJsonKey("tickets"), "tickets", "JSON key mapping for tickets (no custom key)")
 
     print("\n--- Test 10: GetAll Method ---")

@@ -99,7 +99,6 @@ end
 function BattleHooks:OnRollBattleRewards(archipelago, storage)
     return function(_, rewards)
         if not archipelago.apSystem then return end
-        if not storage.initialized_after_lumiere then return end
 
         local battleRewards = rewards:get() ---@type FS_BattleRewards
         local keepRewards = {} ---@type table<FS_RolledLootEntry>
@@ -134,8 +133,7 @@ end
 ---@return function hookFunction
 function BattleHooks:OnPartyWipe(archipelago, storage)
     return function(ctx)
-        if not archipelago.apSystem then return end
-        if not storage.initialized_after_lumiere then return end
+        if not archipelago:IsInitialized() then return end
 
         local battleManager = ctx:get() ---@type UAC_jRPG_BattleManager_C
 

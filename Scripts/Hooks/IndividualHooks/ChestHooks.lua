@@ -35,10 +35,13 @@ function ChestHooks:Register(hookManager, dependencies)
     logger:info("Chest hooks registered")
 end
 
+---comment
+---@param archipelago Archipelago
+---@param storage any
+---@return function
 function ChestHooks:OnItemAddedFromChestToInventory(archipelago, storage)
     return function(Context)
-        if not archipelago.apSystem then return end
-        if not storage.initialized_after_lumiere then return end
+        if not archipelago:IsInitialized() then return end
 
         local chest = Context:get() ---@type ABP_Chest_Regular_C
         local chestName = chest.ChestSetupHandle["RowName"]:ToString()
@@ -49,8 +52,7 @@ end
 
 function ChestHooks:OnRollItemsToRemove(archipelago, storage)
     return function(_, _, itemsToLoot)
-        if not archipelago.apSystem then return end
-        if not storage.initialized_after_lumiere then return end
+        if not archipelago:IsInitialized() then return end
 
         local map = itemsToLoot:get() ---@type TMap<FName, int32>
         map:Empty()
@@ -59,8 +61,7 @@ end
 
 function ChestHooks:UpdateVisualFeedback(archipelago, storage)
     return function(self)
-        if not archipelago.apSystem then return end
-        if not storage.initialized_after_lumiere then return end
+        if not archipelago:IsConnected() then return end
 
         local chest = self:get() ---@type ABP_Chest_Regular_C
 

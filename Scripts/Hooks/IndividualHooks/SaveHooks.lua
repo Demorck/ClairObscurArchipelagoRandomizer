@@ -51,10 +51,6 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
             return
         end
 
-        if not Storage:Get("initialized_after_lumiere") then
-            return
-        end
-
         if not self.AddingButtonHook then
             hookManager:Register(
                 "/Game/UI/Widgets/HUD_Exploration/WBP_SavePointMenu.WBP_SavePointMenu_C:UpdateUpgradeWeaponsButtonVisibility",
@@ -108,8 +104,8 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
         )
 
         -- Update party and characters
+        -- Characters:EnableCharactersInCollectionOnlyUnlocked()
         Characters:ModifyPartyIfNeeded()
-        Characters:EnableCharactersInCollectionOnlyUnlocked()
         Capacities:DisableFreeAimIfNeeded()
 
         local lastReceived = Storage:Get("lastReceivedItemIndex")
@@ -159,7 +155,8 @@ function SaveHooks:SetSpringMeadowsSpawnpointWhenNewSave()
         LevelAssetName:set(FName("Level_SpringMeadows_Main_V2"))
         local spawnpoint = SpawnPointTag:get() ---@cast spawnpoint FGameplayTag
         spawnpoint.TagName = FName("Level.SpawnPoint.SpringMeadows.Entry")
-        InitSaveAfterLumiere()
+        
+        NEEDED_TO_INIT = true
     end
 end
 

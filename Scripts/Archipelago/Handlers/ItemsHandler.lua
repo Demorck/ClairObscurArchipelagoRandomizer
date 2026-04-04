@@ -42,11 +42,6 @@ end
 ---Filters and processes each item, ensuring they haven't been received before
 ---@param items NetworkItem[] Array of items received from server
 function ItemsHandler:Handle(items)
-    -- Don't process items if game hasn't initialized past Lumiere Act I
-    if not Storage.initialized_after_lumiere then
-        return
-    end
-
     -- Don't process if player is in a state where they can't receive items
     if not self:CanReceiveItems() then
         return
@@ -113,7 +108,6 @@ function ItemsHandler:CanReceiveItems()
 
     return ClientBP:IsInitialized() and
            not ClientBP:IsMainMenu() and
-           not ClientBP:IsLumiereActI() and
            ClientBP:InLevel()
 end
 

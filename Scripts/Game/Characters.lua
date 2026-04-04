@@ -78,6 +78,25 @@ function Characters:EnableCharacter(name)
     end
 end
 
+function Characters:SetExcludedCharacterByName(name, locked)
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
+    if char_data == nil then return end
+
+    for _, char in ipairs(char_data) do
+        if char.HardcodedNameID:ToString() == name and char.IsExcluded then
+            char.IsExcluded = locked
+        end
+    end
+end
+
+function Characters:UnlockCharacter(name)
+    self:SetExcludedCharacterByName(name, false)
+end
+
+function Characters:LockCharacter(name)
+    self:SetExcludedCharacterByName(name, true)
+end
+
 --- Count the number of enabled characters (not excluded)
 ---@return integer 
 function Characters:NumberOfEnabledCharacters()
@@ -131,59 +150,65 @@ end
 
 --- Ensure that the battle team is correct: no excluded characters, at least one enabled character
 function Characters:ModifyPartyIfNeeded()
-    local in_party_count, not_in_party_count = Characters:NumberOfCharactersInPartyEnabled()
+    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    if not helper or not helper:IsValid() then return end
 
-    if not_in_party_count > 0 then
-        Logger:info("There are " .. not_in_party_count .. " excluded characters in party... Need to fix it")
-        if in_party_count > 0 then
-            Logger:info("There are also enabled characters in party, removing excluded ones only...")
-            self:DisableInPartyExcludedCharacters()
-        else
-            Logger:info("No enabled characters in party, enabling only unlocked ones...")
-            self:EnableCharactersInPartyOnlyUnlocked()
-        end
-    else
-        Logger:info("No excluded characters in party...")
-        if in_party_count == 0 then
-            self:EnableCharactersInPartyOnlyUnlocked()
-        end
-    end
-end
+    local locked_in_party = {}
+    local unlocked_in_party = {}
+    local unlocked_not_in_party = {}
 
---- Enable only the characters that are unlocked
---- @deprecated i guess
-function Characters:EnableOnlyUnlockedCharacters()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return end
+    for _, char_id in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
+        local in_party = Logger:callMethod(helper, "IsCharacterInParty", FName(char_id))
+        local is_unlocked = Storage:IsCharacterUnlocked(char_id)
 
-    -- Do it twice because if the first char is in the party and the only one AND the it's the first in the list, it won't be removed
-    for _ = 1, 2, 1 do
-        for _, char in ipairs(char_data) do
-            local name = char.HardcodedNameID:ToString()
-            if Storage:IsCharacterUnlocked(name) then
-                self:EnableCharacter(name)
+        self:SetExcludedCharacterByName(char_id, not is_unlocked)
+        if in_party then
+            if is_unlocked then
+                table.insert(unlocked_in_party, char_id)
             else
-                self:EnableInParty(name, false)
+                table.insert(locked_in_party, char_id)
+            end
+        else
+            if is_unlocked then
+                table.insert(unlocked_not_in_party, char_id)
             end
         end
     end
+
+    local added = 0
+    -- Si aucun personnage non exclu est dans la party, en rajouter au maximum 3 (toujours non exclu)
+    if #unlocked_in_party == 0 then
+        Logger:info("No enabled characters in party, adding up to 3 unlocked ones...")
+        for _, char_id in ipairs(unlocked_not_in_party) do
+            if added >= 3 then break end
+            self:EnableInParty(char_id, true)
+            added = added + 1
+        end
+    end
+
+    -- Si au moins un personnage exclus est dans la party, l'enlever.
+    if #locked_in_party > 0 then
+        Logger:info("Found " .. #locked_in_party .. " excluded characters in party, removing them...")
+        if #unlocked_in_party > 0 or added > 0 then
+            for _, char_id in ipairs(locked_in_party) do
+                self:EnableInParty(char_id, false)
+            end
+        else
+            Logger:warn("Cannot remove locked characters because there are NO unlocked characters available to take their place!")
+        end
+    end
+
+    -- Si aucun des personnages exclus et au moins un personnage non exclu est dans la party, ne rien faire
+    -- (This happens naturally if the two above conditions are false)
 end
 
 
 --- Enable in party only the characters that are unlocked
 function Characters:EnableCharactersInPartyOnlyUnlocked()
-    Logger:info("Enabling characters in party only if unlocked...")
-
-    for _ = 1, 2, 1 do
-        for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-            if Storage:IsCharacterUnlocked(char) then
-                self:EnableInParty(char, true)
-            else
-                self:EnableInParty(char, false)
-            end
-        end
-    end
+    -- Redirect to the exact same logic
+    self:ModifyPartyIfNeeded()
 end
+
 function Characters:EnableCharactersInCollectionOnlyUnlocked()
     local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
@@ -208,15 +233,15 @@ function Characters:HasExcludedCharactersInCollection()
     for _, char in ipairs(char_data) do
         local char_name = char.HardcodedNameID:ToString()
         if char.IsExcluded and Storage:IsCharacterUnlocked(char_name) then
-            return false
+            return true
         end
 
         if not char.IsExcluded and not Storage:IsCharacterUnlocked(char_name) then
-            return false
+            return true
         end
     end
 
-    return true
+    return false
 end
 
 --- Disable everyone from the party

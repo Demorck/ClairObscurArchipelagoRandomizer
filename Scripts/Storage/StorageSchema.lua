@@ -18,17 +18,6 @@ StorageSchema.fields = {
         default = false,
     },
 
-    initialized_after_lumiere = {
-        type = "boolean",
-        default = false,
-        jsonKey = "lumiere_done"
-    },
-
-    transition_lumiere = {
-        type = "boolean",
-        default = false,
-    },
-
     -- Item tracking indices
     lastReceivedItemIndex = {
         type = "number",

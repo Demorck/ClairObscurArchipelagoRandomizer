@@ -1,10 +1,15 @@
+---@class UIDependencies
+---@field archipelago Archipelago
+---@field storage Storage
+---@field logger Logger
+
 ---UI related hooks 
 ---@class UIHooks
 local UIHooks = {}
 
 ---Register all inventory hooks
 ---@param hookManager HookManager
----@param dependencies table
+---@param dependencies UIDependencies
 function UIHooks:Register(hookManager, dependencies)
     local archipelago = dependencies.archipelago
     local storage = dependencies.storage
@@ -13,9 +18,7 @@ function UIHooks:Register(hookManager, dependencies)
     hookManager:Register(
         "/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened",
         function (_)
-            if not Storage.initialized_after_lumiere then
-                return
-            end
+            if not archipelago:IsInitialized() then return end
 
             local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
             for _, value in ipairs(buttons) do

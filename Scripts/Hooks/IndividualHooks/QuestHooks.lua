@@ -21,21 +21,6 @@ function QuestHooks:Register(hookManager, dependencies)
 
             logger:info("Game change subquest: " .. objectiveName .. " to " .. statusValue)
 
-            -- Initialize after Lumiere
-            if not storage:Get("initialized_after_lumiere") and
-               objectiveName == "2_SpringMeadow" and
-               statusValue == QUEST_STATUS.STARTED then
-                InitSaveAfterLumiere()
-                return
-            end
-
-            -- Reset on Lumiere beginning
-            if objectiveName == "1_LumiereBeginning" and statusValue ~= QUEST_STATUS.COMPLETED then
-                storage:Set("initialized_after_lumiere", false)
-                storage:Update("QuestHooks:UpdateActivitySubTaskStatus")
-                return
-            end
-
             -- Auto-complete forced camps
             --TODO: Seems to not work for Post SM
             if objectiveName == CONSTANTS.QUEST.FORCED_CAMPS.POST_SPRING_MEADOWS and statusValue == QUEST_STATUS.STARTED then
