@@ -45,8 +45,8 @@ setmetatable(AP_REF, {
    end
 })
 
-RequestInitLumiere = false
 AddingCharacterFromArchipelago = false
+FLAG_COMMAND = false
 
 -- And maybe the party issues in act 3 ? there is one iirc
 
@@ -64,9 +64,13 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, 
    end)
 end)
 
+RegisterCustomEvent("ConnectionSettings_CB_SaveIcon", function(ctx, is_checked)
+   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = is_checked:get()
+end)
+
 
 function InitSaveAfterLumiere()
-   Logger:info("The festival ended...")
+   Logger:info("Initialized after Lumière")
    Characters:AddEveryone()
    Characters:HealEveryone()
 

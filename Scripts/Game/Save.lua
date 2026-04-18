@@ -10,8 +10,19 @@ function Save:SaveGame()
         return
     end
 
-    local save_name = savemanager:GetSaveNameForSelectedSlot()
-    savemanager:SaveGameToFile(save_name)
+    -- local save_name = savemanager:GetSaveNameForSelectedSlot()
+    -- savemanager:SaveGameToFile(save_name)
+    savemanager:RequestSaveInternal(true, "Archipelago needed to save internal")
+end
+
+function Save:TriggerSaveIssue()
+    local savemanager = FindFirstOf(BluePrintName) ---@type UBP_SaveManager_C
+    if savemanager == nil or not savemanager:IsValid() then
+        Logger:error("Impossible to save: SaveManager nil")
+        return
+    end
+
+    savemanager:RequestAutoSave("Archipelago needed to save issue")
 end
 
 --- Modify the GPE (Gameplay Experience) settings if needed 

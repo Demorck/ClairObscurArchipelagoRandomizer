@@ -132,6 +132,11 @@ StorageSchema.fields = {
             return value >= 0 and value <= 5
         end
     },
+
+    locations_checked = {
+        type = "table",
+        default = {}
+    }
 }
 
 ---Get the JSON key for a field (or use the field name if no jsonKey is defined)

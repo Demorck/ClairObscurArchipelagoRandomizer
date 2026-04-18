@@ -7,16 +7,19 @@ end
 
 function DebugCommands:DebugFunction2()
     Archipelago:Sync()
+    Archipelago:SendAlreadyChecked()
 end
 
 function DebugCommands:DebugFunction3()
+    FLAG_COMMAND = not FLAG_COMMAND
+    print(FLAG_COMMAND)
 end
 
 function DebugCommands:DebugFunction4()
 end
 
 function DebugCommands:ToggleConsole()
-    ArchipelagoSystem:ToggleConnection()
+    ClientBP:ToggleConsole()
 end
 
 function DebugCommands:RegisterKeybinds()

@@ -65,7 +65,7 @@ function ClientBP:GetLevelName()
     
     a:GetLevelName(out)
     
-    if not out then return "" end
+    if not out or not out["LevelName"] then return "" end
     return Trim(out["LevelName"]:ToString())
 end
 
@@ -90,11 +90,21 @@ end
 
 
 RegisterCustomEvent("ModLoader_Initiation", function(ctx)
-   if Archipelago:IsInitialized() then
-        for _, message in ipairs(last_logs) do
-            ClientBP:PushToLogger(message)
-        end
-   end
+    local helper = ClientBP:GetHelper()
+    if Archipelago:IsInitialized() then
+            for _, message in ipairs(last_logs) do
+                if not helper then return end
+                
+                helper:AddToLogger(message)
+            end
+    end
+
+    if ArchipelagoSystem:IsConnected() then
+        helper.Connected = true
+    else
+        helper.Connected = false
+    end
 end)
+
 
 return ClientBP

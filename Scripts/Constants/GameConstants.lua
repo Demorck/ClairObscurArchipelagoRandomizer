@@ -4,8 +4,31 @@ local GAME = {
     {
         CHARACTERS_ID = {"Frey", "Maelle", "Lune", "Sciel", "Verso", "Monoco" },
         CHARACTERS_WEAPONS = {"Noahram", "Maellum", "Lunerim", "Scieleson", "Verleso", "Monocaro" },
+        CHARACTERS_DEFAULT_SKILLS = {
+            Frey = {
+                "Combo1_Gustave", "UnleashCharge"
+            },
+            Maelle = {
+                "OffensiveSwitch", "Percee"
+            }, 
+            Lune = {
+                "IceGust", "Immolation"
+            },
+            Sciel = {
+                "Grimprediction", "Foretelling2"
+            },
+            Verso = {
+                "Combo1", "FromFire"
+            },
+            Monoco = {
+                "ChalierRelentlessSword", "StalactCombo"
+            }
+        },
+
         WORLDMAP_CAPACITIES = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" },
         EXPLORATION_CAPACITIES = { "FreeAim", "AttackInWorld", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" },
+
+
         SAVE_NOTIFICATION = {   -- Meme/niche/our references
                                 "<- Imagine a baguette spinning", "Yezzdia did the Poptracker", "Jostar will be raised as promise", 
                                 "Not saving...", "Did you know that vaporeon...", "My wife makes me happy ! :)",

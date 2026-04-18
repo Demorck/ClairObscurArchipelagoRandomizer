@@ -44,6 +44,13 @@ function Archipelago:Sync()
     self.waitingForSync = false
 end
 
+function Archipelago:SendAlreadyChecked()
+    local locations_already_checked = Storage:Get("locations_checked")
+    for i, v in ipairs(locations_already_checked) do
+        self:SendLocationCheckByID(v)
+    end
+end
+
 ---Check if player can receive items
 ---@return boolean canReceive
 function Archipelago:CanReceiveItems()
@@ -81,6 +88,12 @@ end
 ---@param location_name string Location name
 function Archipelago:SendLocationCheck(location_name)
     Facade.LocationSender:SendLocationCheck(location_name)
+end
+
+---Send a location check
+---@param location_id number Location ID
+function Archipelago:SendLocationCheckByID(location_id)
+    Facade.LocationSender:SendLocationCheckByID(location_id)
 end
 
 ---Send victory/completion

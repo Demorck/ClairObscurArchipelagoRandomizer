@@ -11,8 +11,9 @@ function LocationSender:SendLocationCheck(location_name)
     local location_data = self:GetLocationFromAPData(location_name)
     if location_data == nil then return end
 
+    local location_id = location_data["id"]
     local location_to_send = {}
-    location_to_send[1] = location_data["id"]
+    location_to_send[1] = location_id
     
     if not location_data then
         return
@@ -24,7 +25,24 @@ function LocationSender:SendLocationCheck(location_name)
         end
     end
 
-    Logger:info("Location: \"" .. location_name .. "\" checked !")
+    Logger:info("Location: \"" .. location_name .. "\" checked, ID: " .. location_id .. " !")
+    Storage:AddInTable("locations_checked", location_id)
+    ExecuteAsync(async)
+end
+
+---Send a location check to the AP server
+---@param location_id number ID of the location
+function LocationSender:SendLocationCheckByID(location_id)
+    local location_to_send = {}
+    location_to_send[1] = location_id
+
+    local function async()
+        if ArchipelagoState.apSystem then
+            ArchipelagoState.apSystem:GetClient():GetClient():LocationChecks(location_to_send)
+        end
+    end
+
+    Logger:info("Location checked, ID: " .. location_id .. " !")
     ExecuteAsync(async)
 end
 

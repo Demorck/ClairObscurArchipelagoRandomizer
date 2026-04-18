@@ -4,7 +4,10 @@ local RUNTIME = {
     TABLE_CURRENT_AP_FUNCTION = {},
 
     ---@type table<string, boolean>
-    NAMEDID_TO_BE_ADDED = {}
+    NAMEDID_TO_BE_ADDED = {},
+
+    ---@type boolean
+    CHANGE_SAVE_ICON = false
 }
 
 

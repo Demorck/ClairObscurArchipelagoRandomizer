@@ -102,7 +102,7 @@ function EventDispatcher:OnRetrieved(data)
 end
 
 function EventDispatcher:OnPrintJson(data)
-    self.logger:debug("Retrieved json event received")
+    -- self.logger:debug("Retrieved json event received")
 
     local ok, err = pcall(self.handlers.json, data)
     if not ok then

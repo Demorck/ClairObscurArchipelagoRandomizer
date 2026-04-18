@@ -116,6 +116,7 @@ end
 
 function SaveHooks:SaveNotificationUI()
     return function(ctx)
+        if not CONSTANTS.RUNTIME.CHANGE_SAVE_ICON then return end
         local a = ctx:get() ---@cast a UWBP_FullScreenNotificationContainer_C
 
         local random_string = Utils.TableHelper.GetRandomElement(CONSTANTS.GAME.TABLE.SAVE_NOTIFICATION)

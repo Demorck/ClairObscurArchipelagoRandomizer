@@ -40,7 +40,9 @@ local CONFIG = {
         "Consumable_Health_Level0",
         "Consumable_Health_Level1",
         "Consumable_Health_Level2"
-    }
+    },
+
+    VERSION = "0.3.0"
 }
 
 return CONFIG

@@ -53,8 +53,35 @@ function Storage:Set(key, value)
         return false
     end
 
+
+    local callerInfo = debug.getinfo(2, "nS")
+    local callerName = callerInfo and callerInfo.name or "unknown function"
+    local callerSource = callerInfo and callerInfo.short_src or "unknown source"
+    local callerLine = callerInfo and callerInfo.currentline or "?"
+
+    Logger:info(string.format("Storage:Set('%s') called by %s (%s:%s)", key, callerName, callerSource, callerLine))
+    
     self.data[key] = value
     return true
+end
+
+---Adding a value in a table 
+---@param key string Field name
+---@param value_to_add any value to add
+---@return boolean sucess True if value was added successfully
+function Storage:AddInTable(key, value_to_add)
+    local data = self.data[key]
+
+    if type(data) ~= "table" then
+        Logger:error("Trying to add a value " .. tostring(value_to_add) .. " but not in table, key: " .. key)
+        return false
+    end
+
+    local newTable = {}
+    for k, v in ipairs(data) do newTable[k] = v end
+    table.insert(newTable, value_to_add)
+    
+    return self:Set(key, newTable)
 end
 
 function Storage:Increment(key)
@@ -181,7 +208,6 @@ function Storage:Load()
         Logger:info("Last saved item index: " .. self.data.lastSavedItemIndex)
         Logger:info("Pictos index: " .. self.data.pictosIndex)
         Logger:info("Weapons index: " .. self.data.weaponsIndex)
-        Logger:info("Lumiere done: " .. tostring(self.data.initialized_after_lumiere))
         Logger:info("Tickets: " .. Dump(self.data.tickets))
         Logger:info("Characters: " .. Dump(self.data.characters))
         Logger:info("Free Aim unlocked: " .. tostring(self.data.free_aim_unlocked))

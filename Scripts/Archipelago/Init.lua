@@ -96,6 +96,7 @@ function ArchipelagoSystem:Initialize()
     return self
 end
 
+--TODO: return true when ap is disconnected 
 function ArchipelagoSystem:SetupPollingLoop()
     LoopAsync(1000, function()
         if self.apClient.wantToConnect then
@@ -108,7 +109,7 @@ function ArchipelagoSystem:SetupPollingLoop()
                     Archipelago.waitingForSync = false
                 end
 
-                if Archipelago and NEEDED_TO_INIT and Archipelago:IsInitialized()  then
+                if Archipelago and NEEDED_TO_INIT and Archipelago:IsInitialized() and FLAG_COMMAND then
                     InitSaveAfterLumiere()
                     NEEDED_TO_INIT = false
                 end
@@ -117,6 +118,12 @@ function ArchipelagoSystem:SetupPollingLoop()
             end
         end
 
+        return false
+    end)
+
+    --To force a save every 10 minutes
+    LoopAsync(1000 * 60 * 10, function ()
+        Save:SaveGame()
         return false
     end)
 end

@@ -34,7 +34,7 @@ function Characters:AddCharacter(name)
     local helper = ClientBP:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
 
     local found = {}
-    local struct = {}
+    local struct = {} 
     local fname = FName(name)
     AddingCharacterFromArchipelago = true
     Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)

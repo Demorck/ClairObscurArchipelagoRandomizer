@@ -95,15 +95,6 @@ function Logger:callMethod(obj, method_name, ...)
     end)
 end
 
-function Logger:StartIGT(name)
-    Logger:info("VVVVVVVVVVVVVVV  " .. name .. "  VVVVVVVVVVVVVVV")
-end
-
-function Logger:EndIGT(name)
-    Logger:info("ɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅ  " .. name .. "  ɅɅɅɅɅɅɅɅɅɅɅɅɅɅɅ")
-end
-
-
 --- Wrap a table with logging
 ---@param t table
 ---@param name string
