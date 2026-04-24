@@ -118,7 +118,8 @@ function Capacities:UnlockAllExplorationCapacities()
                 -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
                 Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i, true)
             else
-                Storage:Set("free_aim_unlocked", false)
+                local free_aim_unlocked = Storage:Get("free_aim_unlocked")
+                Storage:Set("free_aim_unlocked", free_aim_unlocked)
             end
         else
             Storage:Set("free_aim_unlocked", true)

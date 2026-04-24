@@ -101,6 +101,15 @@ function InitSaveAfterLumiere()
    Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.RUN_MAELLE_2, QUEST_STATUS.COMPLETED)
    Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SCULPTURE_NEVRON, QUEST_STATUS.COMPLETED)
    Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SOPHIE, QUEST_STATUS.COMPLETED)
+
+
+   local save = FindFirstOf("BP_jRPG_GameSave_C") ---@type UBP_jRPG_GameSave_C
+   local inv_manager = Inventory:GetInventoryManager()
+   if inv_manager == nil then return end
+   save.CharactersCollection:ForEach(function (key, value)
+      local save_state = value:get() ---@type FS_jRPG_CharacterSaveState
+      inv_manager:AddMissingItemsFromCharacterSave(save_state)
+   end)
 end
 
 -- RegisterHook("/Game/Gameplay/GameActionsSystem/ReplaceCharacter/BP_GameActionInstance_ReplaceCharacter.BP_GameActionInstance_ReplaceCharacter_C:GetReplaceCharacterParameters", 
