@@ -46,7 +46,84 @@ local GAME = {
 
                                 -- Expedition 33 references
                                 "What lovely feet", "COE33 won the GOTY"
-                            }
+                            },
+
+
+        WORLDMAP_DIVE_POSITION = {
+            N_OF_SIRENE = {
+                X = -324977.38906072, 
+                Y = 95615.723324887, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - N of Sirene"
+            },
+            NEAR_THE_CROWS = {
+                X = -401420.23656072, 
+                Y = -49355.726539823, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Near The Crows"
+            },
+            S_OF_SINISTER_CAVE = {
+                X = -405667.1027116, 
+                Y = 252859.2109331, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - S of Sinister Cave"
+            },
+            BELOW_FLOATING_CEMETERY = { 
+                X = -543486.48471066, 
+                Y = -69062.958281085, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Below Floating Cemetery"
+            },
+            BELOW_GESTRAL_TOWER = { 
+                X = -467553.83258783, 
+                Y = 169528.96519204, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Near Gestral Beach Tower"
+            },
+            BELOW_THE_CHOSEN_PATH = {
+                X = -480573.79194773, 
+                Y = 59389.64078752, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Below The Chosen Path"
+            },
+            BELOW_ENDLESS_TOWER = {
+                X = -697692.23045245, 
+                Y = -23388.701439278, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Below Endless Tower"
+            },
+            NEAR_THE_MEADOWS = {
+                X = -774962.12823495, 
+                Y = 85405.206397979, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Near The Meadows"
+            },
+            EAST_OF_LUMIERE = {   
+                X = -827703.85963173, 
+                Y = 129434.95928411, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - East of Lumiere"
+            },
+            NEAR_SE_MANOR_DOOR = {
+                X = -763619.93138162, 
+                Y = 161666.68827581, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Near SE Manor Door"
+            },
+            UNDER_SERPENPHARE = { 
+                X = -593980.70235564, 
+                Y = 128062.42748221, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - Under Serpenphare"
+            },
+            NE_OF_WHITE_SAND = {
+                X = -549044.05472752, 
+                Y = 201473.2868461, 
+                Z = 0,
+                NAME_AP = "World Map: Dive - NE of White Sands"
+            },
+
+        }
     },
 
 

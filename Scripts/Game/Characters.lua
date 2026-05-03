@@ -354,4 +354,22 @@ function Characters:GetCharacterDataByID(name)
     return nil
 end
 
+--- Return the current character location in exploration
+---@return nil | table<Position>
+function Characters:GetPosition()
+    local manager = FindFirstOf(CONSTANTS.BLUEPRINT.CHARACTER_WORLD) ---@type ABP_jRPG_Character_World_C
+    
+    if manager == nil then return nil end
+
+    return { X = manager:K2_GetActorLocation().X,
+             Y = manager:K2_GetActorLocation().Y,
+             Z = manager:K2_GetActorLocation().Z
+            }
+end
+
+---@class Position
+---@field X number
+---@field Y number
+---@field Z number
+
 return Characters

@@ -56,14 +56,6 @@ StorageSchema.fields = {
     },
 
     -- Game progress counters
-    dive_items = {
-        type = "number",
-        default = 0,
-        validator = function(value)
-            return value >= 0
-        end
-    },
-
     gestral_found = {
         type = "number",
         default = 0,

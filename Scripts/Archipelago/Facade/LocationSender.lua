@@ -113,10 +113,32 @@ function LocationSender:HandleMultipleLocations(location_name, locations_data)
     end
 
     local function HandleDiveItems()
-        local res = locations_data[Storage.dive_items + 1]
-        Storage.dive_items = Storage.dive_items + 1
-        Storage:Update("LocationSender:HandleDiveItems")
-        return res
+        local position_world = Characters:GetPosition()
+        if position_world == nil then return end
+
+        --- Calculate the euclidian distance 
+        ---@param d1 Position
+        ---@param d2 Position
+        local function euclidian_distance(d1, d2)
+            return math.sqrt((d1.X - d2.X) ^ 2 + (d1.Y - d2.Y) ^ 2)
+        end
+
+        local location = nil
+        local min_value = 9999999
+        for _, value in pairs(CONSTANTS.GAME.TABLE.WORLDMAP_DIVE_POSITION) do
+            local distance = euclidian_distance(value, position_world)
+            if distance < min_value then
+                min_value = distance
+                for _, location_data in ipairs(locations_data) do
+                    if location_data.name == value.NAME_AP then
+                        location = location_data
+                        break
+                    end
+                end
+            end
+        end
+        
+        return location
     end
 
     local function HandlePetank()

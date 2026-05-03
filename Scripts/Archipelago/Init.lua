@@ -109,7 +109,7 @@ function ArchipelagoSystem:SetupPollingLoop()
                     Archipelago.waitingForSync = false
                 end
 
-                if Archipelago and NEEDED_TO_INIT and Archipelago:IsInitialized() and FLAG_COMMAND then
+                if Archipelago and NEEDED_TO_INIT and Archipelago:IsInitialized() then
                     InitSaveAfterLumiere()
                     NEEDED_TO_INIT = false
                 end

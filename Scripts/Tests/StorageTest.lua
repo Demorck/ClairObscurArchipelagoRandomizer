@@ -34,7 +34,6 @@ local function runTests()
     assert_equal(Storage:Get("weaponsIndex"), -1, "weaponsIndex initialized to -1")
     assert_false(Storage:Get("initialized_after_lumiere"), "initialized_after_lumiere initialized to false")
     assert_false(Storage:Get("free_aim_unlocked"), "free_aim_unlocked initialized to false")
-    assert_equal(Storage:Get("dive_items"), 0, "dive_items initialized to 0")
     assert_equal(Storage:Get("gestral_found"), 0, "gestral_found initialized to 0")
     assert_equal(Storage:Get("currentLocation"), "None", "currentLocation initialized to 'None'")
 

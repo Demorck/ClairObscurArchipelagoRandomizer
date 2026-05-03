@@ -141,6 +141,19 @@ function TableHelpers.Dump(o, depth)
     end
 end
 
+function TableHelpers.SimpleDump(o)
+    if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. TableHelpers.SimpleDump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 function TableHelpers.GetRandomElement(table)
     return table[math.random(#table)]
 end

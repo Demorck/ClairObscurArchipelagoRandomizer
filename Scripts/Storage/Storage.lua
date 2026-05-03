@@ -149,6 +149,7 @@ function Storage:UnlockCharacter(characterName)
         return false
     end
 
+    Logger:info("[STORAGE] Unlocking " .. characterName .. "...")
     characters[characterName] = true
     return self:Set("characters", characters)
 end

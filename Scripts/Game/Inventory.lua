@@ -14,15 +14,6 @@ function Inventory:GetInventoryManager()
     end
 end
 
-function Inventory.AddGold(amount)
-    --- @class UAC_jRPG_InventoryManager_C
-    local playerInventory = Inventory:GetInventoryManager()
-    if playerInventory ~= nil then
-        -- playerInventory:ReceiveGold(amount, "")
-        Logger:callMethod(playerInventory, "ReceiveGold", amount, "")
-    end
-end
-
 --- TODO: Modify lootcontext
 function Inventory:AddItem(itemName, amount, item_level)
     --- @class UAC_jRPG_InventoryManager_C
