@@ -11,8 +11,6 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
-    FLAG_COMMAND = not FLAG_COMMAND
-    print(FLAG_COMMAND)
 end
 
 function DebugCommands:DebugFunction4()
