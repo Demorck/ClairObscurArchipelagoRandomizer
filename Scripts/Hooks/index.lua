@@ -8,6 +8,7 @@ local CharacterHooks = require "Hooks.IndividualHooks.CharacterHooks"
 local InventoryHooks = require "Hooks.IndividualHooks.InventoryHooks"
 local UIHooks        = require "Hooks.IndividualHooks.UIHooks"
 local CapacityHook   = require "Hooks.IndividualHooks.CapacityHook"
+local OtherHooks     = require "Hooks.IndividualHooks.OtherHooks"
 
 
 local Hooks = {}
@@ -48,6 +49,7 @@ function Hooks:Register()
     InventoryHooks:Register(hookManager, dependencies)
     UIHooks:Register(hookManager, dependencies)
     CapacityHook:Register(hookManager, dependencies)
+    -- OtherHooks:Register(hookManager, dependencies)
 
     Logger:info("Hooks registered successfully")
 end

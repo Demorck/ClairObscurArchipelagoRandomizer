@@ -70,6 +70,11 @@ StorageSchema.fields = {
         default = false,
     },
 
+    paint_break_unlocked = {
+        type = "boolean",
+        default = false,
+    },
+
     -- Location tracking
     currentLocation = {
         type = "string",

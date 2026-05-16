@@ -57,6 +57,7 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, 
    local passwordStr = password:get():ToString()
    local deathlinkBool = deathlink:get()
 
+   print("[COE33AP - Before connection] Connect button pressed")
 
    ExecuteAsync(function()
       ArchipelagoSystem:SetConnectionConfig(hostStr, portStr, slotStr, passwordStr, deathlinkBool)
@@ -78,11 +79,11 @@ function InitSaveAfterLumiere()
       Storage:UnlockCharacter("Frey")
    end
 
+   Archipelago:Sync()
+
    Characters:EnableCharactersInPartyOnlyUnlocked()
    Inventory:Adding999Recoat()
    Capacities:UnlockAllExplorationCapacities()
-
-   Archipelago:Sync()
 
    Save:WriteFlagByName(CONSTANTS.NID.FB_GRADIENT_TUTORIAL.NAME, true)
    Save:WriteFlagByName(CONSTANTS.NID.FW_JUMP_TUTORIAL.NAME, true)
@@ -103,31 +104,35 @@ function InitSaveAfterLumiere()
    Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SOPHIE, QUEST_STATUS.COMPLETED)
 
 
-   local save = FindFirstOf("BP_jRPG_GameSave_C") ---@type UBP_jRPG_GameSave_C
-   local inv_manager = Inventory:GetInventoryManager()
-   if inv_manager == nil then return end
-   save.CharactersCollection:ForEach(function (key, value)
-      local save_state = value:get() ---@type FS_jRPG_CharacterSaveState
-      inv_manager:AddMissingItemsFromCharacterSave(save_state)
+   LoopAsync(1000 * 10, function ()
+      local pause_menu = FindFirstOf("WBP_PauseMenu_C") ---@type UWBP_PauseMenu_C
+      pause_menu:TeleportToSafeLocation()
+      return true
    end)
 end
 
--- RegisterHook("/Game/Gameplay/GameActionsSystem/ReplaceCharacter/BP_GameActionInstance_ReplaceCharacter.BP_GameActionInstance_ReplaceCharacter_C:GetReplaceCharacterParameters", 
---    function(ctx, param)
---       local param = param:get() ---@cast param FS_ReplaceCharacterParameters
-      
---       param.TransferLumina_7_347621E5466692025EF4B2A21AA8E631 = false
---       param.TransferLevel_11_1EDF1E544B7806EACF12E8968EE240CA = false
---       param.TransferPictos_16_F3ADFDAC4F0D8D09C20CB9B1B6415108 = false
---       param.TransferWeapon_18_3B0D73CF4D925EE41C43C3A35B759EE7 = false
---       param.TransferAttributePoints_13_005710C0425DE39B3D97B78BAE5C34E6 = false
+print("[COE33AP - Before Connection] Main initialized")
+
+-- RegisterHook("/Game/Gameplay/InteractiveMusic/BP_InteractiveMusicSystem.BP_InteractiveMusicSystem_C:CreateInteractiveMusicWithContextIfNeeded",
+--    function(ctx, music_context, sound, music)
+--       local InteractiveMusic = music:get()
+
+--       local audio_comp = InteractiveMusic["AudioComponent_7_F10237DD43456A26DE6840B3DC60292D"]
+
+--       local asset = LoadAsset("/Game/Audio/WAV/MUSIC/Beta/Common/MUS_Common_ENV_Lumiere_Orchestral.MUS_Common_ENV_Lumiere_Orchestral")
+--       if asset and asset:IsValid() then
+--             audio_comp.Sound = asset
+--       end
+--       print(audio_comp.Sound:GetFullName())
 --    end
 -- )
+
 
 
 --- GetNewGameData
 --- InitializeLevelForNewGame
 --- StartNewGame
 ---Function /Game/Gameplay/GameFlow/ProjectConfiguration/BP_DataAsset_ProjectConfiguration.BP_DataAsset_ProjectConfiguration_C:GetNewGameLevel
+---
 ---
 ---

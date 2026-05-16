@@ -154,8 +154,11 @@ function TableHelpers.SimpleDump(o)
    end
 end
 
-function TableHelpers.GetRandomElement(table)
-    return table[math.random(#table)]
+function TableHelpers.GetRandomElement(t)
+    local keys = {}
+    for k in pairs(t) do table.insert(keys, k) end
+    
+    return t[keys[math.random(#keys)]]
 end
 
 return TableHelpers

@@ -20,8 +20,16 @@ function Capacities:UnlockDestroyPaintedRock()
     if ExplorationProgression == nil then return end
 
     table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
-    -- ExplorationProgression:UnlockFreeAimDamageLevel(1)
     Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", 1)
+    Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
+end
+
+function Capacities:LockDestroyPaintedRock()
+    local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+    if ExplorationProgression == nil then return end
+
+    table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
+    Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", 0)
     Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockDestroyPaintedRock")
 end
 
@@ -131,6 +139,17 @@ end
 
 function Capacities:DisableFreeAimIfNeeded()
     if Archipelago.options.shuffle_free_aim == 1 and not Storage:Get("free_aim_unlocked") then
+        Logger:info("Disabling Free Aim...")
+        local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
+        if ExplorationProgression == nil then return end
+        
+        -- ExplorationProgression:SetExplorationCapacityUnlocked(1, false)
+        Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", 1, false)
+    end
+end
+
+function Capacities:DisablePaintBreakIfNeeded()
+    if not Storage:Get("paint_break_unlocked") then
         Logger:info("Disabling Free Aim...")
         local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
         if ExplorationProgression == nil then return end

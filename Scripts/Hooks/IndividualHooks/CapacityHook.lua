@@ -29,6 +29,25 @@ function CapacityHook:Register(hookManager, dependencies)
         "Capacities - Remove WM capacities"
     )
 
+
+    hookManager:Register(
+        "/Game/Gameplay/Exploration/BP_ExplorationProgressionSystem.BP_ExplorationProgressionSystem_C:UnlockFreeAimDamageLevel",
+        function ()
+            if not Archipelago:IsInitialized() then
+                return
+            end
+
+            if Utils.TableHelper.Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockFreeAimDamageLevel") then
+                return
+            end
+
+            if not storage:Get("paint_break_unlocked") then
+                Capacities:LockDestroyPaintedRock()
+            end
+        end,
+        "Capacities - UnlockFreeAimDamageLevel"
+    )
+
     logger:info("Capacity hook registered")
 end
 

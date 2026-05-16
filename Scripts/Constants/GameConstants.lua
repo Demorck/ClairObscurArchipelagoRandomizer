@@ -49,6 +49,21 @@ local GAME = {
                             },
 
 
+                            
+        MAP_NAME = {
+            ASSETS_TABLE   = {  "Level_Goblu_Main_V5", "Level_AncientSanctuary_Main_V2", "Level_RedForest_Main", "LevelMain_EsquieNest", "Level_OraneForest_Main",
+                                "Level_Side_CleasWorkShop_V2", "Level_Main_ForgottenBattlefield_V2", "Level_Side_FrozenHeart", "Level_Main_GestralVillage_V2",
+                                "Level_MonocoStation", "Level_Lumiere_Main_V2", "Level_PaintressIntro_Main", "Level_OldLumiere_Main", "Level_Reacher_Main_V2",
+                                "Level_SeaCliff_Main_V2", "Level_Sirene_Main_V2", "Level_Side_TwilightSanctuary", "Level_Visages_Main_V1", "Level_YellowForest_Main",
+                                "CleasTower_GroundFloorEntrance", "Level_Side_VersosDraft", "Level_Camp_Main" },
+
+            READABLE_TABLE = {  "GoblusLair", "AncientSanctuary", "SideLevel_RedForest", "EsquieNest", "SideLevel_OrangeForest",
+                                "SideLevel_CleasFlyingHouse", "ForgottenBattlefield", "SidelLevel_FrozenHearts", "GestralVillage",
+                                "MonocoStation", "Lumiere", "Monolith_Interior_PaintressIntro", "OldLumiere", "SideLevel_Reacher",
+                                "SeaCliff", "Sirene", "SideLevel_TwilightSanctuary", "Visages", "SideLevel_YellowForest",
+                                "SideLevel_CleasTower_Entrance", "SideLevel_VersosDraft", "Camps" }
+        },
+
         WORLDMAP_DIVE_POSITION = {
             N_OF_SIRENE = {
                 X = -324977.38906072, 
