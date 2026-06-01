@@ -104,11 +104,11 @@ function InitSaveAfterLumiere()
    Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SOPHIE, QUEST_STATUS.COMPLETED)
 
 
-   LoopAsync(1000 * 10, function ()
-      local pause_menu = FindFirstOf("WBP_PauseMenu_C") ---@type UWBP_PauseMenu_C
-      pause_menu:TeleportToSafeLocation()
-      return true
-   end)
+   -- LoopAsync(1000 * 10, function ()
+   --    local pause_menu = FindFirstOf("WBP_PauseMenu_C") ---@type UWBP_PauseMenu_C
+   --    pause_menu:TeleportToSafeLocation()
+   --    return true
+   -- end)
 end
 
 print("[COE33AP - Before Connection] Main initialized")

@@ -54,6 +54,10 @@ function SlotDataHandler:Handle(slotData)
         Storage:Load()
     end
 
+    if self.archipelago then
+        self.archipelago.pendingLocationsFlush = true
+    end
+
     -- Check if can receive items
     if not self.archipelago:CanReceiveItems() then
         if self.archipelago then

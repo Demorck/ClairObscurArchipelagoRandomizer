@@ -37,6 +37,8 @@ ArchipelagoState.number_of_players = 0
 -- Reference to AP system (initialized later)
 ArchipelagoState.apSystem = nil
 
+ArchipelagoState.pendingLocationsFlush = false
+
 ---Initialize state with default values
 function ArchipelagoState:Initialize()
     self.seed = nil

@@ -109,6 +109,12 @@ function ArchipelagoSystem:SetupPollingLoop()
                     Archipelago.waitingForSync = false
                 end
 
+                -- Sync pending location checks after reconnect
+                if Archipelago and Archipelago.pendingLocationsFlush and ArchipelagoSystem:IsConnected() then
+                    Archipelago:SendAlreadyChecked()
+                    Archipelago.pendingLocationsFlush = false
+                end
+
                 if Archipelago and NEEDED_TO_INIT and Archipelago:IsInitialized() then
                     InitSaveAfterLumiere()
                     NEEDED_TO_INIT = false

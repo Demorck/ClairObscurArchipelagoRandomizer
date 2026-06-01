@@ -44,6 +44,9 @@ end
 function ItemsHandler:Handle(items)
     -- Don't process if player is in a state where they can't receive items
     if not self:CanReceiveItems() then
+        if self.archipelago then
+            self.archipelago.waitingForSync = true
+        end
         return
     end
 
