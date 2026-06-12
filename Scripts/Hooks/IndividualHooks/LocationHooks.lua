@@ -124,7 +124,7 @@ function LocationHooks:Register(hookManager, dependencies)
             local scene = portal.LevelDestination.RowName:ToString()
 
 
-            if not Storage:IsAreaUnlocked(scene)then
+            if not Storage:IsAreaUnlocked(scene) then
                 portal:K2_SetActorRelativeTransform(a, false, {}, true)
             else
                 if portal.DestinationSpawnPointTag.TagName:ToString() == "Level.SpawnPoint.OldLumiere.EndPath" and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED then

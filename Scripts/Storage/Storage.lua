@@ -133,10 +133,12 @@ end
 
 ---Check if an area is unlocked
 ---@param ticketName string Ticket name
----@return boolean unlocked True if area is unlocked
+---@return boolean unlocked True if area is unlocked, or true if key doesn't exist in storage
 function Storage:IsAreaUnlocked(ticketName)
     local tickets = self:Get("tickets")
-    return tickets[ticketName] == true
+    local value = tickets[ticketName]
+    
+    return value == nil or value == true
 end
 
 ---Unlock a character (set to true)

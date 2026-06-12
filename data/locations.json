@@ -43,7 +43,7 @@
     },
     {
         "internal_name": "Chest_AncientSanctuary_6",
-        "name": "Ancient Sanctuary: Entrance - Across bridge",
+        "name": "Ancient Sanctuary or Forgotten Battlefield: Entrance - Across bridge or Fort Ruins - In left ruins near dead end",
         "location": "Ancient Sanctuary",
         "original_item": "JumpRecovery",
         "condition": {},
@@ -683,7 +683,7 @@
     },
     {
         "internal_name": "Chest_ForgottenBattlefield_3",
-        "name": "Forgotten Battlefield: Fort Ruins - In left ruins near dead end",
+        "name": "Ancient Sanctuary or Forgotten Battlefield: Entrance - Across bridge or Fort Ruins - In left ruins near dead end",
         "location": "Forgotten Battlefield",
         "original_item": "ChromaPack_ExtraLarge",
         "condition": {},
@@ -3305,7 +3305,7 @@
     },
     {
         "internal_name": "Chest_SmallLevel_Visages_2",
-        "name": "Visages: Item 2",
+        "name": "Isle of the Eyes - The Crows: Item 2 or Item",
         "location": "Small Level Visages",
         "original_item": "UpgradeMaterial",
         "condition": {},
@@ -3313,7 +3313,7 @@
     },
     {
         "internal_name": "Chest_SmallLevel_Reacher_1",
-        "name": "The Crows: Item",
+        "name": "Isle of the Eyes - The Crows: Item 2 or Item",
         "location": "Small Level Reacher",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -4077,7 +4077,7 @@
     },
     {
         "internal_name": "Chest_WorldMap_6",
-        "name": "World Map: Unknown 2",
+        "name": "World Map: In crates before Flying Waters",
         "location": "World Map",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -4632,7 +4632,7 @@
     },
     {
         "internal_name": "Chest_Generic_Chroma",
-        "name": "Esquies Nest: Get Outta My Way! - Go right from Sunniso",
+        "name": "Esquie's Nest or Monolith: Get Outta My Way! - Go right from Sunniso or Tainted Lumiere - Left before Expedition Flag",
         "location": "Esquies Nest",
         "original_item": "ChromaPack_Large",
         "condition": {},
@@ -4648,7 +4648,7 @@
     },
     {
         "internal_name": "Chest_Generic_Chroma",
-        "name": "Monolith: Tainted Lumiere - Left before Expedition Flag",
+        "name": "Esquie's Nest or Monolith: Get Outta My Way! - Go right from Sunniso or Tainted Lumiere - Left before Expedition Flag",
         "location": "The Monolith",
         "original_item": "ChromaPack_Large",
         "condition": {},

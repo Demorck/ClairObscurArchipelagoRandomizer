@@ -50,7 +50,7 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
             logger:error("Impossible to save: SaveGameData nil")
             return
         end
-
+        
         if not self.AddingButtonHook then
             hookManager:Register(
                 "/Game/UI/Widgets/HUD_Exploration/WBP_SavePointMenu.WBP_SavePointMenu_C:UpdateUpgradeWeaponsButtonVisibility",
