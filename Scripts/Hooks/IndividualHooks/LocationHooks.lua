@@ -19,16 +19,16 @@ function LocationHooks:Register(hookManager, dependencies)
     local clientBP = dependencies.clientBP
     local AddingGestralHook = false
 
-    local function change_data_storage()
+    local function change_data_storage(level)
         local operation = {
             operation = "replace",
-            value = storage:Get("currentLocation")
+            value = level
         }
 
         local playerInfo = archipelago.apSystem:GetClient():GetPlayerInfo()
         archipelago.apSystem:GetClient():SetDataStorage(
             playerInfo.number .. "-coe33-currentLocation",
-            storage:Get("currentLocation"),
+            level,
             false,
             {operation}
         )
@@ -58,9 +58,11 @@ function LocationHooks:Register(hookManager, dependencies)
          function (ctx, level_destination, spawn_point_tag, world_context)
             local level = level_destination:get():ToString()
 
-            if storage:Get("currentLocation") ~= level and level ~= "None" then
+            print("Level - ChangeMapByName: " .. level)
+            if level ~= "None" then
                 register_sastro(level)
-                change_data_storage()
+                change_data_storage(level)
+                Storage:Set("currentLocation", level)
             end
 
          end,
@@ -84,9 +86,11 @@ function LocationHooks:Register(hookManager, dependencies)
             end
 
             local level = CONSTANTS.GAME.TABLE.MAP_NAME.READABLE_TABLE[index]
-            if storage:Get("currentLocation") ~= level and level ~= "None" then
+            print("Level - ChangeMapByAssetName: " .. level)
+            if level ~= "None" then
                 register_sastro(level)
-                change_data_storage()
+                change_data_storage(level)
+                Storage:Set("currentLocation", level)
             end
          end,
         "LocationHooks - ChangeMapByAssetName"
