@@ -62,6 +62,7 @@ function LocationHooks:Register(hookManager, dependencies)
                 register_sastro(level)
                 change_data_storage()
             end
+
          end,
         "LocationHooks - ChangeMapByName"
     )
@@ -123,7 +124,6 @@ function LocationHooks:Register(hookManager, dependencies)
 
             local scene = portal.LevelDestination.RowName:ToString()
 
-
             if not Storage:IsAreaUnlocked(scene) then
                 portal:K2_SetActorRelativeTransform(a, false, {}, true)
             else
@@ -131,8 +131,6 @@ function LocationHooks:Register(hookManager, dependencies)
                     portal:K2_SetActorRelativeTransform(a, false, {}, true)
                 end
             end
-
-            portal:K2_SetActorRelativeTransform(a, false, {}, true)
         end,
         "LocationHooks - RegisterTeleportPoint")
 
