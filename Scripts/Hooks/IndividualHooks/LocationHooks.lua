@@ -58,7 +58,6 @@ function LocationHooks:Register(hookManager, dependencies)
          function (ctx, level_destination, spawn_point_tag, world_context)
             local level = level_destination:get():ToString()
 
-            print("Level - ChangeMapByName: " .. level)
             if level ~= "None" then
                 register_sastro(level)
                 change_data_storage(level)
@@ -86,7 +85,6 @@ function LocationHooks:Register(hookManager, dependencies)
             end
 
             local level = CONSTANTS.GAME.TABLE.MAP_NAME.READABLE_TABLE[index]
-            print("Level - ChangeMapByAssetName: " .. level)
             if level ~= "None" then
                 register_sastro(level)
                 change_data_storage(level)
