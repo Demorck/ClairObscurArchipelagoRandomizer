@@ -40,7 +40,7 @@ function InventoryHooks:Register(hookManager, dependencies)
             --- Hidden Gestral Arena
             elseif (itemName == "LastStandCritical" or itemName == "LastStandSpeed" or itemName == "LastStandPowerful" or itemName == "LastStandShell" or itemName == "SoloFighter") and
                    not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
-                    invManager:RemoveItemFromInventory(FName(itemName), 1, true)
+                    invManager:RemoveItemFromInventory(FName(itemName), 1, false)
             end
         end,
         "Inventory - Add Item"

@@ -274,8 +274,7 @@ end
 function Characters:KillAll()
     Logger:info("Killing all characters...")
     local bm = Battle:GetManager() --- @cast bm UAC_jRPG_BattleManager_C
-
-    bm:ForceBattleEnd(2)
+    bm:TriggerAbandonBattle()
 end
 
 --- Set the HP of all characters to a specific value

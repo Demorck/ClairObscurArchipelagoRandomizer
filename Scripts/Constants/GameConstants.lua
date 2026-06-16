@@ -26,7 +26,7 @@ local GAME = {
         },
 
         WORLDMAP_CAPACITIES = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" },
-        EXPLORATION_CAPACITIES = { "FreeAim", "AttackInWorld", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" },
+        EXPLORATION_CAPACITIES = { "AttackInWorld", "FreeAim", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" },
 
 
         SAVE_NOTIFICATION = {   -- Meme/niche/our references
@@ -55,13 +55,13 @@ local GAME = {
                                 "Level_Side_CleasWorkShop_V2", "Level_Main_ForgottenBattlefield_V2", "Level_Side_FrozenHeart", "Level_Main_GestralVillage_V2",
                                 "Level_MonocoStation", "Level_Lumiere_Main_V2", "Level_PaintressIntro_Main", "Level_OldLumiere_Main", "Level_Reacher_Main_V2",
                                 "Level_SeaCliff_Main_V2", "Level_Sirene_Main_V2", "Level_Side_TwilightSanctuary", "Level_Visages_Main_V1", "Level_YellowForest_Main",
-                                "CleasTower_GroundFloorEntrance", "Level_Side_VersosDraft", "Level_Camp_Main" },
+                                "CleasTower_GroundFloorEntrance", "Level_Side_VersosDraft", "Level_Camp_Main", "Level_WorldMap_Main_V2" },
 
             READABLE_TABLE = {  "GoblusLair", "AncientSanctuary", "SideLevel_RedForest", "EsquieNest", "SideLevel_OrangeForest",
                                 "SideLevel_CleasFlyingHouse", "ForgottenBattlefield", "SidelLevel_FrozenHearts", "GestralVillage",
                                 "MonocoStation", "Lumiere", "Monolith_Interior_PaintressIntro", "OldLumiere", "SideLevel_Reacher",
                                 "SeaCliff", "Sirene", "SideLevel_TwilightSanctuary", "Visages", "SideLevel_YellowForest",
-                                "SideLevel_CleasTower_Entrance", "SideLevel_VersosDraft", "Camps" }
+                                "SideLevel_CleasTower_Entrance", "SideLevel_VersosDraft", "Camps", "WorldMap" }
         },
 
         WORLDMAP_DIVE_POSITION = {
@@ -141,6 +141,36 @@ local GAME = {
         }
     },
 
+
+    BATTLE = {
+        STATUS_EFFECT = {
+            BURN            = 1,
+            FROZEN          = 2,
+            STUN            = 3,
+            INVERTED        = 4,
+            MARKED          = 5,
+            CURSED          = 6,
+            BOUND           = 7,
+            EXHAUST         = 8,
+            DIZZY           = 9,
+            SILENCE         = 10,
+            RAGE            = 11,
+            POWERFUL        = 12,
+            RUSH            = 13,
+            SHELL           = 14,
+            PRECISION       = 15,
+            POWERLESS       = 16,
+            SLOW            = 17,
+            DEFENSLESS      = 18,
+            BLIND           = 19,
+            BUFF_LOW_HEALTH = 20,
+            REGEN           = 21,
+            BERSERK         = 22,
+            CHARMED         = 23,
+            BARBAPAPA       = 24,
+
+        }
+    }
 
 }
 

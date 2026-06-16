@@ -56,6 +56,17 @@ end
 function DeathLinkHandler:HandleDeathLink(data)
     if not self.archipelago then return end
 
+    if data.source == self.archipelago.slot then
+        return
+    end
+
+    if not self.archipelago:CanReceiveDeathLink() then
+        local last = self.archipelago:LastDeathLinkInSeconds()
+        self.logger:info("Receiving deathlink but the last one was in " .. last .. " seconds, aborting it...")
+        return
+    end
+
+    self.archipelago.wasDeathLinked = true
     local currentDeathLink = data.time
 
     self.logger:info("DeathLink received: " .. Dump(data))
@@ -82,6 +93,7 @@ function DeathLinkHandler:HandleDeathLink(data)
     end
 
     self.archipelago.lastDeathLink = currentDeathLink
+    self.archipelago.wasDeathLinked = false
 end
 
 return DeathLinkHandler

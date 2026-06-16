@@ -75,7 +75,9 @@ function ArchipelagoSystem:Initialize()
     end)
 
     eventDispatcher:RegisterHandler("bounced", function(data)
-        deathLinkHandler:Handle(data)
+        ExecuteInGameThread(function ()
+            deathLinkHandler:Handle(data)
+        end)
     end)
 
     eventDispatcher:RegisterHandler("json", function (data)

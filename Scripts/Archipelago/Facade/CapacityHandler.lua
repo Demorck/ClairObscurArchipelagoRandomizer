@@ -14,6 +14,7 @@ function CapacityHandler:Handle(item_data)
         Storage:Increment("progressive_rock")
     elseif item_data.name == "Paint Break" then
         Capacities:UnlockDestroyPaintedRock()
+        Storage:Update("CapacityHandler:Handle - Paint Break")
     elseif item_data.name == "Free Aim" then
         Capacities:UnlockExplorationCapacity("FreeAim")
         Storage:Set("free_aim_unlocked", true)

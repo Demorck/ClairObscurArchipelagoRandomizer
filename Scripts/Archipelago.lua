@@ -112,13 +112,21 @@ end
 ---@param games table|nil Games
 ---@param tags table|nil Tags
 function Archipelago:SendDeathLink(msg, players_id, games, tags)
-    Facade.DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
+    if self:CanReceiveDeathLink() then
+        Facade.DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
+    end
 end
 
----Handle incoming DeathLink
----@param data table DeathLink data
-function Archipelago:HandleDeathLink(data)
-    Facade.DeathLinkManager:HandleDeathLink(data)
+function Archipelago:CanReceiveDeathLink()
+    local time = self.apSystem:GetClient():GetServerTime()
+    
+    return time >= self.lastDeathLink + 30 and not self.wasDeathLinked
+end
+
+function Archipelago:LastDeathLinkInSeconds()
+    local time = self.apSystem:GetClient():GetServerTime()
+
+    return time - self.lastDeathLink
 end
 
 ---Handle capacity item (legacy compatibility)

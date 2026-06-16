@@ -121,7 +121,7 @@ end
 function Logger:initialize()
     logFile = makeLogName()
     rotateLogs()
-    Logger:info("Logger initialisé: " .. logFile)
+    Logger:info("Logger initialized: " .. logFile)
 end
 
 return Logger

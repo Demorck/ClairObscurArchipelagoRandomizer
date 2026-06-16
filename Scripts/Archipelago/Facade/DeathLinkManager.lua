@@ -5,28 +5,6 @@ local ArchipelagoState = require("Archipelago.ArchipelagoState")
 ---@class DeathLinkManager
 local DeathLinkManager = {}
 
----Handle incoming DeathLink
----@param data table DeathLink data from AP
-function DeathLinkManager:HandleDeathLink(data)
-    local currentDeathLink = data["time"]
-
-    Logger:info("DeathLink Received with data: " .. Dump(data))
-    Logger:info("Last received in: " .. ArchipelagoState.lastDeathLink)
-
-    if Battle:InBattle() then
-        Logger:info("Death link receiving during battle.")
-        Logger:info(data["cause"])
-        Characters:KillAll()
-    else
-        Logger:info("Death link receiving outside of battle.")
-        Logger:info(data["cause"])
-        Inventory:RemoveConsumable()
-        Characters:SetHPAll(1)
-    end
-
-    ArchipelagoState.lastDeathLink = currentDeathLink
-end
-
 ---Send DeathLink to other players
 ---@param msg string Death message
 ---@param players_id table|nil Player IDs to send to
@@ -41,7 +19,7 @@ function DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
     msg        = msg or {}
 
     local data = {}
-    data["time"] = math.floor(ArchipelagoState.apSystem:GetClient():GetServerTime())
+    data["time"] = ArchipelagoState.apSystem:GetClient():GetServerTime()
 
     local playerInfo = ArchipelagoState.apSystem:GetClient():GetPlayerInfo()
     local slotName = playerInfo.alias or "Unknown"

@@ -74,6 +74,7 @@ function Quests:SetObjectiveStatus(quest_name, objective_name, status)
 end
 
 function Quests:GetObjectiveStatus(quest_name, objective_name)
+    Logger:info("Quests:GetObjectiveStatus called with: " .. quest_name .. " and " .. objective_name)
     local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C
     if quest_system == nil then return end
 

@@ -107,6 +107,7 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
         -- Characters:EnableCharactersInCollectionOnlyUnlocked()
         Characters:ModifyPartyIfNeeded()
         Capacities:DisableFreeAimIfNeeded()
+        Capacities:DisablePaintBreakIfNeeded()
 
         local lastReceived = Storage:Get("lastReceivedItemIndex")
         Storage:Set("lastSavedItemIndex", lastReceived)
@@ -158,6 +159,7 @@ function SaveHooks:SetSpringMeadowsSpawnpointWhenNewSave()
         spawnpoint.TagName = FName("Level.SpawnPoint.SpringMeadows.Entry")
         
         NEEDED_TO_INIT = true
+        Logger:info("Starting a new save...")
     end
 end
 
