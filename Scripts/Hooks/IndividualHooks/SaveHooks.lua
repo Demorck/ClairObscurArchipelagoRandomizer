@@ -106,8 +106,8 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
         -- Update party and characters
         -- Characters:EnableCharactersInCollectionOnlyUnlocked()
         Characters:ModifyPartyIfNeeded()
-        Capacities:DisableFreeAimIfNeeded()
-        Capacities:DisablePaintBreakIfNeeded()
+        Capacities:ToggleFreeAimIfNeeded()
+        Capacities:TogglePaintBreakIfNeeded()
 
         local lastReceived = Storage:Get("lastReceivedItemIndex")
         Storage:Set("lastSavedItemIndex", lastReceived)

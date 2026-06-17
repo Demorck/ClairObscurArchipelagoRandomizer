@@ -12,11 +12,13 @@ function CapacityHandler:Handle(item_data)
     if item_data.name == "Progressive Rock" then
         Capacities:UnlockNextWorldMapAbility()
         Storage:Increment("progressive_rock")
+        Storage:Update("CapacityHandler:Handle - Progressive Rock")
     elseif item_data.name == "Paint Break" then
-        Capacities:UnlockDestroyPaintedRock()
+        Capacities:SetDestroyPaintedRock(true)
+        Storage:Set("paint_break_unlocked", true)
         Storage:Update("CapacityHandler:Handle - Paint Break")
     elseif item_data.name == "Free Aim" then
-        Capacities:UnlockExplorationCapacity("FreeAim")
+        Capacities:SetExplorationCapacity("FreeAim", true)
         Storage:Set("free_aim_unlocked", true)
         Storage:Update("CapacityHandler:Handle - Free Aim")
     end

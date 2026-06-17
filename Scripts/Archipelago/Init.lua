@@ -63,15 +63,21 @@ function ArchipelagoSystem:Initialize()
 
     -- Register handlers with dispatcher
     eventDispatcher:RegisterHandler("slotConnected", function(data)
-        slotDataHandler:Handle(data)
+        ExecuteInGameThread(function ()
+            slotDataHandler:Handle(data)
+        end)
     end)
 
     eventDispatcher:RegisterHandler("itemsReceived", function(data)
-        itemsHandler:Handle(data)
+        ExecuteInGameThread(function ()
+            itemsHandler:Handle(data)
+        end)
     end)
 
     eventDispatcher:RegisterHandler("locationsChecked", function(data)
-        locationsHandler:Handle(data)
+        ExecuteInGameThread(function ()
+            locationsHandler:Handle(data)
+        end)
     end)
 
     eventDispatcher:RegisterHandler("bounced", function(data)
@@ -81,7 +87,9 @@ function ArchipelagoSystem:Initialize()
     end)
 
     eventDispatcher:RegisterHandler("json", function (data)
-        jsonHandler:Handle(data)
+    ExecuteInGameThread(function ()
+            jsonHandler:Handle(data)
+        end)
     end)
 
 

@@ -42,7 +42,7 @@ function CapacityHook:Register(hookManager, dependencies)
             end
 
             if not storage:Get("paint_break_unlocked") then
-                Capacities:LockDestroyPaintedRock()
+                Capacities:SetDestroyPaintedRock(false)
             end
         end,
         "Capacities - UnlockFreeAimDamageLevel"

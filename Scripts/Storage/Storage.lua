@@ -54,7 +54,7 @@ function Storage:Set(key, value)
     end
 
 
-    local callerInfo = debug.getinfo(2, "nS")
+    local callerInfo = debug.getinfo(2, "nSl")
     local callerName = callerInfo and callerInfo.name or "unknown function"
     local callerSource = callerInfo and callerInfo.short_src or "unknown source"
     local callerLine = callerInfo and callerInfo.currentline or "?"
@@ -94,7 +94,7 @@ function Storage:Increment(key)
         self.data[key] = 0
     end
 
-    self.data[key] = self.data[key] + 1
+    self:Set(key, self.data[key] + 1)
 end
 
 ---Get all storage data (for debugging or serialization)
@@ -214,7 +214,9 @@ function Storage:Load()
         Logger:info("Tickets: " .. Dump(self.data.tickets))
         Logger:info("Characters: " .. Dump(self.data.characters))
         Logger:info("Free Aim unlocked: " .. tostring(self.data.free_aim_unlocked))
+        Logger:info("Paint break unlocked: " .. tostring(self.data.paint_break_unlocked))
         Logger:info("Number of gestral rescued: " .. self.data.gestral_found)
+        Logger:info("Number of rocks: " .. self.data.progressive_rock)
     else
         Storage:Update("Storage:Load - New file")
     end
