@@ -25,8 +25,27 @@ local GAME = {
             }
         },
 
-        WORLDMAP_CAPACITIES = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" },
-        EXPLORATION_CAPACITIES = { "AttackInWorld", "FreeAim", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" },
+        --- E_WorldMapExplorationCapacity
+        --- TODO: Also here
+        WORLDMAP_CAPACITIES = { 
+            BASE = 1, 
+            HARDEN_LANDS = 2, 
+            SWIM = 3, 
+            SWIM_BOOST = 4, 
+            FLY = 5  
+        },
+
+        --- E_ExplorationCapacity
+        --- TODO: Need to change in the code 
+        EXPLORATION_CAPACITIES = { 
+            ATTACK_IN_WORLD = 0, 
+            FREE_AIM = 1, 
+            FREE_AIM_TELEPORT = 2, 
+            OVERLAY = 3, 
+            GAME_MENU = 4, 
+            FAST_TRAVEL = 5, 
+            CAMP = 6  
+        },
 
 
         SAVE_NOTIFICATION = {   -- Meme/niche/our references
@@ -143,6 +162,7 @@ local GAME = {
 
 
     BATTLE = {
+        -- E_StatusEffects
         STATUS_EFFECT = {
             BURN            = 1,
             FROZEN          = 2,
