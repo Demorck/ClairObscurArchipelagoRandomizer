@@ -83,7 +83,7 @@ function BattleHooks:OnBattleVictory(archipelago, storage, logger, battle, chara
                     logger:info("Unlocking character: " .. charName)
                     AddingCharacterFromArchipelago = true
                     characters:EnableCharacter(charName)
-                    Storage:UnlockCharacter(charName)
+                    storage:UnlockCharacter(charName)
                     storage:Update("BattleHooks:OnBattleEndVictory")
                 end
             end
