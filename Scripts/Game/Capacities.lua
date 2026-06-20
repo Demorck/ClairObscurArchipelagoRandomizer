@@ -160,7 +160,8 @@ function Capacities:TogglePaintBreakIfNeeded()
         Logger:info("Disabling paint break...")
         self:SetDestroyPaintedRock(false)
     end
-    if unlocked and not self:IsExplorationCapacityUnlocked(1) then
+    
+    if unlocked and not self:IsPaintBreakUnlocked() then
         Logger:info("Enabling paint break...")
         self:SetDestroyPaintedRock(true)
     end
