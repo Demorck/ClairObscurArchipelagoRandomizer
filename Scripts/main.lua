@@ -50,12 +50,17 @@ FLAG_COMMAND = false
 
 -- And maybe the party issues in act 3 ? there is one iirc
 
-RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, password, deathlink, musicrando)
-   local hostStr = host:get():ToString()
-   local portStr = port:get():ToString()
-   local slotStr = slot:get():ToString()
-   local passwordStr = password:get():ToString()
-   local deathlinkBool = deathlink:get()
+RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
+   local settings = settings:get() ---@type FS_AP_Settings
+   local hostStr = settings.host_5_57D7FAAE4EE105D7FFBA43836D0EB068:ToString()
+   local portStr = settings.port_6_667302EB4A0B1D65E7126FA80C5F37A9:ToString()
+   local slotStr = settings.slot_8_F865C5C946B8CEFF2A3CBC95B903BC9C:ToString()
+   local passwordStr = settings.password_9_29E90B5A490FB64EF37D899B7FE35702:ToString()
+   local deathlinkBool = settings.death_link_16_BD6444064CB7AF2080DA9F86599CD9A0
+
+   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = settings.save_icon_18_CAE18D2E4FC0450B5A48BABB660DF652
+
+   print(hostStr ..  " - " .. portStr ..  " - " ..slotStr ..  " - " ..passwordStr ..  " - " .. tostring(deathlinkBool) ..  " - " .. tostring(CONSTANTS.RUNTIME.CHANGE_SAVE_ICON))
 
    print("[COE33AP - Before connection] Connect button pressed")
 
@@ -64,11 +69,6 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, 
       ArchipelagoSystem:ToggleConnection()
    end)
 end)
-
-RegisterCustomEvent("ConnectionSettings_CB_SaveIcon", function(ctx, is_checked)
-   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = is_checked:get()
-end)
-
 
 function InitSaveAfterLumiere()
    Logger:info("Initialized after Lumière")
