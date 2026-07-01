@@ -41,7 +41,6 @@ function LocationHooks:Register(hookManager, dependencies)
                     "/Game/Narrative/Dialogs/LevelsDialogs/Camp/BP_Dialogue_Quest_LostGestralChief.BP_Dialogue_Quest_LostGestralChief_C:GetFoundLostGestralCount",
                     function (context)
                         if not archipelago.apSystem then return end
-                        if Archipelago.options.gestral_shuffle == 0 then return end
 
                         for i = 1, Storage:Get("gestral_found") do
                             Archipelago:SendLocationCheck("Lost Gestral reward " .. tostring(i))
