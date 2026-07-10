@@ -6,14 +6,19 @@ function DebugCommands:DebugFunction1()
 end
 
 function DebugCommands:DebugFunction2()
-    Archipelago:Sync()
-    Archipelago:SendAlreadyChecked()
+    local a = FindAllOf("WBP_Merchant_Item_Row_C") ---@type UWBP_Merchant_Item_Row_C[]
+    for index, value in ipairs(a) do
+        value.TextBlock_OwnedQuantity.Text = FText("prout")
+    end
+    
 end
 
 function DebugCommands:DebugFunction3()
+    registerhooks()
 end
 
 function DebugCommands:DebugFunction4()
+    RestartCurrentMod()
 end
 
 function DebugCommands:ToggleConsole()
