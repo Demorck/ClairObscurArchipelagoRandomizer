@@ -49,9 +49,11 @@ local function writeLine(line)
 
 
     local file = io.open(logFile, "a")
-    if file then
+    if file and file ~= nil then
         file:write(os.date("[%d-%m-%Y %H:%M:%S] ") .. line .. "\n")
         file:close()
+    else
+        Debug.print(line)
     end
 end
 

@@ -112,27 +112,3 @@ function InitSaveAfterLumiere()
 end
 
 print("[COE33AP - Before Connection] Main initialized")
-
--- RegisterHook("/Game/Gameplay/InteractiveMusic/BP_InteractiveMusicSystem.BP_InteractiveMusicSystem_C:CreateInteractiveMusicWithContextIfNeeded",
---    function(ctx, music_context, sound, music)
---       local InteractiveMusic = music:get()
-
---       local audio_comp = InteractiveMusic["AudioComponent_7_F10237DD43456A26DE6840B3DC60292D"]
-
---       local asset = LoadAsset("/Game/Audio/WAV/MUSIC/Beta/Common/MUS_Common_ENV_Lumiere_Orchestral.MUS_Common_ENV_Lumiere_Orchestral")
---       if asset and asset:IsValid() then
---             audio_comp.Sound = asset
---       end
---       print(audio_comp.Sound:GetFullName())
---    end
--- )
-
-
-
---- GetNewGameData
---- InitializeLevelForNewGame
---- StartNewGame
----Function /Game/Gameplay/GameFlow/ProjectConfiguration/BP_DataAsset_ProjectConfiguration.BP_DataAsset_ProjectConfiguration_C:GetNewGameLevel
----
----
----
