@@ -53,7 +53,7 @@ function Inventory:RemoveItem(itemName, amount)
     end
 end
 
-function Inventory.GetInventory()
+function Inventory:GetInventory()
     local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
     local inv = GI.Inventory ---@cast inv TArray<FS_jRPG_Item_DynamicData>
     local items = {} ---@cast items table<string, int32>
@@ -73,8 +73,8 @@ function Inventory.GetInventory()
     return items
 end
 
-function Inventory.HasItem(itemName)
-    local inventory_table = Inventory.GetInventory()
+function Inventory:HasItem(itemName)
+    local inventory_table = self:GetInventory()
 
     for key, _ in pairs(inventory_table) do
         if key == itemName then
@@ -86,9 +86,9 @@ function Inventory.HasItem(itemName)
 end
 
 function Inventory:GetAmountOfItem(itemName)
-    if not Inventory.HasItem(itemName) then return 0 end
+    if not Inventory:HasItem(itemName) then return 0 end
 
-    local inventory_table = Inventory.GetInventory()
+    local inventory_table = Inventory:GetInventory()
     for key, value in pairs(inventory_table) do
         if key == itemName then
             return value

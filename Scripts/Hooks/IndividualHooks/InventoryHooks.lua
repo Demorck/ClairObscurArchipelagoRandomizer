@@ -41,6 +41,10 @@ function InventoryHooks:Register(hookManager, dependencies)
             elseif (itemName == "LastStandCritical" or itemName == "LastStandSpeed" or itemName == "LastStandPowerful" or itemName == "LastStandShell" or itemName == "SoloFighter") and
                    not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
                     invManager:RemoveItemFromInventory(FName(itemName), 1, false)
+            elseif (archipelago.options.shopsanity == 1 and Utils.StringHelper.StartsWith(itemName, "Shop:")) then
+                Archipelago:ForceSendLocationCheck(itemName)
+                Storage:CheckMerchant(itemName, true)
+                Storage:Update("Hook - AC_jRPG_InventoryManager_C:AddItemToInventory")
             end
         end,
         "Inventory - Add Item"

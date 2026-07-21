@@ -164,6 +164,10 @@ function APClient:SetupHandlers()
         self.eventDispatcher:OnBounced(data)
     end)
 
+    self.client:set_location_info_handler(function(items)
+        self.eventDispatcher:OnScoutedLocation(items)
+    end)
+
     self.client:set_retrieved_handler(function(data)
         self.eventDispatcher:OnRetrieved(data)
     end)
@@ -417,6 +421,13 @@ function APClient:GetLocationId(locationName)
     end
 
     return self.client:get_location_id(locationName)
+end
+
+---Send a packet to scout locations
+---@param location_ids table<number> Locations ids
+---@param create_hint number Ask for creating hint (0, 1, 2)
+function APClient:ScoutLocations(location_ids, create_hint)
+    self.client:LocationScouts(location_ids, create_hint)
 end
 
 ---Set data storage value on AP server

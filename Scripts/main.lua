@@ -50,13 +50,15 @@ FLAG_COMMAND = false
 
 -- And maybe the party issues in act 3 ? there is one iirc
 
-RegisterCustomEvent("ConnectButtonPressed", function(Context, host, port, slot, password, deathlink, musicrando)
-   local hostStr = host:get():ToString()
-   local portStr = port:get():ToString()
-   local slotStr = slot:get():ToString()
-   local passwordStr = password:get():ToString()
-   local deathlinkBool = deathlink:get()
-
+RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
+   local ap_settings = settings:get() ---@type FS_AP_Settings
+   local hostStr = ap_settings.host_5_57D7FAAE4EE105D7FFBA43836D0EB068:ToString()
+   local portStr = ap_settings.port_6_667302EB4A0B1D65E7126FA80C5F37A9:ToString()
+   local slotStr = ap_settings.slot_8_F865C5C946B8CEFF2A3CBC95B903BC9C:ToString()
+   local passwordStr = ap_settings.password_9_29E90B5A490FB64EF37D899B7FE35702:ToString()
+   local deathlinkBool = ap_settings.death_link_16_BD6444064CB7AF2080DA9F86599CD9A0
+   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = ap_settings.save_icon_18_CAE18D2E4FC0450B5A48BABB660DF652
+   
    print("[COE33AP - Before connection] Connect button pressed")
 
    ExecuteAsync(function()
@@ -111,14 +113,8 @@ function InitSaveAfterLumiere()
    -- end)
 end
 
+local tablel = {}
 print("[COE33AP - Before Connection] Main initialized")
-
-local struct = {
-      ItemRowName_18_22FD2F5E42C1473FBA6AB9BF09E4890C  = FName("Consumable_LuminaPoint"),
-      PriceOverride_6_7DE9A0224D826DBF8CF033AD6077A4EE = 500,
-      LevelOverride_8_A53457704B4D0037ECA806A29C727EF4 = 33,
-      Quantity_10_A62DFEDB41EF5DA12CE979AB3F742758     = 50,
-   } ---@type FS_MerchantItemData
 
 function registerhooks()
    -- --- Pour les armes et pictos déjà eu + WBP 
@@ -138,8 +134,10 @@ function registerhooks()
    RegisterHook("/Game/Gameplay/Inventory/Merchant/BP_MerchantComponent.BP_MerchantComponent_C:GetItemFromName", function (self, ItemName, ItemStaticData)
       local item_data = ItemStaticData:get() ---@type FS_jRPG_Item_StaticData
 
+      local data = table.remove(tablel, 1)
       item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP
-      item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText("An item")
+      item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(data["name"] .. " - " .. tostring(data["classification"]))
+      
 
       item_data.HideInInventory_105_28F500C94EA8D5C6632F7E8E4A85586E = true
       item_data.HideInLootPopup_107_333FB0CB4314A0D9E40A7F8480A5686A = true
@@ -148,13 +146,23 @@ function registerhooks()
    -- --- Modifie droite + injecter le rowname (main)
    RegisterHook("/Game/Gameplay/Inventory/Merchant/BP_MerchantComponent.BP_MerchantComponent_C:ComputeItemToSell", function (self, ItemsDataTable, ItemRowName, MerchantItemSellData)
       local a = MerchantItemSellData:get() ---@type FS_MerchantItemSellData
-      print(ItemRowName:get():ToString())
+      local location_name = ItemRowName:get():ToString()
+      local scouted_location = Storage:Get("merchant_scouted")[location_name]
+      local found = Storage:IsLocationInMerchantFound(location_name)
+      local item_unlock = "Merchant: Mandelgo - Extra shop unlock"
+      local internal_name = Data:FindInternalNameItemFromName(item_unlock)
+            -- print(internal_name)
+      local has_item = Inventory:HasItem(internal_name)
+      local f = string.find(location_name, "Extra Item")
+      local extra = f ~= nil
+
+      local string_builded = scouted_location.item_name .. " for this player: " .. scouted_location.player_name
       
-      a.Price_9_248FCE8A44F45DA941E4588E69DEC974 = struct.PriceOverride_6_7DE9A0224D826DBF8CF033AD6077A4EE
+      a.Price_9_248FCE8A44F45DA941E4588E69DEC974 = math.random(6000)
 
       a.IsConditional_21_88432AA744B13A1E76DA06A6BE959C5B = false
-      a.IsVisible_14_1EA2C6EF4F1FD7E6D108ACA2706ACF30 = true -- can be use with gestral item
-      a.RemainingQuantity_11_1B190D314C37EDBB84752194D11E5070 = math.random(2) - 1
+      a.IsVisible_14_1EA2C6EF4F1FD7E6D108ACA2706ACF30 = not extra or has_item -- can be use with gestral item
+      a.RemainingQuantity_11_1B190D314C37EDBB84752194D11E5070 = found and 0 or 1
 
       local instance = a.ItemInstance_30_348E27D442782C0B63BEEE9F20829FC9
       local item_data = instance.ItemStaticData
@@ -162,10 +170,10 @@ function registerhooks()
       item_data.Item_HardcodedName_90_C7F763B74AAB28EF890A66854D7D95AA = FName("FaceMaelle_DoubleBraid")
       item_data.Item_Type_88_2F24F8FB4235429B4DE1399DBA533C78 = 4
       item_data.Item_Type_88_2F24F8FB4235429B4DE1399DBA533C78 = 8
-      item_data.ItemDescription_32_0A978AFB4AB4B316342DD6A72ACDD4E1 = FText("An important item for Hollow Knight")
-      item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(ItemRowName:get():ToString())
+      item_data.ItemDescription_32_0A978AFB4AB4B316342DD6A72ACDD4E1 = FText(string_builded)
+      item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(location_name)
       item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP
-      item_data.Consumable_MaxStackAmount_76_2DD073774D235ED7EE5C8F99817D7FFA = 99
+      item_data.Consumable_MaxStackAmount_76_2DD073774D235ED7EE5C8F99817D7FFA = 1
       item_data.Pictos_Data_103_EE44D66B4E4F16A7FD44FF9F25777CF4 = nil
       item_data.Pictos_ItemStats_91_229F4A00415AB214191377B73987FF7B = nil
       item_data.HideInInventory_105_28F500C94EA8D5C6632F7E8E4A85586E = true
@@ -175,20 +183,69 @@ function registerhooks()
    --- Aucun autre moyen de modifier après car les hooks se font post appel
    --- Possiblement obliger d'itérer sur toutes les datatable. Peut être qu'avec le self, on peut trovuer le bon cependant (ou la map)
    RegisterHook("/Game/Gameplay/DialogueSystem/BP_DialogueSystemComponent.BP_DialogueSystemComponent_C:ActivateDialogue", function (self, ...)
-      local a = StaticFindObject("/Game/Gameplay/Inventory/Merchant/Merchants_Content_DT/DT_Merchant_OldLumiere.DT_Merchant_OldLumiere") ---@type UDataTable
-      
-      a:EmptyTable()
 
-      for i = 1, 10, 1 do
-         local struct = {
-            ItemRowName_18_22FD2F5E42C1473FBA6AB9BF09E4890C  = FName("Consumable_LuminaPoint"),
-            PriceOverride_6_7DE9A0224D826DBF8CF033AD6077A4EE = 500,
-            LevelOverride_8_A53457704B4D0037ECA806A29C727EF4 = 33,
-            Quantity_10_A62DFEDB41EF5DA12CE979AB3F742758     = 50,
-         } ---@type FS_MerchantItemData
+      local shop_data = Data.shops
 
-         a:AddRow("OL_" .. tostring(i), struct)
-      end
+      if shop_data == nil then return end
+      -- for _, shop in ipairs(shop_data) do
+         local datatable = StaticFindObject("/Game/Gameplay/Inventory/Merchant/Merchants_Content_DT/DT_Merchant_OldLumiere.DT_Merchant_OldLumiere") ---@type UDataTable
+         if datatable ~= nil and datatable:IsValid() then 
+            datatable:EmptyTable()
+            local item_unlock = "Merchant: Mandelgo - Extra shop unlock"
+            local internal_name = Data:FindInternalNameItemFromName(item_unlock)
+            print(internal_name)
+            local has_item = Inventory:HasItem(internal_name)
+            Inventory:RemoveItem(internal_name, 1)
+
+            for i = 1, Archipelago.options.location_per_shop, 1 do
+               local name = "Shop: Old Lumiere Merchant - Item " .. tostring(i)
+               local scouted_location = Storage:Get("merchant_scouted")[name]
+               if scouted_location.found then
+                  goto continue
+               end
+
+
+               local struct = {
+                  ItemRowName_18_22FD2F5E42C1473FBA6AB9BF09E4890C  = FName("Consumable_LuminaPoint"),
+                  PriceOverride_6_7DE9A0224D826DBF8CF033AD6077A4EE = 666,
+                  LevelOverride_8_A53457704B4D0037ECA806A29C727EF4 = -1,
+                  Quantity_10_A62DFEDB41EF5DA12CE979AB3F742758     = 1,
+               } ---@type FS_MerchantItemData
+
+               -- local name = "Shop: " .. shop.name .. " - Item " .. tostring(i)
+               datatable:AddRow(name, struct)
+               table.insert(tablel, { ["name"] = name, ["classification"] = scouted_location.classification})
+
+               ::continue::
+            end
+
+            -- if not is fight then
+            --    return
+            -- end
+
+            for i = 1, Archipelago.options.extra_location_per_shop, 1 do
+               local name = "Shop: Old Lumiere Merchant - Extra Item " .. tostring(i)
+               local scouted_location = Storage:Get("merchant_scouted")[name]
+               if scouted_location.found then
+                  goto continue
+               end
+
+
+               local struct = {
+                  ItemRowName_18_22FD2F5E42C1473FBA6AB9BF09E4890C  = FName("Consumable_LuminaPoint"),
+                  PriceOverride_6_7DE9A0224D826DBF8CF033AD6077A4EE = 666,
+                  LevelOverride_8_A53457704B4D0037ECA806A29C727EF4 = -1,
+                  Quantity_10_A62DFEDB41EF5DA12CE979AB3F742758     = 1,
+               } ---@type FS_MerchantItemData
+
+               -- local name = "Shop: " .. shop.name .. " - Item " .. tostring(i)
+               datatable:AddRow(name, struct)
+               table.insert(tablel, { ["name"] = name, ["classification"] = scouted_location.classification})
+
+               ::continue::
+            end
+         end
+      -- end
    end)
 
 end
