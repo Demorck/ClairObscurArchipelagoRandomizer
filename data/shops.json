@@ -1,0 +1,269 @@
+[
+  {
+    "name": "Coastal Cave Bruler Merchant",
+    "region": "Coastal Cave",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Coastal Cave Cruler Merchant",
+    "region": "Coastal Cave",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Gestral Village CustoSuit Merchant",
+    "region": "Gestral Village",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Osquio Merchant",
+    "region": "Verso's Drafts",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 1 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 2 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 3 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 4 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 5 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 6 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 7 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 8 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 9 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 9 Sirene Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 10 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 11 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 12 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 13 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 14 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 15 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 16 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map 17 Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "World Map Chic Merchant",
+    "region": "WM: First Continent North",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Frozen Hearts CustoDanseuse Merchant",
+    "region": "Frozen Hearts",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+
+
+  {
+    "name": "Flying Waters Merchant",
+    "region": "Flying Waters",
+    "has_fight": true,
+    "unlock_item": "Merchant: Noco - Extra shop unlock"
+  },
+  {
+    "name": "Gestral Village 1 Merchant",
+    "region": "Gestral Village",
+    "has_fight": true,
+    "unlock_item": "Merchant: Jujubree - Extra shop unlock"
+  },
+  {
+    "name": "Gestral Village 2 Merchant",
+    "region": "Gestral Village",
+    "has_fight": true,
+    "unlock_item": "Merchant: Eesda - Extra shop unlock"
+  },
+  {
+    "name": "Gestral Village 3 Merchant",
+    "region": "Gestral Village",
+    "has_fight": true,
+    "unlock_item": "Merchant: Alexcyclo - Extra shop unlock"
+  },
+  {
+    "name": "Stone Wave Cliffs Merchant",
+    "region": "Stone Wave Cliffs",
+    "has_fight": true,
+    "unlock_item": "Merchant: Jerijeri - Extra shop unlock"
+  },
+  {
+    "name": "Forgotten Battlefield Merchant",
+    "region": "Forgotten Battlefield",
+    "has_fight": true,
+    "unlock_item": "Merchant: Kasumi - Extra shop unlock"
+  },
+  {
+    "name": "Monoco's Station Merchant",
+    "region": "Monoco's Station",
+    "has_fight": true,
+    "unlock_item": "Merchant: Monoco's station - Extra shop unlock"
+  },
+  {
+    "name": "Old Lumiere Merchant",
+    "region": "Old Lumiere",
+    "has_fight": true,
+    "unlock_item": "Merchant: Mandelgo - Extra shop unlock"
+  },
+  {
+    "name": "Visages Merchant",
+    "region": "Visages",
+    "has_fight": true,
+    "unlock_item": "Merchant: Blooraga - Extra shop unlock"
+  },
+  {
+    "name": "Sirene Merchant",
+    "region": "Sirene",
+    "has_fight": true,
+    "unlock_item": "Merchant: Klaudiso - Extra shop unlock"
+  },
+  {
+    "name": "The Monolith 1 Merchant",
+    "region": "The Monolith",
+    "has_fight": true,
+    "unlock_item": "Merchant: Mistra - Extra shop unlock"
+  },
+  {
+    "name": "Lumiere Merchant",
+    "region": "Lumiere",
+    "has_fight": true,
+    "unlock_item": "Merchant: Cribappa - Extra shop unlock"
+  },
+  {
+    "name": "Yellow Harvest Merchant",
+    "region": "Yellow Harvest",
+    "has_fight": true,
+    "unlock_item": "Merchant: Pinabby - Extra shop unlock"
+  },
+  {
+    "name": "Falling Leaves Merchant",
+    "region": "Falling Leaves",
+    "has_fight": true,
+    "unlock_item": "Merchant: Persik - Extra shop unlock"
+  },
+  {
+    "name": "Frozen Hearts Merchant",
+    "region": "Frozen Hearts",
+    "has_fight": true,
+    "unlock_item": "Merchant: Verogo - Extra shop unlock"
+  },
+  {
+    "name": "The Reacher Merchant",
+    "region": "The Reacher",
+    "has_fight": true,
+    "unlock_item": "Merchant: Eragol - Extra shop unlock"
+  },
+  {
+    "name": "Flying Manor Merchant",
+    "region": "Flying Manor",
+    "has_fight": true,
+    "unlock_item": "Merchant: Fusoka - Extra shop unlock"
+  },
+  {
+    "name": "The Monolith 2 Merchant",
+    "region": "The Monolith",
+    "has_fight": true,
+    "unlock_item": "Merchant: - Melosh Extra shop unlock"
+  },
+  {
+    "name": "Endless Night Sanctuary Merchant",
+    "region": "Endless Night Sanctuary",
+    "has_fight": true,
+    "unlock_item": "Merchant: Anthonypo - Extra shop unlock"
+  },
+  {
+    "name": "Verso's Drafts Merchant",
+    "region": "Verso's Drafts",
+    "has_fight": true,
+    "unlock_item": "Merchant: Najabla - Extra shop unlock"
+  }
+]

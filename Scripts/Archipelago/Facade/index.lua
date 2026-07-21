@@ -5,7 +5,7 @@ local Facade = {
     CapacityHandler = require("Archipelago.Facade.CapacityHandler"),
     TrapHandler = require("Archipelago.Facade.TrapHandler"),
     DeathLinkManager = require("Archipelago.Facade.DeathLinkManager"),
-    LocationSender = require("Archipelago.Facade.LocationSender"),
+    LocationManager = require("Archipelago.Facade.LocationManager"),
 }
 
 return Facade

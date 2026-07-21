@@ -72,6 +72,12 @@ function SlotDataHandler:Handle(slotData)
     if Data then
         Data.Load()
     end
+
+    if self.archipelago.options.shopsanity and self.archipelago.want_to_scout_shop then
+        self.archipelago:ScoutMerchants()
+    end
+
+    self.archipelago.want_to_scout_shop = false
 end
 
 ---Process the slot data
@@ -97,6 +103,7 @@ function SlotDataHandler:ProcessSlotData(slotData)
         self.archipelago.totals = slotData.totals or {}
         self.archipelago.pictos_data = slotData.pictos or {}
         self.archipelago.weapons_data = slotData.weapons or {}
+        self.archipelago.shop_data = slotData.shops or {}
     end
 
     -- Max gear level

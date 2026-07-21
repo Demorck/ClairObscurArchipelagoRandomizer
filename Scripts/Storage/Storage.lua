@@ -84,6 +84,57 @@ function Storage:AddInTable(key, value_to_add)
     return self:Set(key, newTable)
 end
 
+---Adding a value in a dict
+---@param key_in_storage string Field name
+---@param key_in_dict string Field name
+---@param value_dict any value to add
+---@return boolean sucess True if value was added successfully
+function Storage:AddInDict(key_in_storage, key_in_dict, value_dict)
+    local data = self.data[key_in_storage]
+
+    if type(data) ~= "table" then
+        Logger:error("Trying to add a value " .. tostring(key_in_dict) .. " but not in table, key: " .. key_in_storage)
+        return false
+    end
+
+    local newTable = {}
+    for k, v in pairs(data) do 
+        newTable[k] = v
+        if k == key_in_dict then
+            Logger:warn("Trying to add a value in dict in storage that already exists in: " .. key_in_storage .. "[ " .. key_in_dict .."]")
+        end
+    end
+    
+    newTable[key_in_dict] = value_dict
+    
+    return self:Set(key_in_storage, newTable)
+end
+
+---Adding a value in a dict
+---@param key_in_storage string Field name
+---@param key_in_dict string Field name
+---@return boolean sucess True if value was added successfully
+function Storage:RemoveInDict(key_in_storage, key_in_dict)
+    local data = self.data[key_in_storage]
+
+    if type(data) ~= "table" then
+        Logger:error("Trying to add a value " .. tostring(key_in_dict) .. " but not in table, key: " .. key_in_storage)
+        return false
+    end
+
+    local newTable = {}
+    for k, v in pairs(data) do 
+        newTable[k] = v
+        if k == key_in_dict then
+            Logger:warn("Trying to add a value in dict in storage that already exists in: " .. key_in_storage .. "[ " .. key_in_dict .."]")
+        end
+    end
+    
+    newTable[key_in_dict] = value_dict
+    
+    return self:Set(key_in_storage, newTable)
+end
+
 function Storage:Increment(key)
     if self.schema.fields[key] == nil then
         Logger:warn("Attempted to increment unknown storage key: " .. key)
@@ -178,6 +229,30 @@ function Storage:IsCharacterUnlocked(characterName)
     return characters[characterName] == true
 end
 
+function Storage:AddScoutedMerchant(location_name, item_name, player_name, flags)
+    local t = { ["item_name"] = item_name, ["player_name"] = player_name, ["classification"] = flags, ["found"] = false }
+
+    return self:AddInDict("merchant_scouted", location_name, t)
+end
+
+function Storage:CheckMerchant(location_name, checked)
+    local location_is_in_table = self.data["merchant_scouted"][location_name] ~= nil
+    
+    if location_is_in_table then
+        self.data["merchant_scouted"][location_name]["found"] = checked
+    end
+end
+
+function Storage:IsLocationInMerchantFound(location_name)
+    local location_is_in_table = self.data["merchant_scouted"][location_name] ~= nil
+    
+    if location_is_in_table then
+        return self.data["merchant_scouted"][location_name]["found"]
+    end
+
+    return true -- So we'll skip it
+end
+
 ---Load storage from JSON file
 function Storage:Load()
     local file = JSON.read_file(Storage:GetFilePath())
@@ -219,6 +294,7 @@ function Storage:Load()
         Logger:info("Number of rocks: " .. self.data.progressive_rock)
     else
         Storage:Update("Storage:Load - New file")
+        Archipelago.want_to_scout_shop = true
     end
 
     self.data.initialized = true

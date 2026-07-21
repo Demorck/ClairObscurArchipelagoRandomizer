@@ -87,18 +87,54 @@ end
 ---Send a location check
 ---@param location_name string Location name
 function Archipelago:SendLocationCheck(location_name)
-    Facade.LocationSender:SendLocationCheck(location_name)
+    Facade.LocationManager:SendLocationCheck(location_name, false)
+end
+
+function Archipelago:ForceSendLocationCheck(location_name)
+    Facade.LocationManager:SendLocationCheck(location_name, true)
+end
+
+function Archipelago:ScoutLocation(location_name, create_hint)
+    Facade.LocationManager:ScoutLocation(location_name, create_hint)
+end
+
+function Archipelago:ScoutMerchants()
+    local location_names = {}
+    for _, shop in ipairs(Data.shops) do
+        if self:isRegionExcluded(shop.region) then goto continue end
+
+
+        for i = 1, self.options.location_per_shop, 1 do
+            local current_name = "Shop: " .. shop.name .. " - Item " .. tostring(i)
+            table.insert(location_names, current_name)
+        end
+
+        if shop.has_fight then
+            local fight = "Shop: " .. shop.name .. " - Fight"
+            table.insert(location_names, fight)
+
+            for i = 1, self.options.extra_location_per_shop, 1 do
+                local current_name = "Shop: " .. shop.name .. " - Extra Item " .. tostring(i)
+                table.insert(location_names, current_name)
+            end
+        end
+        
+        ::continue::
+    end
+
+    self:ScoutLocation(location_names, false)
+
 end
 
 ---Send a location check
 ---@param location_id number Location ID
 function Archipelago:SendLocationCheckByID(location_id)
-    Facade.LocationSender:SendLocationCheckByID(location_id)
+    Facade.LocationManager:SendLocationCheckByID(location_id)
 end
 
 ---Send victory/completion
 function Archipelago:SendVictory()
-    Facade.LocationSender:SendVictory()
+    Facade.LocationManager:SendVictory()
 end
 
 ---Send Gommage DeathLink
@@ -147,6 +183,34 @@ end
 ---@return integer level
 function Archipelago:GetLevelItem(gear_type, id)
     return Facade.ItemReceiver:GetLevelItem(gear_type, id)
+end
+
+function Archipelago:isRegionExcluded(region_name) 
+    if self.options.exclude_endgame_locations ~= 0 and self.options.exclude_endless_tower ~= 0 then
+        return false
+    end
+
+    if self.options.exclude_endless_tower == 0 and region_name == "Endless Tower" then
+        return true
+    end
+
+    local exclusion_level = self:GetExclusionLevel()
+    if self.options.exclude_endgame_locations == 0 and CONSTANTS.CONFIG.REGION_LEVEL[region_name] > exclusion_level then
+        return true
+    end
+end
+
+function Archipelago:GetExclusionLevel()
+    local level = 33
+    if self.options.goal == 0 then
+        level = 15
+    elseif self.options.goal == 1 then
+        level = 16
+    elseif self.options.goal == 4 then
+        level = 28
+    end 
+
+    return level
 end
 
 ---Get item from AP data (utility function)
