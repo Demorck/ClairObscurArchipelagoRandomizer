@@ -135,12 +135,13 @@ function registerhooks()
       local item_data = ItemStaticData:get() ---@type FS_jRPG_Item_StaticData
 
       local data = table.remove(tablel, 1)
-      item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP
-      item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(data["name"] .. " - " .. tostring(data["classification"]))
+      item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP:Find(data["classification"]):get()
+      item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(data["name"])
       
 
       item_data.HideInInventory_105_28F500C94EA8D5C6632F7E8E4A85586E = true
       item_data.HideInLootPopup_107_333FB0CB4314A0D9E40A7F8480A5686A = true
+      table.insert(tablel, data)
    end)
    
    -- --- Modifie droite + injecter le rowname (main)
@@ -156,7 +157,13 @@ function registerhooks()
       local f = string.find(location_name, "Extra Item")
       local extra = f ~= nil
 
-      local string_builded = scouted_location.item_name .. " for this player: " .. scouted_location.player_name
+      local string_builded = ""
+      local easter_egg = math.random(10000)
+      if easter_egg == 1 then
+         string_builded = "A fucking item for a fucking player probably for yezzdia then"
+      else
+         string_builded = scouted_location.item_name .. " for " .. scouted_location.player_name
+      end
       
       a.Price_9_248FCE8A44F45DA941E4588E69DEC974 = math.random(6000)
 
@@ -172,7 +179,7 @@ function registerhooks()
       item_data.Item_Type_88_2F24F8FB4235429B4DE1399DBA533C78 = 8
       item_data.ItemDescription_32_0A978AFB4AB4B316342DD6A72ACDD4E1 = FText(string_builded)
       item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(location_name)
-      item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP
+      item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP:Find(scouted_location.classification):get()
       item_data.Consumable_MaxStackAmount_76_2DD073774D235ED7EE5C8F99817D7FFA = 1
       item_data.Pictos_Data_103_EE44D66B4E4F16A7FD44FF9F25777CF4 = nil
       item_data.Pictos_ItemStats_91_229F4A00415AB214191377B73987FF7B = nil
@@ -193,9 +200,7 @@ function registerhooks()
             datatable:EmptyTable()
             local item_unlock = "Merchant: Mandelgo - Extra shop unlock"
             local internal_name = Data:FindInternalNameItemFromName(item_unlock)
-            print(internal_name)
             local has_item = Inventory:HasItem(internal_name)
-            Inventory:RemoveItem(internal_name, 1)
 
             for i = 1, Archipelago.options.location_per_shop, 1 do
                local name = "Shop: Old Lumiere Merchant - Item " .. tostring(i)

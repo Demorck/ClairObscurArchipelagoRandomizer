@@ -19,7 +19,6 @@ function Inventory:AddItem(itemName, amount, item_level)
     --- @class UAC_jRPG_InventoryManager_C
     local playerInventory = Inventory:GetInventoryManager()
     local level = item_level or 45
-    Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount .. " with level " .. level)
     if playerInventory == nil then
         return false
     end
@@ -36,9 +35,11 @@ function Inventory:AddItem(itemName, amount, item_level)
 
     -- Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     -- playerInventory:AddItemToInventory(name, amount, lootContext, returned)
+    Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount .. " with level " .. level .. "...")
     table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
     Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
+    Logger:info("Item " .. itemName .. " added !")
 
     return true
 end
@@ -74,28 +75,13 @@ function Inventory:GetInventory()
 end
 
 function Inventory:HasItem(itemName)
-    local inventory_table = self:GetInventory()
-
-    for key, _ in pairs(inventory_table) do
-        if key == itemName then
-            return true
-        end
-    end
-
-    return false
+    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    return GI:GetItemQuantityInInventory(FName(itemName)) > 0
 end
 
 function Inventory:GetAmountOfItem(itemName)
-    if not Inventory:HasItem(itemName) then return 0 end
-
-    local inventory_table = Inventory:GetInventory()
-    for key, value in pairs(inventory_table) do
-        if key == itemName then
-            return value
-        end
-    end
-
-    return -1
+    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    return GI:GetItemQuantityInInventory(FName(itemName))
 end
 
 function Inventory:Adding999Recoat()
