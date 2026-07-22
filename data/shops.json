@@ -2,144 +2,168 @@
   {
     "name": "Coastal Cave Bruler Merchant",
     "region": "Coastal Cave",
+    "datatable": "DT_Merchant_CoastalCave_Bruler.DT_Merchant_CoastalCave_Bruler",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "Coastal Cave Cruler Merchant",
     "region": "Coastal Cave",
+    "datatable": "DT_Merchant_CoastalCave_Cruler.DT_Merchant_CoastalCave_Cruler",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "Gestral Village CustoSuit Merchant",
     "region": "Gestral Village",
+    "datatable": "CustomizationMerchants/DT_Merchant_GV_1_CustoSuits_Ladies.DT_Merchant_GV_1_CustoSuits_Ladies",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "Osquio Merchant",
     "region": "Verso's Drafts",
+    "datatable": "CustomizationMerchants/DT_Merchant_Osquio.DT_Merchant_Osquio",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 1 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_1.DT_Merchant_WM_1",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 2 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_2.DT_Merchant_WM_2",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 3 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_3_GustaveSuit.DT_Merchant_WM_3_GustaveSuit",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 4 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_4.DT_Merchant_WM_4",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 5 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_5.DT_Merchant_WM_5",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 6 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_6.DT_Merchant_WM_6",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 7 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_7.DT_Merchant_WM_7",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 8 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_8.DT_Merchant_WM_8",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 9 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_9.DT_Merchant_WM_9",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 9 Sirene Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_9_Sirene.DT_Merchant_WM_9_Sirene",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 10 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_10.DT_Merchant_WM_10",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 11 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_11.DT_Merchant_WM_11",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 12 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_12.DT_Merchant_WM_12",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 13 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_13.DT_Merchant_WM_13",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 14 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_14.DT_Merchant_WM_14",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 15 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_15.DT_Merchant_WM_15",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 16 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_16.DT_Merchant_WM_16",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map 17 Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_17.DT_Merchant_WM_17",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "World Map Chic Merchant",
     "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_Chic.DT_Merchant_WM_Chic",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "Frozen Hearts CustoDanseuse Merchant",
     "region": "Frozen Hearts",
+    "datatable": "CustomizationMerchants/DT_Merchant_FH_Custo_Danseuse.DT_Merchant_FH_Custo_Danseuse",
     "has_fight": false,
     "unlock_item": null
   },
@@ -149,120 +173,140 @@
   {
     "name": "Flying Waters Merchant",
     "region": "Flying Waters",
+    "datatable": "DT_Merchant_GoblusLair.DT_Merchant_GoblusLair",
     "has_fight": true,
     "unlock_item": "Merchant: Noco - Extra shop unlock"
   },
   {
     "name": "Gestral Village 1 Merchant",
     "region": "Gestral Village",
+    "datatable": "DT_Merchant_GestralVillage1.DT_Merchant_GestralVillage1",
     "has_fight": true,
     "unlock_item": "Merchant: Jujubree - Extra shop unlock"
   },
   {
     "name": "Gestral Village 2 Merchant",
     "region": "Gestral Village",
+    "datatable": "DT_Merchant_GestralVillage2.DT_Merchant_GestralVillage2",
     "has_fight": true,
     "unlock_item": "Merchant: Eesda - Extra shop unlock"
   },
   {
     "name": "Gestral Village 3 Merchant",
     "region": "Gestral Village",
+    "datatable": "DT_Merchant_GestralVillage3.DT_Merchant_GestralVillage3",
     "has_fight": true,
     "unlock_item": "Merchant: Alexcyclo - Extra shop unlock"
   },
   {
     "name": "Stone Wave Cliffs Merchant",
     "region": "Stone Wave Cliffs",
+    "datatable": "DT_Merchant_SeaCliff.DT_Merchant_SeaCliff",
     "has_fight": true,
     "unlock_item": "Merchant: Jerijeri - Extra shop unlock"
   },
   {
     "name": "Forgotten Battlefield Merchant",
     "region": "Forgotten Battlefield",
+    "datatable": "DT_Merchant_ForgottenBattlefield.DT_Merchant_ForgottenBattlefield",
     "has_fight": true,
     "unlock_item": "Merchant: Kasumi - Extra shop unlock"
   },
   {
     "name": "Monoco's Station Merchant",
     "region": "Monoco's Station",
+    "datatable": "DT_Merchant_GrandisStation.DT_Merchant_GrandisStation",
     "has_fight": true,
     "unlock_item": "Merchant: Monoco's station - Extra shop unlock"
   },
   {
     "name": "Old Lumiere Merchant",
     "region": "Old Lumiere",
+    "datatable": "DT_Merchant_OldLumiere.DT_Merchant_OldLumiere",
     "has_fight": true,
     "unlock_item": "Merchant: Mandelgo - Extra shop unlock"
   },
   {
     "name": "Visages Merchant",
     "region": "Visages",
+    "datatable": "DT_Merchant_Visages.DT_Merchant_Visages",
     "has_fight": true,
     "unlock_item": "Merchant: Blooraga - Extra shop unlock"
   },
   {
     "name": "Sirene Merchant",
     "region": "Sirene",
+    "datatable": "DT_Merchant_Sirene.DT_Merchant_Sirene",
     "has_fight": true,
     "unlock_item": "Merchant: Klaudiso - Extra shop unlock"
   },
   {
     "name": "The Monolith 1 Merchant",
     "region": "The Monolith",
+    "datatable": "DT_Merchant_Monolith.DT_Merchant_Monolith",
     "has_fight": true,
     "unlock_item": "Merchant: Mistra - Extra shop unlock"
   },
   {
     "name": "Lumiere Merchant",
     "region": "Lumiere",
+    "datatable": "DT_Merchant_Lumiere.DT_Merchant_Lumiere",
     "has_fight": true,
     "unlock_item": "Merchant: Cribappa - Extra shop unlock"
   },
   {
     "name": "Yellow Harvest Merchant",
     "region": "Yellow Harvest",
+    "datatable": "DT_Merchant_YellowForest.DT_Merchant_YellowForest",
     "has_fight": true,
     "unlock_item": "Merchant: Pinabby - Extra shop unlock"
   },
   {
     "name": "Falling Leaves Merchant",
     "region": "Falling Leaves",
+    "datatable": "DT_Merchant_OrangeForest.DT_Merchant_OrangeForest",
     "has_fight": true,
     "unlock_item": "Merchant: Persik - Extra shop unlock"
   },
   {
     "name": "Frozen Hearts Merchant",
     "region": "Frozen Hearts",
+    "datatable": "DT_Merchant_MonocosMountain.DT_Merchant_MonocosMountain",
     "has_fight": true,
     "unlock_item": "Merchant: Verogo - Extra shop unlock"
   },
   {
     "name": "The Reacher Merchant",
     "region": "The Reacher",
+    "datatable": "DT_Merchant_Reacher.DT_Merchant_Reacher",
     "has_fight": true,
     "unlock_item": "Merchant: Eragol - Extra shop unlock"
   },
   {
     "name": "Flying Manor Merchant",
     "region": "Flying Manor",
+    "datatable": "DT_Merchant_CleaIsland.DT_Merchant_CleaIsland",
     "has_fight": true,
     "unlock_item": "Merchant: Fusoka - Extra shop unlock"
   },
   {
     "name": "The Monolith 2 Merchant",
     "region": "The Monolith",
+    "datatable": "DT_Merchant_Optional3.DT_Merchant_Optional3",
     "has_fight": true,
     "unlock_item": "Merchant: - Melosh Extra shop unlock"
   },
   {
     "name": "Endless Night Sanctuary Merchant",
     "region": "Endless Night Sanctuary",
+    "datatable": "DT_Merchant_TwilightSanctuary.DT_Merchant_TwilightSanctuary",
     "has_fight": true,
     "unlock_item": "Merchant: Anthonypo - Extra shop unlock"
   },
   {
     "name": "Verso's Drafts Merchant",
     "region": "Verso's Drafts",
+    "datatable": "DT_Merchant_VersosDraft.DT_Merchant_VersosDraft",
     "has_fight": true,
     "unlock_item": "Merchant: Najabla - Extra shop unlock"
   }

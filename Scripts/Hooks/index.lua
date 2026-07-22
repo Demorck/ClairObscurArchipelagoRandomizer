@@ -9,6 +9,7 @@ local InventoryHooks = require "Hooks.IndividualHooks.InventoryHooks"
 local UIHooks        = require "Hooks.IndividualHooks.UIHooks"
 local CapacityHook   = require "Hooks.IndividualHooks.CapacityHook"
 local OtherHooks     = require "Hooks.IndividualHooks.OtherHooks"
+local ShopHooks      = require "Hooks.IndividualHooks.ShopHooks"
 
 
 local Hooks = {}
@@ -49,6 +50,10 @@ function Hooks:Register()
     InventoryHooks:Register(hookManager, dependencies)
     UIHooks:Register(hookManager, dependencies)
     CapacityHook:Register(hookManager, dependencies)
+
+    if dependencies.archipelago.options.shopsanity == 1 then
+        ShopHooks:Register(hookManager, dependencies)
+    end
     -- OtherHooks:Register(hookManager, dependencies)
 
     Logger:info("Hooks registered successfully")

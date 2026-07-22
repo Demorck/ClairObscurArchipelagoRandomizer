@@ -43,6 +43,9 @@ function SlotDataHandler:Handle(slotData)
         self.archipelago.hasConnectedPrior = true
         self.archipelago.trying_to_connect = false
     end
+    
+    -- Process slot data
+    self:ProcessSlotData(slotData)
 
     -- Register hooks
     if Hooks then
@@ -64,9 +67,6 @@ function SlotDataHandler:Handle(slotData)
             self.archipelago:Sync()
         end
     end
-
-    -- Process slot data
-    self:ProcessSlotData(slotData)
 
     -- Load game data
     if Data then
@@ -111,6 +111,7 @@ function SlotDataHandler:ProcessSlotData(slotData)
         CONSTANTS.CONFIG.MAX_LEVEL_GEAR = slotData.max_gear_level or CONSTANTS.CONFIG.DEFAULT_MAX_LEVEL_GEAR
     end
 
+    print(Utils.TableHelper.Dump(self.archipelago.shop_data["Old Lumiere Merchant"], 1))
     -- Log received data
     self.logger:info("Slot Data Received:")
     if self.archipelago then
