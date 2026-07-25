@@ -9,7 +9,6 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
-    registerhooks()
 end
 
 function DebugCommands:DebugFunction4()

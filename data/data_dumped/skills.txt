@@ -15,3 +15,29 @@ Sandfall/Content/Gameplay/SkillTree/Content/Maelle/Skills/DA_Skill_Maelle_LastCh
     Name/Description/etc
     Script/Tags
     Mechanic (like Maelle, maybe switch to another stance)
+
+
+
+
+Map_BattleTesting
+
+
+    -- Logger:callMethod(bm, "ForceBattleEnd", 2)
+    -- self:SetHPAll(0)
+
+    -- local bases = FindAllOf("BP_jRPG_Character_Battle_Base_C") --- @cast bases ABP_jRPG_Character_Battle_Base_C[]
+    -- for _, char in ipairs(bases) do
+    --     ---@cast char ABP_jRPG_Character_Battle_Base_C
+    --     if not char["Enemy?"] then
+    --         char:ApplyStandardStatusEffectOnTarget(CONSTANTS.GAME.BATTLE.STATUS_EFFECT.BURN, 9999, 4, true, char, {})
+    --     end
+    -- end
+
+    -- local bases = FindAllOf("AC_jRPG_CharacterBattleStats_C") --- @cast bases UAC_jRPG_CharacterBattleStats_C[]
+    -- for _, char in ipairs(bases) do
+    --     ---@cast char UAC_jRPG_CharacterBattleStats_C
+    --     if char.CharacterHardcodedName:ToString() == "Verso" then
+    --         char:SetDead()
+    --     end
+    -- end
+    -- NEED_TO_KILL = false
