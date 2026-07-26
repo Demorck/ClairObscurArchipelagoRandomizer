@@ -59,9 +59,7 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
    local deathlinkBool = settings.death_link_16_BD6444064CB7AF2080DA9F86599CD9A0
 
    CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = settings.save_icon_18_CAE18D2E4FC0450B5A48BABB660DF652
-
-   print(hostStr ..  " - " .. portStr ..  " - " ..slotStr ..  " - " ..passwordStr ..  " - " .. tostring(deathlinkBool) ..  " - " .. tostring(CONSTANTS.RUNTIME.CHANGE_SAVE_ICON))
-
+   
    print("[COE33AP - Before connection] Connect button pressed")
 
    ExecuteAsync(function()

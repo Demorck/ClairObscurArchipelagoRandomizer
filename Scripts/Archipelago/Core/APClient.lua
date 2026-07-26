@@ -184,6 +184,7 @@ end
 ---@private
 ---@param msg string Error message
 function APClient:OnSocketError(msg)
+    self.logger:bindSeed(self.config:Get("slot"), nil)
     self.logger:error("Socket error: " .. tostring(msg))
     self:UpdateConnectionUI("DISCONNECTED")
 
@@ -206,6 +207,7 @@ end
 ---Room info received - send connect request to slot
 ---@private
 function APClient:OnRoomInfo()
+    self.logger:bindSeed(self.config:Get("slot"), self.client:get_seed())
     self.logger:info("Room info received, connecting to slot...")
 
     local slot = self.config:Get("slot")
@@ -221,6 +223,7 @@ end
 ---@private
 ---@param reasons string[] Array of refusal reasons
 function APClient:OnSlotRefused(reasons)
+    self.logger:bindSeed(self.config:Get("slot"), nil)
     self.logger:error("Slot refused: " .. table.concat(reasons, ", "))
     self:UpdateConnectionUI("DISCONNECTED")
 end

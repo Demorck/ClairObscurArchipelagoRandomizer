@@ -181,7 +181,7 @@ function ArchipelagoSystem:ToggleConnection()
         end
     else
         Logger:info("Connecting...")
-        Logger:initialize()
+        Logger:startSession()
         self.apClient:Connect()
     end
 end
