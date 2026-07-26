@@ -78,6 +78,21 @@ function Characters:EnableCharacter(name)
     end
 end
 
+function Characters:ModifyCollectionIfNeeded()
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
+    if char_data == nil then return end
+
+    for _, char in ipairs(char_data) do
+        local character_name = char.HardcodedNameID:ToString()
+        if Storage:IsCharacterUnlocked(character_name) and char.IsExcluded then
+            char.IsExcluded = false
+        end
+        if not Storage:IsCharacterUnlocked(character_name) and not char.IsExcluded then
+            char.IsExcluded = true
+        end
+    end
+end
+
 function Characters:SetExcludedCharacterByName(name, locked)
     local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
