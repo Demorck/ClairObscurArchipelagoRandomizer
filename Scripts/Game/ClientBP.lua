@@ -88,6 +88,19 @@ function ClientBP:ToggleConsole()
     helper:ToggleConsole()
 end
 
+function ClientBP:UpdateConnectionUI(status)
+    ExecuteInGameThread(function()
+        local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
+        if helper and helper:IsValid() then
+            local statusEnum = E_CLIENT_INFOS[status]
+            if statusEnum then
+                helper:ChangeAPTextConnect(statusEnum)
+                helper:SetConnection(status == "CONNECTED")
+            end
+        end
+    end)
+end
+
 
 RegisterCustomEvent("ModLoader_Initiation", function(ctx)
     local helper = ClientBP:GetHelper()

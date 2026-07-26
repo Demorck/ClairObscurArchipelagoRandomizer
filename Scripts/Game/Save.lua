@@ -16,15 +16,14 @@ function Save:GetManager()
 end
 
 function Save:SaveGame()
-    local savemanager = FindFirstOf(BluePrintName) ---@type UBP_SaveManager_C
-    if savemanager == nil or not savemanager:IsValid() then
-        Logger:error("Impossible to save: SaveManager nil")
-        return
-    end
-
-    -- local save_name = savemanager:GetSaveNameForSelectedSlot()
-    -- savemanager:SaveGameToFile(save_name)
-    savemanager:RequestSaveInternal(true, "Archipelago needed to save internal")
+    ExecuteInGameThread(function()
+        local savemanager = FindFirstOf(BluePrintName)
+        if savemanager == nil or not savemanager:IsValid() then
+            Logger:error("Impossible to save: SaveManager nil")
+            return
+        end
+        savemanager:RequestSaveInternal(true, "Archipelago needed to save internal")
+    end)
 end
 
 function Save:TriggerSaveIssue()

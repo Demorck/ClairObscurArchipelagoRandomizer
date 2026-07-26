@@ -79,7 +79,7 @@ function APClient:Connect()
     self.client = self.AP(uuid, gameName, host)
 
     -- Update UI
-    self:UpdateConnectionUI("TRYING_TO_CONNECT")
+    ClientBP:UpdateConnectionUI("TRYING_TO_CONNECT")
 
     -- Set up handlers
     self:SetupHandlers()
