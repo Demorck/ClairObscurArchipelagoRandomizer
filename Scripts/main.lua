@@ -108,7 +108,3 @@ function InitSaveAfterLumiere()
 end
 
 print("[COE33AP - Before Connection] Main initialized")
-
-
--- Handle: 820 items en 75.784s
--- Handle: 820 items en 85.671s
