@@ -97,6 +97,7 @@ function ArchipelagoSystem:Initialize()
     self.config = config
     self.apClient = apClient
     self.eventDispatcher = eventDispatcher
+    self.itemsHandler = itemsHandler
 
     -- Setup polling loop
     self:SetupPollingLoop()
@@ -110,20 +111,27 @@ GameState = { canReceiveItems = false, isInitialized = false }
 
 --TODO: return true when ap is disconnected 
 function ArchipelagoSystem:SetupPollingLoop()
-    LoopAsync(1000, function()
+    local pollTicks = 0
+    local pollHandle
+    pollHandle = LoopInGameThreadWithDelay(250, function()
+        if self.pendingToggle then
+            self.pendingToggle = false
+            self:ToggleConnection()
+        end
+
         if self.apClient.wantToConnect then
             if self.apClient.client then
                 self.apClient:Poll()
-
-                if Archipelago and Archipelago.waitingForSync and GameState.canReceiveItems then
-                    self.apClient:Sync()
-                    Archipelago.waitingForSync = false
+                self.apClient:DrainPendingCalls()
+                if Archipelago and Archipelago.waitingForSync and Archipelago:CanReceiveItems() then
+                    if self.apClient:Sync() then
+                        Archipelago.waitingForSync = false
+                    end
                 end
             else
                 self.apClient:Connect()
             end
         end
-        return false
     end)
 
     local loopHandle
@@ -141,9 +149,14 @@ function ArchipelagoSystem:SetupPollingLoop()
             InitSaveAfterLumiere()
         end
 
-        if not self.apClient.wantToConnect then
+        if Archipelago.hasConnectedPrior and not self.apClient.wantToConnect then
             CancelDelayedAction(loopHandle)
         end
+    end)
+
+    local itemLoop
+    itemLoop = LoopInGameThreadWithDelay(100, function()
+        self.itemsHandler:Drain()
     end)
 
     local saveLoopHandle

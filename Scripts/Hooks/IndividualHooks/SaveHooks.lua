@@ -106,6 +106,7 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
         -- Update party and characters
         -- Characters:EnableCharactersInCollectionOnlyUnlocked()
         Characters:ModifyPartyIfNeeded()
+        Characters:ModifyCollectionIfNeeded()
         Capacities:ToggleFreeAimIfNeeded()
         Capacities:TogglePaintBreakIfNeeded()
 

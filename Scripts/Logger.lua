@@ -8,6 +8,11 @@ local logFile = nil
 local queue = {}
 local writing = false
 
+CONCURRENT_LOG_HITS = 0
+local depth = 0
+
+
+local os_date, io_open, table_concat = os.date, io.open, table.concat
 os.execute("mkdir \"" .. log_dir .. "\"") -- Create the log directory if it doesn't exist
 
 local function sanitize(value, fallback)
@@ -19,7 +24,7 @@ end
 --- Create the name of the file
 ---@return string 
 local function makeLogName()
-    return log_dir .. "/" .. os.date("%Y-%m-%d_%H-%M-%S") .. ".txt"
+    return log_dir .. "/" .. os_date("%Y-%m-%d_%H-%M-%S") .. ".txt"
 end
 
 --- List log files
@@ -55,14 +60,14 @@ local function flush()
     while #queue > 0 do
         local batch = queue
         queue = {}
-        local file = io.open(logFile, "a")
+        local file = io_open(logFile, "a")
         if not file then
             for i = #batch, 1, -1 do table.insert(queue, 1, batch[i]) end
             Debug.print("LOGGER: impossible d'ouvrir " .. logFile)
             break
         end
 
-        file:write(table.concat(batch))
+        file:write(table_concat(batch))
         file:close()
     end
     writing = false
@@ -71,14 +76,19 @@ end
 
 -- Write a line to the log
 local function writeLine(line)
-    queue[#queue + 1] = os.date("[%d-%m-%Y %H:%M:%S] ") .. line .. "\n"
+
+    depth = depth + 1
+    if depth > 1 then CONCURRENT_LOG_HITS = CONCURRENT_LOG_HITS + 1 end
+    queue[#queue + 1] = os_date("[%d-%m-%Y %H:%M:%S] ") .. line .. "\n"
     if logFile == nil then
         Debug.print("LOGGER: " .. line)
         if #queue > 2000 then table.remove(queue, 1) end
-        return
+        -- return
+    else
+        flush()
     end
 
-    flush()
+    depth = depth - 1
 end
 
 -- Public API
@@ -102,7 +112,7 @@ end
 
 function Logger:startSession()
     logFile = nil
-    queue = { ("\n===== Session %s =====\n"):format(os.date("%Y-%m-%d %H:%M:%S")) }
+    queue = { ("\n===== Session %s =====\n"):format(os_date("%Y-%m-%d %H:%M:%S")) }
 end
 
 function Logger:bindSeed(slot, seed)

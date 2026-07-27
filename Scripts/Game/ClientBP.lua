@@ -3,15 +3,20 @@ local ClientBP = {}
 
 local BlueprintName = "BP_ArchipelagoHelper_C"
 local last_logs = {}
-
+local cachedHelper = nil
 
 function ClientBP:GetHelper()
-    local helper = FindFirstOf(BlueprintName) ---@type ABP_ArchipelagoHelper_C
+    if cachedHelper ~= nil and cachedHelper:IsValid() then
+        return cachedHelper
+    end
 
-    if helper:IsValid() then
+    local helper = FindFirstOf(BlueprintName) ---@type ABP_ArchipelagoHelper_C
+    if helper ~= nil and helper:IsValid() then
+        cachedHelper = helper
         return helper
     end
 
+    cachedHelper = nil
     return nil
 end
 

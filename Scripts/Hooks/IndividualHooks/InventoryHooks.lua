@@ -7,6 +7,11 @@
 ---@class InventoryHooks
 local InventoryHooks = {}
 
+local LAST_STAND_ITEMS = {
+    LastStandCritical = true, LastStandSpeed = true, LastStandPowerful = true,
+    LastStandShell = true, SoloFighter = true,
+}
+
 ---Register all inventory hooks
 ---@param hookManager HookManager
 ---@param dependencies InventoryDependencies
@@ -21,6 +26,12 @@ function InventoryHooks:Register(hookManager, dependencies)
             if not archipelago:IsInitialized() then return end
 
             local itemName = ItemHardcodedName:get():ToString()
+
+            if itemName ~= "LostGestral" and not LAST_STAND_ITEMS[itemName] then
+                return
+            end
+
+
             local invManager = context:get() ---@cast invManager UAC_jRPG_InventoryManager_C
 
             if itemName == "LostGestral" then
@@ -38,9 +49,8 @@ function InventoryHooks:Register(hookManager, dependencies)
                 storage:Update("InventoryHooks:AddItemToInventory - LostGestral")
 
             --- Hidden Gestral Arena
-            elseif (itemName == "LastStandCritical" or itemName == "LastStandSpeed" or itemName == "LastStandPowerful" or itemName == "LastStandShell" or itemName == "SoloFighter") and
-                   not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
-                    invManager:RemoveItemFromInventory(FName(itemName), 1, false)
+            elseif not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
+                invManager:RemoveItemFromInventory(FName(itemName), 1, false)
             end
         end,
         "Inventory - Add Item"

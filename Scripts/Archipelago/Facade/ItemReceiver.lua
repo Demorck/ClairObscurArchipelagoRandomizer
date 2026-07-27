@@ -9,14 +9,7 @@ local ItemReceiver = {}
 ---@param item_data table Item data from AP
 ---@return boolean success True if item was processed successfully
 function ItemReceiver:ReceiveItem(item_data)
-    local local_item_data = nil ---@type ItemData
-
-    for _, item in pairs(Data.items) do
-        if item.name == item_data["name"] then
-            local_item_data = item
-            break
-        end
-    end
+    local local_item_data = Data.items_by_AP_name[item_data["name"]] ---@type ItemData
 
     if local_item_data == nil then
         Logger:error("Item data nil when receiving item: " .. Dump(item_data))
@@ -43,15 +36,10 @@ function ItemReceiver:ReceiveItem(item_data)
     end
 
     -- Handle gear items (Weapon, Picto, etc.)
-    if local_item_data ~= nil then
-        local level = self:GetLevelItem(local_item_data.type, item_data["id"])
+    local level = self:GetLevelItem(local_item_data.type, item_data["id"])
 
-        if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level) then
-            return true
-        end
-    else
-        Logger:error("Item not found in local data: " .. Dump(item_data))
-        return false
+    if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level) then
+        return true
     end
 
     return false
@@ -62,7 +50,6 @@ end
 ---@return boolean success
 function ItemReceiver:HandleAreaItem(item_data)
     Storage:UnlockArea(item_data.internal_name)
-    Storage:Update("ItemReceiver:HandleAreaItem")
 
     -- Handle specific area unlocks
     if item_data.name == "Area - Esquie's Nest" then
@@ -93,7 +80,6 @@ function ItemReceiver:HandleCharacterItem(item_data)
 
     if not ok then Logger:error("ItemReceiver:HandleCharacterItem when trying to unlock " .. internal_name) end
 
-    Storage:Update("ItemReceiver:HandleCharacterItem")
     return true
 end
 
@@ -127,7 +113,7 @@ function ItemReceiver:GetLevelItem(gear_type, id)
         elseif gear_type == "Weapon" then
             Storage.weaponsIndex = Storage.weaponsIndex + 1
         end
-        Storage:Update("ItemReceiver:GetLevelItem")
+
         level = math.ceil(CONSTANTS.CONFIG.MAX_LEVEL_GEAR * percent)
     elseif ArchipelagoState.options.gear_scaling == 3 then
         level = math.random(1, CONSTANTS.CONFIG.MAX_LEVEL_GEAR)

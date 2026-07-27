@@ -11,9 +11,12 @@
 ---@class ItemsHandler
 ---@field logger Logger Logger instance for debugging and tracking
 ---@field storage Storage Storage manager for persistent data
+---@field queue table<NetworkItem>
 ---@field apClient APClient Client for AP server communication
 ---@field archipelago Archipelago|nil Reference to main Archipelago instance (set after creation)
 local ItemsHandler = {}
+
+local ITEMS_PER_TICK = 5
 
 ---Create a new ItemsHandler instance
 ---@param dependencies ItemsHandlerDependencies Required dependencies
@@ -24,6 +27,7 @@ function ItemsHandler:New(dependencies)
         storage = dependencies.storage,
         apClient = dependencies.apClient,
         archipelago = nil,
+        queue = {}
     }
 
     setmetatable(instance, { __index = ItemsHandler })
@@ -44,15 +48,39 @@ end
 function ItemsHandler:Handle(items)
     -- Don't process if player is in a state where they can't receive items
     if not self:CanReceiveItems() then
+        self.logger:info(("%d items différés (CanReceiveItems false)"):format(#items))
         if self.archipelago then
             self.archipelago.waitingForSync = true
         end
         return
     end
 
-    -- Process each item individually
     for _, item in ipairs(items) do
-        self:ProcessItem(item)
+        self.queue[#self.queue+1] = item
+    end
+end
+function ItemsHandler:Drain()
+    if #self.queue == 0 or not self:CanReceiveItems() then
+        return  -- on garde la file, on réessaiera au tick suivant
+    end
+
+    local t0 = os.clock()
+    local names = {}
+
+    local dirty = false
+    for _ = 1, math.min(ITEMS_PER_TICK, #self.queue) do
+        local item = table.remove(self.queue, 1)
+        names[#names + 1] = tostring(item.item)
+        if self:ProcessItem(item) then dirty = true end
+    end
+
+    if dirty then
+        Storage:Update("ItemsHandler:Drain")
+    end
+
+    local dt = os.clock() - t0
+    if dt > 0.008 then   -- ~une demi-frame à 60 fps
+        self.logger:warn(("Drain lent: %.1f ms, items %s"):format(dt * 1000, table.concat(names, ",")))
     end
 end
 
@@ -61,26 +89,28 @@ end
 ---@param item NetworkItem The item to process
 ---@private
 function ItemsHandler:ProcessItem(item)
-
     if not item.index or item.index <= Storage.lastSavedItemIndex then
-        return
+        return false
     end
 
     local itemData = self:GetItemData(item.item)
     if not itemData then
         self.logger:error("Item data is nil for item: " .. item.item)
-        return
+        return false
     end
 
-    if self.archipelago and self.archipelago:ReceiveItem(itemData) then
+    local received = self.archipelago and self.archipelago:ReceiveItem(itemData)
+    if received then
         self.logger:info(string.format(
             "Received item: %s (%d) at index: %d for player: %d",
             itemData.name, item.item, item.index, item.player
         ))
 
         Storage.lastReceivedItemIndex = item.index
-        Storage:Update("ItemsHandler:ProcessItem")
+        return true
     end
+
+    return false
 end
 
 ---Convert an Archipelago item ID to internal item data
@@ -89,8 +119,8 @@ end
 ---@return ItemDataInternal|nil itemData Item data with name and ID, or nil if not found
 ---@private
 function ItemsHandler:GetItemData(itemId)
-    local playerInfo = self.apClient:GetPlayerInfo()
-    local itemName = self.apClient:GetItemName(itemId, playerInfo.game)
+    self.gameName = self.gameName or self.apClient:GetPlayerInfo().game
+    local itemName = self.apClient:GetItemName(itemId, self.gameName)
 
     if not itemName then
         return nil

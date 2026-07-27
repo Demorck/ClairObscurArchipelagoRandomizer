@@ -18,6 +18,8 @@
 ---@field AP any The AP library (lua-apclientpp)
 local APClient = {}
 
+
+
 ---Create a new APClient instance
 ---@param dependencies APClientDependencies
 ---@return APClient
@@ -31,6 +33,8 @@ function APClient:New(dependencies)
         client = nil,
         isConnecting = false,
         wantToConnect = false,
+        
+        pendingCalls = {},
 
         -- AP library
         AP = nil,
@@ -51,6 +55,21 @@ function APClient:Initialize()
     end
 
     self.logger:info("AP library loaded successfully")
+end
+
+---@param fn fun(self: APClient)
+function APClient:Enqueue(fn)
+    self.pendingCalls[#self.pendingCalls + 1] = fn
+end
+
+function APClient:DrainPendingCalls()
+    if #self.pendingCalls == 0 then return end
+    local batch = self.pendingCalls
+    self.pendingCalls = {}
+    for _, fn in ipairs(batch) do
+        local ok, err = pcall(fn, self)
+        if not ok then self.logger:error("AP call failed: " .. tostring(err)) end
+    end
 end
 
 ---Connect to the Archipelago server
@@ -282,9 +301,7 @@ function APClient:SendLocationChecks(locationIds)
         return false
     end
 
-    ExecuteAsync(function()
-        self.client:LocationChecks(locationIds)
-    end)
+    self:Enqueue(function (c) c.client:LocationChecks(locationIds) end)
 
     return true
 end
@@ -297,8 +314,10 @@ function APClient:SendCompletion()
         return false
     end
 
-    self.client:StatusUpdate(self.AP.ClientStatus.GOAL)
-    self.logger:info("Sent completion status to AP")
+    self:Enqueue(function(c)
+        c.client:StatusUpdate(c.AP.ClientStatus.GOAL)
+        c.logger:info("Sent completion status to AP")
+    end)
 
     return true
 end
@@ -315,7 +334,7 @@ function APClient:Bounce(data, games, slots, tags)
         return false
     end
 
-    self.client:Bounce(data, games or {}, slots or {}, tags or {})
+    self:Enqueue(function(c) c.client:Bounce(data, games or {}, slots or {}, tags or {}) end)
     return true
 end
 
@@ -326,7 +345,7 @@ function APClient:Sync()
         return false
     end
 
-    self.client:Sync()
+     self:Enqueue(function(c) c.client:Sync() end)
     return true
 end
 
@@ -433,7 +452,7 @@ function APClient:SetDataStorage(key, value, wantReply, operations)
         return false
     end
 
-    self.client:Set(key, value, wantReply or false, operations or {})
+    self:Enqueue(function(c) c.client:Set(key, value, wantReply or false, operations or {}) end)
     return true
 end
 

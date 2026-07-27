@@ -62,10 +62,8 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
    
    print("[COE33AP - Before connection] Connect button pressed")
 
-   ExecuteAsync(function()
-      ArchipelagoSystem:SetConnectionConfig(hostStr, portStr, slotStr, passwordStr, deathlinkBool)
-      ArchipelagoSystem:ToggleConnection()
-   end)
+   ArchipelagoSystem:SetConnectionConfig(hostStr, portStr, slotStr, passwordStr, deathlinkBool)
+   ArchipelagoSystem.pendingToggle = true   
 end)
 
 function InitSaveAfterLumiere()
@@ -110,3 +108,7 @@ function InitSaveAfterLumiere()
 end
 
 print("[COE33AP - Before Connection] Main initialized")
+
+
+-- Handle: 820 items en 75.784s
+-- Handle: 820 items en 85.671s
