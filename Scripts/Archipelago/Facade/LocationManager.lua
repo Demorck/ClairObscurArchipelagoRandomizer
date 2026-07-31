@@ -111,6 +111,10 @@ end
 
 
 function LocationManager:ScoutLocation(location_names, create_hint)
+    if type(location_names) == "string" then
+        location_names = { location_names }
+    end
+    
     local location_ids = {} 
 
     for _, location_name in ipairs(location_names) do
@@ -118,8 +122,7 @@ function LocationManager:ScoutLocation(location_names, create_hint)
         table.insert(location_ids, id)
     end
 
-    Logger:info(Dump(location_names))
-    Logger:info(Dump(location_ids))
+
     -- print(location_ids)
     ArchipelagoState.apSystem:GetClient():ScoutLocations(location_ids, create_hint)
 end

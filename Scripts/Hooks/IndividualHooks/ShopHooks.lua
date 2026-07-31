@@ -98,9 +98,17 @@ function ShopHooks:ChangeShopRowData(t)
 
         local data_merchant = t[merchant.Items:GetFName():ToString()]
         local data = table.remove(data_merchant, 1)
+
+        local icon = ClientBP:GetHelper().IconAP:Find(2):get()
+        local display_name     = FText("An item")
+
+        if not Archipelago.options.show_shop_items then
+            display_name     = FText(data["name"])
+            icon             = ClientBP:GetHelper().IconAP:Find(data["classification"]):get()
+        end
         
-        item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP:Find(data["classification"]):get()
-        item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(data["name"])
+        item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
+        item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = display_name
 
         item_data.HideInInventory_105_28F500C94EA8D5C6632F7E8E4A85586E = true
         item_data.HideInLootPopup_107_333FB0CB4314A0D9E40A7F8480A5686A = true
@@ -203,6 +211,24 @@ function ShopHooks:ChangeItemInformation()
         else
             string_builded = scouted_location.item_name .. " for " .. scouted_location.player_name
         end
+
+        local item_description = FText("An item")
+        local display_name = FText("An item")
+        local icon = ClientBP:GetHelper().IconAP:Find(2):get()
+
+        if Archipelago.options.show_shop_items then
+            item_description = FText(string_builded)
+            display_name     = FText(location_name)
+            icon             = ClientBP:GetHelper().IconAP:Find(scouted_location.classification):get()
+        end
+
+        if Archipelago.options.create_hint and not extra then
+            Archipelago:ScoutLocation(location_name, true)
+        end
+
+        if Archipelago.options.create_hint_extra and extra then
+            Archipelago:ScoutLocation(location_name, true)
+        end
         
         a.Price_9_248FCE8A44F45DA941E4588E69DEC974 = price
 
@@ -216,9 +242,9 @@ function ShopHooks:ChangeItemInformation()
         item_data.Item_HardcodedName_90_C7F763B74AAB28EF890A66854D7D95AA = FName("FaceMaelle_DoubleBraid")
         item_data.Item_Type_88_2F24F8FB4235429B4DE1399DBA533C78 = 4
         item_data.Item_Type_88_2F24F8FB4235429B4DE1399DBA533C78 = 8
-        item_data.ItemDescription_32_0A978AFB4AB4B316342DD6A72ACDD4E1 = FText(string_builded)
-        item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = FText(location_name)
-        item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = ClientBP:GetHelper().IconAP:Find(scouted_location.classification):get()
+        item_data.ItemDescription_32_0A978AFB4AB4B316342DD6A72ACDD4E1 = item_description
+        item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = display_name
+        item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
         item_data.Consumable_MaxStackAmount_76_2DD073774D235ED7EE5C8F99817D7FFA = 1
         item_data.Pictos_Data_103_EE44D66B4E4F16A7FD44FF9F25777CF4 = nil
         item_data.Pictos_ItemStats_91_229F4A00415AB214191377B73987FF7B = nil
