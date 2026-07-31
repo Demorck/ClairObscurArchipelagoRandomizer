@@ -28,6 +28,7 @@ JSON = require("Utils.json")
 ---@field locations LocationData[] | nil
 ---@field shops ShopData[] | nil
 ---@field local_variable table<string, any>
+---@field items_by_name table<string, ItemData>
 local Data = {}
 
 
@@ -36,6 +37,7 @@ Data.locations = {}
 Data.shops = {}
 Data.local_variable = {}
 
+Data.items_by_AP_name = {}
 
 function Data.Load()
     if #Data.items > 0 then return end
@@ -52,6 +54,14 @@ function Data.Load()
     Data.items = content_items
     if Data.items == nil then
         Logger:error("Failed to load items from " .. items_path)
+    else
+        for _, item in ipairs(Data.items) do
+            if Data.items_by_AP_name[item.name] == nil then
+                Data.items_by_AP_name[item.name] = item
+            end
+        end
+
+        Logger:info(("Data: %d items, %d uniques names"):format(#Data.items, #Data.items_by_AP_name))
     end
     
     Data.locations = content_locations

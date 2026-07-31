@@ -78,12 +78,27 @@ function Characters:EnableCharacter(name)
     end
 end
 
+function Characters:ModifyCollectionIfNeeded()
+    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
+    if char_data == nil then return end
+
+    for _, char in ipairs(char_data) do
+        local character_name = char.HardcodedNameID:ToString()
+        if Storage:IsCharacterUnlocked(character_name) and char.IsExcluded then
+            char.IsExcluded = false
+        end
+        if not Storage:IsCharacterUnlocked(character_name) and not char.IsExcluded then
+            char.IsExcluded = true
+        end
+    end
+end
+
 function Characters:SetExcludedCharacterByName(name, locked)
     local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
     if char_data == nil then return end
 
     for _, char in ipairs(char_data) do
-        if char.HardcodedNameID:ToString() == name and char.IsExcluded then
+        if char.HardcodedNameID:ToString() == name then
             char.IsExcluded = locked
         end
     end
@@ -149,57 +164,83 @@ function Characters:NumberOfCharactersInPartyEnabled()
 end
 
 --- Ensure that the battle team is correct: no excluded characters, at least one enabled character
+local MAX_PARTY = 3
+ 
 function Characters:ModifyPartyIfNeeded()
     local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
     if not helper or not helper:IsValid() then return end
-
+ 
     local locked_in_party = {}
     local unlocked_in_party = {}
     local unlocked_not_in_party = {}
-
+ 
     for _, char_id in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
         local in_party = Logger:callMethod(helper, "IsCharacterInParty", FName(char_id))
         local is_unlocked = Storage:IsCharacterUnlocked(char_id)
-
+ 
         self:SetExcludedCharacterByName(char_id, not is_unlocked)
+ 
         if in_party then
             if is_unlocked then
                 table.insert(unlocked_in_party, char_id)
             else
                 table.insert(locked_in_party, char_id)
             end
-        else
-            if is_unlocked then
-                table.insert(unlocked_not_in_party, char_id)
+        elseif is_unlocked then
+            table.insert(unlocked_not_in_party, char_id)
+        end
+    end
+ 
+    -- No characters locked in party -> Nothing to do
+    if #locked_in_party == 0 then return end
+ 
+    -- How many in party do we have 
+    local party_count = #locked_in_party + #unlocked_in_party
+ 
+    -- At least 1 character in party -> We can removing every locked one
+    if #unlocked_in_party > 0 then
+        for _, char_id in ipairs(locked_in_party) do
+            self:EnableInParty(char_id, false)
+            party_count = party_count - 1
+        end
+        return
+    end
+ 
+    -- No characters unlocked exists that is not in party so we can't remove everyone and log some shit
+    if #unlocked_not_in_party == 0 then
+        Logger:warn("Party only has locked characters and no unlocked replacement is available; leaving it untouched to avoid an empty party.")
+        return
+    end
+ 
+    -- ELSE -> some locked char are in party BUT we have unlocked char that not is in party so we can do some bs
+    local r = 1
+    for _, locked_id in ipairs(locked_in_party) do
+        if r <= #unlocked_not_in_party then
+            if party_count >= MAX_PARTY then
+                self:EnableInParty(locked_id, false)
+                party_count = party_count - 1
+                self:EnableInParty(unlocked_not_in_party[r], true)
+                party_count = party_count + 1
+            else
+                self:EnableInParty(unlocked_not_in_party[r], true)
+                party_count = party_count + 1
+                self:EnableInParty(locked_id, false)
+                party_count = party_count - 1
             end
-        end
-    end
-
-    local added = 0
-    -- Si aucun personnage non exclu est dans la party, en rajouter au maximum 3 (toujours non exclu)
-    if #unlocked_in_party == 0 then
-        Logger:info("No enabled characters in party, adding up to 3 unlocked ones...")
-        for _, char_id in ipairs(unlocked_not_in_party) do
-            if added >= 3 then break end
-            self:EnableInParty(char_id, true)
-            added = added + 1
-        end
-    end
-
-    -- Si au moins un personnage exclus est dans la party, l'enlever.
-    if #locked_in_party > 0 then
-        Logger:info("Found " .. #locked_in_party .. " excluded characters in party, removing them...")
-        if #unlocked_in_party > 0 or added > 0 then
-            for _, char_id in ipairs(locked_in_party) do
-                self:EnableInParty(char_id, false)
-            end
+            r = r + 1
         else
-            Logger:warn("Cannot remove locked characters because there are NO unlocked characters available to take their place!")
+            -- We removed locked one
+            self:EnableInParty(locked_id, false)
+            party_count = party_count - 1
         end
     end
-
-    -- Si aucun des personnages exclus et au moins un personnage non exclu est dans la party, ne rien faire
-    -- (This happens naturally if the two above conditions are false)
+ 
+    -- We complete, that could be cool
+    while party_count < MAX_PARTY and r <= #unlocked_not_in_party do
+        self:EnableInParty(unlocked_not_in_party[r], true)
+        party_count = party_count + 1
+        r = r + 1
+    end
 end
 
 

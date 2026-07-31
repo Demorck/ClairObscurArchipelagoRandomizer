@@ -95,6 +95,9 @@ function LocationHooks:Register(hookManager, dependencies)
 
     hookManager:Register("/Game/Gameplay/WorldInfo/BP_WorldInfoComponent.BP_WorldInfoComponent_C:RegisterTeleportPoint",
         function (self, tp_UObject)
+            local level_name = ClientBP:GetLevelName()
+            if level_name ~= "Level_WorldMap_Main_V2" then return end
+
             local portal = tp_UObject:get() ---@cast portal ABP_jRPG_MapTeleportPoint_C
 
             local a = {

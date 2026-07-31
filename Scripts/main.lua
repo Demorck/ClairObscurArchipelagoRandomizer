@@ -61,16 +61,9 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
    
    print("[COE33AP - Before connection] Connect button pressed")
 
-   ExecuteAsync(function()
-      ArchipelagoSystem:SetConnectionConfig(hostStr, portStr, slotStr, passwordStr, deathlinkBool)
-      ArchipelagoSystem:ToggleConnection()
-   end)
+   ArchipelagoSystem:SetConnectionConfig(hostStr, portStr, slotStr, passwordStr, deathlinkBool)
+   ArchipelagoSystem.pendingToggle = true   
 end)
-
-RegisterCustomEvent("ConnectionSettings_CB_SaveIcon", function(ctx, is_checked)
-   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = is_checked:get()
-end)
-
 
 function InitSaveAfterLumiere()
    Logger:info("Initialized after Lumière")
