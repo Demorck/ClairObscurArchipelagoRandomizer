@@ -230,16 +230,33 @@ function Storage:IsCharacterUnlocked(characterName)
 end
 
 function Storage:AddScoutedMerchant(location_name, item_name, player_name, flags)
-    local t = { ["item_name"] = item_name, ["player_name"] = player_name, ["classification"] = flags, ["found"] = false }
+    local merchants = self:Get("merchant_scouted")
+
+    if type(merchants) == "table" and merchants[location_name] ~= nil then
+        return true 
+    end
+
+
+    local t = { 
+        ["item_name"] = item_name,
+        ["player_name"] = player_name,
+        ["classification"] = flags,
+        ["found"] = false,
+        ["hinted"] = false
+    }
 
     return self:AddInDict("merchant_scouted", location_name, t)
 end
 
 function Storage:CheckMerchant(location_name, checked)
-    local location_is_in_table = self.data["merchant_scouted"][location_name] ~= nil
+    local merchants = self:Get("merchant_scouted")
     
-    if location_is_in_table then
-        self.data["merchant_scouted"][location_name]["found"] = checked
+    if type(merchants) == "table" and merchants[location_name] ~= nil then
+        merchants[location_name]["found"] = checked
+        self:Set("merchant_scouted", merchants)
+        self:Update("Storage - Check Merchant")
+    else
+        Logger:warn("CheckMerchant failed : Location '" .. tostring(location_name) .. "' doesn't exist")
     end
 end
 
@@ -251,6 +268,27 @@ function Storage:IsLocationInMerchantFound(location_name)
     end
 
     return true -- So we'll skip it
+end
+
+function Storage:IsShopItemAlreadyHinted(location_name)
+    local location_is_in_table = self.data["merchant_scouted"][location_name] ~= nil
+    
+    if location_is_in_table then
+        return self.data["merchant_scouted"][location_name]["hinted"]
+    end
+
+    return false
+end
+
+function Storage:HintMerchant(location_name, hinted)
+    local merchants = self:Get("merchant_scouted")
+    if type(merchants) == "table" and merchants[location_name] ~= nil then
+        merchants[location_name]["hinted"] = hinted
+        self:Set("merchant_scouted", merchants)
+        self:Update("Storage - Hint Merchant")
+    else
+        Logger:warn("CheckMerchant failed : Location '" .. tostring(location_name) .. "' doesn't exist")
+    end
 end
 
 ---Load storage from JSON file

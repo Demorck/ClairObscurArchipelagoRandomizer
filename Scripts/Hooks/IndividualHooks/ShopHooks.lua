@@ -18,7 +18,6 @@ local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_i
     local item_type = is_extra and "Extra Item" or "Item"
     local number_to_add = is_extra and Archipelago.options.extra_location_per_shop or Archipelago.options.location_per_shop
 
-    print(tostring(number_to_add))
     for i = 1, number_to_add, 1 do
         local name = "Shop: " .. shop_data.name .. " - " .. item_type .. " " .. tostring(i)
         local scouted_location = Storage:Get("merchant_scouted")[name]
@@ -102,7 +101,7 @@ function ShopHooks:ChangeShopRowData(t)
         local icon = ClientBP:GetHelper().IconAP:Find(2):get()
         local display_name     = FText("An item")
 
-        if not Archipelago.options.show_shop_items then
+        if Archipelago.options.show_shop_items then
             display_name     = FText(data["name"])
             icon             = ClientBP:GetHelper().IconAP:Find(data["classification"]):get()
         end
@@ -222,14 +221,20 @@ function ShopHooks:ChangeItemInformation()
             icon             = ClientBP:GetHelper().IconAP:Find(scouted_location.classification):get()
         end
 
-        if Archipelago.options.create_hint and not extra then
-            Archipelago:ScoutLocation(location_name, true)
+        local already_hinted = Storage:IsShopItemAlreadyHinted(location_name)
+        if not already_hinted then
+            if Archipelago.options.create_hint and not extra then
+                Archipelago:ScoutLocation(location_name, true)
+                Storage:HintMerchant(location_name, true)
+            end
+
+            if Archipelago.options.create_hint_extra and extra then
+                Archipelago:ScoutLocation(location_name, true)
+                Storage:HintMerchant(location_name, true)
+            end
         end
 
-        if Archipelago.options.create_hint_extra and extra then
-            Archipelago:ScoutLocation(location_name, true)
-        end
-        
+
         a.Price_9_248FCE8A44F45DA941E4588E69DEC974 = price
 
         a.IsConditional_21_88432AA744B13A1E76DA06A6BE959C5B = false

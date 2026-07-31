@@ -22,7 +22,7 @@ function LocationManager:SendLocationCheck(location_name, force)
     
     local function async()
         if ArchipelagoState.apSystem then
-            ArchipelagoState.apSystem:GetClient():LocationChecks(location_to_send)
+            ArchipelagoState.apSystem:GetClient():SendLocationChecks(location_to_send)
         end
     end
 
@@ -114,7 +114,7 @@ function LocationManager:ScoutLocation(location_names, create_hint)
     if type(location_names) == "string" then
         location_names = { location_names }
     end
-    
+
     local location_ids = {} 
 
     for _, location_name in ipairs(location_names) do
