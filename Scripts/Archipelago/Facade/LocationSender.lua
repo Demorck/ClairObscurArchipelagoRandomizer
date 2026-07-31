@@ -21,7 +21,7 @@ function LocationSender:SendLocationCheck(location_name)
     
     local function async()
         if ArchipelagoState.apSystem then
-            ArchipelagoState.apSystem:GetClient():GetClient():LocationChecks(location_to_send)
+            ArchipelagoState.apSystem:GetClient():LocationChecks(location_to_send)
         end
     end
 
@@ -40,7 +40,7 @@ function LocationSender:SendLocationCheckByID(location_id)
     local function async()
         local apClient = ArchipelagoState.apSystem and ArchipelagoState.apSystem:GetClient()
         if apClient and apClient:IsConnected() then
-            apClient:GetClient():LocationChecks(location_to_send)
+            apClient:SendLocationChecks(location_to_send)
         else
             Logger:warn("Location '" .. location_id .. "' queued (not connected), will be sent on reconnect")
         end

@@ -4,14 +4,27 @@ local Logger = {}
 
 local log_dir = "../../Content/Paks/LogicMods/ClairObscurRandomizer_data/Logs"
 local max_logs = 10
-local logFile = ""
+local logFile = nil
+local queue = {}
+local writing = false
 
+CONCURRENT_LOG_HITS = 0
+local depth = 0
+
+
+local os_date, io_open, table_concat = os.date, io.open, table.concat
 os.execute("mkdir \"" .. log_dir .. "\"") -- Create the log directory if it doesn't exist
+
+local function sanitize(value, fallback)
+    if value == nil or value == "" then return fallback end
+    return (tostring(value):gsub("[^%w%-]", "_"))
+end
+
 
 --- Create the name of the file
 ---@return string 
 local function makeLogName()
-    return log_dir .. "/" .. os.date("%Y-%m-%d_%H-%M-%S") .. ".txt"
+    return log_dir .. "/" .. os_date("%Y-%m-%d_%H-%M-%S") .. ".txt"
 end
 
 --- List log files
@@ -31,28 +44,51 @@ local function listLogs()
 end
 
 --- Rotate logs by keeping only the last 10 files
-local function rotateLogs()
+local function rotateLogs(currentName)
     local files = listLogs()
-    if #files > max_logs then
-        for i = max_logs + 1, #files do
+    for i = max_logs + 1, #files do
+        if files[i] ~= currentName then
             os.remove(log_dir .. "/" .. files[i])
         end
     end
 end
 
--- Write a line to the log
-local function writeLine(line)
-    if logFile == "" then
-        Debug.print("LOGGER: " .. line)
-        return
-    end
+local function flush()
+    if logFile == nil or writing then return end
 
+    writing = true
+    while #queue > 0 do
+        local batch = queue
+        queue = {}
+        local file = io_open(logFile, "a")
+        if not file then
+            for i = #batch, 1, -1 do table.insert(queue, 1, batch[i]) end
+            Debug.print("LOGGER: impossible d'ouvrir " .. logFile)
+            break
+        end
 
-    local file = io.open(logFile, "a")
-    if file then
-        file:write(os.date("[%d-%m-%Y %H:%M:%S] ") .. line .. "\n")
+        file:write(table_concat(batch))
         file:close()
     end
+    writing = false
+end
+
+
+-- Write a line to the log
+local function writeLine(line)
+
+    depth = depth + 1
+    if depth > 1 then CONCURRENT_LOG_HITS = CONCURRENT_LOG_HITS + 1 end
+    queue[#queue + 1] = os_date("[%d-%m-%Y %H:%M:%S] ") .. line .. "\n"
+    if logFile == nil then
+        Debug.print("LOGGER: " .. line)
+        if #queue > 2000 then table.remove(queue, 1) end
+        -- return
+    else
+        flush()
+    end
+
+    depth = depth - 1
 end
 
 -- Public API
@@ -72,6 +108,22 @@ end
 
 function Logger:debug(msg)
     writeLine("[DEBUG] " .. tostring(msg))
+end
+
+function Logger:startSession()
+    logFile = nil
+    queue = { ("\n===== Session %s =====\n"):format(os_date("%Y-%m-%d %H:%M:%S")) }
+end
+
+function Logger:bindSeed(slot, seed)
+    if logFile ~= nil then return end
+
+    local name =  sanitize(seed, "no-seed") .. "_" .. sanitize(slot, "no-slot") .. ".txt"
+    logFile = log_dir .. "/" .. name
+
+    rotateLogs(name)
+
+    flush()
 end
 
 function Logger:safeCall(fn, method_name, ...)

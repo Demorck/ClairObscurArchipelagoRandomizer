@@ -97,6 +97,7 @@ function ArchipelagoSystem:Initialize()
     self.config = config
     self.apClient = apClient
     self.eventDispatcher = eventDispatcher
+    self.itemsHandler = itemsHandler
 
     -- Setup polling loop
     self:SetupPollingLoop()
@@ -106,41 +107,64 @@ function ArchipelagoSystem:Initialize()
     return self
 end
 
+GameState = { canReceiveItems = false, isInitialized = false }
+
 --TODO: return true when ap is disconnected 
 function ArchipelagoSystem:SetupPollingLoop()
-    LoopAsync(1000, function()
+    local pollTicks = 0
+    local pollHandle
+    pollHandle = LoopInGameThreadWithDelay(250, function()
+        if self.pendingToggle then
+            self.pendingToggle = false
+            self:ToggleConnection()
+        end
+
         if self.apClient.wantToConnect then
             if self.apClient.client then
                 self.apClient:Poll()
-
-                -- Sync if waiting
+                self.apClient:DrainPendingCalls()
                 if Archipelago and Archipelago.waitingForSync and Archipelago:CanReceiveItems() then
-                    self.apClient:Sync()
-                    Archipelago.waitingForSync = false
-                end
-
-                -- Sync pending location checks after reconnect
-                if Archipelago and Archipelago.pendingLocationsFlush and ArchipelagoSystem:IsConnected() then
-                    Archipelago:SendAlreadyChecked()
-                    Archipelago.pendingLocationsFlush = false
-                end
-
-                if Archipelago and NEEDED_TO_INIT and Archipelago:IsInitialized() then
-                    InitSaveAfterLumiere()
-                    NEEDED_TO_INIT = false
+                    if self.apClient:Sync() then
+                        Archipelago.waitingForSync = false
+                    end
                 end
             else
                 self.apClient:Connect()
             end
         end
-
-        return false
     end)
 
-    --To force a save every 10 minutes
-    LoopAsync(1000 * 60 * 10, function ()
+    local loopHandle
+    loopHandle = LoopInGameThreadWithDelay(500, function()
+        GameState.canReceiveItems = Archipelago:CanReceiveItems()
+        GameState.isInitialized   = Archipelago:IsInitialized()
+
+        if Archipelago and Archipelago.pendingLocationsFlush and self:IsConnected() then
+            Archipelago.pendingLocationsFlush = false
+            Archipelago:SendAlreadyChecked()
+        end
+
+        if Archipelago and NEEDED_TO_INIT and GameState.isInitialized then
+            NEEDED_TO_INIT = false
+            InitSaveAfterLumiere()
+        end
+
+        if Archipelago.hasConnectedPrior and not self.apClient.wantToConnect then
+            CancelDelayedAction(loopHandle)
+        end
+    end)
+
+    local itemLoop
+    itemLoop = LoopInGameThreadWithDelay(100, function()
+        self.itemsHandler:Drain()
+    end)
+
+    local saveLoopHandle
+    saveLoopHandle = LoopInGameThreadWithDelay(1000 * 60 * 10, function()
         Save:SaveGame()
-        return false
+        if not self.apClient.wantToConnect then
+            CancelDelayedAction(saveLoopHandle)
+        end
     end)
 end
 
@@ -166,11 +190,11 @@ function ArchipelagoSystem:ToggleConnection()
         self.apClient:Disconnect()
 
         if Hooks then
-            Hooks:Unregister()
+            ExecuteInGameThread(function() Hooks:Unregister() end)
         end
     else
         Logger:info("Connecting...")
-        Logger:initialize()
+        Logger:startSession()
         self.apClient:Connect()
     end
 end

@@ -1,12 +1,18 @@
 ---@class Inventory
 local Inventory = {}
 
+local cachedManager = nil
+
 ---@return UAC_jRPG_InventoryManager_C | nil
 function Inventory:GetInventoryManager()
+    if cachedManager ~= nil and cachedManager:IsValid() then
+        return cachedManager
+    end
+    
     local playerInventory = FindFirstOf(CONSTANTS.BLUEPRINT.INVENTORY_MANAGER) ---@cast playerInventory UAC_jRPG_InventoryManager_C
 
     if playerInventory ~= nil and playerInventory:IsValid() then
-        Logger:info("Retrieving Inventory manager succeeds")
+        cachedManager = playerInventory
         return playerInventory
     else
         Logger:error("Retrieving Inventory manager fails")
@@ -23,7 +29,6 @@ function Inventory:AddItem(itemName, amount, item_level)
     if playerInventory == nil then
         return false
     end
-
 
     local name = FName(itemName)
 
