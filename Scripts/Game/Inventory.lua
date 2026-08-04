@@ -20,6 +20,13 @@ function Inventory:GetInventoryManager()
     end
 end
 
+function Inventory:AddGold(amount)
+    local playerInventory = self:GetInventoryManager()
+    local reason = "Archipelago"
+    
+    Logger:callMethod(playerInventory, "ReceiveGold", amount, reason)
+end
+
 --- TODO: Modify lootcontext
 function Inventory:AddItem(itemName, amount, item_level)
     --- @class UAC_jRPG_InventoryManager_C

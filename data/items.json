@@ -7,6 +7,13 @@
     "progressive": 0
   },
   {
+    "type": "Other",
+    "name": "Chroma Pack",
+    "internal_name": "gold",
+    "quantity": 1,
+    "progressive": 0
+  },
+  {
     "type": "Upgrade material",
     "name": "Polished Chroma Catalyst (5)",
     "internal_name": "UpgradeMaterial_Level2",

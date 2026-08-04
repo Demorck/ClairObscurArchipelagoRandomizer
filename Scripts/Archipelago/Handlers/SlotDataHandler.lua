@@ -104,6 +104,7 @@ function SlotDataHandler:ProcessSlotData(slotData)
         self.archipelago.pictos_data = slotData.pictos or {}
         self.archipelago.weapons_data = slotData.weapons or {}
         self.archipelago.shop_data = slotData.shops or {}
+        self.archipelago.chroma = slotData.chroma or nil
     end
 
     -- Max gear level

@@ -9,6 +9,9 @@
 ---@field location_per_shop number
 ---@field extra_location_per_shop number
 ---@field exclude_endless_tower number
+---@field chroma_pack_type number
+---@field min_chroma_pack number
+---@field max_chroma_pack number
 
 ---Archipelago State Module
 ---Centralizes all Archipelago global state and configuration
@@ -33,6 +36,9 @@ local function CreateDefaultOptions()
         location_per_shop = 0,
         extra_location_per_shop = 0,
         exclude_endless_tower = 0,
+        chroma_pack_type = 0,
+        min_chroma_pack = 0,
+        max_chroma_pack = 0,
     }
 end
 
@@ -48,6 +54,8 @@ ArchipelagoState.pictos_data = {}
 
 -- Shop
 ArchipelagoState.shop_data = {}
+
+ArchipelagoState.chroma = 0
 
 -- Connection flags
 ArchipelagoState.trying_to_connect = false
