@@ -70,6 +70,7 @@ function ItemReceiver:HandleAreaItem(item_data)
     -- Handle specific area unlocks
     if item_data.name == "Area - Esquie's Nest" then
         Quests:SetObjectiveStatus("Main_GoldenPath", "6_EsquieNest", QUEST_STATUS.STARTED)
+        Quests:SetObjectiveStatus("Main_ForcedCamps", "1_ForcedCamp_PostSpringMeadows", QUEST_STATUS.COMPLETED)
     elseif item_data.name == "Area - Stone Wave Cliffs" then
         Quests:SetObjectiveStatus("Main_ForcedCamps", "4_ForcedCamp_PostEsquieNest", QUEST_STATUS.COMPLETED)
     elseif item_data.name == "Area - Old Lumiere" then
