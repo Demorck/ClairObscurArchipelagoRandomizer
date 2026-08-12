@@ -105,7 +105,7 @@ function Battle:IsBattleCanUnlockCharacter(encounter_name)
     end
 
     -- Monoco
-    if encounter_name == "MM_Stalact_GradientAttackTutorial*1" then
+    if encounter_name == "MS_Monoco" then
         return true, "Monoco"
     end
 
