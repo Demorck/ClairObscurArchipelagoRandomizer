@@ -51,14 +51,13 @@ FLAG_COMMAND = false
 -- And maybe the party issues in act 3 ? there is one iirc
 
 RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
-   local settings = settings:get() ---@type FS_AP_Settings
-   local hostStr = settings.host_5_57D7FAAE4EE105D7FFBA43836D0EB068:ToString()
-   local portStr = settings.port_6_667302EB4A0B1D65E7126FA80C5F37A9:ToString()
-   local slotStr = settings.slot_8_F865C5C946B8CEFF2A3CBC95B903BC9C:ToString()
-   local passwordStr = settings.password_9_29E90B5A490FB64EF37D899B7FE35702:ToString()
-   local deathlinkBool = settings.death_link_16_BD6444064CB7AF2080DA9F86599CD9A0
-
-   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = settings.save_icon_18_CAE18D2E4FC0450B5A48BABB660DF652
+   local ap_settings = settings:get() ---@type FS_AP_Settings
+   local hostStr = ap_settings.host_5_57D7FAAE4EE105D7FFBA43836D0EB068:ToString()
+   local portStr = ap_settings.port_6_667302EB4A0B1D65E7126FA80C5F37A9:ToString()
+   local slotStr = ap_settings.slot_8_F865C5C946B8CEFF2A3CBC95B903BC9C:ToString()
+   local passwordStr = ap_settings.password_9_29E90B5A490FB64EF37D899B7FE35702:ToString()
+   local deathlinkBool = ap_settings.death_link_16_BD6444064CB7AF2080DA9F86599CD9A0
+   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = ap_settings.save_icon_18_CAE18D2E4FC0450B5A48BABB660DF652
    
    print("[COE33AP - Before connection] Connect button pressed")
 

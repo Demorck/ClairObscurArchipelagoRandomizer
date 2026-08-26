@@ -27,17 +27,21 @@ function InventoryHooks:Register(hookManager, dependencies)
 
             local itemName = ItemHardcodedName:get():ToString()
 
-            if itemName ~= "LostGestral" and not LAST_STAND_ITEMS[itemName] then
+            local is_lost_gestral = itemName == "LostGestral"
+            local is_shop_item = archipelago.options.shopsanity == 1 and Utils.StringHelper.StartsWith(itemName, "Merchant (")
+            local is_game_using_this_function = not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
+
+            if not is_lost_gestral and not LAST_STAND_ITEMS[itemName] and not is_shop_item then
                 return
             end
 
 
             local invManager = context:get() ---@cast invManager UAC_jRPG_InventoryManager_C
 
-            if itemName == "LostGestral" then
+            if is_lost_gestral then
                 if archipelago.options.gestral_shuffle == 1 then
                     -- Remove gestral if shuffled
-                    if not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
+                    if not is_game_using_this_function then
                         invManager:RemoveItemFromInventory(FName(itemName), 1, true)
                     else
                         storage.gestral_found = storage.gestral_found + 1
@@ -48,8 +52,14 @@ function InventoryHooks:Register(hookManager, dependencies)
 
                 storage:Update("InventoryHooks:AddItemToInventory - LostGestral")
 
+            
+            elseif is_shop_item then
+                Archipelago:ForceSendLocationCheck(itemName)
+                Storage:CheckMerchant(itemName, true)
+                Storage:Update("Hook - AC_jRPG_InventoryManager_C:AddItemToInventory")
+
             --- Hidden Gestral Arena
-            elseif not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory") then
+            elseif not is_game_using_this_function then
                 invManager:RemoveItemFromInventory(FName(itemName), 1, false)
             end
         end,

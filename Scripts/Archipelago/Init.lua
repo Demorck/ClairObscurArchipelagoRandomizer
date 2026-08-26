@@ -56,6 +56,11 @@ function ArchipelagoSystem:Initialize()
         apClient = apClient
     })
 
+    local scoutedLocationHandler = Handlers.ScoutedLocationHandler:New({
+        logger = Logger,
+        apClient = apClient
+    })
+
     -- Set archipelago reference (for legacy compatibility)
     slotDataHandler:SetArchipelago(Archipelago)
     itemsHandler:SetArchipelago(Archipelago)
@@ -87,8 +92,14 @@ function ArchipelagoSystem:Initialize()
     end)
 
     eventDispatcher:RegisterHandler("json", function (data)
-    ExecuteInGameThread(function ()
+        ExecuteInGameThread(function ()
             jsonHandler:Handle(data)
+        end)
+    end)
+
+    eventDispatcher:RegisterHandler("onScouted", function(data)
+        ExecuteInGameThread(function ()
+            scoutedLocationHandler:Handle(data)
         end)
     end)
 

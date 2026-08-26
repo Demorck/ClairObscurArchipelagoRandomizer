@@ -1,0 +1,326 @@
+[
+  {
+    "name": "White Bruler",
+    "region": "Coastal Cave",
+    "datatable": "DT_Merchant_CoastalCave_Bruler.DT_Merchant_CoastalCave_Bruler",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "White Cruler",
+    "region": "Coastal Cave",
+    "datatable": "DT_Merchant_CoastalCave_Cruler.DT_Merchant_CoastalCave_Cruler",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Alexcyclo",
+    "region": "Gestral Village",
+    "datatable": "CustomizationMerchants/DT_Merchant_GV_1_CustoSuits_Ladies.DT_Merchant_GV_1_CustoSuits_Ladies",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Delsitra",
+    "region": "Gestral Village",
+    "datatable": "CustomizationMerchants/DT_Merchant_GV_1_CustoSuits_Guys.DT_Merchant_GV_1_CustoSuits_Guys",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Verogo",
+    "region": "Frozen Hearts",
+    "datatable": "CustomizationMerchants/DT_Merchant_FH_Custo_Danseuse.DT_Merchant_FH_Custo_Danseuse",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Osquio Merchant",
+    "region": "Verso's Drafts",
+    "datatable": "CustomizationMerchants/DT_Merchant_Osquio.DT_Merchant_Osquio",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+  {
+    "name": "Blabary",
+    "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_11.DT_Merchant_WM_11",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Carrabi",
+    "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_3_GustaveSuit.DT_Merchant_WM_3_GustaveSuit",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Jumeliba",
+    "region": "WM: First Continent North",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_15.DT_Merchant_WM_15",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+  {
+    "name": "Appla",
+    "region": "WM: South Sea",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_1.DT_Merchant_WM_1",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Colaro",
+    "region": "WM: South Sea",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_2.DT_Merchant_WM_2",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Geranjo",
+    "region": "WM: South Sea",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_12.DT_Merchant_WM_12",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+  {
+    "name": "Chic Gestral Merchant",
+    "region": "WM: Second Continent South",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_Chic.DT_Merchant_WM_Chic",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Pecha",
+    "region": "WM: Second Continent South",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_8.DT_Merchant_WM_8",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Strabami",
+    "region": "WM: Second Continent South",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_9.DT_Merchant_WM_9",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+  {
+    "name": "Blakora",
+    "region": "WM: Second Continent NW",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_6.DT_Merchant_WM_6",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Carnovi",
+    "region": "WM: Second Continent NW",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_10.DT_Merchant_WM_10",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+  {
+    "name": "Papasso",
+    "region": "WM: North Sea",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_7.DT_Merchant_WM_7",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Rederi",
+    "region": "WM: North Sea",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_8.DT_Merchant_WM_8",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Granasori",
+    "region": "WM: North Sea",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_13.DT_Merchant_WM_13",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Rubiju",
+    "region": "WM: North Sea",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_16.DT_Merchant_WM_16",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+  {
+    "name": "Lucaroparfé",
+    "region": "WM: Sky",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_14.DT_Merchant_WM_14",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Gestral Merchant",
+    "region": "WM: Sky",
+    "datatable": "CustomizationMerchants/DT_Merchant_GestralVillage3.DT_Merchant_GestralVillage3",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Citrelo",
+    "region": "WM: Sky",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_17.DT_Merchant_WM_17",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Pearo",
+    "region": "WM: Sky",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_9_Sirene.DT_Merchant_WM_9_Sirene",
+    "has_fight": false,
+    "unlock_item": null
+  },
+  {
+    "name": "Sodasso",
+    "region": "WM: Sky",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_9.DT_Merchant_WM_9",
+    "has_fight": false,
+    "unlock_item": null
+  },
+
+
+
+  {
+    "name": "Noco",
+    "region": "Flying Waters",
+    "datatable": "DT_Merchant_GoblusLair.DT_Merchant_GoblusLair",
+    "has_fight": true,
+    "unlock_item": "Merchant (Flying Waters): Noco - Extra shop unlock"
+  },
+  {
+    "name": "Jujubree",
+    "region": "Gestral Village",
+    "datatable": "DT_Merchant_GestralVillage1.DT_Merchant_GestralVillage1",
+    "has_fight": true,
+    "unlock_item": "Merchant (Gestral Village): Jujubree - Extra shop unlock"
+  },
+  {
+    "name": "Eesda",
+    "region": "Gestral Village",
+    "datatable": "DT_Merchant_GestralVillage2.DT_Merchant_GestralVillage2",
+    "has_fight": true,
+    "unlock_item": "Merchant (Gestral Village): Eesda - Extra shop unlock"
+  },
+  {
+    "name": "Jerijeri",
+    "region": "Stone Wave Cliffs",
+    "datatable": "DT_Merchant_SeaCliff.DT_Merchant_SeaCliff",
+    "has_fight": true,
+    "unlock_item": "Merchant (World Map): Gestral Merchant - Extra shop unlock"
+  },
+  {
+    "name": "Kasumi",
+    "region": "Forgotten Battlefield",
+    "datatable": "DT_Merchant_ForgottenBattlefield.DT_Merchant_ForgottenBattlefield",
+    "has_fight": true,
+    "unlock_item": "Merchant (Stone Wave Cliffs): Jerijeri - Extra shop unlock"
+  },
+  {
+    "name": "Grandis",
+    "region": "Monoco's Station",
+    "datatable": "DT_Merchant_GrandisStation.DT_Merchant_GrandisStation",
+    "has_fight": true,
+    "unlock_item": "Merchant (Forgotten Battlefield): Kasumi - Extra shop unlock"
+  },
+  {
+    "name": "Mandelgo",
+    "region": "Old Lumiere",
+    "datatable": "DT_Merchant_OldLumiere.DT_Merchant_OldLumiere",
+    "has_fight": true,
+    "unlock_item": "Merchant (Old Lumiere): Mandelgo - Extra shop unlock"
+  },
+  {
+    "name": "Blooraga",
+    "region": "Visages",
+    "datatable": "DT_Merchant_Visages.DT_Merchant_Visages",
+    "has_fight": true,
+    "unlock_item": "Merchant (Visages): Blooraga - Extra shop unlock"
+  },
+  {
+    "name": "Klaudiso",
+    "region": "Sirene",
+    "datatable": "DT_Merchant_Sirene.DT_Merchant_Sirene",
+    "has_fight": true,
+    "unlock_item": "Merchant (Sirene): Klaudiso - Extra shop unlock"
+  },
+  {
+    "name": "Mistra",
+    "region": "The Monolith",
+    "datatable": "DT_Merchant_Monolith.DT_Merchant_Monolith",
+    "has_fight": true,
+    "unlock_item": "Merchant (The Monolith): Mistra - Extra shop unlock"
+  },
+  {
+    "name": "Melosh",
+    "region": "The Monolith",
+    "datatable": "DT_Merchant_MonocosMountain.DT_Merchant_MonocosMountain",
+    "has_fight": true,
+    "unlock_item": "Merchant (Lumiere): Cribappa - Extra shop unlock"
+  },
+  {
+    "name": "Cribappa",
+    "region": "Lumiere",
+    "datatable": "DT_Merchant_Lumiere.DT_Merchant_Lumiere",
+    "has_fight": true,
+    "unlock_item": "Merchant (Yellow Harvest): Pinabby - Extra shop unlock"
+  },
+  {
+    "name": "Pinabby",
+    "region": "Yellow Harvest",
+    "datatable": "DT_Merchant_YellowForest.DT_Merchant_YellowForest",
+    "has_fight": true,
+    "unlock_item": "Merchant (Falling Leaves): Persik - Extra shop unlock"
+  },
+  {
+    "name": "Persik",
+    "region": "Falling Leaves",
+    "datatable": "DT_Merchant_OrangeForest.DT_Merchant_OrangeForest",
+    "has_fight": true,
+    "unlock_item": "Merchant (The Monolith): Verogo - Extra shop unlock"
+  },
+  {
+    "name": "Eragol",
+    "region": "The Reacher",
+    "datatable": "DT_Merchant_Reacher.DT_Merchant_Reacher",
+    "has_fight": true,
+    "unlock_item": "Merchant (The Reacher): Eragol - Extra shop unlock"
+  },
+  {
+    "name": "Fusoka",
+    "region": "Flying Manor",
+    "datatable": "DT_Merchant_CleaIsland.DT_Merchant_CleaIsland",
+    "has_fight": true,
+    "unlock_item": "Merchant (Flying Manor): Fusoka - Extra shop unlock"
+  },
+  {
+    "name": "Grour",
+    "region": "Renoir's Drafts",
+    "datatable": "DT_Merchant_Optional3.DT_Merchant_Optional3",
+    "has_fight": true,
+    "unlock_item": "Merchant (Renoir's Drafts): Melosh - Extra shop unlock"
+  },
+  {
+    "name": "Anthonypo",
+    "region": "Endless Night Sanctuary",
+    "datatable": "DT_Merchant_TwilightSanctuary.DT_Merchant_TwilightSanctuary",
+    "has_fight": true,
+    "unlock_item": "Merchant (Endless Night Sanctuary): Anthonypo - Extra shop unlock"
+  },
+  {
+    "name": "Najabla",
+    "region": "Verso's Drafts",
+    "datatable": "DT_Merchant_VersosDraft.DT_Merchant_VersosDraft",
+    "has_fight": true,
+    "unlock_item": "Merchant (Verso's Drafts): Najabla - Extra shop unlock"
+  }
+]

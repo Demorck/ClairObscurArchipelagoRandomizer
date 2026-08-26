@@ -20,6 +20,7 @@ function EventDispatcher:New(dependencies)
             locationsChecked = function() end,
             bounced = function() end,
             retrieved = function() end,
+            onScouted = function() end,
             json = function() end,
         }
     }
@@ -96,6 +97,18 @@ function EventDispatcher:OnRetrieved(data)
     self.logger:debug("Retrieved event received")
 
     local ok, err = pcall(self.handlers.retrieved, data)
+    if not ok then
+        self.logger:error("Error in retrieved handler: " .. tostring(err))
+    end
+end
+
+---Dispatch scout locatoin event
+---Called when a scout location has been scouted
+---@param data NetworkItem[] Array of received items
+function EventDispatcher:OnScoutedLocation(data)
+    self.logger:debug("Scout Location event received")
+
+    local ok, err = pcall(self.handlers.onScouted, data)
     if not ok then
         self.logger:error("Error in retrieved handler: " .. tostring(err))
     end

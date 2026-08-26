@@ -35,6 +35,10 @@ function ItemReceiver:ReceiveItem(item_data)
         return self:HandleCharacterItem(local_item_data)
     end
 
+    if local_item_data.type == "Other" then
+        return self:HandleOtherItem(local_item_data)
+    end
+
     -- Handle gear items (Weapon, Picto, etc.)
     local level = self:GetLevelItem(local_item_data.type, item_data["id"])
 
@@ -43,6 +47,18 @@ function ItemReceiver:ReceiveItem(item_data)
     end
 
     return false
+end
+
+function ItemReceiver:HandleOtherItem(item_data)
+    if item_data.name == "Chroma pack" then
+        local how_much_chroma = 0
+        if Archipelago.options.chroma_pack_type == 0 then
+            how_much_chroma = Archipelago.chroma
+        else
+            how_much_chroma = math.random(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
+        end
+        Inventory:AddGold(how_much_chroma)
+    end
 end
 
 ---Handle Area items (tickets)

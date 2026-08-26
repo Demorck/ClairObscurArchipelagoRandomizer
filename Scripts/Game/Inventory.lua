@@ -20,12 +20,18 @@ function Inventory:GetInventoryManager()
     end
 end
 
+function Inventory:AddGold(amount)
+    local playerInventory = self:GetInventoryManager()
+    local reason = "Archipelago"
+    
+    Logger:callMethod(playerInventory, "ReceiveGold", amount, reason)
+end
+
 --- TODO: Modify lootcontext
 function Inventory:AddItem(itemName, amount, item_level)
     --- @class UAC_jRPG_InventoryManager_C
     local playerInventory = Inventory:GetInventoryManager()
     local level = item_level or 45
-    Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount .. " with level " .. level)
     if playerInventory == nil then
         return false
     end
@@ -41,9 +47,11 @@ function Inventory:AddItem(itemName, amount, item_level)
 
     -- Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     -- playerInventory:AddItemToInventory(name, amount, lootContext, returned)
+    Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount .. " with level " .. level .. "...")
     table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
     Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
+    Logger:info("Item " .. itemName .. " added !")
 
     return true
 end
@@ -58,7 +66,7 @@ function Inventory:RemoveItem(itemName, amount)
     end
 end
 
-function Inventory.GetInventory()
+function Inventory:GetInventory()
     local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
     local inv = GI.Inventory ---@cast inv TArray<FS_jRPG_Item_DynamicData>
     local items = {} ---@cast items table<string, int32>
@@ -78,29 +86,14 @@ function Inventory.GetInventory()
     return items
 end
 
-function Inventory.HasItem(itemName)
-    local inventory_table = Inventory.GetInventory()
-
-    for key, _ in pairs(inventory_table) do
-        if key == itemName then
-            return true
-        end
-    end
-
-    return false
+function Inventory:HasItem(itemName)
+    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    return GI:GetItemQuantityInInventory(FName(itemName)) > 0
 end
 
 function Inventory:GetAmountOfItem(itemName)
-    if not Inventory.HasItem(itemName) then return 0 end
-
-    local inventory_table = Inventory.GetInventory()
-    for key, value in pairs(inventory_table) do
-        if key == itemName then
-            return value
-        end
-    end
-
-    return -1
+    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    return GI:GetItemQuantityInInventory(FName(itemName))
 end
 
 function Inventory:Adding999Recoat()

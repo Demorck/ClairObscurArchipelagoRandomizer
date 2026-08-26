@@ -133,6 +133,11 @@ StorageSchema.fields = {
     locations_checked = {
         type = "table",
         default = {}
+    },
+
+    merchant_scouted = {
+        type = "table",
+        default = {}
     }
 }
 

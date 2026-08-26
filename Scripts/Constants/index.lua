@@ -15,4 +15,6 @@ Constants.GAME = require "Constants.GameConstants"
 Constants.RUNTIME = require "Constants.RuntimeConstants"
 Constants.ASSETS = require "Constants.AssetsConstants"
 
+Constants.VERSION = '0.4.0'
+
 return Constants
