@@ -6670,15 +6670,5 @@
         "type": "Boss",
         "boss_type": "Bourgeon",
         "pictos_level": 9
-    },
-    {
-        "name": "Shop: Old Lumiere Merchant - Fight",
-        "internal_name": "Merchant_OldLumiere",
-        "location": "World Map",
-        "condition": {},
-        "original_item": "",
-        "type": "Boss",
-        "boss_type": "Merchant",
-        "pictos_level": 9
     }
 ]

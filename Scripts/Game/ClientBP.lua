@@ -110,11 +110,11 @@ end
 RegisterCustomEvent("ModLoader_Initiation", function(ctx)
     local helper = ClientBP:GetHelper()
     if Archipelago:IsInitialized() then
-            for _, message in ipairs(last_logs) do
-                if not helper then return end
-                
-                helper:AddToLogger(message)
-            end
+        for _, message in ipairs(last_logs) do
+            if not helper then return end
+            
+            helper:AddToLogger(message)
+        end
     end
 
     if ArchipelagoSystem:IsConnected() then
@@ -122,6 +122,8 @@ RegisterCustomEvent("ModLoader_Initiation", function(ctx)
     else
         helper.Connected = false
     end
+
+    helper.client_version = CONSTANTS.VERSION
 end)
 
 

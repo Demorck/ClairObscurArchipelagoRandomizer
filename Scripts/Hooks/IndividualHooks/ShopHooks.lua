@@ -19,7 +19,7 @@ local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_i
     local number_to_add = is_extra and Archipelago.options.extra_location_per_shop or Archipelago.options.location_per_shop
 
     for i = 1, number_to_add, 1 do
-        local name = "Shop: " .. shop_data.name .. " - " .. item_type .. " " .. tostring(i)
+        local name = "Merchant (" .. shop_data.region .. "): " .. shop_data.name .. " - " .. item_type .. " " .. tostring(i)
         local scouted_location = Storage:Get("merchant_scouted")[name]
         if scouted_location.found then
             goto scout_found
@@ -93,8 +93,6 @@ function ShopHooks:ChangeShopRowData(t)
         local item_data = ItemStaticData:get() ---@type FS_jRPG_Item_StaticData
         local merchant = ctx:get() ---@cast merchant UBP_MerchantComponent_C
 
-        print("Merchant DT: ", merchant.Items:GetFName():ToString())
-
         local data_merchant = t[merchant.Items:GetFName():ToString()]
         local data = table.remove(data_merchant, 1)
 
@@ -120,7 +118,7 @@ function ShopHooks:ModifyDatatable(table_to_insert_data_inserted_in_datatable)
 
         local shop_data = Data.shops
         if shop_data == nil then 
-            print("shop data nil")
+            Logger:warn("shop data nil in ShopHookds:ModifyDatatable")
             return 
         end
         
@@ -134,21 +132,24 @@ function ShopHooks:ModifyDatatable(table_to_insert_data_inserted_in_datatable)
                     break
                 end
             end
-
+            
             if not found then
                 goto next_shop_data
             end
 
             local datatable_location = "/Game/Gameplay/Inventory/Merchant/Merchants_Content_DT/" .. shop.datatable
             local datatable = StaticFindObject(datatable_location) ---@cast datatable UDataTable
-            if datatable == nil or not datatable:IsValid() then return end
+            if datatable == nil or not datatable:IsValid() then 
+                Logger:warn("Datatable is nil or not valid: " .. datatable_location)
+                goto next_shop_data
+            end
 
             if self.last_shop_visited == nil or self.last_shop_visited ~= shop.name then
                 self.last_shop_visited = shop.name
                 local _, _, dt_name  = string.find(shop.datatable, ".*%.(.*)", 1, false)
                 if dt_name == nil then 
-                    print("dfojipadnoka")
-                    return 
+                    Logger:warn("Can't change data table, dt_name is nil: " .. shop.datatable)
+                    goto next_shop_data
                 end
 
                 table_to_insert_data_inserted_in_datatable[dt_name] = {}
@@ -176,7 +177,7 @@ function ShopHooks:ChangeItemInformation()
         local _, _, shop_name  = string.find(location_name, ".*:%s(.*)%s%-.*", 1, false)
         local _, _, item_id_str    = string.find(location_name, ".*Item%s(.*)", 1, false)
         if shop_name == nil or item_id_str == nil then 
-            print("nil somewhere shop name: " .. tostring(shop_name) .. " or item_id_str: " .. tostring(item_id_str))
+            Logger:warn("nil somewhere shop name: " .. tostring(shop_name) .. " or item_id_str: " .. tostring(item_id_str) .. ' locationname: ' .. location_name)
             return
         end
 

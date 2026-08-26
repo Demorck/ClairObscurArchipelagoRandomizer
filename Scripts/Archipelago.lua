@@ -105,16 +105,16 @@ function Archipelago:ScoutMerchants()
 
 
         for i = 1, self.options.location_per_shop, 1 do
-            local current_name = "Shop: " .. shop.name .. " - Item " .. tostring(i)
+            local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Item " .. tostring(i)
             table.insert(location_names, current_name)
         end
 
         if shop.has_fight then
-            local fight = "Shop: " .. shop.name .. " - Fight"
+            local fight = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Fight"
             table.insert(location_names, fight)
 
             for i = 1, self.options.extra_location_per_shop, 1 do
-                local current_name = "Shop: " .. shop.name .. " - Extra Item " .. tostring(i)
+                local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Extra Item " .. tostring(i)
                 table.insert(location_names, current_name)
             end
         end
@@ -195,6 +195,10 @@ function Archipelago:isRegionExcluded(region_name)
     end
 
     local exclusion_level = self:GetExclusionLevel()
+    if CONSTANTS.CONFIG.REGION_LEVEL[region_name] == nil then
+        Logger:warn(region_name .. ' is not found in config region level, returning false')
+        return false
+    end
     if self.options.exclude_endgame_locations == 0 and CONSTANTS.CONFIG.REGION_LEVEL[region_name] > exclusion_level then
         return true
     end

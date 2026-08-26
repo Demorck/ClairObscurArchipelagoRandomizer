@@ -3040,140 +3040,134 @@
 
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Noco - Extra shop unlock",
+    "name": "Merchant (Flying Waters): Noco - Extra shop unlock",
     "internal_name": "Merchant_GoblusLair",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Jujubree - Extra shop unlock",
+    "name": "Merchant (Gestral Village): Jujubree - Extra shop unlock",
     "internal_name": "Merchant_GestralVillage1",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Eesda - Extra shop unlock",
+    "name": "Merchant (Gestral Village): Eesda - Extra shop unlock",
     "internal_name": "Merchant_GestralVillage2",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Alexcyclo - Extra shop unlock",
+    "name": "Merchant (World Map): Gestral Merchant - Extra shop unlock",
     "internal_name": "Merchant_GestralVillage3",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Jerijeri - Extra shop unlock",
+    "name": "Merchant (Stone Wave Cliffs): Jerijeri - Extra shop unlock",
     "internal_name": "Merchant_SeaCliff",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Kasumi - Extra shop unlock",
+    "name": "Merchant (Forgotten Battlefield): Kasumi - Extra shop unlock",
     "internal_name": "Merchant_ForgottenBattlefield",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Monoco's station - Extra shop unlock",
-    "internal_name": "Merchant_GrandisStation",
-    "quantity": 1,
-    "progressive": 1
-  },
-  {
-    "type": "Merchant Unlock",
-    "name": "Merchant: Mandelgo - Extra shop unlock",
+    "name": "Merchant (Old Lumiere): Mandelgo - Extra shop unlock",
     "internal_name": "Merchant_OldLumiere",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Blooraga - Extra shop unlock",
+    "name": "Merchant (Visages): Blooraga - Extra shop unlock",
     "internal_name": "Merchant_Visages",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Klaudiso - Extra shop unlock",
+    "name": "Merchant (Sirene): Klaudiso - Extra shop unlock",
     "internal_name": "Merchant_Sirene",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Mistra - Extra shop unlock",
+    "name": "Merchant (The Monolith): Mistra - Extra shop unlock",
     "internal_name": "Merchant_Monolith",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Cribappa - Extra shop unlock",
+    "name": "Merchant (Lumiere): Cribappa - Extra shop unlock",
     "internal_name": "Merchant_Lumiere",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Pinabby - Extra shop unlock",
+    "name": "Merchant (Yellow Harvest): Pinabby - Extra shop unlock",
     "internal_name": "Merchant_YellowForest",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Persik - Extra shop unlock",
+    "name": "Merchant (Falling Leaves): Persik - Extra shop unlock",
     "internal_name": "Merchant_OrangeForest",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Verogo - Extra shop unlock",
+    "name": "Merchant (The Monolith): Verogo - Extra shop unlock",
     "internal_name": "Merchant_MonocosMountain",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Eragol - Extra shop unlock",
+    "name": "Merchant (The Reacher): Eragol - Extra shop unlock",
     "internal_name": "Merchant_Reacher",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Fusoka - Extra shop unlock",
+    "name": "Merchant (Flying Manor): Fusoka - Extra shop unlock",
     "internal_name": "Merchant_CleaIsland",
     "quantity": 1,
     "progressive": 1
   },
+  
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: - Melosh Extra shop unlock",
+    "name": "Merchant (Renoir's Drafts): - Melosh Extra shop unlock",
     "internal_name": "Merchant_Optional3",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Anthonypo - Extra shop unlock",
+    "name": "Merchant (Endless Night Sanctuary): Anthonypo - Extra shop unlock",
     "internal_name": "Merchant_TwilightSanctuary",
     "quantity": 1,
     "progressive": 1
   },
   {
     "type": "Merchant Unlock",
-    "name": "Merchant: Najabla - Extra shop unlock",
+    "name": "Merchant (Verso's Drafts): Najabla - Extra shop unlock",
     "internal_name": "Merchant_VersosDraft",
     "quantity": 1,
     "progressive": 1
