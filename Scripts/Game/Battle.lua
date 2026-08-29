@@ -67,6 +67,30 @@ function Battle:IsBossNotGoal(encounter_name)
     return false
 end
 
+function Battle:GetMerchantLocationName(encounter_name)
+    if not Utils.StringHelper.StartsWith(encounter_name, "Merchant") then
+        return nil
+    end
+
+    for _, shop in pairs(Data.shops) do
+        if not shop.has_fight then
+            goto continue
+        end
+
+        -- Merchant's name is DT_'Merchant_SMTH'
+        local _, _, current_merchant_name = string.find(shop.datatable, ".*%.DT_(.*)", 1, false)
+        if encounter_name == current_merchant_name then
+            local _, _, prefix = string.find(shop.unlock_item, "(.*- )", 1, false)
+            local suffix = "Fight"
+            return prefix .. suffix
+        end 
+
+        ::continue::
+    end
+
+    return nil
+end
+
 ---Return true if we are currently in a battle
 ---@return boolean
 function Battle:InBattle()

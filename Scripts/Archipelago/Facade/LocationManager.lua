@@ -10,15 +10,14 @@ local LocationManager = {}
 ---@param force boolean If true, the location is not retrieve from json table but directly from the name and id from AP server
 function LocationManager:SendLocationCheck(location_name, force)
     local location_data = self:GetLocationFromAPData(location_name, force)
-    if location_data == nil then return end
+    if location_data == nil or not location_data then 
+        Logger:warn("Try to send location but the location_data is nil or empty. Location_name is: " .. location_name)
+        return
+    end
 
     local location_id = location_data["id"]
     local location_to_send = {}
     location_to_send[1] = location_id
-    
-    if not location_data then
-        return
-    end
     
     local function async()
         if ArchipelagoState.apSystem then
