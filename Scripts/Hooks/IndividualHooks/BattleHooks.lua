@@ -75,6 +75,13 @@ function BattleHooks:OnBattleVictory(archipelago, storage, logger, battle, chara
             quests:SetObjectiveStatus("Main_ForcedCamps", "10_ForcedCamp_PostLumiereAttack", QUEST_STATUS.COMPLETED)
         end
 
+        -- Merchant fights
+        local merchant_location = battle:GetMerchantLocationName(encounterName)
+        if merchant_location ~= nil then
+            logger:info("Merchant defeated: " .. encounterName)
+            archipelago:ForceSendLocationCheck(merchant_location)
+        end
+
         -- Handle character unlocks (if not shuffled)
         if archipelago.options.char_shuffle == 0 then
             local canUnlock, charName = battle:IsBattleCanUnlockCharacter(encounterName)
@@ -103,12 +110,13 @@ function BattleHooks:OnRollBattleRewards(archipelago, storage)
         local battleRewards = rewards:get() ---@type FS_BattleRewards
         local keepRewards = {} ---@type table<FS_RolledLootEntry>
 
-        -- Keep only Foot and Merchant items
+        -- Keep only Foot and merchant (if shopsanity is disabled) items
         battleRewards.RolledLootEntries_12_64C7AB394C92E36998E1CAB6944CA883:ForEach(function(_, entry)
             entry = entry:get() ---@cast entry FS_RolledLootEntry
             local itemName = entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString()
 
-            if string.find(itemName, "Foot") or string.find(itemName, "Merchant") then
+            if  string.find(itemName, "Foot") or
+                Archipelago.options.shopsanity == 0 and string.find(itemName, "Merchant") then
                 table.insert(keepRewards, {
                     ItemID_2_FDDBE5744EC164155E4C959474052581 = entry.ItemID_2_FDDBE5744EC164155E4C959474052581,
                     LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7 = entry.LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7,

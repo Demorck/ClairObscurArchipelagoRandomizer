@@ -48,7 +48,7 @@ end
 function ItemsHandler:Handle(items)
     -- Don't process if player is in a state where they can't receive items
     if not self:CanReceiveItems() then
-        self.logger:info(("%d items différés (CanReceiveItems false)"):format(#items))
+        self.logger:info(("%d pending items (CanReceiveItems false)"):format(#items))
         if self.archipelago then
             self.archipelago.waitingForSync = true
         end
@@ -80,7 +80,7 @@ function ItemsHandler:Drain()
 
     local dt = os.clock() - t0
     if dt > 0.008 then   -- ~une demi-frame à 60 fps
-        self.logger:warn(("Drain lent: %.1f ms, items %s"):format(dt * 1000, table.concat(names, ",")))
+        self.logger:warn(("Small drain: %.1f ms, items %s"):format(dt * 1000, table.concat(names, ",")))
     end
 end
 

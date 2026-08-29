@@ -21,7 +21,8 @@ function CapacityHook:Register(hookManager, dependencies)
             if not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities") then
                 manager:ResetState()
                 Capacities:UnlockAllExplorationCapacities()
-                for _ = 1, storage:Get("progressive_rock"), 1 do
+                for i = 1, storage:Get("progressive_rock"), 1 do
+                    print("Progressive rock: ", tostring(i))
                     Capacities:UnlockNextWorldMapAbility()
                 end
             end

@@ -6,13 +6,13 @@ function DebugCommands:DebugFunction1()
 end
 
 function DebugCommands:DebugFunction2()
+    Archipelago:Sync()
 end
 
 function DebugCommands:DebugFunction3()
 end
 
 function DebugCommands:DebugFunction4()
-    RestartCurrentMod()
 end
 
 function DebugCommands:ToggleConsole()

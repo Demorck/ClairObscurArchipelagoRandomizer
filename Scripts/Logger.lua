@@ -174,6 +174,7 @@ function Logger:initialize()
     logFile = makeLogName()
     rotateLogs()
     Logger:info("Logger initialized: " .. logFile)
+    Logger:info("Client mod version: " .. CONSTANTS.VERSION)
 end
 
 return Logger
