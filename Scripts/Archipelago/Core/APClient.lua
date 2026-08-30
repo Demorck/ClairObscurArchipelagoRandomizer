@@ -252,7 +252,6 @@ function APClient:OnSlotRefused(reasons)
 end
 
 ---Update connection UI status
----@private
 ---@param status "DISCONNECTED"|"TRYING_TO_CONNECT"|"CONNECTED"
 function APClient:UpdateConnectionUI(status)
     ---@type ABP_ArchipelagoHelper_C
