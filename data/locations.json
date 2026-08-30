@@ -47,7 +47,8 @@
         "location": "Ancient Sanctuary",
         "original_item": "JumpRecovery",
         "condition": {},
-        "type": "Chest"
+        "type": "Chest",
+        "multiple": true
     },
     {
         "internal_name": "Chest_AncientSanctuary_7",
@@ -687,7 +688,8 @@
         "location": "Forgotten Battlefield",
         "original_item": "ChromaPack_ExtraLarge",
         "condition": {},
-        "type": "Chest"
+        "type": "Chest",
+        "multiple": true
     },
     {
         "internal_name": "Chest_ForgottenBattlefield_4",
@@ -1374,7 +1376,7 @@
         "name": "Flying Waters: Entrance - On main path",
         "location": "Goblus Lair",
         "original_item": "PartyHealShard",
-        "condition": {},
+        "condition": {"Free Aim":  1},
         "type": "Chest"
     },
     {
@@ -1546,14 +1548,6 @@
         "type": "Chest"
     },
     {
-        "internal_name": "Chest_Lumiere_17",
-        "name": "Lumiere (Act 3): Lumina 5",
-        "location": "Lumiere",
-        "original_item": "Consumable_LuminaPoint",
-        "condition": {},
-        "type": "Chest"
-    },
-    {
         "internal_name": "Chest_Lumiere_18",
         "name": "Lumiere (Act 3): Shattered Alley - Behind Chromatic miniboss",
         "location": "Lumiere",
@@ -1614,14 +1608,6 @@
         "name": "Lumiere (Act 3): Opera House - In between buildings",
         "location": "Lumiere",
         "original_item": "HealingStun",
-        "condition": {},
-        "type": "Chest"
-    },
-    {
-        "internal_name": "Chest_Lumiere_26",
-        "name": "Lumiere (Act 3): Upgrade 6",
-        "location": "Lumiere",
-        "original_item": "UpgradeMaterial",
         "condition": {},
         "type": "Chest"
     },
@@ -2686,14 +2672,6 @@
         "type": "Chest"
     },
     {
-        "internal_name": "Chest_SeaCliff_1",
-        "name": "Sea Cliff: Chroma 1",
-        "location": "Sea Cliff",
-        "original_item": "ChromaPack_Large",
-        "condition": {},
-        "type": "Chest"
-    },
-    {
         "internal_name": "Chest_SeaCliff_2",
         "name": "Stone Wave Cliffs: Old Farm - Near Chromatic Gault 2",
         "location": "Sea Cliff",
@@ -3232,14 +3210,6 @@
         "type": "Chest"
     },
     {
-        "internal_name": "Chest_SmallLevel_RedWoods_1",
-        "name": "Red Woods: Lumina 1",
-        "location": "Small Level Red Woods",
-        "original_item": "Consumable_LuminaPoint",
-        "condition": {},
-        "type": "Chest"
-    },
-    {
         "internal_name": "Chest_SmallLevel_GoblusLair_02_1",
         "name": "Small Bourgeon: Feed the White Nevron and loot his vomit",
         "location": "Small Level Goblus Lair 02",
@@ -3298,7 +3268,7 @@
     {
         "internal_name": "Chest_SmallLevel_Visages_1",
         "name": "Isle of the Eyes: Item 1",
-        "location": "Small Level Visages",
+        "location": "Isle of the Eyes",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
         "type": "Chest"
@@ -3306,10 +3276,11 @@
     {
         "internal_name": "Chest_SmallLevel_Visages_2",
         "name": "Isle of the Eyes - The Crows: Item 2 or Item",
-        "location": "Small Level Visages",
+        "location": "Isle of the Eyes",
         "original_item": "UpgradeMaterial",
         "condition": {},
-        "type": "Chest"
+        "type": "Chest",
+        "multiple": true
     },
     {
         "internal_name": "Chest_SmallLevel_Reacher_1",
@@ -3317,7 +3288,8 @@
         "location": "Small Level Reacher",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
-        "type": "Chest"
+        "type": "Chest",
+        "multiple": true
     },
     {
         "internal_name": "Chest_SmallLevel_Cemetery_1",
@@ -4100,14 +4072,6 @@
         "type": "Chest"
     },
     {
-        "internal_name": "Chest_WorldMap_9",
-        "name": "World Map: Unknown 1",
-        "location": "World Map",
-        "original_item": "Consumable_LuminaPoint",
-        "condition": {},
-        "type": "Chest"
-    },
-    {
         "internal_name": "Chest_WorldMap_10",
         "name": "World Map: First Continent - Paint spike west of Flying Waters exit",
         "location": "World Map",
@@ -4636,7 +4600,8 @@
         "location": "Esquies Nest",
         "original_item": "ChromaPack_Large",
         "condition": {},
-        "type": "Chest"
+        "type": "Chest",
+        "multiple": true
     },
     {
         "internal_name": "Chest_Generic_LuminaPoint",
@@ -4652,7 +4617,8 @@
         "location": "The Monolith",
         "original_item": "ChromaPack_Large",
         "condition": {},
-        "type": "Chest"
+        "type": "Chest",
+        "multiple": true
     },
     {
         "internal_name": "Chest_Generic_Chroma",
@@ -6581,7 +6547,7 @@
         "location": "Endless Tower",
         "condition": {},
         "original_item": "",
-        "type": "Boss",
+        "type": "Superboss",
         "boss_type": "Normal",
         "pictos_level": 32
     },
@@ -6591,7 +6557,7 @@
         "location": "Endless Tower",
         "condition": {},
         "original_item": "",
-        "type": "Boss",
+        "type": "Superboss",
         "boss_type": "Chromatic",
         "pictos_level": 32
     },
@@ -6603,7 +6569,7 @@
             "Area - Flying Manor": 1
         },
         "original_item": "",
-        "type": "Boss",
+        "type": "Superboss",
         "boss_type": "Area",
         "pictos_level": 32
     },
@@ -6616,7 +6582,7 @@
             "Progressive Rock": 5
         },
         "original_item": "",
-        "type": "Boss",
+        "type": "Superboss",
         "boss_type": "Area",
         "pictos_level": 32
     },
