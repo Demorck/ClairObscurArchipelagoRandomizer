@@ -20,6 +20,15 @@ function ClientBP:GetHelper()
     return nil
 end
 
+function ClientBP:GetWBPConnectionSettings()
+    local helper = FindFirstOf("WBP_AP_ConnectionSettings_C") ---@type UWBP_AP_ConnectionSettings_C
+    if helper ~= nil and helper:IsValid() then
+        return helper
+    end
+
+    return nil
+end
+
 --- Not used yet
 ---@param message string The styled string
 function ClientBP:PushToLogger(message)
@@ -106,25 +115,24 @@ function ClientBP:UpdateConnectionUI(status)
     end)
 end
 
-
 RegisterCustomEvent("ModLoader_Initiation", function(ctx)
     local helper = ClientBP:GetHelper()
+    if helper == nil then return end
+
     if Archipelago:IsInitialized() then
         for _, message in ipairs(last_logs) do
-            if not helper then return end
-            
             helper:AddToLogger(message)
         end
     end
-
-    if ArchipelagoSystem:IsConnected() then
-        helper.Connected = true
-    else
-        helper.Connected = false
-    end
-
-    helper.client_version = CONSTANTS.VERSION
 end)
 
+RegisterCustomEvent("RefreshUIFromLua", function (ctx)
+    ClientBP:UpdateConnectionUI(ArchipelagoSystem:IsConnected() and "CONNECTED" or "DISCONNECTED")
+
+    local wbp_settings = ClientBP:GetWBPConnectionSettings()
+    if wbp_settings ~= nil then
+        wbp_settings.TextVersion:SetText(FText(CONSTANTS.VERSION))
+    end
+end)
 
 return ClientBP
