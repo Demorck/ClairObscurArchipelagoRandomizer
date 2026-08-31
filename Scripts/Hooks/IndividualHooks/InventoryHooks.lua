@@ -59,7 +59,7 @@ function InventoryHooks:Register(hookManager, dependencies)
                 Storage:Update("Hook - AC_jRPG_InventoryManager_C:AddItemToInventory")
 
             --- Hidden Gestral Arena
-            elseif not is_game_using_this_function then
+            elseif is_game_using_this_function then
                 invManager:RemoveItemFromInventory(FName(itemName), 1, false)
             end
         end,
