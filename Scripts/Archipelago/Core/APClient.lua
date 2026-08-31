@@ -199,6 +199,7 @@ end
 ---Socket connected callback
 ---@private
 function APClient:OnSocketConnected()
+    Logger:info("Client mod version: " .. CONSTANTS.VERSION)
     self.logger:info("Socket connected successfully")
     self:UpdateConnectionUI("CONNECTED")
 end
