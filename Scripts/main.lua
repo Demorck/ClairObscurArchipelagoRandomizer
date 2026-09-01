@@ -104,6 +104,7 @@ function InitSaveAfterLumiere()
    --    pause_menu:TeleportToSafeLocation()
    --    return true
    -- end)
+   Archipelago:ScoutMerchants()
 end
 
 print("[COE33AP - Before Connection] Main initialized")

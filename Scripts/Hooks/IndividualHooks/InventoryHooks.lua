@@ -41,7 +41,7 @@ function InventoryHooks:Register(hookManager, dependencies)
             if is_lost_gestral then
                 if archipelago.options.gestral_shuffle == 1 then
                     -- Remove gestral if shuffled
-                    if not is_game_using_this_function then
+                    if is_game_using_this_function then
                         invManager:RemoveItemFromInventory(FName(itemName), 1, true)
                     else
                         storage.gestral_found = storage.gestral_found + 1

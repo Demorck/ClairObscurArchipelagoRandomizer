@@ -71,7 +71,7 @@ end
 function ClientBP:GetLevelName()
     local a = self:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
 
-    if a == nil then
+    if a == nil or not a:IsValid() then
         return ""
     end
 

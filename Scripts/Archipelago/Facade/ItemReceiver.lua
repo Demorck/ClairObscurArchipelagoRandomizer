@@ -50,15 +50,19 @@ function ItemReceiver:ReceiveItem(item_data)
 end
 
 function ItemReceiver:HandleOtherItem(item_data)
-    if item_data.name == "Chroma pack" then
+    if item_data.name == "Chroma Pack" then
         local how_much_chroma = 0
         if Archipelago.options.chroma_pack_type == 0 then
             how_much_chroma = Archipelago.chroma
         else
-            how_much_chroma = math.random(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
+            local min = math.min(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
+            local max = math.min(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
+            how_much_chroma = math.random(min, max)
         end
         Inventory:AddGold(how_much_chroma)
     end
+
+    return true
 end
 
 ---Handle Area items (tickets)
