@@ -55,13 +55,15 @@ function Data.Load()
     if Data.items == nil then
         Logger:error("Failed to load items from " .. items_path)
     else
+        local unique_names = 0
         for _, item in ipairs(Data.items) do
             if Data.items_by_AP_name[item.name] == nil then
                 Data.items_by_AP_name[item.name] = item
+                unique_names = unique_names + 1
             end
         end
 
-        Logger:info(("Data: %d items, %d uniques names"):format(#Data.items, #Data.items_by_AP_name))
+        Logger:info(("Data: %d items, %d uniques names"):format(#Data.items, #unique_names))
     end
     
     Data.locations = content_locations

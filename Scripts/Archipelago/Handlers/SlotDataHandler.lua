@@ -73,9 +73,9 @@ function SlotDataHandler:Handle(slotData)
         Data.Load()
     end
 
-    if self.archipelago.options.shopsanity and self.archipelago.want_to_scout_shop then
-        self.archipelago:ScoutMerchants()
-    end
+    -- if self.archipelago.options.shopsanity and self.archipelago.want_to_scout_shop then
+    --     self.archipelago:ScoutMerchants()
+    -- end
 
     self.archipelago.want_to_scout_shop = false
 end

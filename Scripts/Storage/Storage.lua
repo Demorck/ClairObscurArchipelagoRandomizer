@@ -110,31 +110,6 @@ function Storage:AddInDict(key_in_storage, key_in_dict, value_dict)
     return self:Set(key_in_storage, newTable)
 end
 
----Adding a value in a dict
----@param key_in_storage string Field name
----@param key_in_dict string Field name
----@return boolean sucess True if value was added successfully
-function Storage:RemoveInDict(key_in_storage, key_in_dict)
-    local data = self.data[key_in_storage]
-
-    if type(data) ~= "table" then
-        Logger:error("Trying to add a value " .. tostring(key_in_dict) .. " but not in table, key: " .. key_in_storage)
-        return false
-    end
-
-    local newTable = {}
-    for k, v in pairs(data) do 
-        newTable[k] = v
-        if k == key_in_dict then
-            Logger:warn("Trying to add a value in dict in storage that already exists in: " .. key_in_storage .. "[ " .. key_in_dict .."]")
-        end
-    end
-    
-    newTable[key_in_dict] = value_dict
-    
-    return self:Set(key_in_storage, newTable)
-end
-
 function Storage:Increment(key)
     if self.schema.fields[key] == nil then
         Logger:warn("Attempted to increment unknown storage key: " .. key)

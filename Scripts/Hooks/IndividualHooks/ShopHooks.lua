@@ -174,6 +174,11 @@ function ShopHooks:ChangeItemInformation()
 
         -- Find the shop name based on the locations name
         local scouted_location = Storage:Get("merchant_scouted")[location_name]
+        if scouted_location == nil then
+            Logger:warn("Shop location not scouted: " .. location_name)
+            return
+        end
+        
         local _, _, shop_name  = string.find(location_name, ".*:%s(.*)%s%-.*", 1, false)
         local _, _, item_id_str    = string.find(location_name, ".*Item%s(.*)", 1, false)
         if shop_name == nil or item_id_str == nil then 
