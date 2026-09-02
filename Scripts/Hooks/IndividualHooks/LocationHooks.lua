@@ -71,7 +71,7 @@ function LocationHooks:Register(hookManager, dependencies)
          function (ctx, level_destination, spawn_point_tag, world_context)
             local level_asset = level_destination:get():ToString()
 
-            local region = Regions.BY_LEVEL_ASSET(level_asset)
+            local region = Regions.BY_LEVEL_ASSET[level_asset]
             if region == nil or region.name == nil then return end
 
             local level = region.name
