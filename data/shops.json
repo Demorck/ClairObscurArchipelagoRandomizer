@@ -96,14 +96,14 @@
   {
     "name": "Pecha",
     "region": "WM: Second Continent South",
-    "datatable": "CustomizationMerchants/DT_Merchant_WM_8.DT_Merchant_WM_8",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_5.DT_Merchant_WM_5",
     "has_fight": false,
     "unlock_item": null
   },
   {
     "name": "Strabami",
     "region": "WM: Second Continent South",
-    "datatable": "CustomizationMerchants/DT_Merchant_WM_9.DT_Merchant_WM_9",
+    "datatable": "CustomizationMerchants/DT_Merchant_WM_4.DT_Merchant_WM_4",
     "has_fight": false,
     "unlock_item": null
   },
