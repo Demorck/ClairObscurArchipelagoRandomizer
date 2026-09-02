@@ -1,4 +1,5 @@
 local Regions = require("Constants.RegionConstants")
+local Characters = require("Constants.CharacterConstants")
 
 ---Storage Schema Definition
 ---Defines the structure, types, default values, and validation rules for Storage
@@ -41,19 +42,19 @@ StorageSchema.fields = {
 
     pictosIndex = {
         type = "number",
-        default = -1,
+        default = 0,
         jsonKey = "pictos_index",
         validator = function(value)
-            return value >= -1
+            return value >= 0
         end
     },
 
     weaponsIndex = {
         type = "number",
-        default = -1,
+        default = 0,
         jsonKey = "weapons_index",
         validator = function(value)
-            return value >= -1
+            return value >= 0
         end
     },
 
@@ -91,14 +92,7 @@ StorageSchema.fields = {
 
     characters = {
         type = "table",
-        default = {
-            Frey   = false,
-            Maelle = false,
-            Lune   = false,
-            Sciel  = false,
-            Verso  = false,
-            Monoco = false
-        }
+        default = Characters.BuildUnlockDefaults()
     },
 
     progressive_rock = {

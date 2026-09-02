@@ -13,6 +13,7 @@ Constants.QUEST = require "Constants.QuestConstants"
 Constants.BLUEPRINT = require "Constants.BlueprintConstants"
 Constants.GAME = require "Constants.GameConstants"
 Constants.ASSETS = require "Constants.AssetsConstants"
+Constants.CHARACTERS = require "Constants.CharacterConstants"
 
 Constants.VERSION = '0.4.3'
 

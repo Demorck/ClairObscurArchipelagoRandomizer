@@ -56,7 +56,9 @@ function Data.Load()
         Logger:error("Failed to load items from " .. items_path)
     else
         local unique_names = 0
+        Data.count_by_type = {}
         for _, item in ipairs(Data.items) do
+            Data.count_by_type[item.type] = (Data.count_by_type[item.type] or 0) + 1
             if Data.items_by_AP_name[item.name] == nil then
                 Data.items_by_AP_name[item.name] = item
                 unique_names = unique_names + 1

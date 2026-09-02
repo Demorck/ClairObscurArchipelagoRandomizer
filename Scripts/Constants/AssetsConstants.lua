@@ -1,3 +1,4 @@
+  --- Music randomizer catalogue, waiting on the OtherHooks hook to be re-enabled and some strength to do it
   ---@class Music_randomizer
   ---@field ASSET string
   ---@field READABLE_NAME string

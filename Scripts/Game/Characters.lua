@@ -43,9 +43,9 @@ end
 function Characters:AddEveryone()
     Logger:info("Adding everyone to party...")
 
-    for i, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        Inventory:AddItem(CONSTANTS.GAME.TABLE.CHARACTERS_WEAPONS[i], 1, 1)
-        self:AddCharacter(char)
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        Inventory:AddItem(character.weapon, 1, 1)
+        self:AddCharacter(character.id)
     end
 
 
@@ -174,7 +174,8 @@ function Characters:ModifyPartyIfNeeded()
     local unlocked_in_party = {}
     local unlocked_not_in_party = {}
  
-    for _, char_id in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        local char_id = character.id
         local in_party = Logger:callMethod(helper, "IsCharacterInParty", FName(char_id))
         local is_unlocked = Storage:IsCharacterUnlocked(char_id)
  
@@ -250,50 +251,6 @@ function Characters:EnableCharactersInPartyOnlyUnlocked()
     self:ModifyPartyIfNeeded()
 end
 
-function Characters:EnableCharactersInCollectionOnlyUnlocked()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return end
-    if Characters:HasExcludedCharactersInCollection() then return end
-
-    Logger:info("Enabling characters in collection only if unlocked...")
-
-    for _, char in ipairs(char_data) do
-        local char_name = char.HardcodedNameID:ToString()
-        if Storage:IsCharacterUnlocked(char_name) then
-            char.IsExcluded = false
-        else
-            char.IsExcluded = true
-        end
-    end
-end
-
-function Characters:HasExcludedCharactersInCollection()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return false end
-
-    for _, char in ipairs(char_data) do
-        local char_name = char.HardcodedNameID:ToString()
-        if char.IsExcluded and Storage:IsCharacterUnlocked(char_name) then
-            return true
-        end
-
-        if not char.IsExcluded and not Storage:IsCharacterUnlocked(char_name) then
-            return true
-        end
-    end
-
-    return false
-end
-
---- Disable everyone from the party
-function Characters:DisableEveryoneFromParty()
-    Logger:info("Disabling everyone from party...")
-
-    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        self:EnableInParty(char, false)
-    end
-end
-
 --- Enable or disable a specific character in the party
 --- @param name string the internal name of the character
 --- @param enable boolean true to enable, false to disable
@@ -325,8 +282,8 @@ function Characters:SetHPAll(hp)
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
     if helper == nil then return end
 
-    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        local fname = FName(char)
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        local fname = FName(character.id)
         Logger:callMethod(helper, "SetCharacterHP", fname, hp)
         -- helper:SetCharacterHP(fname, hp)
     end
@@ -337,8 +294,8 @@ function Characters:HealEveryone()
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
     if helper == nil then return end
 
-    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        local fname = FName(char)
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        local fname = FName(character.id)
         Logger:callMethod(helper, "RestoreHP", fname, 9999999)
     end
 end

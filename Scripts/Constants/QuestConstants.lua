@@ -1,3 +1,5 @@
+--- Reference table of every quest in the game
+--- Most groups are unused: they are here so a quest can be fixed without digging the game again
 ---@class Quests_Constants
 local QUESTS = {
     GOLDEN_PATH = {

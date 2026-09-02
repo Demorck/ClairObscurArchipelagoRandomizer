@@ -28,12 +28,7 @@ function CharacterHooks:Register(hookManager, dependencies)
             local charName = data.HardcodedNameID:ToString()
 
             -- Check if it's a playable character
-            local isPlayableChar = charName == "Frey" or
-                                   charName == "Lune" or
-                                   charName == "Maelle" or
-                                   charName == "Sciel" or
-                                   charName == "Verso" or
-                                   charName == "Monoco"
+            local isPlayableChar = CONSTANTS.CHARACTERS.BY_ID[charName] ~= nil
 
             if isPlayableChar then
                 local charManager = clientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C

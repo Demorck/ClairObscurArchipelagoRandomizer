@@ -127,14 +127,14 @@ function ItemReceiver:GetLevelItem(gear_type, id)
             level = FindIDinTable(ArchipelagoState.weapons_data)
         end
     elseif ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.ORDER_RECEIVED then
-        local percent = 0
-        percent = (Storage.pictosIndex + Storage.weaponsIndex) / (CONSTANTS.CONFIG.NUMBER_OF_PICTOS + CONSTANTS.CONFIG.NUMBER_OF_WEAPONS)
+        local total_gear = (Data.count_by_type["Picto"] or 0) + (Data.count_by_type["Weapon"] or 0)
         if gear_type == "Picto" then
             Storage.pictosIndex = Storage.pictosIndex + 1
         elseif gear_type == "Weapon" then
             Storage.weaponsIndex = Storage.weaponsIndex + 1
         end
 
+        local percent = (Storage.pictosIndex + Storage.weaponsIndex) / total_gear
         level = math.ceil(CONSTANTS.CONFIG.MAX_LEVEL_GEAR * percent)
     elseif ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.FULL_RANDOM then
         level = math.random(1, CONSTANTS.CONFIG.MAX_LEVEL_GEAR)
