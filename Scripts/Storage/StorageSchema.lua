@@ -1,3 +1,5 @@
+local Regions = require("Constants.RegionConstants")
+
 ---Storage Schema Definition
 ---Defines the structure, types, default values, and validation rules for Storage
 ---@class StorageSchema
@@ -84,30 +86,7 @@ StorageSchema.fields = {
     -- Complex data structures (tables)
     tickets = {
         type = "table",
-        default = {
-            GoblusLair                       = false,
-            AncientSanctuary                 = false,
-            SideLevel_RedForest              = false,
-            EsquieNest                       = false,
-            SideLevel_OrangeForest           = false,
-            SideLevel_CleasFlyingHouse       = false,
-            ForgottenBattlefield             = false,
-            SidelLevel_FrozenHearts          = false,
-            GestralVillage                   = false,
-            MonocoStation                    = false,
-            Lumiere                          = false,
-            Monolith_Interior_PaintressIntro = false,
-            OldLumiere                       = false,
-            SideLevel_Reacher                = false,
-            SideLevel_AxonPath               = false,
-            SeaCliff                         = false,
-            Sirene                           = false,
-            SideLevel_TwilightSanctuary      = false,
-            Visages                          = false,
-            SideLevel_YellowForest           = false,
-            SideLevel_CleasTower_Entrance    = false,
-            SideLevel_VersosDraft            = false,
-        }
+        default = Regions.BuildTicketDefaults()
     },
 
     characters = {

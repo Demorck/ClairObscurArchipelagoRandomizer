@@ -123,7 +123,7 @@ function ShopHooks:ModifyDatatable(table_to_insert_data_inserted_in_datatable)
         end
         
         local level_asset_name = ClientBP:GetLevelName()
-        local shop_datatable_in_level = CONSTANTS.GAME.TABLE.SHOP_DATATABLE_BY_MAP[level_asset_name]
+        local shop_datatable_in_level = Regions.DATATABLES_BY_LEVEL_ASSET[level_asset_name] or {}
         for _, shop in ipairs(shop_data) do
             local found = false
             for _, shop_datatable in ipairs(shop_datatable_in_level) do
@@ -178,7 +178,7 @@ function ShopHooks:ChangeItemInformation()
             Logger:warn("Shop location not scouted: " .. location_name)
             return
         end
-        
+
         local _, _, shop_name  = string.find(location_name, ".*:%s(.*)%s%-.*", 1, false)
         local _, _, item_id_str    = string.find(location_name, ".*Item%s(.*)", 1, false)
         if shop_name == nil or item_id_str == nil then 

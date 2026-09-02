@@ -71,19 +71,10 @@ function LocationHooks:Register(hookManager, dependencies)
          function (ctx, level_destination, spawn_point_tag, world_context)
             local level_asset = level_destination:get():ToString()
 
-            local index = -1
-            for i, value in ipairs(CONSTANTS.GAME.TABLE.MAP_NAME.ASSETS_TABLE) do
-                if value == level_asset then
-                    index = i
-                    break
-                end
-            end
+            local region = Regions.BY_LEVEL_ASSET(level_asset)
+            if region == nil or region.name == nil then return end
 
-            if index == -1 then
-                return
-            end
-
-            local level = CONSTANTS.GAME.TABLE.MAP_NAME.READABLE_TABLE[index]
+            local level = region.name
             if level ~= "None" then
                 register_sastro(level)
                 change_data_storage(level)
@@ -96,7 +87,7 @@ function LocationHooks:Register(hookManager, dependencies)
     hookManager:Register("/Game/Gameplay/WorldInfo/BP_WorldInfoComponent.BP_WorldInfoComponent_C:RegisterTeleportPoint",
         function (self, tp_UObject)
             local level_name = ClientBP:GetLevelName()
-            if level_name ~= "Level_WorldMap_Main_V2" then return end
+            if level_name ~= Regions.BY_NAME.WorldMap.asset then return end
 
             local portal = tp_UObject:get() ---@cast portal ABP_jRPG_MapTeleportPoint_C
 

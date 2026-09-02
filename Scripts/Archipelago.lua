@@ -195,13 +195,17 @@ function Archipelago:isRegionExcluded(region_name)
     end
 
     local exclusion_level = self:GetExclusionLevel()
-    if CONSTANTS.CONFIG.REGION_LEVEL[region_name] == nil then
+    local region = Regions.BY_AP_NAME[region_name]
+    if region == nil then
         Logger:warn(region_name .. ' is not found in config region level, returning false')
         return false
     end
-    if self.options.exclude_endgame_locations == 0 and CONSTANTS.CONFIG.REGION_LEVEL[region_name] > exclusion_level then
+    
+    if self.options.exclude_endgame_locations == 0 and region.level > exclusion_level then
         return true
     end
+
+    return false
 end
 
 function Archipelago:GetExclusionLevel()

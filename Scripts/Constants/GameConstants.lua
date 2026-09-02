@@ -49,44 +49,6 @@ local GAME = {
                             },
 
 
-                            
-        MAP_NAME = {
-            ASSETS_TABLE   = {  "Level_Goblu_Main_V5", "Level_AncientSanctuary_Main_V2", "Level_RedForest_Main", "LevelMain_EsquieNest", "Level_OraneForest_Main",
-                                "Level_Side_CleasWorkShop_V2", "Level_Main_ForgottenBattlefield_V2", "Level_Side_FrozenHeart", "Level_Main_GestralVillage_V2",
-                                "Level_MonocoStation", "Level_Lumiere_Main_V2", "Level_PaintressIntro_Main", "Level_OldLumiere_Main", "Level_Reacher_Main_V2",
-                                "Level_SeaCliff_Main_V2", "Level_Sirene_Main_V2", "Level_Side_TwilightSanctuary", "Level_Visages_Main_V1", "Level_YellowForest_Main",
-                                "CleasTower_GroundFloorEntrance", "Level_Side_VersosDraft", "Level_Camp_Main", "Level_WorldMap_Main_V2" },
-
-            READABLE_TABLE = {  "GoblusLair", "AncientSanctuary", "SideLevel_RedForest", "EsquieNest", "SideLevel_OrangeForest",
-                                "SideLevel_CleasFlyingHouse", "ForgottenBattlefield", "SidelLevel_FrozenHearts", "GestralVillage",
-                                "MonocoStation", "Lumiere", "Monolith_Interior_PaintressIntro", "OldLumiere", "SideLevel_Reacher",
-                                "SeaCliff", "Sirene", "SideLevel_TwilightSanctuary", "Visages", "SideLevel_YellowForest",
-                                "SideLevel_CleasTower_Entrance", "SideLevel_VersosDraft", "Camps", "WorldMap" }
-        },
-
-        SHOP_DATATABLE_BY_MAP = {
-            ["Level_Goblu_Main_V5"]                      = { "DT_Merchant_GoblusLair.DT_Merchant_GoblusLair"},
-            ["Level_Main_GestralVillage_V2"]             = { "CustomizationMerchants/DT_Merchant_GV_1_CustoSuits_Guys.DT_Merchant_GV_1_CustoSuits_Guys", "CustomizationMerchants/DT_Merchant_GV_1_CustoSuits_Ladies.DT_Merchant_GV_1_CustoSuits_Ladies", "DT_Merchant_GestralVillage1.DT_Merchant_GestralVillage1", "DT_Merchant_GestralVillage2.DT_Merchant_GestralVillage2", "DT_Merchant_GestralVillage3.DT_Merchant_GestralVillage3"},
-            ["Level_SeaCliff_Main_V2"]                   = { "DT_Merchant_SeaCliff.DT_Merchant_SeaCliff"},
-            ["Level_Main_ForgottenBattlefield_V2"]       = { "DT_Merchant_ForgottenBattlefield.DT_Merchant_ForgottenBattlefield"},
-            ["Level_MonocoStation"]                      = { "DT_Merchant_GrandisStation.DT_Merchant_GrandisStation"},
-            ["Level_OldLumiere_Main"]                    = { "DT_Merchant_OldLumiere.DT_Merchant_OldLumiere"},
-            ["Level_Visages_Main_V1"]                    = { "DT_Merchant_Visages.DT_Merchant_Visages"},
-            ["Level_Sirene_Main_V2"]                     = { "DT_Merchant_Sirene.DT_Merchant_Sirene"},
-            ["Level_Monolith_Interior_Climb_Main"]       = { "DT_Merchant_Monolith.DT_Merchant_Monolith", "DT_Merchant_MonocosMountain.DT_Merchant_MonocosMountain"},
-            ["Level_Lumiere_Main_V2"]                    = { "DT_Merchant_Lumiere.DT_Merchant_Lumiere"},
-            ["Level_YellowForest_Main"]                  = { "DT_Merchant_YellowForest.DT_Merchant_YellowForest"},
-            ["Level_OraneForest_Main"]                   = { "DT_Merchant_OrangeForest.DT_Merchant_OrangeForest"},
-            ["Level_Side_FrozenHeart"]                   = { "CustomizationMerchants/DT_Merchant_FH_Custo_Danseuse.DT_Merchant_FH_Custo_Danseuse"},
-            ["Level_Reacher_Main_V2"]                    = { "DT_Merchant_Reacher.DT_Merchant_Reacher"},
-            ["Level_Monolith_Floor_1"]                   = { "DT_Merchant_Optional3.DT_Merchant_Optional3" },
-            ["Level_Side_CleasWorkShop_V2"]              = { "DT_Merchant_CleaIsland.DT_Merchant_CleaIsland"},
-            ["Level_Side_TwilightSanctuary"]             = { "DT_Merchant_TwilightSanctuary.DT_Merchant_TwilightSanctuary"},
-            ["Level_Side_VersosDraft"]                   = { "CustomizationMerchants/DT_Merchant_Osquio.DT_Merchant_Osquio", "DT_Merchant_VersosDraft.DT_Merchant_VersosDraft"},
-            ["Level_WorldMap_Main_V2"]                   = { "CustomizationMerchants/DT_Merchant_WM_1.DT_Merchant_WM_1", "CustomizationMerchants/DT_Merchant_WM_2.DT_Merchant_WM_2", "CustomizationMerchants/DT_Merchant_WM_3_GustaveSuit.DT_Merchant_WM_3_GustaveSuit", "CustomizationMerchants/DT_Merchant_WM_4.DT_Merchant_WM_4", "CustomizationMerchants/DT_Merchant_WM_5.DT_Merchant_WM_5", "CustomizationMerchants/DT_Merchant_WM_6.DT_Merchant_WM_6", "CustomizationMerchants/DT_Merchant_WM_7.DT_Merchant_WM_7", "CustomizationMerchants/DT_Merchant_WM_8.DT_Merchant_WM_8", "CustomizationMerchants/DT_Merchant_WM_9.DT_Merchant_WM_9", "CustomizationMerchants/DT_Merchant_WM_9_Sirene.DT_Merchant_WM_9_Sirene", "CustomizationMerchants/DT_Merchant_WM_10.DT_Merchant_WM_10", "CustomizationMerchants/DT_Merchant_WM_11.DT_Merchant_WM_11", "CustomizationMerchants/DT_Merchant_WM_12.DT_Merchant_WM_12", "CustomizationMerchants/DT_Merchant_WM_13.DT_Merchant_WM_13", "CustomizationMerchants/DT_Merchant_WM_14.DT_Merchant_WM_14", "CustomizationMerchants/DT_Merchant_WM_15.DT_Merchant_WM_15", "CustomizationMerchants/DT_Merchant_WM_16.DT_Merchant_WM_16", "CustomizationMerchants/DT_Merchant_WM_17.DT_Merchant_WM_17", "CustomizationMerchants/DT_Merchant_WM_Chic.DT_Merchant_WM_Chic", },
-            ["SmallLevel_CrulerBrulerWeaponry_Blockout"] = { "DT_Merchant_CoastalCave_Bruler.DT_Merchant_CoastalCave_Bruler", "DT_Merchant_CoastalCave_Cruler.DT_Merchant_CoastalCave_Cruler"}
-        },
-
         WORLDMAP_DIVE_POSITION = {
             N_OF_SIRENE = {
                 X = -324977.38906072, 

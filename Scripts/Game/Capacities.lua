@@ -79,7 +79,7 @@ function Capacities:UnlockNextWorldMapAbility()
     end
 
     if not new then
-        Save:WriteFlagByName(CONSTANTS.NID.DIVE_GUID.NAME, true)
+        Save:WriteFlagByName(CONSTANTS.NID.DIVE_GUID, true)
     end
 end
 

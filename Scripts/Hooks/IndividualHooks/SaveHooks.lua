@@ -155,7 +155,7 @@ end
 
 function SaveHooks:SetSpringMeadowsSpawnpointWhenNewSave()
     return function(_, _, LevelAssetName, SpawnPointTag)
-        LevelAssetName:set(FName("Level_SpringMeadows_Main_V2"))
+        LevelAssetName:set(FName(Regions.BY_AP_NAME["Spring Meadows"].asset))
         local spawnpoint = SpawnPointTag:get() ---@cast spawnpoint FGameplayTag
         spawnpoint.TagName = FName("Level.SpawnPoint.SpringMeadows.Entry")
         

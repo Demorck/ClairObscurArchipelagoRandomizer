@@ -83,7 +83,7 @@ function ItemReceiver:HandleAreaItem(item_data)
         Quests:SetObjectiveStatus("Main_GoldenPath", "12_Axon2", QUEST_STATUS.COMPLETED)
         Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.STARTED)
     elseif item_data.name == "Area - The Reacher" then
-        Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE.NAME, true)
+        Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE, true)
     elseif item_data.name == "Area - Lumiere" then
         Quests:SetObjectiveStatus("Main_GoldenPath", "16_GoBackToLumiereAndDefeatRenoir", QUEST_STATUS.STARTED)
     end

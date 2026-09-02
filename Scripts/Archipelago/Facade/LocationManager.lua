@@ -136,17 +136,12 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
         return locations_data[1]
     end
 
-    local function HandleGenericChroma()
-        local predicate = {
-            ["World Map"] = "Level_WorldMap_Main_V2",
-            ["Spring Meadows"] = "Level_SpringMeadows_Main_V2",
-            ["The Monolith"] = "Level_Monolith_Interior_Climb_Main",
-            ["Esquies Nest"] = "LevelMain_EsquieNest",
-        }
+    local function MatchCurrentLevel()
+        local current = Regions.BY_LEVEL_ASSET[level_name]
+        if current == nil then return nil end
 
         for _, loc in pairs(locations_data) do
-            local region = loc["location"]
-            if predicate[region] ~= nil and predicate[region] == level_name then
+            if Regions.BY_AP_NAME[loc["location"]] == current then
                 return loc
             end
         end
@@ -181,36 +176,13 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
         return location
     end
 
-    local function HandlePetank()
-        local predicate = {
-            ["Sirene"] = "Level_Sirene_Main_V2",
-            ["Ancient Sanctuary"] = "Level_AncientSanctuary_Main_V2",
-            ["Frozen Hearts"] = "Level_Side_FrozenHeart",
-            ["The Monolith"] = "Level_Monolith_Interior_Climb_Main",
-            ["Isle of the Eyes"] = "SmallLevel_MF_Zone_01",
-            ["Stone Wave Cliffs"] = "ConceptLevel_SeaCliff_V1",
-            ["Flying Manor"] = "Level_CleaFlyingHouse_Main",
-            ["Forgotten Battlefield"] = "Level_Main_ForgottenBattlefield_V2",
-            ["Endless Night Sanctuary"] = "Level_Side_TwilightSanctuary",
-            ["Esquie's Nest"] = "LevelMain_EsquieNest",
-            ["The Reacher"] = "Level_Reacher_Main_V2"
-        }
-
-        for _, loc in pairs(locations_data) do
-            local region = loc["location"]
-            if predicate[region] ~= nil and predicate[region] == level_name then
-                return loc
-            end
-        end
-    end
-
     local res = nil
     if location_name == "Chest_Generic_Chroma" then
-        res = HandleGenericChroma()
+        res = MatchCurrentLevel()
     elseif location_name == "Chest_Generic_5xLuminaPoint" then
         res = HandleDiveItems()
     elseif string.find(location_name, "^Petank") then
-        res = HandlePetank()
+        res = MatchCurrentLevel()
     end
 
     return res or locations_data[1]

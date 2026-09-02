@@ -13,6 +13,7 @@ Battle     = require "Game.Battle"
 CONSTANTS  = require "Constants.index"
 Utils      = require "Utils.index"
 Commands   = require "Commands"
+Regions    = require "Constants.RegionConstants"
 
 Dump = Utils.TableHelper.Dump
 Contains = Utils.TableHelper.Contains
