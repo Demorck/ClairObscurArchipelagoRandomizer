@@ -41,7 +41,12 @@ local CONFIG = {
         "Consumable_Health_Level2"
     },
 
-    VERSION = "0.3.0"
+    ---How a category of locations is handled by the apworld
+    EXCLUSION = {
+        EXCLUDED = 0,  -- locations are removed from the pool
+        FILLER   = 1,  -- locations exist but only hold filler
+        INCLUDED = 2,  -- locations can hold progression
+    },
 }
 
 return CONFIG
