@@ -51,7 +51,7 @@ function Hooks:Register()
     UIHooks:Register(hookManager, dependencies)
     CapacityHook:Register(hookManager, dependencies)
 
-    if dependencies.archipelago.options.shopsanity == 1 then
+    if Options:IsEnabled("shopsanity") == 1 then
         ShopHooks:Register(hookManager, dependencies)
     end
     -- OtherHooks:Register(hookManager, dependencies)

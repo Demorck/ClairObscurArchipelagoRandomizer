@@ -134,7 +134,7 @@ function Capacities:UnlockAllExplorationCapacities()
     if ExplorationProgression == nil then return end
 
     for i, _ in ipairs(CONSTANTS.GAME.EXPLORATION_CAPACITIES) do
-        if Archipelago.options.shuffle_free_aim == 1 then
+        if Options:IsEnabled("shuffle_free_aim") then
             if CONSTANTS.GAME.EXPLORATION_CAPACITIES[i] ~= "FreeAim" then
                 -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
                 Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i - 1, true)
@@ -166,7 +166,7 @@ function Capacities:TogglePaintBreakIfNeeded()
 end
 
 function Capacities:ToggleFreeAimIfNeeded()
-    if Archipelago.options.shuffle_free_aim == 1 then
+    if Options:IsEnabled("shuffle_free_aim") then
         local unlocked = Storage:Get("free_aim_unlocked")
         local locked = not unlocked
 

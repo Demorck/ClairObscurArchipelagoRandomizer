@@ -52,11 +52,11 @@ end
 function ItemReceiver:HandleOtherItem(item_data)
     if item_data.name == "Chroma Pack" then
         local how_much_chroma = 0
-        if Archipelago.options.chroma_pack_type == 0 then
+        if Options.values.chroma_pack_type == 0 then
             how_much_chroma = Archipelago.chroma
         else
-            local min = math.min(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
-            local max = math.max(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
+            local min = math.min(Options.values.min_chroma_pack, Options.values.max_chroma_pack)
+            local max = math.max(Options.values.min_chroma_pack, Options.values.max_chroma_pack)
             how_much_chroma = math.random(min, max)
         end
         Inventory:AddGold(how_much_chroma)
@@ -112,21 +112,22 @@ function ItemReceiver:GetLevelItem(gear_type, id)
     local function FindIDinTable(t)
         for i, v in ipairs(t) do
             if id == v then
-                return math.ceil(CONSTANTS.CONFIG.MAX_LEVEL_GEAR * i / #t)
+                return math.ceil(Archipelago.max_level_gear * i / #t)
             end
         end
         return 15
     end
 
     local level = 15
-    if  ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.SPHERE_PLACEMENT or
-        ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.BALANCED_RANDOM then
+    local gear_option = Options.values.gear_scaling
+    if  gear_option == Options.GEAR_SCALING.SPHERE_PLACEMENT or
+        gear_option == Options.GEAR_SCALING.BALANCED_RANDOM then
         if gear_type == "Picto" then
             level = FindIDinTable(ArchipelagoState.pictos_data)
         elseif gear_type == "Weapon" then
             level = FindIDinTable(ArchipelagoState.weapons_data)
         end
-    elseif ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.ORDER_RECEIVED then
+    elseif gear_option == Options.GEAR_SCALING.ORDER_RECEIVED then
         local total_gear = (Data.count_by_type["Picto"] or 0) + (Data.count_by_type["Weapon"] or 0)
         if gear_type == "Picto" then
             Storage.pictosIndex = Storage.pictosIndex + 1
@@ -135,9 +136,9 @@ function ItemReceiver:GetLevelItem(gear_type, id)
         end
 
         local percent = (Storage.pictosIndex + Storage.weaponsIndex) / total_gear
-        level = math.ceil(CONSTANTS.CONFIG.MAX_LEVEL_GEAR * percent)
-    elseif ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.FULL_RANDOM then
-        level = math.random(1, CONSTANTS.CONFIG.MAX_LEVEL_GEAR)
+        level = math.ceil(Archipelago.max_level_gear * percent)
+    elseif gear_option == Options.GEAR_SCALING.FULL_RANDOM then
+        level = math.random(1, Archipelago.max_level_gear)
     end
 
     return level

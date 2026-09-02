@@ -16,7 +16,8 @@ local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_i
     } ---@type FS_MerchantItemData
 
     local item_type = is_extra and "Extra Item" or "Item"
-    local number_to_add = is_extra and Archipelago.options.extra_location_per_shop or Archipelago.options.location_per_shop
+    local number_to_add = is_extra and Options.values.extra_location_per_shop
+                                    or Options.values.location_per_shop
 
     for i = 1, number_to_add, 1 do
         local name = "Merchant (" .. shop_data.region .. "): " .. shop_data.name .. " - " .. item_type .. " " .. tostring(i)
@@ -99,7 +100,7 @@ function ShopHooks:ChangeShopRowData(t)
         local icon = ClientBP:GetHelper().IconAP:Find(2):get()
         local display_name     = FText("An item")
 
-        if Archipelago.options.show_shop_items then
+        if Options:IsEnabled("show_shop_items") then
             display_name     = FText(data["name"])
             icon             = ClientBP:GetHelper().IconAP:Find(data["classification"]):get()
         end
@@ -221,7 +222,7 @@ function ShopHooks:ChangeItemInformation()
         local display_name = FText("An item")
         local icon = ClientBP:GetHelper().IconAP:Find(2):get()
 
-        if Archipelago.options.show_shop_items then
+        if Options:IsEnabled("show_shop_items") then
             item_description = FText(string_builded)
             display_name     = FText(location_name)
             icon             = ClientBP:GetHelper().IconAP:Find(scouted_location.classification):get()
@@ -229,12 +230,12 @@ function ShopHooks:ChangeItemInformation()
 
         local already_hinted = Storage:IsShopItemAlreadyHinted(location_name)
         if not already_hinted then
-            if Archipelago.options.create_hint and not extra then
+            if Options:IsEnabled("create_hint") and not extra then
                 Archipelago:ScoutLocation(location_name, true)
                 Storage:HintMerchant(location_name, true)
             end
 
-            if Archipelago.options.create_hint_extra and extra then
+            if Options:IsEnabled("create_hint_extra") and extra then
                 Archipelago:ScoutLocation(location_name, true)
                 Storage:HintMerchant(location_name, true)
             end

@@ -83,7 +83,7 @@ function BattleHooks:OnBattleVictory(archipelago, storage, logger, battle, chara
         end
 
         -- Handle character unlocks (if not shuffled)
-        if archipelago.options.char_shuffle == 0 then
+        if not Options:IsEnabled("char_shuffle") then
             local canUnlock, charName = battle:IsBattleCanUnlockCharacter(encounterName)
             if canUnlock and charName then
                 if not Storage:IsCharacterUnlocked(charName) then
@@ -116,7 +116,7 @@ function BattleHooks:OnRollBattleRewards(archipelago, storage)
             local itemName = entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString()
 
             if  string.find(itemName, "Foot") or
-                Archipelago.options.shopsanity == 0 and string.find(itemName, "Merchant") then
+                not Options:IsEnabled("shopsanity") and string.find(itemName, "Merchant") then
                 table.insert(keepRewards, {
                     ItemID_2_FDDBE5744EC164155E4C959474052581 = entry.ItemID_2_FDDBE5744EC164155E4C959474052581,
                     LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7 = entry.LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7,

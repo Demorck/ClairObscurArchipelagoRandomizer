@@ -104,7 +104,7 @@ function Archipelago:ScoutMerchants()
         if self:isRegionExcluded(shop.region) then goto continue end
 
 
-        for i = 1, self.options.location_per_shop, 1 do
+        for i = 1, Options.values.location_per_shop, 1 do
             local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Item " .. tostring(i)
             table.insert(location_names, current_name)
         end
@@ -113,7 +113,7 @@ function Archipelago:ScoutMerchants()
             local fight = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Fight"
             table.insert(location_names, fight)
 
-            for i = 1, self.options.extra_location_per_shop, 1 do
+            for i = 1, Options.values.extra_location_per_shop, 1 do
                 local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Extra Item " .. tostring(i)
                 table.insert(location_names, current_name)
             end
@@ -186,11 +186,12 @@ function Archipelago:GetLevelItem(gear_type, id)
 end
 
 function Archipelago:isRegionExcluded(region_name) 
-    if self.options.exclude_endgame_locations ~= 0 and self.options.exclude_endless_tower ~= 0 then
+    if Options.values.exclude_endgame_locations ~= EXCLUSION.EXCLUDED and 
+       Options.values.exclude_endless_tower ~= EXCLUSION.EXCLUDED then
         return false
     end
 
-    if self.options.exclude_endless_tower == 0 and region_name == "Endless Tower" then
+    if Options.values.exclude_endless_tower ~= EXCLUSION.EXCLUDED and region_name == "Endless Tower" then
         return true
     end
 
@@ -201,7 +202,7 @@ function Archipelago:isRegionExcluded(region_name)
         return false
     end
     
-    if self.options.exclude_endgame_locations == 0 and region.level > exclusion_level then
+    if Options.values.exclude_endgame_locations ~= EXCLUSION.EXCLUDED and region.level > exclusion_level then
         return true
     end
 
@@ -209,16 +210,8 @@ function Archipelago:isRegionExcluded(region_name)
 end
 
 function Archipelago:GetExclusionLevel()
-    local level = 33
-    if self.options.goal == 0 then
-        level = 15
-    elseif self.options.goal == 1 then
-        level = 16
-    elseif self.options.goal == 4 then
-        level = 28
-    end 
-
-    return level
+    local goal = CONSTANTS.GOAL[Options.values.goal]
+    return goal and goal.exclusion_level or 33
 end
 
 ---Get item from AP data (utility function)

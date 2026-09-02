@@ -1,18 +1,3 @@
----@class ArchipelagoOptions
----@field gear_scaling number
----@field starting_char number
----@field goal number
----@field char_shuffle number
----@field shuffle_free_aim number
----@field exclude_endgame_locations number
----@field shopsanity number
----@field location_per_shop number
----@field extra_location_per_shop number
----@field exclude_endless_tower number
----@field chroma_pack_type number
----@field min_chroma_pack number
----@field max_chroma_pack number
-
 ---Archipelago State Module
 ---Centralizes all Archipelago global state and configuration
 ---@class ArchipelagoState
@@ -22,35 +7,13 @@ local ArchipelagoState = {}
 ArchipelagoState.seed = nil
 ArchipelagoState.slot = nil
 
--- Slot data options
-local function CreateDefaultOptions()
-    ---@type ArchipelagoOptions
-    return {
-        gear_scaling = 0,
-        starting_char = 0,
-        goal = 0,
-        char_shuffle = 0,
-        shuffle_free_aim = 0,
-        exclude_endgame_locations = 0,
-        shopsanity = 0,
-        location_per_shop = 0,
-        extra_location_per_shop = 0,
-        exclude_endless_tower = 0,
-        chroma_pack_type = 0,
-        min_chroma_pack = 0,
-        max_chroma_pack = 0,
-    }
-end
-
----@type ArchipelagoOptions
-ArchipelagoState.options = CreateDefaultOptions()
-
 -- Totals (items, locations, etc.)
 ArchipelagoState.totals = {}
 
 -- Gear scaling data
-ArchipelagoState.weapons_data = {}  
+ArchipelagoState.weapons_data = {}
 ArchipelagoState.pictos_data = {}
+ArchipelagoState.max_level_gear = 33
 
 -- Shop
 ArchipelagoState.shop_data = {}
@@ -84,7 +47,6 @@ ArchipelagoState.want_to_scout_shop = false
 function ArchipelagoState:Initialize()
     self.seed = nil
     self.slot = nil
-    self.options = CreateDefaultOptions()
     self.totals = {}
     self.weapons_data = {}
     self.pictos_data = {}
@@ -98,6 +60,7 @@ function ArchipelagoState:Initialize()
     self.current_year_gommage = 34
     self.number_of_players = 0
     self.apSystem = nil
+    self.max_level_gear = 33
 end
 
 ---Reset state (for disconnection)

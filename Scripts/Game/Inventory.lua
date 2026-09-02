@@ -117,7 +117,7 @@ function Inventory:SetItemQuantity(item_name, amount)
 end
 
 function Inventory:RemoveConsumable()
-    for _, consumable in ipairs(CONSTANTS.CONFIG.CONSUMABLE_ITEM) do
+    for _, consumable in ipairs(CONSTANTS.GAME.CONSUMABLE_ITEM) do
         Inventory:SetItemQuantity(consumable, 0)
     end
 end

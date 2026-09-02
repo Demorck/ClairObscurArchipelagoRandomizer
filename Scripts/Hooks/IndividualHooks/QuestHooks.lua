@@ -43,7 +43,7 @@ function QuestHooks:Register(hookManager, dependencies)
             -- Gestral rewards
             if string.find(objectiveName, "FindLostGestral") and
                statusValue == QUEST_STATUS.COMPLETED then
-                if archipelago.options.gestral_shuffle == 1 then
+                if Options:IsEnabled("gestral_shuffle") then
                     archipelago:SendLocationCheck(objectiveName)
                 end
             end

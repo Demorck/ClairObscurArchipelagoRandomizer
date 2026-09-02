@@ -15,6 +15,7 @@ Utils        = require "Utils.index"
 Commands     = require "Commands"
 Regions      = require "Constants.RegionConstants"
 RuntimeState = require "RuntimeState"
+Options      = require "Archipelago.Options"
 
 Dump = Utils.TableHelper.Dump
 Contains = Utils.TableHelper.Contains
@@ -73,7 +74,7 @@ function InitSaveAfterLumiere()
    Characters:AddEveryone()
    Characters:HealEveryone()
 
-   if Archipelago.options.char_shuffle == 0 then
+   if not Options:IsEnabled("char_shuffle") then
       Storage:UnlockCharacter("Frey")
    end
 

@@ -19,21 +19,9 @@ end
 ---@param encounter_name string
 ---@return boolean
 function Battle:IsEncounterGoal(encounter_name)
-    local goal = Archipelago.options.goal
+    local goal = CONSTANTS.GOAL[Options.values.goal]
 
-    if goal == 0 then
-        return encounter_name == "L_Boss_Paintress_P1"
-    elseif goal == 1 then
-        return encounter_name == "L_Boss_Curator_P1"
-    elseif goal == 2 then
-        return encounter_name == "TowerBattle_33"
-    elseif goal == 3 then
-        return encounter_name == "Boss_SimonPhase2*1"
-    elseif goal == 4 then
-        return encounter_name == "CFH_Boss_Clea"
-    else
-        return false
-    end
+    return goal ~= nil and goal.encounter == encounter_name
 end
 
 --- Return true if the encounter is a boss but not the goal

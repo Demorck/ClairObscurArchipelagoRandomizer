@@ -73,10 +73,6 @@ function SlotDataHandler:Handle(slotData)
         Data.Load()
     end
 
-    -- if self.archipelago.options.shopsanity and self.archipelago.want_to_scout_shop then
-    --     self.archipelago:ScoutMerchants()
-    -- end
-
     self.archipelago.want_to_scout_shop = false
 end
 
@@ -99,25 +95,19 @@ function SlotDataHandler:ProcessSlotData(slotData)
 
     -- Options and data
     if self.archipelago then
-        self.archipelago.options = slotData.options or {}
+        Options:Load(slotData.options)
         self.archipelago.totals = slotData.totals or {}
         self.archipelago.pictos_data = slotData.pictos or {}
         self.archipelago.weapons_data = slotData.weapons or {}
         self.archipelago.shop_data = slotData.shops or {}
         self.archipelago.chroma = slotData.chroma or nil
+        self.archipelago.max_level_gear = slotData.max_level_gear
     end
 
-    -- Max gear level
-    if CONSTANTS then
-        CONSTANTS.CONFIG.MAX_LEVEL_GEAR = slotData.max_gear_level or CONSTANTS.CONFIG.DEFAULT_MAX_LEVEL_GEAR
-    end
-
-    print(Utils.TableHelper.Dump(self.archipelago.shop_data["Old Lumiere Merchant"], 1))
     -- Log received data
     self.logger:info("Slot Data Received:")
     if self.archipelago then
-        self.logger:info("  Options: " .. Dump(self.archipelago.options))
-        self.logger:info("  Totals: " .. Dump(self.archipelago.totals))
+        self.logger:info("############# NEED TO ADD IT AFTER REFACTORING")
     end
 end
 
