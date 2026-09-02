@@ -55,7 +55,7 @@ function Capacities:UnlockNextWorldMapAbility()
     local abilities = Capacities:GetWorldMapAbilities()
 
     local new = false
-    for i, capacity in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
+    for i, capacity in ipairs(CONSTANTS.GAME.WORLDMAP_CAPACITIES) do
         local row = abilities[capacity]
         if not row.is_unlocked then
             local t = { i }
@@ -89,7 +89,7 @@ function Capacities:GetWorldMapAbilities()
     if ExplorationProgression == nil then return {} end
     local result = {}
 
-   for key, value in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
+   for key, value in ipairs(CONSTANTS.GAME.WORLDMAP_CAPACITIES) do
       local out = {}
     --   Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
     --   ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
@@ -113,7 +113,7 @@ function Capacities:SetExplorationCapacity(capacity_to_unlock, unlock)
     if ExplorationProgression == nil then return end
     
     local index = -1
-    for i, value in ipairs(CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES) do
+    for i, value in ipairs(CONSTANTS.GAME.EXPLORATION_CAPACITIES) do
         if value == capacity_to_unlock then
             index = i
             break
@@ -133,9 +133,9 @@ function Capacities:UnlockAllExplorationCapacities()
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression == nil then return end
 
-    for i, _ in ipairs(CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES) do
+    for i, _ in ipairs(CONSTANTS.GAME.EXPLORATION_CAPACITIES) do
         if Archipelago.options.shuffle_free_aim == 1 then
-            if CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES[i] ~= "FreeAim" then
+            if CONSTANTS.GAME.EXPLORATION_CAPACITIES[i] ~= "FreeAim" then
                 -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
                 Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i - 1, true)
             else

@@ -1,30 +1,5 @@
 ---@class Game_Constants
 local GAME = {
-    TABLE = 
-    {
-        CHARACTERS_ID = {"Frey", "Maelle", "Lune", "Sciel", "Verso", "Monoco" },
-        CHARACTERS_WEAPONS = {"Noahram", "Maellum", "Lunerim", "Scieleson", "Verleso", "Monocaro" },
-        CHARACTERS_DEFAULT_SKILLS = {
-            Frey = {
-                "Combo1_Gustave", "UnleashCharge"
-            },
-            Maelle = {
-                "OffensiveSwitch", "Percee"
-            }, 
-            Lune = {
-                "IceGust", "Immolation"
-            },
-            Sciel = {
-                "Grimprediction", "Foretelling2"
-            },
-            Verso = {
-                "Combo1", "FromFire"
-            },
-            Monoco = {
-                "ChalierRelentlessSword", "StalactCombo"
-            }
-        },
-
         WORLDMAP_CAPACITIES = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" },
         EXPLORATION_CAPACITIES = { "AttackInWorld", "FreeAim", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" },
 
@@ -123,9 +98,7 @@ local GAME = {
                 NAME_AP = "World Map: Dive - NE of White Sands"
             },
 
-        }
-    },
-
+        },
 
     BATTLE = {
         STATUS_EFFECT = {
@@ -156,8 +129,6 @@ local GAME = {
 
         }
     }
-
 }
-
 
 return GAME

@@ -121,7 +121,7 @@ function SaveHooks:SaveNotificationUI()
         if not RuntimeState.change_save_icon then return end
         local a = ctx:get() ---@cast a UWBP_FullScreenNotificationContainer_C
 
-        local random_string = Utils.TableHelper.GetRandomElement(CONSTANTS.GAME.TABLE.SAVE_NOTIFICATION)
+        local random_string = Utils.TableHelper.GetRandomElement(CONSTANTS.GAME.SAVE_NOTIFICATION)
         a.WBP_SaveGameNotification.TextBlock_SaveInProgress:SetText(FText(random_string))
 
         ---@type ABP_ArchipelagoHelper_C

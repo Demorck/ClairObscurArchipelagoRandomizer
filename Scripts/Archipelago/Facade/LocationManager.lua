@@ -160,7 +160,7 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
 
         local location = nil
         local min_value = 9999999
-        for _, value in pairs(CONSTANTS.GAME.TABLE.WORLDMAP_DIVE_POSITION) do
+        for _, value in pairs(CONSTANTS.GAME.WORLDMAP_DIVE_POSITION) do
             local distance = euclidian_distance(value, position_world)
             if distance < min_value then
                 min_value = distance
