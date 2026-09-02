@@ -42,9 +42,9 @@ function Capacities:SetDestroyPaintedRock(want_to_unlock)
     local to_int = 0
     if want_to_unlock then to_int = 1 end
 
-    table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockFreeAimDamageLevel")
-    Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", to_int)
-    Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockFreeAimDamageLevel")
+    RuntimeState:AsModCall("UnlockFreeAimDamageLevel", function()
+        Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", to_int)
+    end)
 end
 
 --- Unlock the next world map ability
@@ -61,18 +61,16 @@ function Capacities:UnlockNextWorldMapAbility()
             local t = { i }
 
             
-            table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
-            -- ExplorationProgression:UnlockWorldMapCapacities(t)
-            Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-
-            if capacity == "Base" then
-                local t = { i + 1 }
-                -- ExplorationProgression:UnlockWorldMapCapacities(t)
+            RuntimeState:AsModCall("UnlockWorldMapCapacities", function()
                 Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-            end
 
-            Storage:Update("UnlockSpecificWorldMapCapacity")
-            Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
+                if capacity == "Base" then
+                    Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", { i + 1 })
+                end
+
+                Storage:Update("UnlockSpecificWorldMapCapacity")
+            end)
+            
             new = true
             break
         end

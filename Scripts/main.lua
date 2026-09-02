@@ -1,19 +1,20 @@
-Logger     = require "Logger"
-Hooks      = require "Hooks.index"
-Data       = require "Data"
-Debug      = require "Archipelago.Debug"
-Storage    = require "Storage.index" ---@type Storage
-Inventory  = require "Game.Inventory"
-Capacities = require "Game.Capacities"
-Characters = require "Game.Characters"
-Quests     = require "Game.Quests"
-Save       = require "Game.Save"
-ClientBP   = require "Game.ClientBP"
-Battle     = require "Game.Battle"
-CONSTANTS  = require "Constants.index"
-Utils      = require "Utils.index"
-Commands   = require "Commands"
-Regions    = require "Constants.RegionConstants"
+Logger       = require "Logger"
+Hooks        = require "Hooks.index"
+Data         = require "Data"
+Debug        = require "Archipelago.Debug"
+Storage      = require "Storage.index"              ---@type Storage
+Inventory    = require "Game.Inventory"
+Capacities   = require "Game.Capacities"
+Characters   = require "Game.Characters"
+Quests       = require "Game.Quests"
+Save         = require "Game.Save"
+ClientBP     = require "Game.ClientBP"
+Battle       = require "Game.Battle"
+CONSTANTS    = require "Constants.index"
+Utils        = require "Utils.index"
+Commands     = require "Commands"
+Regions      = require "Constants.RegionConstants"
+RuntimeState = require "RuntimeState"
 
 Dump = Utils.TableHelper.Dump
 Contains = Utils.TableHelper.Contains
@@ -58,7 +59,8 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
    local slotStr = ap_settings.slot_8_F865C5C946B8CEFF2A3CBC95B903BC9C:ToString()
    local passwordStr = ap_settings.password_9_29E90B5A490FB64EF37D899B7FE35702:ToString()
    local deathlinkBool = ap_settings.death_link_16_BD6444064CB7AF2080DA9F86599CD9A0
-   CONSTANTS.RUNTIME.CHANGE_SAVE_ICON = ap_settings.save_icon_18_CAE18D2E4FC0450B5A48BABB660DF652
+
+   RuntimeState.change_save_icon = ap_settings.save_icon_18_CAE18D2E4FC0450B5A48BABB660DF652
    
    print("[COE33AP - Before connection] Connect button pressed")
 
@@ -99,12 +101,6 @@ function InitSaveAfterLumiere()
    Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SCULPTURE_NEVRON, QUEST_STATUS.COMPLETED)
    Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SOPHIE, QUEST_STATUS.COMPLETED)
 
-
-   -- LoopAsync(1000 * 10, function ()
-   --    local pause_menu = FindFirstOf("WBP_PauseMenu_C") ---@type UWBP_PauseMenu_C
-   --    pause_menu:TeleportToSafeLocation()
-   --    return true
-   -- end)
    Archipelago:ScoutMerchants()
 end
 

@@ -48,9 +48,12 @@ function Inventory:AddItem(itemName, amount, item_level)
     -- Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     -- playerInventory:AddItemToInventory(name, amount, lootContext, returned)
     Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount .. " with level " .. level .. "...")
-    table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
-    Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
-    Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
+
+    RuntimeState:AsModCall("AddItemToInventory", function()
+        Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
+    end)
+
+
     Logger:info("Item " .. itemName .. " added !")
 
     return true

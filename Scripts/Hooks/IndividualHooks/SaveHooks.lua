@@ -118,7 +118,7 @@ end
 
 function SaveHooks:SaveNotificationUI()
     return function(ctx)
-        if not CONSTANTS.RUNTIME.CHANGE_SAVE_ICON then return end
+        if not RuntimeState.change_save_icon then return end
         local a = ctx:get() ---@cast a UWBP_FullScreenNotificationContainer_C
 
         local random_string = Utils.TableHelper.GetRandomElement(CONSTANTS.GAME.TABLE.SAVE_NOTIFICATION)
@@ -140,15 +140,11 @@ function SaveHooks:AddNamedID()
             local value = element:get() ---@type UNamedID
             local name = value.Name:ToString()
 
-            local found = false
-            for need_to_add, bool_value in pairs(CONSTANTS.RUNTIME.NAMEDID_TO_BE_ADDED) do
-                if name == need_to_add then
-                    ctx:WritePersistentFlag(value, bool_value)
-                    found = true
-                end
+            local wanted = RuntimeState.named_ids_to_write[name]
+            if wanted ~= nil then
+                ctx:WritePersistentFlag(value, wanted)
+                RuntimeState:ClearNamedIdWrite(name)
             end
-
-            if found then Remove(CONSTANTS.RUNTIME.NAMEDID_TO_BE_ADDED, name) end
         end)
    end
 end

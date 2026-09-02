@@ -29,7 +29,7 @@ function InventoryHooks:Register(hookManager, dependencies)
 
             local is_lost_gestral = itemName == "LostGestral"
             local is_shop_item = archipelago.options.shopsanity == 1 and Utils.StringHelper.StartsWith(itemName, "Merchant (")
-            local is_game_using_this_function = not Contains(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
+            local is_game_using_this_function = not RuntimeState:IsModCall("AddItemToInventory")
 
             if not is_lost_gestral and not LAST_STAND_ITEMS[itemName] and not is_shop_item then
                 return
