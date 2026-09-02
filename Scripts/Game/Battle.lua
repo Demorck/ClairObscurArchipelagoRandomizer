@@ -1,15 +1,10 @@
 ---@class Battle
 local Battle = {}
 
-local BluePrintName = "AC_jRPG_BattleManager_C"
-local goals = {"L_Boss_Paintress_P1", "L_Boss_Curator_P1", "TowerBattle_33", "Boss_SimonPhase2*1"}
-
-
-
 ---Return the Battle manager
 ---@return UAC_jRPG_BattleManager_C | nil
 function Battle:GetManager()
-    local manager = FindFirstOf(BluePrintName) ---@cast manager UAC_jRPG_BattleManager_C
+    local manager = FindFirstOf(CONSTANTS.BLUEPRINT.BATTLE_MANAGER) ---@cast manager UAC_jRPG_BattleManager_C
     
     if manager ~= nil and manager:IsValid() then
         Logger:info("Retrieving Battle manager succeeds")

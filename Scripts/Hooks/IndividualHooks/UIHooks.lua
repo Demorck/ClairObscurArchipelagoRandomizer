@@ -20,7 +20,7 @@ function UIHooks:Register(hookManager, dependencies)
         function (_)
             if not archipelago:IsInitialized() then return end
 
-            local buttons = FindAllOf("WBP_BaseButton_C") ---@cast buttons UWBP_BaseButton_C[]
+            local buttons = FindAllOf(CONSTANTS.BLUEPRINT.WBP_BASE_BUTTON) ---@cast buttons UWBP_BaseButton_C[]
             for _, value in ipairs(buttons) do
                 local name = value:GetFName():ToString()
                 if name == "TeleportPlayerButton" then

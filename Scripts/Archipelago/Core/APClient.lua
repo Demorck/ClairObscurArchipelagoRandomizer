@@ -121,7 +121,7 @@ function APClient:Disconnect()
     self.isConnecting = false
 
     -- Update UI
-    self:UpdateConnectionUI("DISCONNECTED")
+    ClientBP:UpdateConnectionUI("DISCONNECTED")
 
     -- Unregister hooks
     if Hooks then
@@ -201,7 +201,7 @@ end
 function APClient:OnSocketConnected()
     Logger:info("Client mod version: " .. CONSTANTS.VERSION)
     self.logger:info("Socket connected successfully")
-    self:UpdateConnectionUI("CONNECTED")
+    ClientBP:UpdateConnectionUI("CONNECTED")
 end
 
 ---Socket error callback
@@ -210,7 +210,7 @@ end
 function APClient:OnSocketError(msg)
     self.logger:bindSeed(self.config:Get("slot"), nil)
     self.logger:error("Socket error: " .. tostring(msg))
-    self:UpdateConnectionUI("DISCONNECTED")
+    ClientBP:UpdateConnectionUI("DISCONNECTED")
 
     if not self.isConnecting then
         self.wantToConnect = false
@@ -221,7 +221,7 @@ end
 ---@private
 function APClient:OnSocketDisconnected()
     self.logger:info("Socket disconnected")
-    self:UpdateConnectionUI("DISCONNECTED")
+    ClientBP:UpdateConnectionUI("DISCONNECTED")
 
     if not self.isConnecting then
         self.wantToConnect = false
@@ -249,22 +249,7 @@ end
 function APClient:OnSlotRefused(reasons)
     self.logger:bindSeed(self.config:Get("slot"), nil)
     self.logger:error("Slot refused: " .. table.concat(reasons, ", "))
-    self:UpdateConnectionUI("DISCONNECTED")
-end
-
----Update connection UI status
----@param status "DISCONNECTED"|"TRYING_TO_CONNECT"|"CONNECTED"
-function APClient:UpdateConnectionUI(status)
-    ---@type ABP_ArchipelagoHelper_C
-    local helper = FindFirstOf("BP_ArchipelagoHelper_C")
-
-    if helper and helper:IsValid() then
-        local statusEnum = E_CLIENT_INFOS[status]
-        if statusEnum then
-            helper:ChangeAPTextConnect(statusEnum)
-            helper:SetConnection(status == "CONNECTED")
-        end
-    end
+    ClientBP:UpdateConnectionUI("DISCONNECTED")
 end
 
 ---Poll the client to process network events

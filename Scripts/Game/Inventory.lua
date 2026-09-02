@@ -70,7 +70,7 @@ function Inventory:RemoveItem(itemName, amount)
 end
 
 function Inventory:GetInventory()
-    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
     local inv = GI.Inventory ---@cast inv TArray<FS_jRPG_Item_DynamicData>
     local items = {} ---@cast items table<string, int32>
 
@@ -90,12 +90,12 @@ function Inventory:GetInventory()
 end
 
 function Inventory:HasItem(itemName)
-    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
     return GI:GetItemQuantityInInventory(FName(itemName)) > 0
 end
 
 function Inventory:GetAmountOfItem(itemName)
-    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
     return GI:GetItemQuantityInInventory(FName(itemName))
 end
 

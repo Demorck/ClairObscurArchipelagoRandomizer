@@ -31,7 +31,7 @@ local QUESTS_NAME = {
 }
 
 function Quests:GetManager()
-    local quest_system = FindFirstOf(BluePrintName) ---@cast quest_system UBP_QuestSystem_C
+    local quest_system = FindFirstOf(CONSTANTS.BLUEPRINT.QUEST_SYSTEM) ---@cast quest_system UBP_QuestSystem_C
     if quest_system ~= nil and quest_system:IsValid() then
         Logger:info("Retrieving Quest manager succeeds")
         return quest_system

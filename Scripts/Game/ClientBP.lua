@@ -1,7 +1,6 @@
 ---@class ClientBP
 local ClientBP = {}
 
-local BlueprintName = "BP_ArchipelagoHelper_C"
 local last_logs = {}
 local cachedHelper = nil
 
@@ -10,7 +9,7 @@ function ClientBP:GetHelper()
         return cachedHelper
     end
 
-    local helper = FindFirstOf(BlueprintName) ---@type ABP_ArchipelagoHelper_C
+    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.AP_HELPER) ---@type ABP_ArchipelagoHelper_C
     if helper ~= nil and helper:IsValid() then
         cachedHelper = helper
         return helper
@@ -21,7 +20,7 @@ function ClientBP:GetHelper()
 end
 
 function ClientBP:GetWBPConnectionSettings()
-    local helper = FindFirstOf("WBP_AP_ConnectionSettings_C") ---@type UWBP_AP_ConnectionSettings_C
+    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.WBP_AP_SETTINGS) ---@type UWBP_AP_ConnectionSettings_C
     if helper ~= nil and helper:IsValid() then
         return helper
     end
@@ -87,13 +86,6 @@ function ClientBP:IsInitialized()
     local a = self:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
 
     return a ~= nil
-end
-
-function ClientBP:InCinematic()
-    local a = FindFirstOf("BP_CinematicSystem_C") ---@type UBP_CinematicSystem_C
-    if a == nil then return true end
-
-    return a.IsPlayingCinematic
 end
 
 function ClientBP:ToggleConsole()

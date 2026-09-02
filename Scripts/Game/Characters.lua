@@ -148,7 +148,7 @@ function Characters:NumberOfCharactersInPartyEnabled()
     local in_party_count = 0
     local not_in_party_count = 0
     local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast helper UBP_jRPG_GI_Custom_C
     if char_data == nil then return 0, 0 end
 
     for _, char in ipairs(char_data) do
@@ -167,7 +167,7 @@ end
 local MAX_PARTY = 3
  
 function Characters:ModifyPartyIfNeeded()
-    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast helper UBP_jRPG_GI_Custom_C
     if not helper or not helper:IsValid() then return end
  
     local locked_in_party = {}

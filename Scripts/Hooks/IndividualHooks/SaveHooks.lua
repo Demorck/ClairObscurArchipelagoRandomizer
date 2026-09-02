@@ -45,7 +45,7 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
             return
         end
 
-        local data = FindFirstOf("BP_SaveGameData_C") ---@type UBP_SaveGameData_C
+        local data = FindFirstOf(CONSTANTS.BLUEPRINT.SAVE_GAME_DATA) ---@type UBP_SaveGameData_C
         if not data or not data:IsValid() then
             logger:error("Impossible to save: SaveGameData nil")
             return
@@ -125,7 +125,7 @@ function SaveHooks:SaveNotificationUI()
         a.WBP_SaveGameNotification.TextBlock_SaveInProgress:SetText(FText(random_string))
 
         ---@type ABP_ArchipelagoHelper_C
-        local client = FindFirstOf("BP_ArchipelagoHelper_C")
+        local client = FindFirstOf(CONSTANTS.BLUEPRINT.AP_HELPER)
         local texture = client.BaguetteTexture
         a.WBP_SaveGameNotification.Image_CircleDot:SetBrushFromTexture(texture, false)
     end
