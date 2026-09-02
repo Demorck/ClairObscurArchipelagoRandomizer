@@ -56,7 +56,7 @@ function ItemReceiver:HandleOtherItem(item_data)
             how_much_chroma = Archipelago.chroma
         else
             local min = math.min(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
-            local max = math.min(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
+            local max = math.max(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
             how_much_chroma = math.random(min, max)
         end
         Inventory:AddGold(how_much_chroma)
