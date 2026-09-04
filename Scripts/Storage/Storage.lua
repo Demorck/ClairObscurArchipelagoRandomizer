@@ -332,7 +332,6 @@ function Storage:Load()
         Logger:info("Number of rocks: " .. self.data.progressive_rock)
     else
         Storage:Update("Storage:Load - New file")
-        Archipelago.want_to_scout_shop = true
     end
 
     self.data.initialized = true

@@ -122,6 +122,10 @@ function Archipelago:ScoutMerchants()
         ::continue::
     end
 
+    Logger:info("Total merchant scoutted : " .. #location_names)
+    for index, loc_name in ipairs(location_names) do
+        print(index .. " -> " .. loc_name)
+    end
     self:ScoutLocation(location_names, false)
 
 end
@@ -186,22 +190,29 @@ function Archipelago:GetLevelItem(gear_type, id)
 end
 
 function Archipelago:isRegionExcluded(region_name) 
-    if self.options.exclude_endgame_locations ~= 0 and self.options.exclude_endless_tower ~= 0 then
+    local opt_endgame = self.options.exclude_endgame_locations or 0
+    local opt_tower = self.options.exclude_endless_tower or 0
+
+    if opt_endgame ~= 0 and opt_tower ~= 0 then
         return false
     end
 
-    if self.options.exclude_endless_tower == 0 and region_name == "Endless Tower" then
+    if opt_tower == 0 and string.find(region_name, "Endless Tower") then
         return true
     end
 
     local exclusion_level = self:GetExclusionLevel()
+    
     if CONSTANTS.CONFIG.REGION_LEVEL[region_name] == nil then
         Logger:warn(region_name .. ' is not found in config region level, returning false')
         return false
     end
-    if self.options.exclude_endgame_locations == 0 and CONSTANTS.CONFIG.REGION_LEVEL[region_name] > exclusion_level then
+
+    if opt_endgame == 0 and CONSTANTS.CONFIG.REGION_LEVEL[region_name] > exclusion_level then
         return true
     end
+
+    return false
 end
 
 function Archipelago:GetExclusionLevel()
@@ -212,7 +223,7 @@ function Archipelago:GetExclusionLevel()
         level = 16
     elseif self.options.goal == 4 then
         level = 28
-    end 
+    end
 
     return level
 end
