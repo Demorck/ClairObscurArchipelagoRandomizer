@@ -9,6 +9,6 @@ Constants.ASSETS     = require "Constants.AssetsConstants"
 Constants.CHARACTERS = require "Constants.CharacterConstants"
 Constants.GOAL       = require "Constants.GoalConstants"
 
-Constants.VERSION = '0.4.3'
+Constants.VERSION = '0.4.4'
 
 return Constants

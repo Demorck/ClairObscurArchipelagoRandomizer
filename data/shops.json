@@ -163,8 +163,8 @@
     "name": "Gestral Merchant",
     "region": "WM: Sky",
     "datatable": "CustomizationMerchants/DT_Merchant_GestralVillage3.DT_Merchant_GestralVillage3",
-    "has_fight": false,
-    "unlock_item": null
+    "has_fight": true,
+    "unlock_item": "Merchant (World Map): Gestral Merchant - Extra shop unlock"
   },
   {
     "name": "Citrelo",
