@@ -216,21 +216,21 @@
     "region": "Stone Wave Cliffs",
     "datatable": "DT_Merchant_SeaCliff.DT_Merchant_SeaCliff",
     "has_fight": true,
-    "unlock_item": "Merchant (World Map): Gestral Merchant - Extra shop unlock"
+    "unlock_item": "Merchant (Stone Wave Cliffs): Jerijeri - Extra shop unlock"
   },
   {
     "name": "Kasumi",
     "region": "Forgotten Battlefield",
     "datatable": "DT_Merchant_ForgottenBattlefield.DT_Merchant_ForgottenBattlefield",
     "has_fight": true,
-    "unlock_item": "Merchant (Stone Wave Cliffs): Jerijeri - Extra shop unlock"
+    "unlock_item": "Merchant (Forgotten Battlefield): Kasumi - Extra shop unlock"
   },
   {
     "name": "Grandis",
     "region": "Monoco's Station",
     "datatable": "DT_Merchant_GrandisStation.DT_Merchant_GrandisStation",
     "has_fight": true,
-    "unlock_item": "Merchant (Forgotten Battlefield): Kasumi - Extra shop unlock"
+    "unlock_item": "Merchant (Monoco's Station): Grandis - Extra shop unlock"
   },
   {
     "name": "Mandelgo",
@@ -265,28 +265,28 @@
     "region": "The Monolith",
     "datatable": "DT_Merchant_MonocosMountain.DT_Merchant_MonocosMountain",
     "has_fight": true,
-    "unlock_item": "Merchant (Lumiere): Cribappa - Extra shop unlock"
+    "unlock_item": "Merchant (The Monolith): Melosh - Extra shop unlock"
   },
   {
     "name": "Cribappa",
     "region": "Lumiere",
     "datatable": "DT_Merchant_Lumiere.DT_Merchant_Lumiere",
     "has_fight": true,
-    "unlock_item": "Merchant (Yellow Harvest): Pinabby - Extra shop unlock"
+    "unlock_item": "Merchant (Lumiere): Cribappa - Extra shop unlock"
   },
   {
     "name": "Pinabby",
     "region": "Yellow Harvest",
     "datatable": "DT_Merchant_YellowForest.DT_Merchant_YellowForest",
     "has_fight": true,
-    "unlock_item": "Merchant (Falling Leaves): Persik - Extra shop unlock"
+    "unlock_item": "Merchant (Yellow Harvest): Pinabby - Extra shop unlock"
   },
   {
     "name": "Persik",
     "region": "Falling Leaves",
     "datatable": "DT_Merchant_OrangeForest.DT_Merchant_OrangeForest",
     "has_fight": true,
-    "unlock_item": "Merchant (The Monolith): Verogo - Extra shop unlock"
+    "unlock_item": "Merchant (Falling Leaves): Persik - Extra shop unlock"
   },
   {
     "name": "Eragol",
@@ -307,7 +307,7 @@
     "region": "Renoir's Drafts",
     "datatable": "DT_Merchant_Optional3.DT_Merchant_Optional3",
     "has_fight": true,
-    "unlock_item": "Merchant (Renoir's Drafts): Melosh - Extra shop unlock"
+    "unlock_item": "Merchant (Renoir's Drafts): Grour - Extra shop unlock"
   },
   {
     "name": "Anthonypo",
