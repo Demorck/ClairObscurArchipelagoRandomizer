@@ -110,6 +110,7 @@ function SaveHooks:SaveGame(hookManager)
         local lastReceived = Storage:Get("lastReceivedItemIndex")
         Storage:Set("lastSavedItemIndex", lastReceived)
         Storage:Update("SaveHooks:SaveGameToFile")
+        Storage:Flush()
     end
 end
 

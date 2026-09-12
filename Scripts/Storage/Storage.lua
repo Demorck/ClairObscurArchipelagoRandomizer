@@ -1,5 +1,8 @@
 ---Manages persistent game state with schema-based validation
 local StorageSchema = require("Storage.StorageSchema")
+local dirty = false
+local lastReason = nil
+
 
 ---@class Storage
 ---@field schema StorageSchema
@@ -59,7 +62,7 @@ function Storage:Set(key, value)
     local callerSource = callerInfo and callerInfo.short_src or "unknown source"
     local callerLine = callerInfo and callerInfo.currentline or "?"
 
-    Logger:info(string.format("Storage:Set('%s') called by %s (%s:%s)", key, callerName, callerSource, callerLine))
+    Logger:debug(string.format("Storage:Set('%s') called by %s (%s:%s)", key, callerName, callerSource, callerLine))
     
     self.data[key] = value
     return true
@@ -77,11 +80,10 @@ function Storage:AddInTable(key, value_to_add)
         return false
     end
 
-    local newTable = {}
-    for k, v in ipairs(data) do newTable[k] = v end
-    table.insert(newTable, value_to_add)
-    
-    return self:Set(key, newTable)
+    table.insert(data, value_to_add)
+    Logger:debug(("Storage:AddInTable('%s') <- %s"):format(key, tostring(value_to_add)))
+
+    return true
 end
 
 ---Adding a value in a dict
@@ -97,17 +99,13 @@ function Storage:AddInDict(key_in_storage, key_in_dict, value_dict)
         return false
     end
 
-    local newTable = {}
-    for k, v in pairs(data) do 
-        newTable[k] = v
-        if k == key_in_dict then
-            Logger:warn("Trying to add a value in dict in storage that already exists in: " .. key_in_storage .. "[ " .. key_in_dict .."]")
-        end
+    if data[key_in_dict] ~= nil then
+        Logger:warn("Overwriting an existing dict entry: " .. key_in_storage .. "[" .. key_in_dict .. "]")
     end
-    
-    newTable[key_in_dict] = value_dict
-    
-    return self:Set(key_in_storage, newTable)
+
+    data[key_in_dict] = value_dict
+
+    return true
 end
 
 function Storage:Increment(key)
@@ -307,6 +305,7 @@ function Storage:Load()
         Logger:info("Number of rocks: " .. self.data.progressive_rock)
     else
         Storage:Update("Storage:Load - New file")
+        Storage:Flush()
     end
 
     self.data.initialized = true
@@ -315,19 +314,25 @@ end
 ---Save storage to JSON file
 ---@param from string|nil Source of the update (for logging)
 function Storage:Update(from)
-    local player = Archipelago:GetPlayer()
+    dirty = true
+    lastReason = from or "Storage:Update"
 
+    Logger:debug("Storage marked dirty by " .. lastReason)
+end
+
+---Write the file if anything changed since the last write
+---@return boolean written
+function Storage:Flush()
+    if not dirty then return false end
+
+    local player = Archipelago:GetPlayer()
     if not (player["seed"] and player["slot"]) then
-        return
+        return false
     end
 
-    -- Build the values table using schema
-    local values = {
-        from = from or "Storage:Update"
-    }
+    local values = { from = lastReason or "Storage:Flush" }
 
     for fieldName, _ in pairs(self.schema.fields) do
-        -- Skip 'initialized' and 'transition_lumiere' as they're not persisted
         if fieldName ~= "initialized" and fieldName ~= "transition_lumiere" then
             local jsonKey = self.schema:GetJsonKey(fieldName)
             values[jsonKey] = self.data[fieldName]
@@ -335,6 +340,11 @@ function Storage:Update(from)
     end
 
     JSON.write_file(Storage:GetFilePath(), values)
+    dirty = false
+
+    Logger:debug("Storage written: " .. values.from)
+
+    return true
 end
 
 ---Get the file path for storage
@@ -343,42 +353,6 @@ function Storage:GetFilePath()
     local player = Archipelago:GetPlayer()
     return player["seed"] .. "_" .. player["slot"] .. ".json"
 end
-
--- Setup metatable for backward compatibility
--- Allows direct access like Storage.tickets instead of Storage:Get("tickets")
-setmetatable(Storage, {
-    __index = function(t, key)
-        -- Allow access to methods and special fields
-        if key == "data" or key == "schema" or key == "Initialize" or
-           key == "Validate" or key == "Get" or key == "Set" or
-           key == "GetAll" or key == "Load" or key == "Update" or
-           key == "GetFilePath" then
-            return rawget(t, key)
-        end
-
-        -- For data fields, use Get method
-        if t.schema.fields[key] then
-            return t.data[key]
-        end
-
-        return rawget(t, key)
-    end,
-
-    __newindex = function(t, key, value)
-        -- Allow direct setting of special fields
-        if key == "data" or key == "schema" then
-            rawset(t, key, value)
-            return
-        end
-
-        -- For data fields, use Set method
-        if t.schema.fields[key] then
-            t:Set(key, value)
-        else
-            rawset(t, key, value)
-        end
-    end
-})
 
 -- Initialize storage with default values
 Storage:Initialize()

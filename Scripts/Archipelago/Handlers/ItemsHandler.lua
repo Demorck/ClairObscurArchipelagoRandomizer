@@ -56,7 +56,7 @@ end
 ---@param item NetworkItem The item to process
 ---@private
 function ItemsHandler:ProcessItem(item)
-    if not item.index or item.index <= Storage.lastSavedItemIndex then
+    if not item.index or item.index <= Storage:Get("lastSavedItemIndex") then
         return false
     end
 
@@ -73,7 +73,7 @@ function ItemsHandler:ProcessItem(item)
             itemData.name, item.item, item.index, item.player
         ))
 
-        Storage.lastReceivedItemIndex = item.index
+        Storage:Set("lastReceivedItemIndex", item.index)
         return true
     end
 

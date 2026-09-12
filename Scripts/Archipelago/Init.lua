@@ -112,6 +112,8 @@ function ArchipelagoSystem:SetupPollingLoop()
         GameState.canReceiveItems = Archipelago:CanReceiveItems()
         GameState.isInitialized   = Archipelago:IsInitialized()
 
+        Storage:Flush()
+
         if Archipelago and Archipelago.pendingLocationsFlush and self:IsConnected() then
             Archipelago.pendingLocationsFlush = false
             Archipelago:SendAlreadyChecked()
@@ -160,6 +162,7 @@ end
 function ArchipelagoSystem:ToggleConnection()
     if self.apClient.wantToConnect then
         Logger:info("Disconnecting...")
+        Storage:Flush()
         self.apClient:Disconnect()
 
         if Hooks then
