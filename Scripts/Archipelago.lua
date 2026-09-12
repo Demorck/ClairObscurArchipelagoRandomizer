@@ -122,6 +122,10 @@ function Archipelago:ScoutMerchants()
         ::continue::
     end
 
+    Logger:info("Total merchant scoutted : " .. #location_names)
+    for index, loc_name in ipairs(location_names) do
+        Logger:info(index .. " -> " .. loc_name)
+    end
     self:ScoutLocation(location_names, false)
 
 end
@@ -186,12 +190,12 @@ function Archipelago:GetLevelItem(gear_type, id)
 end
 
 function Archipelago:isRegionExcluded(region_name) 
-    if Options.values.exclude_endgame_locations ~= EXCLUSION.EXCLUDED and 
-       Options.values.exclude_endless_tower ~= EXCLUSION.EXCLUDED then
+    if Options.values.exclude_endgame_locations ~= Options.EXCLUSION.EXCLUDED and 
+       Options.values.exclude_endless_tower ~= Options.EXCLUSION.EXCLUDED then
         return false
     end
 
-    if Options.values.exclude_endless_tower ~= EXCLUSION.EXCLUDED and region_name == "Endless Tower" then
+    if Options.values.exclude_endless_tower ~= Options.EXCLUSION.EXCLUDED and region_name == "Endless Tower" then
         return true
     end
 
@@ -202,7 +206,7 @@ function Archipelago:isRegionExcluded(region_name)
         return false
     end
     
-    if Options.values.exclude_endgame_locations ~= EXCLUSION.EXCLUDED and region.level > exclusion_level then
+    if Options.values.exclude_endgame_locations ~= Options.EXCLUSION.EXCLUDED and region.level > exclusion_level then
         return true
     end
 

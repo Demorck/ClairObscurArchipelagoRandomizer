@@ -161,7 +161,7 @@
   },
   {
     "name": "Gestral Merchant",
-    "region": "WM: Sky",
+    "region": "Sacred River",
     "datatable": "CustomizationMerchants/DT_Merchant_GestralVillage3.DT_Merchant_GestralVillage3",
     "has_fight": true,
     "unlock_item": "Merchant (World Map): Gestral Merchant - Extra shop unlock"
