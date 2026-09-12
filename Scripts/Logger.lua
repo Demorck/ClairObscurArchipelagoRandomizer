@@ -1,5 +1,7 @@
 ---@class Logger
 local Logger = {}
+Logger.LEVELS = { DEBUG = 1, INFO = 2, WARN = 3, ERROR = 4 }
+Logger.level = Logger.LEVELS.DEBUG -- Unstable so we debug everything
 
 
 local log_dir = "../../Content/Paks/LogicMods/ClairObscurRandomizer_data/Logs"
@@ -75,7 +77,8 @@ end
 
 
 -- Write a line to the log
-local function writeLine(line)
+local function writeLine(level, line)
+    if level < Logger.level then return end
 
     depth = depth + 1
     if depth > 1 then CONCURRENT_LOG_HITS = CONCURRENT_LOG_HITS + 1 end
@@ -95,19 +98,19 @@ end
 --- Logs an informational message
 ---@param msg any
 function Logger:info(msg)
-    writeLine("[INFO] " .. tostring(msg))
+    writeLine(Logger.LEVELS.INFO, "[INFO] " .. tostring(msg))
 end
 
 function Logger:warn(msg)
-    writeLine("[WARN] " .. tostring(msg))
+    writeLine(Logger.LEVELS.WARN, "[WARN] " .. tostring(msg))
 end
 
 function Logger:error(msg)
-    writeLine("[ERROR] " .. tostring(msg))
+    writeLine(Logger.LEVELS.ERROR, "[ERROR] " .. tostring(msg))
 end
 
 function Logger:debug(msg)
-    writeLine("[DEBUG] " .. tostring(msg))
+    writeLine(Logger.LEVELS.DEBUG, "[DEBUG] " .. tostring(msg))
 end
 
 function Logger:startSession()
