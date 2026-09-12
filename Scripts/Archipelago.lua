@@ -124,7 +124,7 @@ function Archipelago:ScoutMerchants()
 
     Logger:info("Total merchant scoutted : " .. #location_names)
     for index, loc_name in ipairs(location_names) do
-        print(index .. " -> " .. loc_name)
+        Logger:info(index .. " -> " .. loc_name)
     end
     self:ScoutLocation(location_names, false)
 
