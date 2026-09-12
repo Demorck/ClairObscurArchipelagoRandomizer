@@ -2,7 +2,7 @@
 local GAME = {
     WORLDMAP_CAPACITIES = { "Base", "HardenLands", "Swim", "SwimBoost", "Fly" },
     EXPLORATION_CAPACITIES = { "AttackInWorld", "FreeAim", "FreeAimTeleport", "Overlay", "GameMenu", "FastTravel", "Camp" },
-
+    MAIN_MENU_LEVEL = "Level_MainMenu",
 
     SAVE_NOTIFICATION = {   -- Meme/niche/our references
                             "<- Imagine a baguette spinning", "Yezzdia did the Poptracker", "Noeva will be raised as promise", 

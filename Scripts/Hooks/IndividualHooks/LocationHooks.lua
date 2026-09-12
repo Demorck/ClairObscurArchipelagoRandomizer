@@ -1,9 +1,3 @@
----@class LocationDependencies
----@field archipelago Archipelago
----@field storage Storage
----@field logger Logger
----@field clientBP ClientBP
-
 ---Location/level-related hooks
 ---@class LocationHooks
 local LocationHooks = {}
@@ -11,12 +5,7 @@ local LocationHooks = {}
 
 ---Register all location hooks
 ---@param hookManager HookManager
----@param dependencies LocationDependencies
-function LocationHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
-    local storage = dependencies.storage
-    local logger = dependencies.logger
-    local clientBP = dependencies.clientBP
+function LocationHooks:Register(hookManager)
     local AddingGestralHook = false
 
     local function change_data_storage(level)
@@ -25,8 +14,8 @@ function LocationHooks:Register(hookManager, dependencies)
             value = level
         }
 
-        local playerInfo = archipelago.apSystem:GetClient():GetPlayerInfo()
-        archipelago.apSystem:GetClient():SetDataStorage(
+        local playerInfo = Archipelago.apSystem:GetClient():GetPlayerInfo()
+        Archipelago.apSystem:GetClient():SetDataStorage(
             playerInfo.number .. "-coe33-currentLocation",
             level,
             false,
@@ -40,7 +29,7 @@ function LocationHooks:Register(hookManager, dependencies)
                 hookManager:Register(
                     "/Game/Narrative/Dialogs/LevelsDialogs/Camp/BP_Dialogue_Quest_LostGestralChief.BP_Dialogue_Quest_LostGestralChief_C:GetFoundLostGestralCount",
                     function (context)
-                        if not archipelago.apSystem then return end
+                        if not Archipelago.apSystem then return end
 
                         for i = 1, Storage:Get("gestral_found") do
                             Archipelago:SendLocationCheck("Lost Gestral reward " .. tostring(i))
@@ -129,7 +118,7 @@ function LocationHooks:Register(hookManager, dependencies)
         end,
         "LocationHooks - RegisterTeleportPoint")
 
-    logger:info("Location hooks registered")
+    Logger:info("Location hooks registered")
 end
 
 

@@ -1,24 +1,15 @@
----@class UIDependencies
----@field archipelago Archipelago
----@field storage Storage
----@field logger Logger
-
 ---UI related hooks 
 ---@class UIHooks
 local UIHooks = {}
 
 ---Register all inventory hooks
 ---@param hookManager HookManager
----@param dependencies UIDependencies
-function UIHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
-    local storage = dependencies.storage
-    local logger = dependencies.logger
+function UIHooks:Register(hookManager)
 
     hookManager:Register(
         "/Game/Gameplay/Audio/BP_AudioControlSystem.BP_AudioControlSystem_C:OnPauseMenuOpened",
         function (_)
-            if not archipelago:IsInitialized() then return end
+            if not Archipelago:IsInitialized() then return end
 
             local buttons = FindAllOf(CONSTANTS.BLUEPRINT.WBP_BASE_BUTTON) ---@cast buttons UWBP_BaseButton_C[]
             for _, value in ipairs(buttons) do
@@ -42,7 +33,7 @@ function UIHooks:Register(hookManager, dependencies)
         "UI - Adding stuck button"
     )
 
-    logger:info("UI hooks registered")
+    Logger:info("UI hooks registered")
 end
 
 return UIHooks

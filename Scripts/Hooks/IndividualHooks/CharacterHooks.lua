@@ -1,9 +1,3 @@
----@class CharacterDependencies
----@field archipelago Archipelago
----@field storage Storage
----@field logger Logger
----@field clientBP ClientBP
-
 ---Character-related hooks
 ---@class CharacterHooks
 local CharacterHooks = {}
@@ -11,18 +5,13 @@ local CharacterHooks = {}
 
 ---Register all character hooks
 ---@param hookManager HookManager
----@param dependencies CharacterDependencies
-function CharacterHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
-    local storage = dependencies.storage
-    local logger = dependencies.logger
-    local clientBP = dependencies.clientBP
+function CharacterHooks:Register(hookManager)
 
     -- Save characters from unavoidable death
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_CharactersManager.AC_jRPG_CharactersManager_C:RemoveCharacterFromCollection",
         function(_, data_param)
-            if not archipelago:IsInitialized() then return end
+            if not Archipelago:IsInitialized() then return end
 
             local data = data_param:get() ---@cast data UBP_CharacterData_C
             local charName = data.HardcodedNameID:ToString()
@@ -31,10 +20,7 @@ function CharacterHooks:Register(hookManager, dependencies)
             local isPlayableChar = CONSTANTS.CHARACTERS.BY_ID[charName] ~= nil
 
             if isPlayableChar then
-                local charManager = clientBP:GetHelper() ---@type ABP_ArchipelagoHelper_C
-                if charManager == nil then return end
-
-                Logger:callMethod(charManager, "AddCharacterToCollectionFromSaveState", data)
+                ClientBP:CallHelper("AddCharacterToCollectionFromSaveState", data)
             end
         end,
         "Character - Save from Death"
@@ -49,7 +35,7 @@ function CharacterHooks:Register(hookManager, dependencies)
         "Character - Save Verso being remplaced"
     )
 
-    logger:info("Character hooks registered")
+    Logger:info("Character hooks registered")
 end
 
 return CharacterHooks

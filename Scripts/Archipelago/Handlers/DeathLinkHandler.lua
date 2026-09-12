@@ -1,30 +1,5 @@
----@class DeathLinkHandlerDependencies
----@field logger Logger Logger instance for logging
-
 ---@class DeathLinkHandler
----@field logger Logger Logger instance
----@field archipelago Archipelago|nil Archipelago instance for legacy support (for now)
 local DeathLinkHandler = {}
-
----Create a new EventDispatcher instance
----@param dependencies DeathLinkHandlerDependencies
----@return DeathLinkHandler
-function DeathLinkHandler:New(dependencies)
-    local instance = {
-        logger = dependencies.logger,
-        archipelago = nil,
-    }
-
-    setmetatable(instance, { __index = DeathLinkHandler })
-    return instance
-end
-
----Set the Archipelago reference (called after initialization)
----This is needed because of circular dependencies between DeathLinkHandler and Archipelago
----@param archipelago Archipelago The main Archipelago facade instance
-function DeathLinkHandler:SetArchipelago(archipelago)
-    self.archipelago = archipelago
-end
 
 ---Handle a bounce data
 ---This is the main entry point called by the EventDispatcher
@@ -54,23 +29,23 @@ end
 ---Handle death link (if a player with the tag "DeathLink" dies)
 ---@param data table<string, any> The death link data
 function DeathLinkHandler:HandleDeathLink(data)
-    if not self.archipelago then return end
+    if not Archipelago then return end
 
-    if data.source == self.archipelago.slot then
+    if data.source == Archipelago.slot then
         return
     end
 
-    if not self.archipelago:CanReceiveDeathLink() then
-        local last = self.archipelago:LastDeathLinkInSeconds()
-        self.logger:info("Receiving deathlink but the last one was in " .. last .. " seconds, aborting it...")
+    if not Archipelago:CanReceiveDeathLink() then
+        local last = Archipelago:LastDeathLinkInSeconds()
+        Logger:info("Receiving deathlink but the last one was in " .. last .. " seconds, aborting it...")
         return
     end
 
-    self.archipelago.wasDeathLinked = true
+    Archipelago.wasDeathLinked = true
     local currentDeathLink = data.time
 
-    self.logger:info("DeathLink received: " .. Dump(data))
-    self.logger:info("Last received at: " .. self.archipelago.lastDeathLink)
+    Logger:info("DeathLink received: " .. Dump(data))
+    Logger:info("Last received at: " .. Archipelago.lastDeathLink)
 
     if data.cause == nil then
         data.cause = data.source
@@ -78,12 +53,12 @@ function DeathLinkHandler:HandleDeathLink(data)
 
     -- Process death link
     if Battle and Battle:InBattle() then
-        self.logger:info("DeathLink during battle: " .. data.cause)
+        Logger:info("DeathLink during battle: " .. data.cause)
         if Characters then
             Characters:KillAll()
         end
     else
-        self.logger:info("DeathLink outside battle: " .. data.cause)
+        Logger:info("DeathLink outside battle: " .. data.cause)
         if Inventory then
             Inventory:RemoveConsumable()
         end
@@ -92,8 +67,8 @@ function DeathLinkHandler:HandleDeathLink(data)
         end
     end
 
-    self.archipelago.lastDeathLink = currentDeathLink
-    self.archipelago.wasDeathLinked = false
+    Archipelago.lastDeathLink = currentDeathLink
+    Archipelago.wasDeathLinked = false
 end
 
 return DeathLinkHandler

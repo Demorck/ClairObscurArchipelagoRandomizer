@@ -4,16 +4,13 @@ local SaveHooks = {}
 
 ---Register all save hooks
 ---@param hookManager HookManager
----@param dependencies table
-function SaveHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
-    local logger = dependencies.logger
+function SaveHooks:Register(hookManager)
 
     self.AddingButtonHook = false
 
     hookManager:Register(
         "/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:SaveGameToFile",
-        self:SaveGame(logger, hookManager, archipelago),
+        self:SaveGame(hookManager),
         "Save - Game Save"
     )
 
@@ -35,10 +32,10 @@ function SaveHooks:Register(hookManager, dependencies)
         "Save - Set Spawn point in SM when New Save"
     )
 
-    logger:info("Save hooks registered")
+    Logger:info("Save hooks registered")
 end
 
-function SaveHooks:SaveGame(logger, hookManager, archipelago)
+function SaveHooks:SaveGame(hookManager)
     return function(ctx, SaveName)
         local manager = ctx:get() ---@type UBP_SaveManager_C
         if not Archipelago:IsInitialized() or not manager or not manager:IsValid() then
@@ -47,7 +44,7 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
 
         local data = FindFirstOf(CONSTANTS.BLUEPRINT.SAVE_GAME_DATA) ---@type UBP_SaveGameData_C
         if not data or not data:IsValid() then
-            logger:error("Impossible to save: SaveGameData nil")
+            Logger:error("Impossible to save: SaveGameData nil")
             return
         end
         
@@ -95,8 +92,8 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
             operation = "update",
             value = currentFlags
         }
-        local playerInfo = archipelago.apSystem:GetClient():GetPlayerInfo()
-        archipelago.apSystem:GetClient():SetDataStorage(
+        local playerInfo = Archipelago.apSystem:GetClient():GetPlayerInfo()
+        Archipelago.apSystem:GetClient():SetDataStorage(
             playerInfo.number .. "-coe33-flags",
             currentFlags,
             false,
@@ -124,10 +121,10 @@ function SaveHooks:SaveNotificationUI()
         local random_string = Utils.TableHelper.GetRandomElement(CONSTANTS.GAME.SAVE_NOTIFICATION)
         a.WBP_SaveGameNotification.TextBlock_SaveInProgress:SetText(FText(random_string))
 
-        ---@type ABP_ArchipelagoHelper_C
-        local client = FindFirstOf(CONSTANTS.BLUEPRINT.AP_HELPER)
-        local texture = client.BaguetteTexture
-        a.WBP_SaveGameNotification.Image_CircleDot:SetBrushFromTexture(texture, false)
+        local texture = ClientBP:GetSaveIconTexture()
+        if texture ~= nil then
+            a.WBP_SaveGameNotification.Image_CircleDot:SetBrushFromTexture(texture, false)
+        end
     end
 end
 

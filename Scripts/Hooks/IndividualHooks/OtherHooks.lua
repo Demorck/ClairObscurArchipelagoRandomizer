@@ -4,9 +4,7 @@ local OtherHooks = {}
 
 ---Register all character hooks
 ---@param hookManager HookManager
----@param dependencies table
-function OtherHooks:Register(hookManager, dependencies)
-    local logger = dependencies.logger
+function OtherHooks:Register(hookManager)
 
     -- Music randomizer
     hookManager:Register(
@@ -30,7 +28,7 @@ function OtherHooks:Register(hookManager, dependencies)
         "Individual Hook - Music Randomizer"
     )
 
-    logger:info("Capacity hook registered")
+    Logger:info("Capacity hook registered")
 end
 
 return OtherHooks

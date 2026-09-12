@@ -58,23 +58,12 @@ function Archipelago:CanReceiveItems()
         return false
     end
 
-    if not ClientBP then
-        return false
-    end
-
     if not ClientBP:IsInitialized() then
         return false
     end
 
-    if ClientBP:IsMainMenu() then
-        return false
-    end
-
-    if not ClientBP:InLevel() then
-        return false
-    end
-    
-    return true
+    local level = ClientBP:GetLevelName()
+    return level ~= "" and level ~= CONSTANTS.GAME.MAIN_MENU_LEVEL
 end
 
 ---Receive an item from Archipelago

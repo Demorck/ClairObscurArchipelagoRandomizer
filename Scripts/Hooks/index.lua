@@ -27,34 +27,19 @@ function Hooks:Register()
     -- Create hook manager
     hookManager = HookManager:New({ logger = Logger })
 
-    -- Dependencies for hooks
-    local dependencies = {
-        archipelago = Archipelago,
-        storage = Storage,
-        logger = Logger,
-        battle = Battle,
-        characters = Characters,
-        inventory = Inventory,
-        quests = Quests,
-        save = Save,
-        clientBP = ClientBP,
-        capacities = Capacities
-    }
-
-    ChestHook:Register(hookManager, dependencies)
-    BattleHooks:Register(hookManager, dependencies)
-    SaveHooks:Register(hookManager, dependencies)
-    QuestHooks:Register(hookManager, dependencies)
-    LocationHooks:Register(hookManager, dependencies)
-    CharacterHooks:Register(hookManager, dependencies)
-    InventoryHooks:Register(hookManager, dependencies)
-    UIHooks:Register(hookManager, dependencies)
-    CapacityHook:Register(hookManager, dependencies)
+    ChestHook:Register(hookManager)
+    BattleHooks:Register(hookManager)
+    SaveHooks:Register(hookManager)
+    QuestHooks:Register(hookManager)
+    LocationHooks:Register(hookManager)
+    CharacterHooks:Register(hookManager)
+    InventoryHooks:Register(hookManager)
+    UIHooks:Register(hookManager)
+    CapacityHook:Register(hookManager)
 
     if Options:IsEnabled("shopsanity") then
-        ShopHooks:Register(hookManager, dependencies)
+        ShopHooks:Register(hookManager)
     end
-    -- OtherHooks:Register(hookManager, dependencies)
 
     Logger:info("Hooks registered successfully")
 end

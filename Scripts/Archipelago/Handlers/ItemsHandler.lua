@@ -1,45 +1,14 @@
----@class ItemsHandlerDependencies
----@field logger Logger Logger instance for logging item reception events
----@field storage Storage Storage instance for tracking received items
----@field apClient APClient AP client for getting item names and player info
-
-
 ---@class ItemDataInternal
 ---@field name string Human-readable item name
 ---@field id number Archipelago item ID
 
 ---@class ItemsHandler
----@field logger Logger Logger instance for debugging and tracking
----@field storage Storage Storage manager for persistent data
 ---@field queue table<NetworkItem>
----@field apClient APClient Client for AP server communication
----@field archipelago Archipelago|nil Reference to main Archipelago instance (set after creation)
 local ItemsHandler = {}
 
+ItemsHandler.queue = {}
+
 local ITEMS_PER_TICK = 5
-
----Create a new ItemsHandler instance
----@param dependencies ItemsHandlerDependencies Required dependencies
----@return ItemsHandler handler New ItemsHandler instance
-function ItemsHandler:New(dependencies)
-    local instance = {
-        logger = dependencies.logger,
-        storage = dependencies.storage,
-        apClient = dependencies.apClient,
-        archipelago = nil,
-        queue = {}
-    }
-
-    setmetatable(instance, { __index = ItemsHandler })
-    return instance
-end
-
----Set the Archipelago reference (called after initialization)
----This is needed because of circular dependencies between ItemsHandler and Archipelago
----@param archipelago Archipelago The main Archipelago facade instance
-function ItemsHandler:SetArchipelago(archipelago)
-    self.archipelago = archipelago
-end
 
 ---Handle a batch of items received from the AP server
 ---This is the main entry point called by the EventDispatcher
@@ -48,10 +17,8 @@ end
 function ItemsHandler:Handle(items)
     -- Don't process if player is in a state where they can't receive items
     if not self:CanReceiveItems() then
-        self.logger:info(("%d pending items (CanReceiveItems false)"):format(#items))
-        if self.archipelago then
-            self.archipelago.waitingForSync = true
-        end
+        Logger:info(("%d pending items (CanReceiveItems false)"):format(#items))
+        Archipelago.waitingForSync = true
         return
     end
 
@@ -80,7 +47,7 @@ function ItemsHandler:Drain()
 
     local dt = os.clock() - t0
     if dt > 0.008 then   -- ~une demi-frame à 60 fps
-        self.logger:warn(("Small drain: %.1f ms, items %s"):format(dt * 1000, table.concat(names, ",")))
+        Logger:warn(("Small drain: %.1f ms, items %s"):format(dt * 1000, table.concat(names, ",")))
     end
 end
 
@@ -95,13 +62,13 @@ function ItemsHandler:ProcessItem(item)
 
     local itemData = self:GetItemData(item.item)
     if not itemData then
-        self.logger:error("Item data is nil for item: " .. item.item)
+        Logger:error("Item data is nil for item: " .. item.item)
         return false
     end
 
-    local received = self.archipelago and self.archipelago:ReceiveItem(itemData)
+    local received = Archipelago and Archipelago:ReceiveItem(itemData)
     if received then
-        self.logger:info(string.format(
+        Logger:info(string.format(
             "Received item: %s (%d) at index: %d for player: %d",
             itemData.name, item.item, item.index, item.player
         ))
@@ -119,8 +86,8 @@ end
 ---@return ItemDataInternal|nil itemData Item data with name and ID, or nil if not found
 ---@private
 function ItemsHandler:GetItemData(itemId)
-    self.gameName = self.gameName or self.apClient:GetPlayerInfo().game
-    local itemName = self.apClient:GetItemName(itemId, self.gameName)
+    self.gameName = self.gameName or ArchipelagoSystem:GetClient():GetPlayerInfo().game
+    local itemName = ArchipelagoSystem:GetClient():GetItemName(itemId, self.gameName)
 
     if not itemName then
         return nil

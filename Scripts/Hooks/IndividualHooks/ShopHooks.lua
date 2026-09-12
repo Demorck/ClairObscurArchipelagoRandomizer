@@ -37,10 +37,8 @@ end
 
 ---Register all battle hooks
 ---@param hookManager HookManager
----@param dependencies table
-function ShopHooks:Register(hookManager, dependencies)
+function ShopHooks:Register(hookManager)
     self.last_shop_visited = nil
-    local logger = dependencies.logger
 
     local table_current_shop = {}
 
@@ -72,7 +70,7 @@ function ShopHooks:Register(hookManager, dependencies)
         "Shop - Modify Shop row"
     )
 
-    logger:info("Shop hooks registered")
+    Logger:info("Shop hooks registered")
 end
 
 function ShopHooks:RemoveShopOwnedBox()
@@ -97,12 +95,12 @@ function ShopHooks:ChangeShopRowData(t)
         local data_merchant = t[merchant.Items:GetFName():ToString()]
         local data = table.remove(data_merchant, 1)
 
-        local icon = ClientBP:GetHelper().IconAP:Find(2):get()
+        local icon = ClientBP:GetAPIcon(2)
         local display_name     = FText("An item")
 
         if Options:IsEnabled("show_shop_items") then
             display_name     = FText(data["name"])
-            icon             = ClientBP:GetHelper().IconAP:Find(data["classification"]):get()
+            icon             = ClientBP:GetAPIcon(data["classification"])
         end
         
         item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
@@ -220,12 +218,12 @@ function ShopHooks:ChangeItemInformation()
 
         local item_description = FText("An item")
         local display_name = FText("An item")
-        local icon = ClientBP:GetHelper().IconAP:Find(2):get()
+        local icon = ClientBP:GetAPIcon(2)
 
         if Options:IsEnabled("show_shop_items") then
             item_description = FText(string_builded)
             display_name     = FText(location_name)
-            icon             = ClientBP:GetHelper().IconAP:Find(scouted_location.classification):get()
+            icon             = ClientBP:GetAPIcon(scouted_location.classification)
         end
 
         local already_hinted = Storage:IsShopItemAlreadyHinted(location_name)
@@ -256,7 +254,9 @@ function ShopHooks:ChangeItemInformation()
         item_data.Item_Type_88_2F24F8FB4235429B4DE1399DBA533C78 = 8
         item_data.ItemDescription_32_0A978AFB4AB4B316342DD6A72ACDD4E1 = item_description
         item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = display_name
-        item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
+        if icon ~= nil then
+            item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
+        end
         item_data.Consumable_MaxStackAmount_76_2DD073774D235ED7EE5C8F99817D7FFA = 1
         item_data.Pictos_Data_103_EE44D66B4E4F16A7FD44FF9F25777CF4 = nil
         item_data.Pictos_ItemStats_91_229F4A00415AB214191377B73987FF7B = nil

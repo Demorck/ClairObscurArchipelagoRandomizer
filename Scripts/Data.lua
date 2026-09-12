@@ -65,7 +65,7 @@ function Data.Load()
             end
         end
 
-        Logger:info(("Data: %d items, %d uniques names"):format(#Data.items, #unique_names))
+        Logger:info(("Data: %d items, %d uniques names"):format(#Data.items, unique_names))
     end
     
     Data.locations = content_locations

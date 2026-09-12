@@ -1,79 +1,36 @@
----@class SlotDataHandlerDependencies
----@field logger Logger Logger instance for logging item reception events
----@field storage Storage Storage instance for tracking received items
----@field apClient APClient AP client for getting item names and player info
-
 ---@class SlotDataHandler
----@field logger Logger Logger instance for debugging and tracking
----@field storage Storage Storage manager for persistent data
----@field apClient APClient Client for AP server communication
----@field archipelago Archipelago|nil Reference to main Archipelago instance (set after creation)
 local SlotDataHandler = {}
-
----Create a new SlotDataHandler instance
----@param dependencies SlotDataHandlerDependencies Required dependencies
----@return SlotDataHandler handler New SlotDataHandler instance
-function SlotDataHandler:New(dependencies)
-    local instance = {
-        logger = dependencies.logger,
-        storage = dependencies.storage,
-        apClient = dependencies.apClient,
-        archipelago = nil, -- sera set après
-    }
-
-    setmetatable(instance, { __index = SlotDataHandler })
-    return instance
-end
-
----Set the Archipelago reference (called after initialization)
----This is needed because of circular dependencies between SlotDataHandler and Archipelago
----@param archipelago Archipelago The main Archipelago facade instance
-function SlotDataHandler:SetArchipelago(archipelago)
-    self.archipelago = archipelago
-end
 
 ---Handle the slot data received from the AP server
 ---This is the main entry point called by the EventDispatcher
 ---@param slotData table<string, any> The slot data
 function SlotDataHandler:Handle(slotData)
-    self.logger:info("Processing slot data...")
+    Logger:info("Processing slot data...")
 
     -- Mark as connected
-    if self.archipelago then
-        self.archipelago.hasConnectedPrior = true
-        self.archipelago.trying_to_connect = false
-    end
+    Archipelago.hasConnectedPrior = true
+    Archipelago.trying_to_connect = false
     
     -- Process slot data
     self:ProcessSlotData(slotData)
 
     -- Register hooks
-    if Hooks then
-        Hooks:Register()
-    end
+    Hooks:Register()
 
     -- Load storage
-    if Storage then
-        Storage:Load()
-    end
+    Storage:Load()
 
-    if self.archipelago then
-        self.archipelago.pendingLocationsFlush = true
-    end
+    Archipelago.pendingLocationsFlush = true
 
     -- Check if can receive items
-    if not self.archipelago:CanReceiveItems() then
-        if self.archipelago then
-            self.archipelago:Sync()
-        end
+    if not Archipelago:CanReceiveItems() then
+        Archipelago:Sync()
     end
 
     -- Load game data
-    if Data then
-        Data.Load()
-    end
+    Data.Load()
 
-    self.archipelago.want_to_scout_shop = false
+    Archipelago.want_to_scout_shop = false
 end
 
 ---Process the slot data
@@ -81,34 +38,28 @@ end
 ---@param slotData table<string, any> The slot data
 function SlotDataHandler:ProcessSlotData(slotData)
     -- Extract player info
-    local playerInfo = self.apClient:GetPlayerInfo()
+    local playerInfo = ArchipelagoSystem:GetClient():GetPlayerInfo()
 
-    if self.archipelago then
-        self.archipelago.seed = playerInfo.seed
-        self.archipelago.slot = playerInfo.slot
-    end
+    Archipelago.seed = playerInfo.seed
+    Archipelago.slot = playerInfo.slot
 
     -- Death link
-    if slotData.death_link ~= nil and self.archipelago then
-        self.archipelago.death_link = slotData.death_link
+    if slotData.death_link ~= nil and Archipelago then
+        Archipelago.death_link = slotData.death_link
     end
 
     -- Options and data
-    if self.archipelago then
-        Options:Load(slotData.options)
-        self.archipelago.totals = slotData.totals or {}
-        self.archipelago.pictos_data = slotData.pictos or {}
-        self.archipelago.weapons_data = slotData.weapons or {}
-        self.archipelago.shop_data = slotData.shops or {}
-        self.archipelago.chroma = slotData.chroma or nil
-        self.archipelago.max_level_gear = slotData.max_level_gear
-    end
+    Options:Load(slotData.options)
+    Archipelago.totals = slotData.totals or {}
+    Archipelago.pictos_data = slotData.pictos or {}
+    Archipelago.weapons_data = slotData.weapons or {}
+    Archipelago.shop_data = slotData.shops or {}
+    Archipelago.chroma = slotData.chroma or nil
+    Archipelago.max_level_gear = slotData.max_gear_level or 33
 
     -- Log received data
-    self.logger:info("Slot Data Received:")
-    if self.archipelago then
-        self.logger:info("############# NEED TO ADD IT AFTER REFACTORING")
-    end
+    Logger:info("Slot Data Received:")
+    Logger:info("  Options: " .. Dump(Options.values))
 end
 
 ---Check if the player is in a valid state to receive items

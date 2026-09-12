@@ -31,13 +31,12 @@ end
 ---@param name any
 function Characters:AddCharacter(name)
     Logger:info("Adding character to party: " .. name)
-    local helper = ClientBP:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
 
     local found = {}
     local struct = {} 
     local fname = FName(name)
     AddingCharacterFromArchipelago = true
-    Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)
+    ClientBP:CallHelper("AddCharacterToCollectionFromHardcodedName", fname, found, struct)
 end
 
 function Characters:AddEveryone()

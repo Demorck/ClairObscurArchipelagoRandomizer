@@ -4,10 +4,7 @@ local CapacityHook = {}
 
 ---Register all character hooks
 ---@param hookManager HookManager
----@param dependencies table
-function CapacityHook:Register(hookManager, dependencies)
-    local storage = dependencies.storage ---@type Storage
-    local logger = dependencies.logger
+function CapacityHook:Register(hookManager)
 
     -- Save characters from unavoidable death
     hookManager:Register(
@@ -21,7 +18,7 @@ function CapacityHook:Register(hookManager, dependencies)
             if not RuntimeState:IsModCall("UnlockWorldMapCapacities") then
                 manager:ResetState()
                 Capacities:UnlockAllExplorationCapacities()
-                for i = 1, storage:Get("progressive_rock"), 1 do
+                for i = 1, Storage:Get("progressive_rock"), 1 do
                     print("Progressive rock: ", tostring(i))
                     Capacities:UnlockNextWorldMapAbility()
                 end
@@ -42,14 +39,14 @@ function CapacityHook:Register(hookManager, dependencies)
                 return
             end
 
-            if not storage:Get("paint_break_unlocked") then
+            if not Storage:Get("paint_break_unlocked") then
                 Capacities:SetDestroyPaintedRock(false)
             end
         end,
         "Capacities - UnlockFreeAimDamageLevel"
     )
 
-    logger:info("Capacity hook registered")
+    Logger:info("Capacity hook registered")
 end
 
 return CapacityHook

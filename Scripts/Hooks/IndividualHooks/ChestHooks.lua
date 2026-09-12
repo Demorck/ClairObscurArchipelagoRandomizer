@@ -5,63 +5,55 @@ local ChestHooks = {}
 
 ---Register all chest hooks
 ---@param hookManager HookManager Hook manager instance
----@param dependencies table Dependencies (archipelago, storage, logger)
-function ChestHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
-    local storage = dependencies.storage
-    local logger = dependencies.logger
+function ChestHooks:Register(hookManager)
 
     -- When items are added from chest to inventory
     hookManager:Register(
         "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:AddItemsFromChestToInventory",
-        self:OnItemAddedFromChestToInventory(archipelago, storage),
+        self:OnItemAddedFromChestToInventory(),
         "Chest - Item Collection"
     )
 
     -- Set chest contents to zero (remove vanilla loot)
     hookManager:Register(
         "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:RollChestItems",
-        self:OnRollItemsToRemove(archipelago, storage),
+        self:OnRollItemsToRemove(),
         "Chest - Remove Vanilla Loot"
     )
 
     -- Update chest visual feedback
     hookManager:Register(
         "/Game/Gameplay/GPE/Chests/BP_Chest_Regular.BP_Chest_Regular_C:UpdateFeedbackParametersFromLoot",
-        self:UpdateVisualFeedback(archipelago, storage),
+        self:UpdateVisualFeedback(),
         "Chest - Update Visual Feedback"
     )
 
-    logger:info("Chest hooks registered")
+    Logger:info("Chest hooks registered")
 end
 
----comment
----@param archipelago Archipelago
----@param storage any
----@return function
-function ChestHooks:OnItemAddedFromChestToInventory(archipelago, storage)
+function ChestHooks:OnItemAddedFromChestToInventory()
     return function(Context)
-        if not archipelago:IsInitialized() then return end
+        if not Archipelago:IsInitialized() then return end
 
         local chest = Context:get() ---@type ABP_Chest_Regular_C
         local chestName = chest.ChestSetupHandle["RowName"]:ToString()
 
-        archipelago:SendLocationCheck(chestName)
+        Archipelago:SendLocationCheck(chestName)
     end
 end
 
-function ChestHooks:OnRollItemsToRemove(archipelago, storage)
+function ChestHooks:OnRollItemsToRemove()
     return function(_, _, itemsToLoot)
-        if not archipelago:IsInitialized() then return end
+        if not Archipelago:IsInitialized() then return end
 
         local map = itemsToLoot:get() ---@type TMap<FName, int32>
         map:Empty()
     end
 end
 
-function ChestHooks:UpdateVisualFeedback(archipelago, storage)
+function ChestHooks:UpdateVisualFeedback()
     return function(self)
-        if not archipelago:IsConnected() then return end
+        if not Archipelago:IsConnected() then return end
 
         local chest = self:get() ---@type ABP_Chest_Regular_C
 

@@ -29,77 +29,40 @@ function ArchipelagoSystem:Initialize()
         eventDispatcher = eventDispatcher
     })
 
-    -- Create handlers
-    local slotDataHandler = Handlers.SlotDataHandler:New({
-        logger = Logger,
-        storage = Storage,
-        apClient = apClient
-    })
-
-    local itemsHandler = Handlers.ItemsHandler:New({
-        logger = Logger,
-        storage = Storage,
-        apClient = apClient
-    })
-
-    local locationsHandler = Handlers.LocationsHandler:New({
-        logger = Logger,
-        apClient = apClient
-    })
-
-    local deathLinkHandler = Handlers.DeathLinkHandler:New({
-        logger = Logger
-    })
-
-    local jsonHandler = Handlers.JSONHandler:New({
-        logger = Logger,
-        apClient = apClient
-    })
-
-    local scoutedLocationHandler = Handlers.ScoutedLocationHandler:New({
-        logger = Logger,
-        apClient = apClient
-    })
-
-    -- Set archipelago reference (for legacy compatibility)
-    slotDataHandler:SetArchipelago(Archipelago)
-    itemsHandler:SetArchipelago(Archipelago)
-    deathLinkHandler:SetArchipelago(Archipelago)
-
     -- Register handlers with dispatcher
     eventDispatcher:RegisterHandler("slotConnected", function(data)
         ExecuteInGameThread(function ()
-            slotDataHandler:Handle(data)
+            Handlers.SlotDataHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("itemsReceived", function(data)
         ExecuteInGameThread(function ()
-            itemsHandler:Handle(data)
+            Handlers.ItemsHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("locationsChecked", function(data)
         ExecuteInGameThread(function ()
-            locationsHandler:Handle(data)
+            Handlers.LocationsHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("bounced", function(data)
         ExecuteInGameThread(function ()
-            deathLinkHandler:Handle(data)
+            Handlers.DeathLinkHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("json", function (data)
         ExecuteInGameThread(function ()
-            jsonHandler:Handle(data)
+            Handlers.JSONHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("onScouted", function(data)
         ExecuteInGameThread(function ()
-            scoutedLocationHandler:Handle(data)
+            Handlers.ScoutedLocationHandler:Handle(data)
         end)
     end)
 
@@ -108,7 +71,6 @@ function ArchipelagoSystem:Initialize()
     self.config = config
     self.apClient = apClient
     self.eventDispatcher = eventDispatcher
-    self.itemsHandler = itemsHandler
 
     -- Setup polling loop
     self:SetupPollingLoop()
@@ -167,7 +129,7 @@ function ArchipelagoSystem:SetupPollingLoop()
 
     local itemLoop
     itemLoop = LoopInGameThreadWithDelay(100, function()
-        self.itemsHandler:Drain()
+        Handlers.ItemsHandler:Drain()
     end)
 
     local saveLoopHandle
