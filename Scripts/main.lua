@@ -16,6 +16,7 @@ Commands     = require "Commands"
 Regions      = require "Constants.RegionConstants"
 RuntimeState = require "RuntimeState"
 Options      = require "Archipelago.Options"
+MerchantLocations = require "Archipelago.MerchantLocations"
 UEHelpers    = require "UEHelpers"
 
 Dump = Utils.TableHelper.Dump

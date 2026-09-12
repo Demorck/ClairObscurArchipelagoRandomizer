@@ -63,9 +63,7 @@ function Battle:GetMerchantLocationName(encounter_name)
         -- Merchant's name is DT_'Merchant_SMTH'
         local _, _, current_merchant_name = string.find(shop.datatable, ".*%.DT_(.*)", 1, false)
         if encounter_name == current_merchant_name then
-            local _, _, prefix = string.find(shop.unlock_item, "(.*- )", 1, false)
-            local suffix = "Fight"
-            return prefix .. suffix
+            return MerchantLocations.Build(shop, MerchantLocations.FIGHT)
         end 
 
         ::continue::

@@ -15,12 +15,12 @@ local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_i
         Quantity_10_A62DFEDB41EF5DA12CE979AB3F742758     = 1,
     } ---@type FS_MerchantItemData
 
-    local item_type = is_extra and "Extra Item" or "Item"
+    local kind = is_extra and MerchantLocations.EXTRA or MerchantLocations.ITEM
     local number_to_add = is_extra and Options.values.extra_location_per_shop
                                     or Options.values.location_per_shop
 
     for i = 1, number_to_add, 1 do
-        local name = "Merchant (" .. shop_data.region .. "): " .. shop_data.name .. " - " .. item_type .. " " .. tostring(i)
+        local name = MerchantLocations.Build(shop_data, kind, i)
         local scouted_location = Storage:Get("merchant_scouted")[name]
         if scouted_location.found then
             goto scout_found
@@ -178,26 +178,22 @@ function ShopHooks:ChangeItemInformation()
             return
         end
 
-        local _, _, shop_name  = string.find(location_name, ".*:%s(.*)%s%-.*", 1, false)
-        local _, _, item_id_str    = string.find(location_name, ".*Item%s(.*)", 1, false)
-        if shop_name == nil or item_id_str == nil then 
-            Logger:warn("nil somewhere shop name: " .. tostring(shop_name) .. " or item_id_str: " .. tostring(item_id_str) .. ' locationname: ' .. location_name)
+        local parts = MerchantLocations.Parse(location_name)
+        if parts == nil then
+            Logger:warn("Not a merchant item location: " .. location_name)
             return
         end
 
-        local item_id = tonumber(item_id_str)
+        local item_id = parts.index
+        local extra = parts.kind == MerchantLocations.EXTRA
 
         -- Find the shop data based on the shops name
         local found = Storage:IsLocationInMerchantFound(location_name)
-        local shop_data = Data:FindShop(shop_name)
+        local shop_data = Data:FindShop(parts.shop)
         if shop_data == nil then 
-            print("shop_data nil")
+            Logger:warn("Unknown shop in location: " .. location_name)
             return 
         end
-
-        
-        local f = string.find(location_name, "Extra Item")
-        local extra = f ~= nil
 
         local has_item = not extra
         local price = Archipelago.shop_data[shop_data.name]["prices"][item_id]

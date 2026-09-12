@@ -1,4 +1,3 @@
--- Tests/test_storage.lua
 local Runner = require("runner")
 local Storage = require("Storage.index")
 

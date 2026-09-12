@@ -94,17 +94,14 @@ function Archipelago:ScoutMerchants()
 
 
         for i = 1, Options.values.location_per_shop, 1 do
-            local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Item " .. tostring(i)
-            table.insert(location_names, current_name)
+            table.insert(location_names, MerchantLocations.Build(shop, MerchantLocations.ITEM, i))
         end
 
         if shop.has_fight then
-            local fight = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Fight"
-            table.insert(location_names, fight)
+            table.insert(location_names, MerchantLocations.Build(shop, MerchantLocations.FIGHT))
 
             for i = 1, Options.values.extra_location_per_shop, 1 do
-                local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Extra Item " .. tostring(i)
-                table.insert(location_names, current_name)
+                table.insert(location_names, MerchantLocations.Build(shop, MerchantLocations.EXTRA, i))
             end
         end
         
