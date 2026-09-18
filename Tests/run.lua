@@ -8,5 +8,6 @@ require("test_options")
 require("test_storage")
 require("test_merchants_locations")
 require("test_shops")
+require("test_item_receiver")
 
 require("runner").report()

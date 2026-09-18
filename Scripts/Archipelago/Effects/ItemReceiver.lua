@@ -6,6 +6,19 @@ local TrapHandler = require("Archipelago.Effects.TrapHandler")
 ---@class ItemReceiver
 local ItemReceiver = {}
 
+ItemReceiver.HANDLERS_BY_TYPE = {
+    ["Area"]                   = function(item) return ItemReceiver:HandleAreaItem(item) end,
+    ["Character"]              = function(item) return ItemReceiver:HandleCharacterItem(item) end,
+    ["Other"]                  = function(item) return ItemReceiver:HandleOtherItem(item) end,
+    ["Exploration capacities"] = function(item) return CapacityHandler:Handle(item) end,
+    ["Trap"]                   = function(item) return TrapHandler:Handle(item) end,
+}
+
+ItemReceiver.INVENTORY_TYPES = {
+    ["Picto"] = true, ["Weapon"] = true, ["Journal"] = true,
+    ["Merchant Unlock"] = true, ["Quest item"] = true, ["Upgrade material"] = true,
+}
+
 ---Receive and process an item from Archipelago
 ---@param item_data table Item data from AP
 ---@return boolean success True if item was processed successfully
@@ -17,35 +30,15 @@ function ItemReceiver:ReceiveItem(item_data)
         return false
     end
 
-    -- Handle different item types
-    if local_item_data.type == "Area" then
-        return self:HandleAreaItem(local_item_data)
+    local handler_fn = self.HANDLERS_BY_TYPE[local_item_data.type]
+    if handler_fn ~= nil then
+        return handler_fn(local_item_data)
     end
 
-    if local_item_data.type == "Exploration capacities" then
-        return CapacityHandler:Handle(local_item_data)
-    end
-
-    if local_item_data.type == "Trap" then
-        return TrapHandler:Handle(local_item_data)
-    end
-
-    if local_item_data.type == "Character" then
-        return self:HandleCharacterItem(local_item_data)
-    end
-
-    if local_item_data.type == "Other" then
-        return self:HandleOtherItem(local_item_data)
-    end
-
-    -- Handle gear items (Weapon, Picto, etc.)
+    -- Anything else goes straight to the inventory
     local level = self:GetLevelItem(local_item_data.type, item_data["id"])
 
-    if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level) then
-        return true
-    end
-
-    return false
+    return Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level)
 end
 
 function ItemReceiver:HandleOtherItem(item_data)
