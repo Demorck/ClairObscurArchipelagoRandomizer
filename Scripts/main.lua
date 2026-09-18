@@ -31,25 +31,6 @@ Archipelago.apSystem = ArchipelagoSystem
 
 Commands:RegisterKeybinds()
 
--- Just for compatbility for now
-AP_REF               = {
-   APClient = nil,
-}
-
-NEEDED_TO_INIT = false
-
-setmetatable(AP_REF, {
-   __index = function(t, key)
-      if key == "APClient" then
-         if ArchipelagoSystem and ArchipelagoSystem:IsConnected() then
-            return ArchipelagoSystem:GetClient():GetClient()
-         end
-         return nil
-      end
-      return rawget(t, key)
-   end
-})
-
 AddingCharacterFromArchipelago = false
 FLAG_COMMAND = false
 

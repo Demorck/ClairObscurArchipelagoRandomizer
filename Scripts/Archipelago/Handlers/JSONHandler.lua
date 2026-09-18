@@ -12,6 +12,8 @@ local JSONHandler = {}
 ---@param json_data table<JSONMessagePart> JSONMessagePart
 function JSONHandler:Handle(json_data)
     if not json_data then return end
+    local client = Archipelago:GetClient()
+    if client == nil then return end
 
     local string_build = ""
     for i, value in ipairs(json_data) do
@@ -22,14 +24,14 @@ function JSONHandler:Handle(json_data)
         elseif value.type == "location_id" then
             local location_id = tonumber(value.text) or 0
             local player_id = tonumber(value.player) or 0
-            local location_name = ArchipelagoSystem:GetClient():GetLocationNameFromPlayerID(location_id, player_id) or ''
+            local location_name = client:GetLocationNameFromPlayerID(location_id, player_id) or ''
 
             local styled_location = "<Location>" .. location_name .. "</>"
             string_build = string_build .. styled_location
         elseif value.type == "item_id" then
             local item_id = tonumber(value.text) or 0
             local player_id = tonumber(value.player) or 0
-            local location_name = ArchipelagoSystem:GetClient():GetItemNameFromPlayerID(item_id, player_id) or ''
+            local location_name = client:GetItemNameFromPlayerID(item_id, player_id) or ''
             -- flags are for item type (progressive, useful, nothing or trap)
             string_build = string_build .. location_name
         elseif value.type == "player_id" then
@@ -42,8 +44,11 @@ function JSONHandler:Handle(json_data)
 end
 
 function JSONHandler:GetStyledPlayer(player_id)
-    local player_alias = ArchipelagoSystem:GetClient():GetPlayerNameFromID(player_id)
-    local current_player = ArchipelagoSystem:GetClient():GetPlayerInfo()
+    local client = Archipelago:GetClient()
+    if client == nil then return end
+
+    local player_alias = client:GetPlayerNameFromID(player_id)
+    local current_player = client:GetPlayerInfo()
 
     local string_build = ""
     if current_player["slot"] == player_id then

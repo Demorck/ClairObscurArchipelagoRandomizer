@@ -51,11 +51,19 @@ end
 ---Get player information
 ---@return table playerInfo Player information from AP
 function Archipelago:GetPlayer()
-    if not self.apSystem then
+    if not self:IsConnected() then
         return {}
     end
     
-    return self.apSystem:GetClient():GetPlayerInfo()
+    return self:GetClient():GetPlayerInfo()
+end
+
+function Archipelago:GetClient()
+    if self.apSystem == nil then
+        return nil
+    end
+
+    return self.apSystem:GetClient()
 end
 
 ---Sync with AP server
@@ -69,7 +77,7 @@ function Archipelago:Sync()
         return
     end
     
-    self.apSystem:GetClient():Sync()
+    self:GetClient():Sync()
     self.waitingForSync = false
 end
 
@@ -168,13 +176,13 @@ function Archipelago:SendDeathLink(msg, players_id, games, tags)
 end
 
 function Archipelago:CanReceiveDeathLink()
-    local time = self.apSystem:GetClient():GetServerTime()
+    local time = self:GetClient():GetServerTime()
     
     return time >= self.lastDeathLink + 30 and not self.wasDeathLinked
 end
 
 function Archipelago:LastDeathLinkInSeconds()
-    local time = self.apSystem:GetClient():GetServerTime()
+    local time = self:GetClient():GetServerTime()
 
     return time - self.lastDeathLink
 end
@@ -256,11 +264,11 @@ function GetItemFromAPData(item_id)
     local player = Archipelago:GetPlayer()
     local item = {}
     
-    if not Archipelago.apSystem then
+    if not Archipelago:IsConnected() then
         return nil
     end
     
-    item["name"] = Archipelago.apSystem:GetClient():GetItemName(item_id, player["game"])
+    item["name"] = Archipelago:GetClient():GetItemName(item_id, player["game"])
 
     if not item["name"] then
         return nil

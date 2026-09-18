@@ -10,7 +10,7 @@ local DeathLinkManager = {}
 ---@param games table|nil Games to send to
 ---@param tags table|nil Tags for the bounce
 function DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
-    if not Archipelago.apSystem then return end
+    if not Archipelago:IsInitialized() then return end
 
     players_id = players_id or {}
     games      = games or {}
@@ -18,9 +18,9 @@ function DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
     msg        = msg or {}
 
     local data = {}
-    data["time"] = Archipelago.apSystem:GetClient():GetServerTime()
+    data["time"] = Archipelago:GetClient():GetServerTime()
 
-    local playerInfo = Archipelago.apSystem:GetClient():GetPlayerInfo()
+    local playerInfo = Archipelago:GetClient():GetPlayerInfo()
     local slotName = playerInfo.alias or "Unknown"
 
     if not string.find(msg, slotName) then
@@ -32,7 +32,7 @@ function DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
 
     table.insert(tags, "DeathLink")
 
-    Archipelago.apSystem:GetClient():Bounce(data, games, players_id, tags)
+    Archipelago:GetClient():Bounce(data, games, players_id, tags)
     Logger:info("Sending DeathLink with cause: " .. msg .. " from source: " .. slotName)
 end
 

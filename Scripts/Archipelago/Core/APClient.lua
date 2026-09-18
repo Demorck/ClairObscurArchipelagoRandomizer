@@ -275,12 +275,6 @@ function APClient:IsConnected()
            self.client:get_state() == self.AP.State.SLOT_CONNECTED
 end
 
----Get the underlying AP client instance
----@return any client The lua-apclientpp client
-function APClient:GetClient()
-    return self.client
-end
-
 ---Send location checks to the AP server
 ---@param locationIds number[] Array of location IDs to check
 ---@return boolean success True if sent successfully

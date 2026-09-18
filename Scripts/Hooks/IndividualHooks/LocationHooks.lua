@@ -9,13 +9,15 @@ function LocationHooks:Register(hookManager)
     local AddingGestralHook = false
 
     local function change_data_storage(level)
+        if not Archipelago:IsConnected() then return end
+        
         local operation = {
             operation = "replace",
             value = level
         }
 
-        local playerInfo = Archipelago.apSystem:GetClient():GetPlayerInfo()
-        Archipelago.apSystem:GetClient():SetDataStorage(
+        local playerInfo = Archipelago:GetClient():GetPlayerInfo()
+        Archipelago:GetClient():SetDataStorage(
             playerInfo.number .. "-coe33-currentLocation",
             level,
             false,
@@ -29,7 +31,7 @@ function LocationHooks:Register(hookManager)
                 hookManager:Register(
                     "/Game/Narrative/Dialogs/LevelsDialogs/Camp/BP_Dialogue_Quest_LostGestralChief.BP_Dialogue_Quest_LostGestralChief_C:GetFoundLostGestralCount",
                     function (context)
-                        if not Archipelago.apSystem then return end
+                        if not Archipelago:CanReceiveItems() then return end
 
                         for i = 1, Storage:Get("gestral_found") do
                             Archipelago:SendLocationCheck("Lost Gestral reward " .. tostring(i))

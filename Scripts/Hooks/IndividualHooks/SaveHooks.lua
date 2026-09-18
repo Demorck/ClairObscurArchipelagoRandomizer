@@ -92,13 +92,16 @@ function SaveHooks:SaveGame(hookManager)
             operation = "update",
             value = currentFlags
         }
-        local playerInfo = Archipelago.apSystem:GetClient():GetPlayerInfo()
-        Archipelago.apSystem:GetClient():SetDataStorage(
-            playerInfo.number .. "-coe33-flags",
-            currentFlags,
-            false,
-            {operation}
-        )
+        
+        if Archipelago:IsConnected() then
+            local playerInfo = Archipelago:GetClient():GetPlayerInfo()
+            Archipelago:GetClient():SetDataStorage(
+                playerInfo.number .. "-coe33-flags",
+                currentFlags,
+                false,
+                {operation}
+            )
+        end
 
         -- Update party and characters
         -- Characters:EnableCharactersInCollectionOnlyUnlocked()

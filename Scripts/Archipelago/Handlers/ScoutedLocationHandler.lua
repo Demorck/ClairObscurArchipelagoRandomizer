@@ -20,10 +20,13 @@ end
 ---@param item NetworkItem
 ---@private
 function ScoutedLocationHandler:ProcessItem(item)
-    local player_name = ArchipelagoSystem:GetClient():GetPlayerNameFromID(item.player)
-    local item_name = ArchipelagoSystem:GetClient():GetItemNameFromPlayerID(item.item, item.player)
-    local player_info = ArchipelagoSystem:GetClient():GetPlayerInfo()
-    local location_name = ArchipelagoSystem:GetClient():GetLocationName(item.location, player_info.game)
+    local client = Archipelago:GetClient()
+    if client == nil then return end
+
+    local player_name = client:GetPlayerNameFromID(item.player)
+    local item_name = client:GetItemNameFromPlayerID(item.item, item.player)
+    local player_info = client:GetPlayerInfo()
+    local location_name = client:GetLocationName(item.location, player_info.game)
 
     Storage:AddScoutedMerchant(location_name, item_name, player_name, item.flags)
 end

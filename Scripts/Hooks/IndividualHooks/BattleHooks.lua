@@ -82,7 +82,7 @@ end
 
 function BattleHooks:OnRollBattleRewards()
     return function(_, rewards)
-        if not Archipelago.apSystem then return end
+        if not Archipelago:IsConnected() then return end
 
         local battleRewards = rewards:get() ---@type FS_BattleRewards
         local keepRewards = {} ---@type table<FS_RolledLootEntry>

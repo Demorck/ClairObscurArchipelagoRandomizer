@@ -38,7 +38,7 @@ end
 ---@param slotData table<string, any> The slot data
 function SlotDataHandler:ProcessSlotData(slotData)
     -- Extract player info
-    local playerInfo = ArchipelagoSystem:GetClient():GetPlayerInfo()
+    local playerInfo = Archipelago:GetClient():GetPlayerInfo()
 
     Archipelago.seed = playerInfo.seed
     Archipelago.slot = playerInfo.slot

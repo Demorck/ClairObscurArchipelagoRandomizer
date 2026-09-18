@@ -9,7 +9,7 @@ function QuestHooks:Register(hookManager)
     hookManager:Register(
         "/Game/Gameplay/Quests/System/BP_QuestSystem.BP_QuestSystem_C:UpdateActivitySubTaskStatus",
         function(self, objective_name, status)
-            if not Archipelago.apSystem then return end
+            if not Archipelago:IsConnected() then return end
 
             local objectiveName = objective_name:get():ToString()
             local statusValue = status:get()

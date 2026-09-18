@@ -7,7 +7,7 @@ local LocationsHandler = {}
 function LocationsHandler:Handle(locations)
     if not locations then return end
 
-    local playerInfo = ArchipelagoSystem:GetClient():GetPlayerInfo()
+    local playerInfo = Archipelago:GetClient():GetPlayerInfo()
 
     for _, locationId in ipairs(locations) do
         self:ProcessLocation(locationId, playerInfo)
@@ -26,7 +26,7 @@ function LocationsHandler:ProcessLocation(locationId, playerInfo)
         return
     end
 
-    local locationName = ArchipelagoSystem:GetClient():GetLocationName(id, playerInfo.game)
+    local locationName = Archipelago:GetClient():GetLocationName(id, playerInfo.game)
     if not locationName then
         return
     end
