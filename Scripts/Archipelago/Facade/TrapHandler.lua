@@ -1,6 +1,5 @@
 ---Trap Handler
 ---Handles trap items from Archipelago
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
 
 ---@class TrapHandler
 local TrapHandler = {}

@@ -1,6 +1,5 @@
 ---DeathLink Manager
 ---Handles DeathLink sending and receiving
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
 
 ---@class DeathLinkManager
 local DeathLinkManager = {}
@@ -11,7 +10,7 @@ local DeathLinkManager = {}
 ---@param games table|nil Games to send to
 ---@param tags table|nil Tags for the bounce
 function DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
-    if not ArchipelagoState.apSystem then return end
+    if not Archipelago.apSystem then return end
 
     players_id = players_id or {}
     games      = games or {}
@@ -19,9 +18,9 @@ function DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
     msg        = msg or {}
 
     local data = {}
-    data["time"] = ArchipelagoState.apSystem:GetClient():GetServerTime()
+    data["time"] = Archipelago.apSystem:GetClient():GetServerTime()
 
-    local playerInfo = ArchipelagoState.apSystem:GetClient():GetPlayerInfo()
+    local playerInfo = Archipelago.apSystem:GetClient():GetPlayerInfo()
     local slotName = playerInfo.alias or "Unknown"
 
     if not string.find(msg, slotName) then
@@ -33,21 +32,8 @@ function DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
 
     table.insert(tags, "DeathLink")
 
-    ArchipelagoState.apSystem:GetClient():Bounce(data, games, players_id, tags)
+    Archipelago.apSystem:GetClient():Bounce(data, games, players_id, tags)
     Logger:info("Sending DeathLink with cause: " .. msg .. " from source: " .. slotName)
-end
-
----Send Gommage DeathLink (not used yet)
-function DeathLinkManager:SendGommage()
-    if not ArchipelagoState.canDeathLink then return end
-
-    local players_id = {}
-    for i = ArchipelagoState.current_year_gommage, 3000, 1 do
-        table.insert(players_id, i)
-    end
-
-    self:SendDeathLink("The gommage happens for " .. ArchipelagoState.current_year_gommage .. " years old", players_id, {}, {})
-    ArchipelagoState.current_year_gommage = ArchipelagoState.current_year_gommage - 1
 end
 
 return DeathLinkManager

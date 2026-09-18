@@ -1,10 +1,39 @@
 ---Archipelago Facade
 ---Main interface between the game and Archipelago
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
 local Facade = require("Archipelago.Facade.index")
 
----@class Archipelago : ArchipelagoState
-local Archipelago = ArchipelagoState
+---@class Archipelago
+local Archipelago = {}
+
+-- Connection
+Archipelago.seed = nil
+Archipelago.slot = nil
+Archipelago.apSystem = nil
+Archipelago.trying_to_connect = false
+Archipelago.hasConnectedPrior = false
+Archipelago.waitingForSync = false
+Archipelago.pendingLocationsFlush = false
+
+-- Slot data
+Archipelago.totals = {}
+Archipelago.weapons_data = {}
+Archipelago.pictos_data = {}
+Archipelago.shop_data = {}
+Archipelago.max_level_gear = 33
+Archipelago.chroma = 0
+Archipelago.want_to_scout_shop = false
+
+-- DeathLink
+Archipelago.death_link = false
+Archipelago.canDeathLink = false
+Archipelago.wasDeathLinked = false
+Archipelago.lastDeathLink = 0.0
+
+-- Not used yet
+Archipelago.current_year_gommage = 34
+Archipelago.number_of_players = 0
+
+
 
 ---Check if connected to AP server
 ---@return boolean connected
@@ -125,11 +154,6 @@ end
 ---Send victory/completion
 function Archipelago:SendVictory()
     Facade.LocationManager:SendVictory()
-end
-
----Send Gommage DeathLink
-function Archipelago:SendGommage()
-    Facade.DeathLinkManager:SendGommage()
 end
 
 ---Send DeathLink

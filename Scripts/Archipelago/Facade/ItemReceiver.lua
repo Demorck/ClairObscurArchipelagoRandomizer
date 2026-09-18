@@ -1,6 +1,5 @@
 ---Item Receiver
 ---Handles reception and processing of items from Archipelago
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
 
 ---@class ItemReceiver
 local ItemReceiver = {}
@@ -123,9 +122,9 @@ function ItemReceiver:GetLevelItem(gear_type, id)
     if  gear_option == Options.GEAR_SCALING.SPHERE_PLACEMENT or
         gear_option == Options.GEAR_SCALING.BALANCED_RANDOM then
         if gear_type == "Picto" then
-            level = FindIDinTable(ArchipelagoState.pictos_data)
+            level = FindIDinTable(Archipelago.pictos_data)
         elseif gear_type == "Weapon" then
-            level = FindIDinTable(ArchipelagoState.weapons_data)
+            level = FindIDinTable(Archipelago.weapons_data)
         end
     elseif gear_option == Options.GEAR_SCALING.ORDER_RECEIVED then
         local total_gear = (Data.count_by_type["Picto"] or 0) + (Data.count_by_type["Weapon"] or 0)

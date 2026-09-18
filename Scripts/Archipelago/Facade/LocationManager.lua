@@ -1,6 +1,5 @@
 ---Location Sender
 ---Handles sending location checks and managing location data
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
 
 ---@class LocationManager
 local LocationManager = {}
@@ -20,8 +19,8 @@ function LocationManager:SendLocationCheck(location_name, force)
     location_to_send[1] = location_id
     
     local function async()
-        if ArchipelagoState.apSystem then
-            ArchipelagoState.apSystem:GetClient():SendLocationChecks(location_to_send)
+        if Archipelago.apSystem then
+            Archipelago.apSystem:GetClient():SendLocationChecks(location_to_send)
         end
     end
 
@@ -38,7 +37,7 @@ function LocationManager:SendLocationCheckByID(location_id)
     location_to_send[1] = location_id
 
     local function async()
-        local apClient = ArchipelagoState.apSystem and ArchipelagoState.apSystem:GetClient()
+        local apClient = Archipelago.apSystem and Archipelago.apSystem:GetClient()
         if apClient and apClient:IsConnected() then
             apClient:SendLocationChecks(location_to_send)
         else
@@ -53,23 +52,23 @@ end
 
 ---Send victory/completion to the AP server
 function LocationManager:SendVictory()
-    if not ArchipelagoState.apSystem then return end
+    if not Archipelago.apSystem then return end
     
-    ArchipelagoState.apSystem:GetClient():SendCompletion()
+    Archipelago.apSystem:GetClient():SendCompletion()
 end
 
 ---Get location data from AP data
 ---@param location_name string Location name
 ---@return table|nil location Location data with id and name
 function LocationManager:GetLocationFromAPData(location_name, force)
-    if not ArchipelagoState.apSystem then
+    if not Archipelago.apSystem then
         return nil
     end
     
     local location = {}
 
     if force then
-        location["id"] = ArchipelagoState.apSystem:GetClient():GetLocationId(location_name)
+        location["id"] = Archipelago.apSystem:GetClient():GetLocationId(location_name)
         location["name"] = location_name
     else
         location = self:GetLocationFromTable(location_name)
@@ -97,7 +96,7 @@ function LocationManager:GetLocationFromTable(location_name)
         return nil
     end
 
-    location["id"] = ArchipelagoState.apSystem:GetClient():GetLocationId(location_data.name)
+    location["id"] = Archipelago.apSystem:GetClient():GetLocationId(location_data.name)
 
     if not location["id"] then
         return nil
@@ -117,13 +116,13 @@ function LocationManager:ScoutLocation(location_names, create_hint)
     local location_ids = {} 
 
     for _, location_name in ipairs(location_names) do
-        local id = ArchipelagoState.apSystem:GetClient():GetLocationId(location_name)
+        local id = Archipelago.apSystem:GetClient():GetLocationId(location_name)
         table.insert(location_ids, id)
     end
 
 
     -- print(location_ids)
-    ArchipelagoState.apSystem:GetClient():ScoutLocations(location_ids, create_hint)
+    Archipelago.apSystem:GetClient():ScoutLocations(location_ids, create_hint)
 end
 
 ---Handle locations with same name like generic chroma, petank
