@@ -16,7 +16,7 @@ local ITEMS_PER_TICK = 5
 ---@param items NetworkItem[] Array of items received from server
 function ItemsHandler:Handle(items)
     -- Don't process if player is in a state where they can't receive items
-    if not self:CanReceiveItems() then
+    if not Archipelago:CanReceiveItems() then
         Logger:info(("%d pending items (CanReceiveItems false)"):format(#items))
         Archipelago.waitingForSync = true
         return
@@ -27,7 +27,7 @@ function ItemsHandler:Handle(items)
     end
 end
 function ItemsHandler:Drain()
-    if #self.queue == 0 or not self:CanReceiveItems() then
+    if #self.queue == 0 or not Archipelago:CanReceiveItems() then
         return  -- on garde la file, on réessaiera au tick suivant
     end
 
@@ -97,18 +97,6 @@ function ItemsHandler:GetItemData(itemId)
         name = itemName,
         id = itemId
     }
-end
-
----Check if the player is in a valid state to receive items
----Items should only be processed when player is in-game and initialized
----@return boolean canReceive True if items can be received
----@private
-function ItemsHandler:CanReceiveItems()
-    if not ClientBP then return false end
-
-    return ClientBP:IsInitialized() and
-           not ClientBP:IsMainMenu() and
-           ClientBP:InLevel()
 end
 
 return ItemsHandler

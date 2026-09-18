@@ -62,17 +62,4 @@ function SlotDataHandler:ProcessSlotData(slotData)
     Logger:info("  Options: " .. Dump(Options.values))
 end
 
----Check if the player is in a valid state to receive items
----Items should only be processed when player is in-game and initialized
----@return boolean canReceive True if items can be received
----TODO: DUPLICATE OF ItemsHandler:CanReceiveItems()
----@private
-function SlotDataHandler:CanReceiveItems()
-    if not ClientBP then return false end
-
-    return ClientBP:IsInitialized() and
-           not ClientBP:IsMainMenu() and
-           ClientBP:InLevel()
-end
-
 return SlotDataHandler
