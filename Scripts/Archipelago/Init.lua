@@ -80,8 +80,6 @@ function ArchipelagoSystem:Initialize()
     return self
 end
 
-GameState = { canReceiveItems = false, isInitialized = false }
-
 --TODO: return true when ap is disconnected 
 function ArchipelagoSystem:SetupPollingLoop()
     local pollTicks = 0
@@ -109,9 +107,6 @@ function ArchipelagoSystem:SetupPollingLoop()
 
     local loopHandle
     loopHandle = LoopInGameThreadWithDelay(500, function()
-        GameState.canReceiveItems = Archipelago:CanReceiveItems()
-        GameState.isInitialized   = Archipelago:IsInitialized()
-
         Storage:Flush()
 
         if Archipelago and Archipelago.pendingLocationsFlush and self:IsConnected() then
@@ -119,7 +114,7 @@ function ArchipelagoSystem:SetupPollingLoop()
             Archipelago:SendAlreadyChecked()
         end
 
-        if Archipelago and NEEDED_TO_INIT and GameState.isInitialized then
+        if NEEDED_TO_INIT and Archipelago:IsInitialized() then
             NEEDED_TO_INIT = false
             InitSaveAfterLumiere()
         end
