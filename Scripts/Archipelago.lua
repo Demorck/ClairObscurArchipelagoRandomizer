@@ -1,6 +1,9 @@
----Archipelago Facade
 ---Main interface between the game and Archipelago
-local Facade = require("Archipelago.Facade.index")
+local ItemReceiver     = require("Archipelago.Effects.ItemReceiver")
+local CapacityHandler  = require("Archipelago.Effects.CapacityHandler")
+local TrapHandler      = require("Archipelago.Effects.TrapHandler")
+local LocationManager  = require("Archipelago.Outbound.LocationManager")
+local DeathLinkManager = require("Archipelago.Outbound.DeathLinkManager")
 
 ---@class Archipelago
 local Archipelago = {}
@@ -107,21 +110,21 @@ end
 ---@param item_data table Item data from AP
 ---@return boolean success
 function Archipelago:ReceiveItem(item_data)
-    return Facade.ItemReceiver:ReceiveItem(item_data)
+    return ItemReceiver:ReceiveItem(item_data)
 end
 
 ---Send a location check
 ---@param location_name string Location name
 function Archipelago:SendLocationCheck(location_name)
-    Facade.LocationManager:SendLocationCheck(location_name, false)
+    LocationManager:SendLocationCheck(location_name, false)
 end
 
 function Archipelago:ForceSendLocationCheck(location_name)
-    Facade.LocationManager:SendLocationCheck(location_name, true)
+    LocationManager:SendLocationCheck(location_name, true)
 end
 
 function Archipelago:ScoutLocation(location_name, create_hint)
-    Facade.LocationManager:ScoutLocation(location_name, create_hint)
+    LocationManager:ScoutLocation(location_name, create_hint)
 end
 
 function Archipelago:ScoutMerchants()
@@ -156,12 +159,12 @@ end
 ---Send a location check
 ---@param location_id number Location ID
 function Archipelago:SendLocationCheckByID(location_id)
-    Facade.LocationManager:SendLocationCheckByID(location_id)
+    LocationManager:SendLocationCheckByID(location_id)
 end
 
 ---Send victory/completion
 function Archipelago:SendVictory()
-    Facade.LocationManager:SendVictory()
+    LocationManager:SendVictory()
 end
 
 ---Send DeathLink
@@ -171,7 +174,7 @@ end
 ---@param tags table|nil Tags
 function Archipelago:SendDeathLink(msg, players_id, games, tags)
     if self:CanReceiveDeathLink() then
-        Facade.DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
+        DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
     end
 end
 
@@ -190,13 +193,13 @@ end
 ---Handle capacity item (legacy compatibility)
 ---@param item_data ItemData
 function Archipelago:HandleCapacityItem(item_data)
-    Facade.CapacityHandler:Handle(item_data)
+    CapacityHandler:Handle(item_data)
 end
 
 ---Handle trap item (legacy compatibility)
 ---@param item_data ItemData
 function Archipelago:HandleTrapItem(item_data)
-    Facade.TrapHandler:Handle(item_data)
+    TrapHandler:Handle(item_data)
 end
 
 ---Get level for an item (legacy compatibility)
@@ -204,7 +207,7 @@ end
 ---@param id integer
 ---@return integer level
 function Archipelago:GetLevelItem(gear_type, id)
-    return Facade.ItemReceiver:GetLevelItem(gear_type, id)
+    return ItemReceiver:GetLevelItem(gear_type, id)
 end
 
 ---Price of a merchant slot, nil when the slot data does not describe it

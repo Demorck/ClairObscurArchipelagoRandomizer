@@ -1,7 +1,7 @@
 local Config = require "Archipelago.Core.Config"
 local APClient = require "Archipelago.Core.APClient"
 local EventDispatcher = require "Archipelago.Core.EventDispatcher"
-local Handlers = require "Archipelago.Handlers.index"
+local Inbound = require "Archipelago.Inbound.index"
 
 -- Connection states
 E_CLIENT_INFOS = {
@@ -32,37 +32,37 @@ function ArchipelagoSystem:Initialize()
     -- Register handlers with dispatcher
     eventDispatcher:RegisterHandler("slotConnected", function(data)
         ExecuteInGameThread(function ()
-            Handlers.SlotDataHandler:Handle(data)
+            Inbound.SlotDataHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("itemsReceived", function(data)
         ExecuteInGameThread(function ()
-            Handlers.ItemsHandler:Handle(data)
+            Inbound.ItemsHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("locationsChecked", function(data)
         ExecuteInGameThread(function ()
-            Handlers.LocationsHandler:Handle(data)
+            Inbound.LocationsHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("bounced", function(data)
         ExecuteInGameThread(function ()
-            Handlers.DeathLinkHandler:Handle(data)
+            Inbound.DeathLinkHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("json", function (data)
         ExecuteInGameThread(function ()
-            Handlers.JSONHandler:Handle(data)
+            Inbound.JSONHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("onScouted", function(data)
         ExecuteInGameThread(function ()
-            Handlers.ScoutedLocationHandler:Handle(data)
+            Inbound.ScoutedLocationHandler:Handle(data)
         end)
     end)
 
@@ -126,7 +126,7 @@ function ArchipelagoSystem:SetupPollingLoop()
 
     local itemLoop
     itemLoop = LoopInGameThreadWithDelay(100, function()
-        Handlers.ItemsHandler:Drain()
+        Inbound.ItemsHandler:Drain()
     end)
 
     local saveLoopHandle

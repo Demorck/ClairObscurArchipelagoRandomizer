@@ -1,5 +1,7 @@
 ---Item Receiver
 ---Handles reception and processing of items from Archipelago
+local CapacityHandler = require("Archipelago.Effects.CapacityHandler")
+local TrapHandler = require("Archipelago.Effects.TrapHandler")
 
 ---@class ItemReceiver
 local ItemReceiver = {}
@@ -21,12 +23,10 @@ function ItemReceiver:ReceiveItem(item_data)
     end
 
     if local_item_data.type == "Exploration capacities" then
-        local CapacityHandler = require("Archipelago.Facade.CapacityHandler")
         return CapacityHandler:Handle(local_item_data)
     end
 
     if local_item_data.type == "Trap" then
-        local TrapHandler = require("Archipelago.Facade.TrapHandler")
         return TrapHandler:Handle(local_item_data)
     end
 
