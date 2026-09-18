@@ -175,6 +175,27 @@ function Archipelago:GetLevelItem(gear_type, id)
     return Facade.ItemReceiver:GetLevelItem(gear_type, id)
 end
 
+---Price of a merchant slot, nil when the slot data does not describe it
+---@param shop_name string
+---@param extra boolean
+---@param index integer
+---@return number|nil
+function Archipelago:GetShopPrice(shop_name, extra, index)
+    local shop = self.shop_data[shop_name]
+    if shop == nil then
+        Logger:warn("No slot data for shop: " .. tostring(shop_name))
+        return nil
+    end
+
+    local prices = shop[extra and "extra_prices" or "prices"]
+    if prices == nil then
+        Logger:warn(("Shop %q has no %s in the slot data"):format(shop_name, extra and "extra_prices" or "prices"))
+        return nil
+    end
+
+    return prices[index]
+end
+
 function Archipelago:isRegionExcluded(region_name) 
     if Options.values.exclude_endgame_locations ~= Options.EXCLUSION.EXCLUDED and 
        Options.values.exclude_endless_tower ~= Options.EXCLUSION.EXCLUDED then

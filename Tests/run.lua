@@ -7,5 +7,6 @@ require("test_goals")
 require("test_options")
 require("test_storage")
 require("test_merchants_locations")
+require("test_shops")
 
 require("runner").report()

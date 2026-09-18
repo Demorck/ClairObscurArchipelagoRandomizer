@@ -38,7 +38,7 @@ end
 ---@field region string
 ---@field shop string
 ---@field kind string
----@field index integer|nil
+---@field index integer
 
 ---@param location_name string
 ---@return MerchantLocationParts|nil parts nil when the name is not a merchant location
@@ -57,7 +57,13 @@ function MerchantLocations.Parse(location_name)
         return nil
     end
 
-    return { region = owner.region, shop = owner.shop, kind = kind, index = tonumber(index) }
+    local index_int = tonumber(index)
+    if index_int == nil then
+        Logger:error("Failed to parse index number in MerchantLocations.parse (should not happened by construction)")
+        return
+    end
+
+    return { region = owner.region, shop = owner.shop, kind = kind, index = index_int }
 end
 
 return MerchantLocations
