@@ -156,7 +156,7 @@ function SaveHooks:SetSpringMeadowsSpawnpointWhenNewSave()
         local spawnpoint = SpawnPointTag:get() ---@cast spawnpoint FGameplayTag
         spawnpoint.TagName = FName("Level.SpawnPoint.SpringMeadows.Entry")
         
-        NEEDED_TO_INIT = true
+        RuntimeState.needs_new_game_setup = true
         Logger:info("Starting a new save...")
     end
 end

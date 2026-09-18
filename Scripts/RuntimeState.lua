@@ -12,6 +12,10 @@ local RuntimeState = {
 
     ---@type boolean
     change_save_icon = false,
+
+    ---True between "a new save was created" and "the setup has run"
+    ---@type boolean
+    needs_new_game_setup = false,
 }
 
 ---Run a UE call while marking it as coming from the mod

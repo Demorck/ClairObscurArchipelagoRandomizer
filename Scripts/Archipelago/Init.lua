@@ -114,10 +114,10 @@ function ArchipelagoSystem:SetupPollingLoop()
             Archipelago:SendAlreadyChecked()
         end
 
-        if NEEDED_TO_INIT and Archipelago:IsInitialized() then
-            NEEDED_TO_INIT = false
-            InitSaveAfterLumiere()
-        end
+        if RuntimeState.needs_new_game_setup and Archipelago:IsInitialized() then
+            RuntimeState.needs_new_game_setup = false
+            NewGameSetup:Run()
+         end
 
         if Archipelago.hasConnectedPrior and not self.apClient.wantToConnect then
             CancelDelayedAction(loopHandle)

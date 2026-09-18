@@ -17,6 +17,7 @@ Regions      = require "Constants.RegionConstants"
 RuntimeState = require "RuntimeState"
 Options      = require "Archipelago.Options"
 MerchantLocations = require "Archipelago.MerchantLocations"
+NewGameSetup = require "Game.NewGameSetup"
 UEHelpers    = require "UEHelpers"
 
 Dump = Utils.TableHelper.Dump
@@ -31,10 +32,8 @@ Archipelago.apSystem = ArchipelagoSystem
 
 Commands:RegisterKeybinds()
 
-AddingCharacterFromArchipelago = false
-FLAG_COMMAND = false
-
 -- And maybe the party issues in act 3 ? there is one iirc
+AddingCharacterFromArchipelago = false
 
 RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
    local ap_settings = settings:get() ---@type FS_AP_Settings
@@ -51,41 +50,5 @@ RegisterCustomEvent("ConnectButtonPressed", function(Context, settings)
    ArchipelagoSystem:SetConnectionConfig(hostStr, portStr, slotStr, passwordStr, deathlinkBool)
    ArchipelagoSystem.pendingToggle = true   
 end)
-
-function InitSaveAfterLumiere()
-   Logger:info("Initialized after Lumière")
-   Characters:AddEveryone()
-   Characters:HealEveryone()
-
-   if not Options:IsEnabled("char_shuffle") then
-      Storage:UnlockCharacter("Frey")
-   end
-
-   Archipelago:Sync()
-
-   Characters:EnableCharactersInPartyOnlyUnlocked()
-   Inventory:Adding999Recoat()
-   Capacities:UnlockAllExplorationCapacities()
-
-   Save:WriteFlagByName(CONSTANTS.NID.FB_GRADIENT_TUTORIAL, true)
-   Save:WriteFlagByName(CONSTANTS.NID.FW_JUMP_TUTORIAL, true)
-   Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE, true)
-   Save:WriteFlagByName(CONSTANTS.NID.RELATION_LVL6_LUNE, true)
-   Save:WriteFlagByName(CONSTANTS.NID.RELATION_LVL6_MONOCO, true)
-
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.LUMIERE_BEGINNING, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.DUEL_MAELLE, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.FLOWER, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.MIME, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.FIND_TRASHMAN, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.NEWSPAPER_PETALS, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.PAINTER, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.RUN_MAELLE_1, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.RUN_MAELLE_2, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SCULPTURE_NEVRON, QUEST_STATUS.COMPLETED)
-   Quests:SetObjectiveStatus(CONSTANTS.QUEST.LUMIERE_ACT1.QUEST_NAME, CONSTANTS.QUEST.LUMIERE_ACT1.SOPHIE, QUEST_STATUS.COMPLETED)
-
-   Archipelago:ScoutMerchants()
-end
 
 print("[COE33AP - Before Connection] Main initialized")
