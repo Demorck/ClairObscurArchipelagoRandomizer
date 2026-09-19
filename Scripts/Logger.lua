@@ -22,13 +22,6 @@ local function sanitize(value, fallback)
     return (tostring(value):gsub("[^%w%-]", "_"))
 end
 
-
---- Create the name of the file
----@return string 
-local function makeLogName()
-    return log_dir .. "/" .. os_date("%Y-%m-%d_%H-%M-%S") .. ".txt"
-end
-
 --- List log files
 ---@return table
 local function listLogs()
@@ -170,13 +163,6 @@ function Logger:wrapTable(t, name)
         end
     end
     return t
-end
-
-
-function Logger:initialize()
-    logFile = makeLogName()
-    rotateLogs()
-    Logger:info("Logger initialized: " .. logFile)
 end
 
 return Logger

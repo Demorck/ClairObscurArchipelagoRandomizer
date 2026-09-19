@@ -125,19 +125,6 @@ function StorageSchema:GetJsonKey(fieldName)
     return field.jsonKey or fieldName
 end
 
----Get the internal field name from a JSON key
----@param jsonKey string JSON key name
----@return string|nil fieldName Internal field name, or nil if not found
-function StorageSchema:GetFieldName(jsonKey)
-    for fieldName, field in pairs(self.fields) do
-        local key = field.jsonKey or fieldName
-        if key == jsonKey then
-            return fieldName
-        end
-    end
-    return nil
-end
-
 ---Deep copy a table (for default values)
 ---@param orig table Original table to copy
 ---@return table copy Deep copy of the table
@@ -205,16 +192,6 @@ function StorageSchema:Validate(fieldName, value)
     end
 
     return true, nil
-end
-
----Get all field names
----@return string[] fieldNames Array of all field names
-function StorageSchema:GetAllFieldNames()
-    local names = {}
-    for fieldName, _ in pairs(self.fields) do
-        table.insert(names, fieldName)
-    end
-    return names
 end
 
 return StorageSchema

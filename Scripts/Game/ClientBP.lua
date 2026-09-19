@@ -110,14 +110,6 @@ function ClientBP:FeetTrap()
     self:CallHelper("FeetTrap")
 end
 
-function ClientBP:IsMainMenu()
-    return self:IsLevel("Level_MainMenu")
-end
-
-function ClientBP:InLevel()
-    return self:GetLevelName() ~= ""
-end
-
 function ClientBP:IsLevel(name)
     return self:GetLevelName() == name
 end

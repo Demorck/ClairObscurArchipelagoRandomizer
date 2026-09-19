@@ -15,18 +15,6 @@ function Characters:GetManager()
     end
 end
 
---- Remove a character from the party
----@param name any
-function Characters:RemoveCharacterFromParty(name)
-    ---@class UAC_jRPG_CharactersManager_C
-    local manager = self:GetManager() ---@cast manager UAC_jRPG_CharactersManager_C
-
-    if manager == nil then return end
-
-    local fname = FName(name)
-    Logger:callMethod(manager, "RemoveCharacterFromParty", fname)
-end
-
 --- Add a character to the collection
 ---@param name any
 function Characters:AddCharacter(name)
@@ -101,65 +89,6 @@ function Characters:SetExcludedCharacterByName(name, locked)
             char.IsExcluded = locked
         end
     end
-end
-
-function Characters:UnlockCharacter(name)
-    self:SetExcludedCharacterByName(name, false)
-end
-
-function Characters:LockCharacter(name)
-    self:SetExcludedCharacterByName(name, true)
-end
-
---- Count the number of enabled characters (not excluded)
----@return integer 
-function Characters:NumberOfEnabledCharacters()
-    local enabled_count = 0
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return enabled_count end
-
-    for _, char in ipairs(char_data) do
-        if not char.IsExcluded then
-            enabled_count = enabled_count + 1
-        end
-    end
-
-    return enabled_count
-end
-
---- Removing from battle team all excluded characters
-function Characters:DisableInPartyExcludedCharacters()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return end
-
-    for _, char in ipairs(char_data) do
-        if char.IsExcluded then
-            self:EnableInParty(char.HardcodedNameID:ToString(), false)
-        end
-    end
-end
-
---- Count the number of characters in battle team, separated by enabled and excluded
---- TODO: Renaming function
----@return integer 
----@return integer
-function Characters:NumberOfCharactersInPartyEnabled()
-    local in_party_count = 0
-    local not_in_party_count = 0
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast helper UBP_jRPG_GI_Custom_C
-    if char_data == nil then return 0, 0 end
-
-    for _, char in ipairs(char_data) do
-        local in_party = Logger:callMethod(helper, "IsCharacterInParty", char.HardcodedNameID)
-        if not char.IsExcluded and in_party then
-            in_party_count = in_party_count + 1
-        elseif char.IsExcluded and in_party then
-            not_in_party_count = not_in_party_count + 1
-        end
-    end
-
-    return in_party_count, not_in_party_count
 end
 
 --- Ensure that the battle team is correct: no excluded characters, at least one enabled character
@@ -299,20 +228,6 @@ function Characters:HealEveryone()
     end
 end
 
---- Get the mean level of all characters
----@return integer
-function Characters:GetMeanLevel()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return 1 end
-
-    local s = 0;
-    for _, char in ipairs(char_data) do
-        s = s + char.CurrentLevel
-    end
-
-    return math.ceil(s / #char_data)
-end
-
 --- Get the max level of all characters
 --- @return integer
 function Characters:GetMaxLevel()
@@ -332,22 +247,6 @@ function Characters:GetMaxLevel()
     end
 
     return max
-end
-
---- Return the characterdata from the internal ID
----@param name string The internal name of the character
----@return UBP_CharacterData_C | nil
-function Characters:GetCharacterDataByID(name)
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return nil end
-
-    for _, char in ipairs(char_data) do
-        if char.HardcodedNameID:ToString() == name then
-            return char
-        end
-    end
-
-    return nil
 end
 
 --- Return the current character location in exploration

@@ -41,26 +41,6 @@ function Quests:GetManager()
     end
 end
 
-function Quests:UnlockNextGestral()
-    Logger:info("Unlocking next gestral...")
-    local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C | nil
-    if quest_system == nil then return end
-
-    local fname = FName(QUESTS_NAME.GESTRALS.Name)
-    local objectives = quest_system.QuestStatuses:Find(fname):get() ---@type FS_QuestStatusData
-    for _, gestral_name in ipairs(QUESTS_NAME.GESTRALS.Objectives) do
-        local gestral_fname = FName(gestral_name)
-        local status = objectives.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Find(gestral_fname):get() ---@type E_QuestStatus
-        if status ~= QUEST_STATUS.STARTED and status ~= QUEST_STATUS.COMPLETED then
-            Logger:info("Unlocking gestral: " .. gestral_name)
-            local key = FName(gestral_name)
-            objectives.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Add(key, QUEST_STATUS.STARTED)
-        end
-    end
-
-    Save:SaveGame()
-end
-
 function Quests:SetObjectiveStatus(quest_name, objective_name, status)
     Logger:info("Setting objective status: " .. objective_name .. "(" .. quest_name .. ") to " .. status)
     local quest_system = self:GetManager() ---@cast quest_system UBP_QuestSystem_C

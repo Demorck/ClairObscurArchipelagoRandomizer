@@ -131,15 +131,6 @@ function APClient:Disconnect()
     collectgarbage("collect")
 end
 
----Toggle connection state (connect if disconnected, disconnect if connected)
-function APClient:Toggle()
-    if self.wantToConnect then
-        self:Disconnect()
-    else
-        self:Connect()
-    end
-end
-
 ---Set up event handlers for AP client
 ---Registers callbacks for socket events, room events, and game events
 ---@private

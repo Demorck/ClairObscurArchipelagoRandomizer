@@ -58,10 +58,4 @@ function Hooks:Unregister()
     Logger:info("All hooks unregistered")
 end
 
----Get hook manager (for debugging)
----@return HookManager|nil
-function Hooks:GetHookManager()
-    return hookManager
-end
-
 return Hooks

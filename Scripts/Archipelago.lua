@@ -190,26 +190,6 @@ function Archipelago:LastDeathLinkInSeconds()
     return time - self.lastDeathLink
 end
 
----Handle capacity item (legacy compatibility)
----@param item_data ItemData
-function Archipelago:HandleCapacityItem(item_data)
-    CapacityHandler:Handle(item_data)
-end
-
----Handle trap item (legacy compatibility)
----@param item_data ItemData
-function Archipelago:HandleTrapItem(item_data)
-    TrapHandler:Handle(item_data)
-end
-
----Get level for an item (legacy compatibility)
----@param gear_type string
----@param id integer
----@return integer level
-function Archipelago:GetLevelItem(gear_type, id)
-    return ItemReceiver:GetLevelItem(gear_type, id)
-end
-
 ---Price of a merchant slot, nil when the slot data does not describe it
 ---@param shop_name string
 ---@param extra boolean
@@ -258,28 +238,6 @@ end
 function Archipelago:GetExclusionLevel()
     local goal = CONSTANTS.GOAL[Options.values.goal]
     return goal and goal.exclusion_level or 33
-end
-
----Get item from AP data (utility function)
----@param item_id integer
----@return table|nil item
-function GetItemFromAPData(item_id)
-    local player = Archipelago:GetPlayer()
-    local item = {}
-    
-    if not Archipelago:IsConnected() then
-        return nil
-    end
-    
-    item["name"] = Archipelago:GetClient():GetItemName(item_id, player["game"])
-
-    if not item["name"] then
-        return nil
-    end
-
-    item["id"] = item_id
-
-    return item
 end
 
 return Archipelago

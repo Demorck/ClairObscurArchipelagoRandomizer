@@ -69,37 +69,17 @@ function Inventory:RemoveItem(itemName, amount)
     end
 end
 
-function Inventory:GetInventory()
-    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
-    local inv = GI.Inventory ---@cast inv TArray<FS_jRPG_Item_DynamicData>
-    local items = {} ---@cast items table<string, int32>
-
-
-    local index = 1
-    while inv[index].StacksAmount_2_9F82380C4167D3E4C37234817EF904DC ~= 0 do
-        local item = inv[index]
-        local name = item.ItemStaticData_9_59CF465348F5D7696BDFE68CB4071486.Item_HardcodedName_90_C7F763B74AAB28EF890A66854D7D95AA:ToString()
-        local amount = item.StacksAmount_2_9F82380C4167D3E4C37234817EF904DC
-        items[name] = amount
-
-        index = index + 1
-    end
-
-
-    return items
-end
-
 function Inventory:HasItem(itemName)
     local GI = ClientBP:GetGameInstance()
     if GI == nil then return false end
-    
+
     return GI:GetItemQuantityInInventory(FName(itemName)) > 0
 end
 
 function Inventory:GetAmountOfItem(itemName)
     local GI = ClientBP:GetGameInstance()
     if GI == nil then return false end
-    
+
     return GI:GetItemQuantityInInventory(FName(itemName))
 end
 
