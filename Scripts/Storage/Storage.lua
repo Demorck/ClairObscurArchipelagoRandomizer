@@ -121,12 +121,6 @@ function Storage:Increment(key)
     self:Set(key, self.data[key] + 1)
 end
 
----Get all storage data (for debugging or serialization)
----@return table data All storage data
-function Storage:GetAll()
-    return self.data
-end
-
 ---Unlock an area (set to true)
 ---@param ticketName string Ticket name ("GoblusLair", "Lumiere")
 ---@return boolean success True if area was unlocked
@@ -138,20 +132,6 @@ function Storage:UnlockArea(ticketName)
     end
 
     tickets[ticketName] = true
-    return self:Set("tickets", tickets)
-end
-
----Lock an area (set to false)
----@param ticketName string Ticket name
----@return boolean success True if area was locked
-function Storage:LockArea(ticketName)
-    local tickets = self:Get("tickets")
-    if tickets[ticketName] == nil then
-        Logger:error("Unknown ticket: " .. ticketName)
-        return false
-    end
-
-    tickets[ticketName] = false
     return self:Set("tickets", tickets)
 end
 
