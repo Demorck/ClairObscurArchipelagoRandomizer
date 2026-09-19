@@ -90,12 +90,16 @@ function Inventory:GetInventory()
 end
 
 function Inventory:HasItem(itemName)
-    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
+    local GI = ClientBP:GetGameInstance()
+    if GI == nil then return false end
+    
     return GI:GetItemQuantityInInventory(FName(itemName)) > 0
 end
 
 function Inventory:GetAmountOfItem(itemName)
-    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
+    local GI = ClientBP:GetGameInstance()
+    if GI == nil then return false end
+    
     return GI:GetItemQuantityInInventory(FName(itemName))
 end
 

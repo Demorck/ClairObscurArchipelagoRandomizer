@@ -23,6 +23,19 @@ function ClientBP:GetHelper()
     return nil
 end
 
+---@return UBP_jRPG_GI_Custom_C | nil
+function ClientBP:GetGameInstance()
+    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
+
+    if GI ~= nil and GI:IsValid() then
+        return GI
+    end
+
+    Logger:error("Retrieving Game Instance fails")
+
+    return nil
+end
+
 function ClientBP:CallHelper(method, ...)
     local args = { ... }
 

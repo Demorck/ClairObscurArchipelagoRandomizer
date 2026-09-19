@@ -30,9 +30,12 @@ end
 ---@param flag_name string
 ---@param boolean_value boolean
 function Save:WriteFlagByName(flag_name, boolean_value)
-    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast helper UBP_jRPG_GI_Custom_C
+    ---@type UBP_jRPG_GI_Custom_C
+    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) 
+    if GI == nil then return false end
+
     RuntimeState:QueueNamedIdWrite(flag_name, boolean_value)
-    helper:GetAllNamedIDs({})
+    GI:GetAllNamedIDs({})
 end
 
 return Save

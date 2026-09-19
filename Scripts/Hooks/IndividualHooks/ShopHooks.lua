@@ -6,8 +6,8 @@ local ShopHooks = {}
 ---comment
 ---@param datatable UDataTable
 ---@param shop_data ShopData
----@param table_to_insert_data_inserted_in_datatable table
-local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_insert_data_inserted_in_datatable)
+---@param state table
+local function AddItemRowsInDataTable(datatable, shop_data, is_extra, state)
     local base_struct = {
         ItemRowName_18_22FD2F5E42C1473FBA6AB9BF09E4890C  = FName("Consumable_LuminaPoint"),
         PriceOverride_6_7DE9A0224D826DBF8CF033AD6077A4EE = 666,
@@ -22,14 +22,23 @@ local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_i
     for i = 1, number_to_add, 1 do
         local name = MerchantLocations.Build(shop_data, kind, i)
         local scouted_location = Storage:Get("merchant_scouted")[name]
+        if scouted_location == nil then
+            Logger:warn("Shop location not scouted, skipping: " .. name)
+            goto scout_found
+        end
+
         if scouted_location.found then
             goto scout_found
         end
 
+        local rows = state[datatable:GetFName():ToString()]
+        if rows == nil then
+            Logger:warn("No row list for datatable: " .. datatable:GetFName():ToString())
+            goto scout_found
+        end
+
         datatable:AddRow(name, base_struct)
-        table.insert(table_to_insert_data_inserted_in_datatable[datatable:GetFName():ToString()], 
-            { ["name"] = name, ["classification"] = scouted_location.classification}
-        )
+        table.insert(rows, { ["name"] = name, ["classification"] = scouted_location.classification })
 
         ::scout_found::
     end
