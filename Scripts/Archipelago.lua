@@ -229,6 +229,7 @@ function Archipelago:isRegionExcluded(region_name)
     end
     
     if Options.values.exclude_endgame_locations ~= Options.EXCLUSION.EXCLUDED and region.level > exclusion_level then
+        Logger:info(("Region %q excluded (level %d > %d)"):format(region_name, region.level, exclusion_level))
         return true
     end
 

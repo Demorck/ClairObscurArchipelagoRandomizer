@@ -37,6 +37,8 @@ function ItemReceiver:ReceiveItem(item_data)
 
     -- Anything else goes straight to the inventory
     local level = self:GetLevelItem(local_item_data.type, item_data["id"])
+    Logger:debug(("Item %q (type %s) sent to inventory as %s")
+        :format(local_item_data.name, local_item_data.type, local_item_data.internal_name))
 
     return Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level)
 end
@@ -133,6 +135,9 @@ function ItemReceiver:GetLevelItem(gear_type, id)
         level = math.random(1, Archipelago.max_level_gear)
     end
 
+    Logger:debug(("Gear %s id=%s -> level %d (scaling %d, pictos=%d weapons=%d)")
+        :format(gear_type, tostring(id), level, Options.values.gear_scaling,
+            Storage:Get("pictosIndex"), Storage:Get("weaponsIndex")))
     return level
 end
 

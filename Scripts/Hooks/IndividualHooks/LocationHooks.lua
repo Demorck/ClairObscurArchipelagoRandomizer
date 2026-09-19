@@ -52,6 +52,12 @@ function LocationHooks:Register(hookManager)
                 register_sastro(level)
                 change_data_storage(level)
                 Storage:Set("currentLocation", level)
+
+                local region = Regions.BY_NAME[level]
+                if region == nil or region.asset == nil then return end
+
+                local level_asset = region.asset
+                Logger:info(("Level change -> %s (%s)"):format(level, level_asset))
             end
 
          end,
@@ -70,6 +76,8 @@ function LocationHooks:Register(hookManager)
                 register_sastro(level)
                 change_data_storage(level)
                 Storage:Set("currentLocation", level)
+
+                Logger:info(("Level change -> %s (%s)"):format(level, level_asset))
             end
          end,
         "LocationHooks - ChangeMapByAssetName"

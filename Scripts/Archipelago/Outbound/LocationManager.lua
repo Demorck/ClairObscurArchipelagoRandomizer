@@ -46,7 +46,7 @@ function LocationManager:SendLocationCheckByID(location_id)
     end
 
 
-    Logger:info("Location checked, ID: " .. location_id .. " !")
+    -- Logger:info("Location checked, ID: " .. location_id .. " !")
     ExecuteAsync(async)
 end
 
@@ -186,6 +186,13 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
         res = HandleDiveItems()
     elseif string.find(location_name, "^Petank") then
         res = MatchCurrentLevel()
+    end
+
+    if res == nil then
+        Logger:warn(("Ambiguous location %q in %s: no match, falling back to %q")
+            :format(location_name, level_name, locations_data[1].name))
+    else
+        Logger:info(("Ambiguous location %q in %s -> %q"):format(location_name, level_name, res.name))
     end
 
     return res or locations_data[1]

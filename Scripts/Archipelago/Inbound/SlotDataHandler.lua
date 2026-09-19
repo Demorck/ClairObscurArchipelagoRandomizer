@@ -58,8 +58,31 @@ function SlotDataHandler:ProcessSlotData(slotData)
     Archipelago.max_level_gear = slotData.max_gear_level or 33
 
     -- Log received data
-    Logger:info("Slot Data Received:")
-    Logger:info("  Options: " .. Dump(Options.values))
+    self:LogSessionHeader()
+end
+
+function SlotDataHandler:LogSessionHeader()
+    local player = Archipelago:GetPlayer()
+    local goal = CONSTANTS.GOAL[Options.values.goal]
+
+    Logger:info("=============== SESSION ===============")
+    Logger:info(("Mod version  : %s"):format(CONSTANTS.VERSION))
+    Logger:info(("Seed         : %s"):format(tostring(player.seed)))
+    Logger:info(("Slot         : %s (player %s)"):format(tostring(player.slot), tostring(player.number)))
+    Logger:info(("Goal         : %s"):format(goal and goal.name or "unknown"))
+    Logger:info(("Max gear lvl : %d"):format(Archipelago.max_level_gear))
+    Logger:info(("Data loaded  : %d items, %d locations, %d shops")
+        :format(#Data.items, #Data.locations, #Data.shops))
+
+    local keys = {}
+    for key in pairs(Options.values) do table.insert(keys, key) end
+    table.sort(keys)
+
+    for _, key in ipairs(keys) do
+        Logger:info(("  option %-26s = %s"):format(key, tostring(Options.values[key])))
+    end
+
+    Logger:info("=======================================")
 end
 
 return SlotDataHandler

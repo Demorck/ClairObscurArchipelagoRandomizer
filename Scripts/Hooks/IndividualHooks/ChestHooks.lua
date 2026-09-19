@@ -38,6 +38,13 @@ function ChestHooks:OnItemAddedFromChestToInventory()
         local chest = Context:get() ---@type ABP_Chest_Regular_C
         local chestName = chest.ChestSetupHandle["RowName"]:ToString()
 
+        
+        if not Archipelago:IsInitialized() then
+            Logger:warn("Loot checked while the mod is not Initialized, check lost (or in checked stuff in Storage): " .. chestName)
+            return
+        end
+
+
         Archipelago:SendLocationCheck(chestName)
     end
 end
