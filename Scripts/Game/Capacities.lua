@@ -42,9 +42,9 @@ function Capacities:SetDestroyPaintedRock(want_to_unlock)
     local to_int = 0
     if want_to_unlock then to_int = 1 end
 
-    table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockFreeAimDamageLevel")
-    Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", to_int)
-    Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockFreeAimDamageLevel")
+    RuntimeState:AsModCall("UnlockFreeAimDamageLevel", function()
+        Logger:callMethod(ExplorationProgression, "UnlockFreeAimDamageLevel", to_int)
+    end)
 end
 
 --- Unlock the next world map ability
@@ -55,31 +55,29 @@ function Capacities:UnlockNextWorldMapAbility()
     local abilities = Capacities:GetWorldMapAbilities()
 
     local new = false
-    for i, capacity in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
+    for i, capacity in ipairs(CONSTANTS.GAME.WORLDMAP_CAPACITIES) do
         local row = abilities[capacity]
         if not row.is_unlocked then
             local t = { i }
 
             
-            table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
-            -- ExplorationProgression:UnlockWorldMapCapacities(t)
-            Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-
-            if capacity == "Base" then
-                local t = { i + 1 }
-                -- ExplorationProgression:UnlockWorldMapCapacities(t)
+            RuntimeState:AsModCall("UnlockWorldMapCapacities", function()
                 Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", t)
-            end
 
-            Storage:Update("UnlockSpecificWorldMapCapacity")
-            Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "UnlockWorldMapCapacities")
+                if capacity == "Base" then
+                    Logger:callMethod(ExplorationProgression, "UnlockWorldMapCapacities", { i + 1 })
+                end
+
+                Storage:Update("UnlockSpecificWorldMapCapacity")
+            end)
+            
             new = true
             break
         end
     end
 
     if not new then
-        Save:WriteFlagByName(CONSTANTS.NID.DIVE_GUID.NAME, true)
+        Save:WriteFlagByName(CONSTANTS.NID.DIVE_GUID, true)
     end
 end
 
@@ -91,7 +89,7 @@ function Capacities:GetWorldMapAbilities()
     if ExplorationProgression == nil then return {} end
     local result = {}
 
-   for key, value in ipairs(CONSTANTS.GAME.TABLE.WORLDMAP_CAPACITIES) do
+   for key, value in ipairs(CONSTANTS.GAME.WORLDMAP_CAPACITIES) do
       local out = {}
     --   Logger:callMethod(ExplorationProgression, "IsWorldMapCapacityUnlocked", key, out)
     --   ExplorationProgression:IsWorldMapCapacityUnlocked(key, out)
@@ -115,7 +113,7 @@ function Capacities:SetExplorationCapacity(capacity_to_unlock, unlock)
     if ExplorationProgression == nil then return end
     
     local index = -1
-    for i, value in ipairs(CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES) do
+    for i, value in ipairs(CONSTANTS.GAME.EXPLORATION_CAPACITIES) do
         if value == capacity_to_unlock then
             index = i
             break
@@ -135,9 +133,9 @@ function Capacities:UnlockAllExplorationCapacities()
     local ExplorationProgression = self:GetManager() ---@cast ExplorationProgression UBP_ExplorationProgressionSystem_C
     if ExplorationProgression == nil then return end
 
-    for i, _ in ipairs(CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES) do
-        if Archipelago.options.shuffle_free_aim == 1 then
-            if CONSTANTS.GAME.TABLE.EXPLORATION_CAPACITIES[i] ~= "FreeAim" then
+    for i, _ in ipairs(CONSTANTS.GAME.EXPLORATION_CAPACITIES) do
+        if Options:IsEnabled("shuffle_free_aim") then
+            if CONSTANTS.GAME.EXPLORATION_CAPACITIES[i] ~= "FreeAim" then
                 -- ExplorationProgression:SetExplorationCapacityUnlocked(i, true)
                 Logger:callMethod(ExplorationProgression, "SetExplorationCapacityUnlocked", i - 1, true)
             else
@@ -168,7 +166,7 @@ function Capacities:TogglePaintBreakIfNeeded()
 end
 
 function Capacities:ToggleFreeAimIfNeeded()
-    if Archipelago.options.shuffle_free_aim == 1 then
+    if Options:IsEnabled("shuffle_free_aim") then
         local unlocked = Storage:Get("free_aim_unlocked")
         local locked = not unlocked
 

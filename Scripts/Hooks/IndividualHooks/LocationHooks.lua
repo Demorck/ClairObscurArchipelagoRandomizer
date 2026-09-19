@@ -1,9 +1,3 @@
----@class LocationDependencies
----@field archipelago Archipelago
----@field storage Storage
----@field logger Logger
----@field clientBP ClientBP
-
 ---Location/level-related hooks
 ---@class LocationHooks
 local LocationHooks = {}
@@ -11,22 +5,19 @@ local LocationHooks = {}
 
 ---Register all location hooks
 ---@param hookManager HookManager
----@param dependencies LocationDependencies
-function LocationHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
-    local storage = dependencies.storage
-    local logger = dependencies.logger
-    local clientBP = dependencies.clientBP
+function LocationHooks:Register(hookManager)
     local AddingGestralHook = false
 
     local function change_data_storage(level)
+        if not Archipelago:IsConnected() then return end
+        
         local operation = {
             operation = "replace",
             value = level
         }
 
-        local playerInfo = archipelago.apSystem:GetClient():GetPlayerInfo()
-        archipelago.apSystem:GetClient():SetDataStorage(
+        local playerInfo = Archipelago:GetClient():GetPlayerInfo()
+        Archipelago:GetClient():SetDataStorage(
             playerInfo.number .. "-coe33-currentLocation",
             level,
             false,
@@ -40,7 +31,7 @@ function LocationHooks:Register(hookManager, dependencies)
                 hookManager:Register(
                     "/Game/Narrative/Dialogs/LevelsDialogs/Camp/BP_Dialogue_Quest_LostGestralChief.BP_Dialogue_Quest_LostGestralChief_C:GetFoundLostGestralCount",
                     function (context)
-                        if not archipelago.apSystem then return end
+                        if not Archipelago:CanReceiveItems() then return end
 
                         for i = 1, Storage:Get("gestral_found") do
                             Archipelago:SendLocationCheck("Lost Gestral reward " .. tostring(i))
@@ -61,6 +52,12 @@ function LocationHooks:Register(hookManager, dependencies)
                 register_sastro(level)
                 change_data_storage(level)
                 Storage:Set("currentLocation", level)
+
+                local region = Regions.BY_NAME[level]
+                if region == nil or region.asset == nil then return end
+
+                local level_asset = region.asset
+                Logger:info(("Level change -> %s (%s)"):format(level, level_asset))
             end
 
          end,
@@ -71,23 +68,16 @@ function LocationHooks:Register(hookManager, dependencies)
          function (ctx, level_destination, spawn_point_tag, world_context)
             local level_asset = level_destination:get():ToString()
 
-            local index = -1
-            for i, value in ipairs(CONSTANTS.GAME.TABLE.MAP_NAME.ASSETS_TABLE) do
-                if value == level_asset then
-                    index = i
-                    break
-                end
-            end
+            local region = Regions.BY_LEVEL_ASSET[level_asset]
+            if region == nil or region.name == nil then return end
 
-            if index == -1 then
-                return
-            end
-
-            local level = CONSTANTS.GAME.TABLE.MAP_NAME.READABLE_TABLE[index]
+            local level = region.name
             if level ~= "None" then
                 register_sastro(level)
                 change_data_storage(level)
                 Storage:Set("currentLocation", level)
+
+                Logger:info(("Level change -> %s (%s)"):format(level, level_asset))
             end
          end,
         "LocationHooks - ChangeMapByAssetName"
@@ -96,7 +86,7 @@ function LocationHooks:Register(hookManager, dependencies)
     hookManager:Register("/Game/Gameplay/WorldInfo/BP_WorldInfoComponent.BP_WorldInfoComponent_C:RegisterTeleportPoint",
         function (self, tp_UObject)
             local level_name = ClientBP:GetLevelName()
-            if level_name ~= "Level_WorldMap_Main_V2" then return end
+            if level_name ~= Regions.BY_NAME.WorldMap.asset then return end
 
             local portal = tp_UObject:get() ---@cast portal ABP_jRPG_MapTeleportPoint_C
 
@@ -138,7 +128,7 @@ function LocationHooks:Register(hookManager, dependencies)
         end,
         "LocationHooks - RegisterTeleportPoint")
 
-    logger:info("Location hooks registered")
+    Logger:info("Location hooks registered")
 end
 
 

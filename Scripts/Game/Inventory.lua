@@ -48,9 +48,12 @@ function Inventory:AddItem(itemName, amount, item_level)
     -- Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
     -- playerInventory:AddItemToInventory(name, amount, lootContext, returned)
     Logger:info("Adding item to inventory: " .. itemName .. " x" .. amount .. " with level " .. level .. "...")
-    table.insert(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
-    Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
-    Remove(CONSTANTS.RUNTIME.TABLE_CURRENT_AP_FUNCTION, "AddItemToInventory")
+
+    RuntimeState:AsModCall("AddItemToInventory", function()
+        Logger:callMethod(playerInventory, "AddItemToInventory", name, amount, lootContext, returned)
+    end)
+
+
     Logger:info("Item " .. itemName .. " added !")
 
     return true
@@ -66,33 +69,17 @@ function Inventory:RemoveItem(itemName, amount)
     end
 end
 
-function Inventory:GetInventory()
-    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
-    local inv = GI.Inventory ---@cast inv TArray<FS_jRPG_Item_DynamicData>
-    local items = {} ---@cast items table<string, int32>
-
-
-    local index = 1
-    while inv[index].StacksAmount_2_9F82380C4167D3E4C37234817EF904DC ~= 0 do
-        local item = inv[index]
-        local name = item.ItemStaticData_9_59CF465348F5D7696BDFE68CB4071486.Item_HardcodedName_90_C7F763B74AAB28EF890A66854D7D95AA:ToString()
-        local amount = item.StacksAmount_2_9F82380C4167D3E4C37234817EF904DC
-        items[name] = amount
-
-        index = index + 1
-    end
-
-
-    return items
-end
-
 function Inventory:HasItem(itemName)
-    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    local GI = ClientBP:GetGameInstance()
+    if GI == nil then return false end
+
     return GI:GetItemQuantityInInventory(FName(itemName)) > 0
 end
 
 function Inventory:GetAmountOfItem(itemName)
-    local GI = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast GI UBP_jRPG_GI_Custom_C
+    local GI = ClientBP:GetGameInstance()
+    if GI == nil then return false end
+
     return GI:GetItemQuantityInInventory(FName(itemName))
 end
 
@@ -114,7 +101,7 @@ function Inventory:SetItemQuantity(item_name, amount)
 end
 
 function Inventory:RemoveConsumable()
-    for _, consumable in ipairs(CONSTANTS.CONFIG.CONSUMABLE_ITEM) do
+    for _, consumable in ipairs(CONSTANTS.GAME.CONSUMABLE_ITEM) do
         Inventory:SetItemQuantity(consumable, 0)
     end
 end

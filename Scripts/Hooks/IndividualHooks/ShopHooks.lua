@@ -6,8 +6,8 @@ local ShopHooks = {}
 ---comment
 ---@param datatable UDataTable
 ---@param shop_data ShopData
----@param table_to_insert_data_inserted_in_datatable table
-local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_insert_data_inserted_in_datatable)
+---@param state table
+local function AddItemRowsInDataTable(datatable, shop_data, is_extra, state)
     local base_struct = {
         ItemRowName_18_22FD2F5E42C1473FBA6AB9BF09E4890C  = FName("Consumable_LuminaPoint"),
         PriceOverride_6_7DE9A0224D826DBF8CF033AD6077A4EE = 666,
@@ -15,33 +15,54 @@ local function AddItemRowsInDataTable(datatable, shop_data, is_extra, table_to_i
         Quantity_10_A62DFEDB41EF5DA12CE979AB3F742758     = 1,
     } ---@type FS_MerchantItemData
 
-    local item_type = is_extra and "Extra Item" or "Item"
-    local number_to_add = is_extra and Archipelago.options.extra_location_per_shop or Archipelago.options.location_per_shop
+    local kind = is_extra and MerchantLocations.EXTRA or MerchantLocations.ITEM
+    local number_to_add = is_extra and Options.values.extra_location_per_shop
+                                    or Options.values.location_per_shop
 
     for i = 1, number_to_add, 1 do
-        local name = "Merchant (" .. shop_data.region .. "): " .. shop_data.name .. " - " .. item_type .. " " .. tostring(i)
+        local name = MerchantLocations.Build(shop_data, kind, i)
         local scouted_location = Storage:Get("merchant_scouted")[name]
+        if scouted_location == nil then
+            Logger:warn("Shop location not scouted, skipping: " .. name)
+            goto scout_found
+        end
+
         if scouted_location.found then
             goto scout_found
         end
 
+        local rows = state[datatable:GetFName():ToString()]
+        if rows == nil then
+            Logger:warn("No row list for datatable: " .. datatable:GetFName():ToString())
+            goto scout_found
+        end
+
         datatable:AddRow(name, base_struct)
-        table.insert(table_to_insert_data_inserted_in_datatable[datatable:GetFName():ToString()], 
-            { ["name"] = name, ["classification"] = scouted_location.classification}
-        )
+        table.insert(rows, { ["name"] = name, ["classification"] = scouted_location.classification })
 
         ::scout_found::
     end
 end
 
+---One in ten thousand
+---@param scouted_location table
+---@return string
+local function BuildItemDescription(scouted_location)
+    if math.random(10000) == 1 then
+        return "A fucking item for a fucking player probably for yezzdia then"
+    end
+
+    return scouted_location.item_name .. " for " .. scouted_location.player_name
+end
+
 ---Register all battle hooks
 ---@param hookManager HookManager
----@param dependencies table
-function ShopHooks:Register(hookManager, dependencies)
-    self.last_shop_visited = nil
-    local logger = dependencies.logger
-
-    local table_current_shop = {}
+function ShopHooks:Register(hookManager)
+    ---@class ShopHookState
+    local state = {
+        rows_by_datatable = {},
+        last_shop_visited = nil
+    }
 
     -- Removing "Owned: x" in the row
     hookManager:Register(
@@ -53,14 +74,14 @@ function ShopHooks:Register(hookManager, dependencies)
     -- Changing the row image and name
     hookManager:Register(
         "/Game/Gameplay/Inventory/Merchant/BP_MerchantComponent.BP_MerchantComponent_C:GetItemFromName",
-        self:ChangeShopRowData(table_current_shop),
+        self:ChangeShopRowData(state),
         "Shop - Modify Shop row"
     )
 
     -- Changing the right description
     hookManager:Register(
         "/Game/Gameplay/DialogueSystem/BP_DialogueSystemComponent.BP_DialogueSystemComponent_C:ActivateDialogue",
-        self:ModifyDatatable(table_current_shop),
+        self:ModifyDatatable(state),
         "Shop - Modify Datatable"
     )
 
@@ -71,7 +92,7 @@ function ShopHooks:Register(hookManager, dependencies)
         "Shop - Modify Shop row"
     )
 
-    logger:info("Shop hooks registered")
+    Logger:info("Shop hooks registered")
 end
 
 function ShopHooks:RemoveShopOwnedBox()
@@ -88,20 +109,27 @@ function ShopHooks:RemoveShopOwnedBox()
     end
 end
 
-function ShopHooks:ChangeShopRowData(t)
+---@param state ShopHookState
+function ShopHooks:ChangeShopRowData(state)
     return function (ctx, ItemName, ItemStaticData)
         local item_data = ItemStaticData:get() ---@type FS_jRPG_Item_StaticData
         local merchant = ctx:get() ---@cast merchant UBP_MerchantComponent_C
 
-        local data_merchant = t[merchant.Items:GetFName():ToString()]
+        local datatable_name = merchant.Items:GetFName():ToString()
+        local data_merchant = state.rows_by_datatable[datatable_name]
+        if data_merchant == nil or #data_merchant == 0 then
+            Logger:warn("No AP row queued for datatable: " .. datatable_name)
+            return
+        end
+
         local data = table.remove(data_merchant, 1)
 
-        local icon = ClientBP:GetHelper().IconAP:Find(2):get()
+        local icon = ClientBP:GetAPIcon(2)
         local display_name     = FText("An item")
 
-        if Archipelago.options.show_shop_items then
+        if Options:IsEnabled("show_shop_items") then
             display_name     = FText(data["name"])
-            icon             = ClientBP:GetHelper().IconAP:Find(data["classification"]):get()
+            icon             = ClientBP:GetAPIcon(data["classification"])
         end
         
         item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
@@ -113,7 +141,9 @@ function ShopHooks:ChangeShopRowData(t)
    end
 end
 
-function ShopHooks:ModifyDatatable(table_to_insert_data_inserted_in_datatable)
+---
+---@param state ShopHookState
+function ShopHooks:ModifyDatatable(state)
     return function (ctx, ...)
 
         local shop_data = Data.shops
@@ -123,7 +153,7 @@ function ShopHooks:ModifyDatatable(table_to_insert_data_inserted_in_datatable)
         end
         
         local level_asset_name = ClientBP:GetLevelName()
-        local shop_datatable_in_level = CONSTANTS.GAME.TABLE.SHOP_DATATABLE_BY_MAP[level_asset_name]
+        local shop_datatable_in_level = Regions.DATATABLES_BY_LEVEL_ASSET[level_asset_name] or {}
         for _, shop in ipairs(shop_data) do
             local found = false
             for _, shop_datatable in ipairs(shop_datatable_in_level) do
@@ -144,22 +174,22 @@ function ShopHooks:ModifyDatatable(table_to_insert_data_inserted_in_datatable)
                 goto next_shop_data
             end
 
-            if self.last_shop_visited == nil or self.last_shop_visited ~= shop.name then
-                self.last_shop_visited = shop.name
+            if state.last_shop_visited ~= shop.name then
+                state.last_shop_visited = shop.name
                 local _, _, dt_name  = string.find(shop.datatable, ".*%.(.*)", 1, false)
                 if dt_name == nil then 
                     Logger:warn("Can't change data table, dt_name is nil: " .. shop.datatable)
                     goto next_shop_data
                 end
 
-                table_to_insert_data_inserted_in_datatable[dt_name] = {}
+                state.rows_by_datatable[dt_name] = {}
             end
 
             datatable:EmptyTable()
-            AddItemRowsInDataTable(datatable, shop, false, table_to_insert_data_inserted_in_datatable)
+            AddItemRowsInDataTable(datatable, shop, false, state.rows_by_datatable)
 
             if shop.has_fight then
-                AddItemRowsInDataTable(datatable, shop, true, table_to_insert_data_inserted_in_datatable)
+                AddItemRowsInDataTable(datatable, shop, true, state.rows_by_datatable)
             end
 
             ::next_shop_data::
@@ -168,68 +198,64 @@ function ShopHooks:ModifyDatatable(table_to_insert_data_inserted_in_datatable)
 end
 
 function ShopHooks:ChangeItemInformation()
-    return function (self, ItemsDataTable, ItemRowName, MerchantItemSellData)
+    return function (ctx, ItemsDataTable, ItemRowName, MerchantItemSellData)
         local a = MerchantItemSellData:get() ---@type FS_MerchantItemSellData
         local location_name = ItemRowName:get():ToString()
 
         -- Find the shop name based on the locations name
         local scouted_location = Storage:Get("merchant_scouted")[location_name]
-        local _, _, shop_name  = string.find(location_name, ".*:%s(.*)%s%-.*", 1, false)
-        local _, _, item_id_str    = string.find(location_name, ".*Item%s(.*)", 1, false)
-        if shop_name == nil or item_id_str == nil then 
-            Logger:warn("nil somewhere shop name: " .. tostring(shop_name) .. " or item_id_str: " .. tostring(item_id_str) .. ' locationname: ' .. location_name)
+        if scouted_location == nil then
+            Logger:warn("Shop location not scouted: " .. location_name)
             return
         end
 
-        local item_id = tonumber(item_id_str)
+        local parts = MerchantLocations.Parse(location_name)
+        if parts == nil then
+            Logger:warn("Not a merchant item location: " .. location_name)
+            return
+        end
+
+        local item_id = parts.index
+        local extra = parts.kind == MerchantLocations.EXTRA
 
         -- Find the shop data based on the shops name
         local found = Storage:IsLocationInMerchantFound(location_name)
-        local shop_data = Data:FindShop(shop_name)
+        local shop_data = Data:FindShop(parts.shop)
         if shop_data == nil then 
-            print("shop_data nil")
+            Logger:warn("Unknown shop in location: " .. location_name)
             return 
         end
 
-        
-        local f = string.find(location_name, "Extra Item")
-        local extra = f ~= nil
-
         local has_item = not extra
-        local price = Archipelago.shop_data[shop_data.name]["prices"][item_id]
         if extra then
             local internal_name = Data:FindInternalNameItemFromName(shop_data.unlock_item)
-            has_item = Inventory:HasItem(internal_name)
-            price = Archipelago.shop_data[shop_data.name]["extra_prices"][item_id]
+            has_item = internal_name ~= nil and Inventory:HasItem(internal_name)
         end
 
-
-        local string_builded = ""
-        local easter_egg = math.random(10000)
-        if easter_egg == 1 then
-            string_builded = "A fucking item for a fucking player probably for yezzdia then"
-        else
-            string_builded = scouted_location.item_name .. " for " .. scouted_location.player_name
+        local price = Archipelago:GetShopPrice(shop_data.name, extra, item_id)
+        if price == nil then
+            Logger:warn("No price for " .. location_name .. ", leaving the row untouched")
+            return
         end
 
         local item_description = FText("An item")
         local display_name = FText("An item")
-        local icon = ClientBP:GetHelper().IconAP:Find(2):get()
+        local icon = ClientBP:GetAPIcon(2)
 
-        if Archipelago.options.show_shop_items then
-            item_description = FText(string_builded)
+        if Options:IsEnabled("show_shop_items") then
+            item_description = FText(BuildItemDescription(scouted_location))
             display_name     = FText(location_name)
-            icon             = ClientBP:GetHelper().IconAP:Find(scouted_location.classification):get()
+            icon             = ClientBP:GetAPIcon(scouted_location.classification)
         end
 
         local already_hinted = Storage:IsShopItemAlreadyHinted(location_name)
         if not already_hinted then
-            if Archipelago.options.create_hint and not extra then
+            if Options:IsEnabled("create_hint") and not extra then
                 Archipelago:ScoutLocation(location_name, true)
                 Storage:HintMerchant(location_name, true)
             end
 
-            if Archipelago.options.create_hint_extra and extra then
+            if Options:IsEnabled("create_hint_extra") and extra then
                 Archipelago:ScoutLocation(location_name, true)
                 Storage:HintMerchant(location_name, true)
             end
@@ -250,7 +276,9 @@ function ShopHooks:ChangeItemInformation()
         item_data.Item_Type_88_2F24F8FB4235429B4DE1399DBA533C78 = 8
         item_data.ItemDescription_32_0A978AFB4AB4B316342DD6A72ACDD4E1 = item_description
         item_data.Item_DisplayName_89_41C0C54E4A55598869C84CA3B5B5DECA = display_name
-        item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
+        if icon ~= nil then
+            item_data.Item_Icon_95_4D742A7E46F761161F9173969C69F468 = icon
+        end
         item_data.Consumable_MaxStackAmount_76_2DD073774D235ED7EE5C8F99817D7FFA = 1
         item_data.Pictos_Data_103_EE44D66B4E4F16A7FD44FF9F25777CF4 = nil
         item_data.Pictos_ItemStats_91_229F4A00415AB214191377B73987FF7B = nil

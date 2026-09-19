@@ -15,37 +15,24 @@ function Characters:GetManager()
     end
 end
 
---- Remove a character from the party
----@param name any
-function Characters:RemoveCharacterFromParty(name)
-    ---@class UAC_jRPG_CharactersManager_C
-    local manager = self:GetManager() ---@cast manager UAC_jRPG_CharactersManager_C
-
-    if manager == nil then return end
-
-    local fname = FName(name)
-    Logger:callMethod(manager, "RemoveCharacterFromParty", fname)
-end
-
 --- Add a character to the collection
 ---@param name any
 function Characters:AddCharacter(name)
     Logger:info("Adding character to party: " .. name)
-    local helper = ClientBP:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
 
     local found = {}
     local struct = {} 
     local fname = FName(name)
     AddingCharacterFromArchipelago = true
-    Logger:callMethod(helper, "AddCharacterToCollectionFromHardcodedName", fname, found, struct)
+    ClientBP:CallHelper("AddCharacterToCollectionFromHardcodedName", fname, found, struct)
 end
 
 function Characters:AddEveryone()
     Logger:info("Adding everyone to party...")
 
-    for i, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        Inventory:AddItem(CONSTANTS.GAME.TABLE.CHARACTERS_WEAPONS[i], 1, 1)
-        self:AddCharacter(char)
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        Inventory:AddItem(character.weapon, 1, 1)
+        self:AddCharacter(character.id)
     end
 
 
@@ -104,77 +91,19 @@ function Characters:SetExcludedCharacterByName(name, locked)
     end
 end
 
-function Characters:UnlockCharacter(name)
-    self:SetExcludedCharacterByName(name, false)
-end
-
-function Characters:LockCharacter(name)
-    self:SetExcludedCharacterByName(name, true)
-end
-
---- Count the number of enabled characters (not excluded)
----@return integer 
-function Characters:NumberOfEnabledCharacters()
-    local enabled_count = 0
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return enabled_count end
-
-    for _, char in ipairs(char_data) do
-        if not char.IsExcluded then
-            enabled_count = enabled_count + 1
-        end
-    end
-
-    return enabled_count
-end
-
---- Removing from battle team all excluded characters
-function Characters:DisableInPartyExcludedCharacters()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return end
-
-    for _, char in ipairs(char_data) do
-        if char.IsExcluded then
-            self:EnableInParty(char.HardcodedNameID:ToString(), false)
-        end
-    end
-end
-
---- Count the number of characters in battle team, separated by enabled and excluded
---- TODO: Renaming function
----@return integer 
----@return integer
-function Characters:NumberOfCharactersInPartyEnabled()
-    local in_party_count = 0
-    local not_in_party_count = 0
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
-    if char_data == nil then return 0, 0 end
-
-    for _, char in ipairs(char_data) do
-        local in_party = Logger:callMethod(helper, "IsCharacterInParty", char.HardcodedNameID)
-        if not char.IsExcluded and in_party then
-            in_party_count = in_party_count + 1
-        elseif char.IsExcluded and in_party then
-            not_in_party_count = not_in_party_count + 1
-        end
-    end
-
-    return in_party_count, not_in_party_count
-end
-
 --- Ensure that the battle team is correct: no excluded characters, at least one enabled character
 local MAX_PARTY = 3
  
 function Characters:ModifyPartyIfNeeded()
-    local helper = FindFirstOf("BP_jRPG_GI_Custom_C") ---@cast helper UBP_jRPG_GI_Custom_C
+    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast helper UBP_jRPG_GI_Custom_C
     if not helper or not helper:IsValid() then return end
  
     local locked_in_party = {}
     local unlocked_in_party = {}
     local unlocked_not_in_party = {}
  
-    for _, char_id in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        local char_id = character.id
         local in_party = Logger:callMethod(helper, "IsCharacterInParty", FName(char_id))
         local is_unlocked = Storage:IsCharacterUnlocked(char_id)
  
@@ -250,50 +179,6 @@ function Characters:EnableCharactersInPartyOnlyUnlocked()
     self:ModifyPartyIfNeeded()
 end
 
-function Characters:EnableCharactersInCollectionOnlyUnlocked()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return end
-    if Characters:HasExcludedCharactersInCollection() then return end
-
-    Logger:info("Enabling characters in collection only if unlocked...")
-
-    for _, char in ipairs(char_data) do
-        local char_name = char.HardcodedNameID:ToString()
-        if Storage:IsCharacterUnlocked(char_name) then
-            char.IsExcluded = false
-        else
-            char.IsExcluded = true
-        end
-    end
-end
-
-function Characters:HasExcludedCharactersInCollection()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return false end
-
-    for _, char in ipairs(char_data) do
-        local char_name = char.HardcodedNameID:ToString()
-        if char.IsExcluded and Storage:IsCharacterUnlocked(char_name) then
-            return true
-        end
-
-        if not char.IsExcluded and not Storage:IsCharacterUnlocked(char_name) then
-            return true
-        end
-    end
-
-    return false
-end
-
---- Disable everyone from the party
-function Characters:DisableEveryoneFromParty()
-    Logger:info("Disabling everyone from party...")
-
-    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        self:EnableInParty(char, false)
-    end
-end
-
 --- Enable or disable a specific character in the party
 --- @param name string the internal name of the character
 --- @param enable boolean true to enable, false to disable
@@ -325,8 +210,8 @@ function Characters:SetHPAll(hp)
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
     if helper == nil then return end
 
-    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        local fname = FName(char)
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        local fname = FName(character.id)
         Logger:callMethod(helper, "SetCharacterHP", fname, hp)
         -- helper:SetCharacterHP(fname, hp)
     end
@@ -337,24 +222,10 @@ function Characters:HealEveryone()
     local helper = self:GetManager() ---@cast helper UAC_jRPG_CharactersManager_C
     if helper == nil then return end
 
-    for _, char in ipairs(CONSTANTS.GAME.TABLE.CHARACTERS_ID) do
-        local fname = FName(char)
+    for _, character in ipairs(CONSTANTS.CHARACTERS.ALL) do
+        local fname = FName(character.id)
         Logger:callMethod(helper, "RestoreHP", fname, 9999999)
     end
-end
-
---- Get the mean level of all characters
----@return integer
-function Characters:GetMeanLevel()
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return 1 end
-
-    local s = 0;
-    for _, char in ipairs(char_data) do
-        s = s + char.CurrentLevel
-    end
-
-    return math.ceil(s / #char_data)
 end
 
 --- Get the max level of all characters
@@ -376,22 +247,6 @@ function Characters:GetMaxLevel()
     end
 
     return max
-end
-
---- Return the characterdata from the internal ID
----@param name string The internal name of the character
----@return UBP_CharacterData_C | nil
-function Characters:GetCharacterDataByID(name)
-    local char_data = FindAllOf(CONSTANTS.BLUEPRINT.CHARACTERS_DATA) ---@cast char_data UBP_CharacterData_C[]
-    if char_data == nil then return nil end
-
-    for _, char in ipairs(char_data) do
-        if char.HardcodedNameID:ToString() == name then
-            return char
-        end
-    end
-
-    return nil
 end
 
 --- Return the current character location in exploration
