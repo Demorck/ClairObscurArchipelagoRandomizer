@@ -1,6 +1,5 @@
 ---Location Sender
 ---Handles sending location checks and managing location data
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
 
 ---@class LocationManager
 local LocationManager = {}
@@ -20,8 +19,8 @@ function LocationManager:SendLocationCheck(location_name, force)
     location_to_send[1] = location_id
     
     local function async()
-        if ArchipelagoState.apSystem then
-            ArchipelagoState.apSystem:GetClient():SendLocationChecks(location_to_send)
+        if Archipelago:IsConnected() then
+            Archipelago:GetClient():SendLocationChecks(location_to_send)
         end
     end
 
@@ -38,7 +37,7 @@ function LocationManager:SendLocationCheckByID(location_id)
     location_to_send[1] = location_id
 
     local function async()
-        local apClient = ArchipelagoState.apSystem and ArchipelagoState.apSystem:GetClient()
+        local apClient = Archipelago:IsConnected() and Archipelago:GetClient()
         if apClient and apClient:IsConnected() then
             apClient:SendLocationChecks(location_to_send)
         else
@@ -47,29 +46,29 @@ function LocationManager:SendLocationCheckByID(location_id)
     end
 
 
-    Logger:info("Location checked, ID: " .. location_id .. " !")
+    -- Logger:info("Location checked, ID: " .. location_id .. " !")
     ExecuteAsync(async)
 end
 
 ---Send victory/completion to the AP server
 function LocationManager:SendVictory()
-    if not ArchipelagoState.apSystem then return end
+    if not Archipelago:IsConnected() then return end
     
-    ArchipelagoState.apSystem:GetClient():SendCompletion()
+    Archipelago:GetClient():SendCompletion()
 end
 
 ---Get location data from AP data
 ---@param location_name string Location name
 ---@return table|nil location Location data with id and name
 function LocationManager:GetLocationFromAPData(location_name, force)
-    if not ArchipelagoState.apSystem then
+    if not Archipelago:IsInitialized() then
         return nil
     end
     
     local location = {}
 
     if force then
-        location["id"] = ArchipelagoState.apSystem:GetClient():GetLocationId(location_name)
+        location["id"] = Archipelago:GetClient():GetLocationId(location_name)
         location["name"] = location_name
     else
         location = self:GetLocationFromTable(location_name)
@@ -97,7 +96,7 @@ function LocationManager:GetLocationFromTable(location_name)
         return nil
     end
 
-    location["id"] = ArchipelagoState.apSystem:GetClient():GetLocationId(location_data.name)
+    location["id"] = Archipelago:GetClient():GetLocationId(location_data.name)
 
     if not location["id"] then
         return nil
@@ -114,16 +113,20 @@ function LocationManager:ScoutLocation(location_names, create_hint)
         location_names = { location_names }
     end
 
+    if not Archipelago:IsConnected() then return end
+
     local location_ids = {} 
 
     for _, location_name in ipairs(location_names) do
-        local id = ArchipelagoState.apSystem:GetClient():GetLocationId(location_name)
-        table.insert(location_ids, id)
+        local id = Archipelago:GetClient():GetLocationId(location_name)
+        if id == nil then
+            Logger:warn("Unknown location, not scouted: " .. location_name)
+        else
+            table.insert(location_ids, id)
+        end
     end
 
-
-    -- print(location_ids)
-    ArchipelagoState.apSystem:GetClient():ScoutLocations(location_ids, create_hint)
+    Archipelago:GetClient():ScoutLocations(location_ids, create_hint)
 end
 
 ---Handle locations with same name like generic chroma, petank
@@ -136,17 +139,12 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
         return locations_data[1]
     end
 
-    local function HandleGenericChroma()
-        local predicate = {
-            ["World Map"] = "Level_WorldMap_Main_V2",
-            ["Spring Meadows"] = "Level_SpringMeadows_Main_V2",
-            ["The Monolith"] = "Level_Monolith_Interior_Climb_Main",
-            ["Esquies Nest"] = "LevelMain_EsquieNest",
-        }
+    local function MatchCurrentLevel()
+        local current = Regions.BY_LEVEL_ASSET[level_name]
+        if current == nil then return nil end
 
         for _, loc in pairs(locations_data) do
-            local region = loc["location"]
-            if predicate[region] ~= nil and predicate[region] == level_name then
+            if Regions.BY_AP_NAME[loc["location"]] == current then
                 return loc
             end
         end
@@ -165,7 +163,7 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
 
         local location = nil
         local min_value = 9999999
-        for _, value in pairs(CONSTANTS.GAME.TABLE.WORLDMAP_DIVE_POSITION) do
+        for _, value in pairs(CONSTANTS.GAME.WORLDMAP_DIVE_POSITION) do
             local distance = euclidian_distance(value, position_world)
             if distance < min_value then
                 min_value = distance
@@ -181,36 +179,20 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
         return location
     end
 
-    local function HandlePetank()
-        local predicate = {
-            ["Sirene"] = "Level_Sirene_Main_V2",
-            ["Ancient Sanctuary"] = "Level_AncientSanctuary_Main_V2",
-            ["Frozen Hearts"] = "Level_Side_FrozenHeart",
-            ["The Monolith"] = "Level_Monolith_Interior_Climb_Main",
-            ["Isle of the Eyes"] = "SmallLevel_MF_Zone_01",
-            ["Stone Wave Cliffs"] = "ConceptLevel_SeaCliff_V1",
-            ["Flying Manor"] = "Level_CleaFlyingHouse_Main",
-            ["Forgotten Battlefield"] = "Level_Main_ForgottenBattlefield_V2",
-            ["Endless Night Sanctuary"] = "Level_Side_TwilightSanctuary",
-            ["Esquie's Nest"] = "LevelMain_EsquieNest",
-            ["The Reacher"] = "Level_Reacher_Main_V2"
-        }
-
-        for _, loc in pairs(locations_data) do
-            local region = loc["location"]
-            if predicate[region] ~= nil and predicate[region] == level_name then
-                return loc
-            end
-        end
-    end
-
     local res = nil
     if location_name == "Chest_Generic_Chroma" then
-        res = HandleGenericChroma()
+        res = MatchCurrentLevel()
     elseif location_name == "Chest_Generic_5xLuminaPoint" then
         res = HandleDiveItems()
     elseif string.find(location_name, "^Petank") then
-        res = HandlePetank()
+        res = MatchCurrentLevel()
+    end
+
+    if res == nil then
+        Logger:warn(("Ambiguous location %q in %s: no match, falling back to %q")
+            :format(location_name, level_name, locations_data[1].name))
+    else
+        Logger:info(("Ambiguous location %q in %s -> %q"):format(location_name, level_name, res.name))
     end
 
     return res or locations_data[1]

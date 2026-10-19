@@ -1,15 +1,10 @@
 ---@class Battle
 local Battle = {}
 
-local BluePrintName = "AC_jRPG_BattleManager_C"
-local goals = {"L_Boss_Paintress_P1", "L_Boss_Curator_P1", "TowerBattle_33", "Boss_SimonPhase2*1"}
-
-
-
 ---Return the Battle manager
 ---@return UAC_jRPG_BattleManager_C | nil
 function Battle:GetManager()
-    local manager = FindFirstOf(BluePrintName) ---@cast manager UAC_jRPG_BattleManager_C
+    local manager = FindFirstOf(CONSTANTS.BLUEPRINT.BATTLE_MANAGER) ---@cast manager UAC_jRPG_BattleManager_C
     
     if manager ~= nil and manager:IsValid() then
         Logger:info("Retrieving Battle manager succeeds")
@@ -24,21 +19,9 @@ end
 ---@param encounter_name string
 ---@return boolean
 function Battle:IsEncounterGoal(encounter_name)
-    local goal = Archipelago.options.goal
+    local goal = CONSTANTS.GOAL[Options.values.goal]
 
-    if goal == 0 then
-        return encounter_name == "L_Boss_Paintress_P1"
-    elseif goal == 1 then
-        return encounter_name == "L_Boss_Curator_P1"
-    elseif goal == 2 then
-        return encounter_name == "TowerBattle_33"
-    elseif goal == 3 then
-        return encounter_name == "Boss_SimonPhase2*1"
-    elseif goal == 4 then
-        return encounter_name == "CFH_Boss_Clea"
-    else
-        return false
-    end
+    return goal ~= nil and goal.encounter == encounter_name
 end
 
 --- Return true if the encounter is a boss but not the goal
@@ -80,9 +63,7 @@ function Battle:GetMerchantLocationName(encounter_name)
         -- Merchant's name is DT_'Merchant_SMTH'
         local _, _, current_merchant_name = string.find(shop.datatable, ".*%.DT_(.*)", 1, false)
         if encounter_name == current_merchant_name then
-            local _, _, prefix = string.find(shop.unlock_item, "(.*- )", 1, false)
-            local suffix = "Fight"
-            return prefix .. suffix
+            return MerchantLocations.Build(shop, MerchantLocations.FIGHT)
         end 
 
         ::continue::

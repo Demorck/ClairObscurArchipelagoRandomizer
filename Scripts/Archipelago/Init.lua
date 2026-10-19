@@ -1,7 +1,7 @@
 local Config = require "Archipelago.Core.Config"
 local APClient = require "Archipelago.Core.APClient"
 local EventDispatcher = require "Archipelago.Core.EventDispatcher"
-local Handlers = require "Archipelago.Handlers.index"
+local Inbound = require "Archipelago.Inbound.index"
 
 -- Connection states
 E_CLIENT_INFOS = {
@@ -29,77 +29,40 @@ function ArchipelagoSystem:Initialize()
         eventDispatcher = eventDispatcher
     })
 
-    -- Create handlers
-    local slotDataHandler = Handlers.SlotDataHandler:New({
-        logger = Logger,
-        storage = Storage,
-        apClient = apClient
-    })
-
-    local itemsHandler = Handlers.ItemsHandler:New({
-        logger = Logger,
-        storage = Storage,
-        apClient = apClient
-    })
-
-    local locationsHandler = Handlers.LocationsHandler:New({
-        logger = Logger,
-        apClient = apClient
-    })
-
-    local deathLinkHandler = Handlers.DeathLinkHandler:New({
-        logger = Logger
-    })
-
-    local jsonHandler = Handlers.JSONHandler:New({
-        logger = Logger,
-        apClient = apClient
-    })
-
-    local scoutedLocationHandler = Handlers.ScoutedLocationHandler:New({
-        logger = Logger,
-        apClient = apClient
-    })
-
-    -- Set archipelago reference (for legacy compatibility)
-    slotDataHandler:SetArchipelago(Archipelago)
-    itemsHandler:SetArchipelago(Archipelago)
-    deathLinkHandler:SetArchipelago(Archipelago)
-
     -- Register handlers with dispatcher
     eventDispatcher:RegisterHandler("slotConnected", function(data)
         ExecuteInGameThread(function ()
-            slotDataHandler:Handle(data)
+            Inbound.SlotDataHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("itemsReceived", function(data)
         ExecuteInGameThread(function ()
-            itemsHandler:Handle(data)
+            Inbound.ItemsHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("locationsChecked", function(data)
         ExecuteInGameThread(function ()
-            locationsHandler:Handle(data)
+            Inbound.LocationsHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("bounced", function(data)
         ExecuteInGameThread(function ()
-            deathLinkHandler:Handle(data)
+            Inbound.DeathLinkHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("json", function (data)
         ExecuteInGameThread(function ()
-            jsonHandler:Handle(data)
+            Inbound.JSONHandler:Handle(data)
         end)
     end)
 
     eventDispatcher:RegisterHandler("onScouted", function(data)
         ExecuteInGameThread(function ()
-            scoutedLocationHandler:Handle(data)
+            Inbound.ScoutedLocationHandler:Handle(data)
         end)
     end)
 
@@ -108,7 +71,6 @@ function ArchipelagoSystem:Initialize()
     self.config = config
     self.apClient = apClient
     self.eventDispatcher = eventDispatcher
-    self.itemsHandler = itemsHandler
 
     -- Setup polling loop
     self:SetupPollingLoop()
@@ -117,8 +79,6 @@ function ArchipelagoSystem:Initialize()
 
     return self
 end
-
-GameState = { canReceiveItems = false, isInitialized = false }
 
 --TODO: return true when ap is disconnected 
 function ArchipelagoSystem:SetupPollingLoop()
@@ -147,18 +107,17 @@ function ArchipelagoSystem:SetupPollingLoop()
 
     local loopHandle
     loopHandle = LoopInGameThreadWithDelay(500, function()
-        GameState.canReceiveItems = Archipelago:CanReceiveItems()
-        GameState.isInitialized   = Archipelago:IsInitialized()
+        Storage:Flush()
 
         if Archipelago and Archipelago.pendingLocationsFlush and self:IsConnected() then
             Archipelago.pendingLocationsFlush = false
             Archipelago:SendAlreadyChecked()
         end
 
-        if Archipelago and NEEDED_TO_INIT and GameState.isInitialized then
-            NEEDED_TO_INIT = false
-            InitSaveAfterLumiere()
-        end
+        if RuntimeState.needs_new_game_setup and Archipelago:IsInitialized() then
+            RuntimeState.needs_new_game_setup = false
+            NewGameSetup:Run()
+         end
 
         if Archipelago.hasConnectedPrior and not self.apClient.wantToConnect then
             CancelDelayedAction(loopHandle)
@@ -167,7 +126,7 @@ function ArchipelagoSystem:SetupPollingLoop()
 
     local itemLoop
     itemLoop = LoopInGameThreadWithDelay(100, function()
-        self.itemsHandler:Drain()
+        Inbound.ItemsHandler:Drain()
     end)
 
     local saveLoopHandle
@@ -198,6 +157,7 @@ end
 function ArchipelagoSystem:ToggleConnection()
     if self.apClient.wantToConnect then
         Logger:info("Disconnecting...")
+        Storage:Flush()
         self.apClient:Disconnect()
 
         if Hooks then

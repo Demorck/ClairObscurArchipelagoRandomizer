@@ -1,16 +1,19 @@
 ---@class ClientBP
 local ClientBP = {}
 
-local BlueprintName = "BP_ArchipelagoHelper_C"
 local last_logs = {}
 local cachedHelper = nil
+local LEVEL_NAME_TTL = 0.5
+
+local cachedLevelName = ""
+local cachedLevelNameAt = -1
 
 function ClientBP:GetHelper()
     if cachedHelper ~= nil and cachedHelper:IsValid() then
         return cachedHelper
     end
 
-    local helper = FindFirstOf(BlueprintName) ---@type ABP_ArchipelagoHelper_C
+    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.AP_HELPER) ---@type ABP_ArchipelagoHelper_C
     if helper ~= nil and helper:IsValid() then
         cachedHelper = helper
         return helper
@@ -20,8 +23,71 @@ function ClientBP:GetHelper()
     return nil
 end
 
+---@return UBP_jRPG_GI_Custom_C | nil
+function ClientBP:GetGameInstance()
+    local GI = FindFirstOf(CONSTANTS.BLUEPRINT.GI_CUSTOM) ---@cast GI UBP_jRPG_GI_Custom_C
+
+    if GI ~= nil and GI:IsValid() then
+        return GI
+    end
+
+    Logger:error("Retrieving Game Instance fails")
+
+    return nil
+end
+
+function ClientBP:CallHelper(method, ...)
+    local args = { ... }
+
+    local function Try()
+        local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
+        if helper == nil then return false end
+
+        return pcall(function() helper[method](helper, table.unpack(args)) end)
+    end
+
+    if Try() then return true end
+
+    cachedHelper = nil
+
+    if Try() then return true end
+
+    Logger:warn("Helper call failed twice: " .. method)
+
+    return false
+end
+
+---@param classification integer
+---@return any|nil icon nil when the helper actor is gone
+function ClientBP:GetAPIcon(classification)
+    local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
+    if helper == nil then return nil end
+
+    local ok, icon = pcall(function() return helper.IconAP:Find(classification):get() end)
+    if not ok then
+        cachedHelper = nil
+        return nil
+    end
+
+    return icon
+end
+
+---@return any|nil texture nil when the helper actor is gone
+function ClientBP:GetSaveIconTexture()
+    local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
+    if helper == nil then return nil end
+
+    local ok, texture = pcall(function() return helper.BaguetteTexture end)
+    if not ok then
+        cachedHelper = nil
+        return nil
+    end
+
+    return texture
+end
+
 function ClientBP:GetWBPConnectionSettings()
-    local helper = FindFirstOf("WBP_AP_ConnectionSettings_C") ---@type UWBP_AP_ConnectionSettings_C
+    local helper = FindFirstOf(CONSTANTS.BLUEPRINT.WBP_AP_SETTINGS) ---@type UWBP_AP_ConnectionSettings_C
     if helper ~= nil and helper:IsValid() then
         return helper
     end
@@ -32,55 +98,37 @@ end
 --- Not used yet
 ---@param message string The styled string
 function ClientBP:PushToLogger(message)
-    local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
-    if helper == nil then return end
-    helper:AddToLogger(message)
     table.insert(last_logs, message)
     if #last_logs > 10 then
         table.remove(last_logs, 1)
     end
+
+    self:CallHelper("AddToLogger", message)
 end
 
 function ClientBP:FeetTrap()
-    local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
-    if helper == nil then return end
-
-    Logger:callMethod(helper, "FeetTrap")
-    -- helper:FeetTrap()
-end
-
-function ClientBP:IsMainMenu()
-    return self:IsLevel("Level_MainMenu")
-end
-
-function ClientBP:InLevel()
-    return self:GetLevelName() ~= ""
+    self:CallHelper("FeetTrap")
 end
 
 function ClientBP:IsLevel(name)
-    local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
-
-    if helper ~= nil and helper:IsValid() then
-        local levelName = self:GetLevelName()
-        return levelName == name
-    else
-        return false
-    end
+    return self:GetLevelName() == name
 end
 
 function ClientBP:GetLevelName()
-    local a = self:GetHelper() ---@cast a ABP_ArchipelagoHelper_C
-
-    if a == nil or not a:IsValid() then
-        return ""
+    local now = os.clock()
+    if now - cachedLevelNameAt < LEVEL_NAME_TTL then
+        return cachedLevelName
     end
 
-    local out = {}
-    
-    a:GetLevelName(out)
-    
-    if not out or not out["LevelName"] then return "" end
-    return Trim(out["LevelName"]:ToString())
+    local world = UEHelpers.GetWorld()
+    if world == nil or not world:IsValid() then
+        return cachedLevelName
+    end
+
+    cachedLevelName = Trim(world:GetFName():ToString())
+    cachedLevelNameAt = now
+
+    return cachedLevelName
 end
 
 function ClientBP:IsInitialized()
@@ -89,39 +137,24 @@ function ClientBP:IsInitialized()
     return a ~= nil
 end
 
-function ClientBP:InCinematic()
-    local a = FindFirstOf("BP_CinematicSystem_C") ---@type UBP_CinematicSystem_C
-    if a == nil then return true end
-
-    return a.IsPlayingCinematic
-end
-
 function ClientBP:ToggleConsole()
-    local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
-
-    helper:ToggleConsole()
+    self:CallHelper("ToggleConsole")
 end
 
 function ClientBP:UpdateConnectionUI(status)
     ExecuteInGameThread(function()
-        local helper = self:GetHelper() ---@cast helper ABP_ArchipelagoHelper_C
-        if helper and helper:IsValid() then
-            local statusEnum = E_CLIENT_INFOS[status]
-            if statusEnum then
-                helper:ChangeAPTextConnect(statusEnum)
-                helper:SetConnection(status == "CONNECTED")
-            end
-        end
+        local statusEnum = E_CLIENT_INFOS[status]
+        if statusEnum == nil then return end
+
+        self:CallHelper("ChangeAPTextConnect", statusEnum)
+        self:CallHelper("SetConnection", status == "CONNECTED")
     end)
 end
 
 RegisterCustomEvent("ModLoader_Initiation", function(ctx)
-    local helper = ClientBP:GetHelper()
-    if helper == nil then return end
-
     if Archipelago:IsInitialized() then
         for _, message in ipairs(last_logs) do
-            helper:AddToLogger(message)
+            ClientBP:CallHelper("AddToLogger", message)
         end
     end
 end)

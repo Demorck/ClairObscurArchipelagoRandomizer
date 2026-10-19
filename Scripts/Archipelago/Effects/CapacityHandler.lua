@@ -1,6 +1,5 @@
 ---Capacity Handler
 ---Handles exploration capacity items
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
 
 ---@class CapacityHandler
 local CapacityHandler = {}

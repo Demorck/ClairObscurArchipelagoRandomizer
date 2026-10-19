@@ -1,3 +1,6 @@
+local Regions = require("Constants.RegionConstants")
+local Characters = require("Constants.CharacterConstants")
+
 ---Storage Schema Definition
 ---Defines the structure, types, default values, and validation rules for Storage
 ---@class StorageSchema
@@ -39,19 +42,19 @@ StorageSchema.fields = {
 
     pictosIndex = {
         type = "number",
-        default = -1,
+        default = 0,
         jsonKey = "pictos_index",
         validator = function(value)
-            return value >= -1
+            return value >= 0
         end
     },
 
     weaponsIndex = {
         type = "number",
-        default = -1,
+        default = 0,
         jsonKey = "weapons_index",
         validator = function(value)
-            return value >= -1
+            return value >= 0
         end
     },
 
@@ -84,42 +87,12 @@ StorageSchema.fields = {
     -- Complex data structures (tables)
     tickets = {
         type = "table",
-        default = {
-            GoblusLair                       = false,
-            AncientSanctuary                 = false,
-            SideLevel_RedForest              = false,
-            EsquieNest                       = false,
-            SideLevel_OrangeForest           = false,
-            SideLevel_CleasFlyingHouse       = false,
-            ForgottenBattlefield             = false,
-            SidelLevel_FrozenHearts          = false,
-            GestralVillage                   = false,
-            MonocoStation                    = false,
-            Lumiere                          = false,
-            Monolith_Interior_PaintressIntro = false,
-            OldLumiere                       = false,
-            SideLevel_Reacher                = false,
-            SideLevel_AxonPath               = false,
-            SeaCliff                         = false,
-            Sirene                           = false,
-            SideLevel_TwilightSanctuary      = false,
-            Visages                          = false,
-            SideLevel_YellowForest           = false,
-            SideLevel_CleasTower_Entrance    = false,
-            SideLevel_VersosDraft            = false,
-        }
+        default = Regions.BuildTicketDefaults()
     },
 
     characters = {
         type = "table",
-        default = {
-            Frey   = false,
-            Maelle = false,
-            Lune   = false,
-            Sciel  = false,
-            Verso  = false,
-            Monoco = false
-        }
+        default = Characters.BuildUnlockDefaults()
     },
 
     progressive_rock = {
@@ -150,19 +123,6 @@ function StorageSchema:GetJsonKey(fieldName)
         return fieldName
     end
     return field.jsonKey or fieldName
-end
-
----Get the internal field name from a JSON key
----@param jsonKey string JSON key name
----@return string|nil fieldName Internal field name, or nil if not found
-function StorageSchema:GetFieldName(jsonKey)
-    for fieldName, field in pairs(self.fields) do
-        local key = field.jsonKey or fieldName
-        if key == jsonKey then
-            return fieldName
-        end
-    end
-    return nil
 end
 
 ---Deep copy a table (for default values)
@@ -232,16 +192,6 @@ function StorageSchema:Validate(fieldName, value)
     end
 
     return true, nil
-end
-
----Get all field names
----@return string[] fieldNames Array of all field names
-function StorageSchema:GetAllFieldNames()
-    local names = {}
-    for fieldName, _ in pairs(self.fields) do
-        table.insert(names, fieldName)
-    end
-    return names
 end
 
 return StorageSchema

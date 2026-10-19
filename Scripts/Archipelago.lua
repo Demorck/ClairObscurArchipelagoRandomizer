@@ -1,10 +1,42 @@
----Archipelago Facade
 ---Main interface between the game and Archipelago
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
-local Facade = require("Archipelago.Facade.index")
+local ItemReceiver     = require("Archipelago.Effects.ItemReceiver")
+local CapacityHandler  = require("Archipelago.Effects.CapacityHandler")
+local TrapHandler      = require("Archipelago.Effects.TrapHandler")
+local LocationManager  = require("Archipelago.Outbound.LocationManager")
+local DeathLinkManager = require("Archipelago.Outbound.DeathLinkManager")
 
----@class Archipelago : ArchipelagoState
-local Archipelago = ArchipelagoState
+---@class Archipelago
+local Archipelago = {}
+
+-- Connection
+Archipelago.seed = nil
+Archipelago.slot = nil
+Archipelago.apSystem = nil
+Archipelago.trying_to_connect = false
+Archipelago.hasConnectedPrior = false
+Archipelago.waitingForSync = false
+Archipelago.pendingLocationsFlush = false
+
+-- Slot data
+Archipelago.totals = {}
+Archipelago.weapons_data = {}
+Archipelago.pictos_data = {}
+Archipelago.shop_data = {}
+Archipelago.max_level_gear = 33
+Archipelago.chroma = 0
+Archipelago.want_to_scout_shop = false
+
+-- DeathLink
+Archipelago.death_link = false
+Archipelago.canDeathLink = false
+Archipelago.wasDeathLinked = false
+Archipelago.lastDeathLink = 0.0
+
+-- Not used yet
+Archipelago.current_year_gommage = 34
+Archipelago.number_of_players = 0
+
+
 
 ---Check if connected to AP server
 ---@return boolean connected
@@ -22,11 +54,19 @@ end
 ---Get player information
 ---@return table playerInfo Player information from AP
 function Archipelago:GetPlayer()
-    if not self.apSystem then
+    if not self:IsConnected() then
         return {}
     end
     
-    return self.apSystem:GetClient():GetPlayerInfo()
+    return self:GetClient():GetPlayerInfo()
+end
+
+function Archipelago:GetClient()
+    if self.apSystem == nil then
+        return nil
+    end
+
+    return self.apSystem:GetClient()
 end
 
 ---Sync with AP server
@@ -40,7 +80,7 @@ function Archipelago:Sync()
         return
     end
     
-    self.apSystem:GetClient():Sync()
+    self:GetClient():Sync()
     self.waitingForSync = false
 end
 
@@ -58,44 +98,33 @@ function Archipelago:CanReceiveItems()
         return false
     end
 
-    if not ClientBP then
-        return false
-    end
-
     if not ClientBP:IsInitialized() then
         return false
     end
 
-    if ClientBP:IsMainMenu() then
-        return false
-    end
-
-    if not ClientBP:InLevel() then
-        return false
-    end
-    
-    return true
+    local level = ClientBP:GetLevelName()
+    return level ~= "" and level ~= CONSTANTS.GAME.MAIN_MENU_LEVEL
 end
 
 ---Receive an item from Archipelago
 ---@param item_data table Item data from AP
 ---@return boolean success
 function Archipelago:ReceiveItem(item_data)
-    return Facade.ItemReceiver:ReceiveItem(item_data)
+    return ItemReceiver:ReceiveItem(item_data)
 end
 
 ---Send a location check
 ---@param location_name string Location name
 function Archipelago:SendLocationCheck(location_name)
-    Facade.LocationManager:SendLocationCheck(location_name, false)
+    LocationManager:SendLocationCheck(location_name, false)
 end
 
 function Archipelago:ForceSendLocationCheck(location_name)
-    Facade.LocationManager:SendLocationCheck(location_name, true)
+    LocationManager:SendLocationCheck(location_name, true)
 end
 
 function Archipelago:ScoutLocation(location_name, create_hint)
-    Facade.LocationManager:ScoutLocation(location_name, create_hint)
+    LocationManager:ScoutLocation(location_name, create_hint)
 end
 
 function Archipelago:ScoutMerchants()
@@ -104,18 +133,15 @@ function Archipelago:ScoutMerchants()
         if self:isRegionExcluded(shop.region) then goto continue end
 
 
-        for i = 1, self.options.location_per_shop, 1 do
-            local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Item " .. tostring(i)
-            table.insert(location_names, current_name)
+        for i = 1, Options.values.location_per_shop, 1 do
+            table.insert(location_names, MerchantLocations.Build(shop, MerchantLocations.ITEM, i))
         end
 
         if shop.has_fight then
-            local fight = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Fight"
-            table.insert(location_names, fight)
+            table.insert(location_names, MerchantLocations.Build(shop, MerchantLocations.FIGHT))
 
-            for i = 1, self.options.extra_location_per_shop, 1 do
-                local current_name = "Merchant (" .. shop.region .. "): " .. shop.name .. " - Extra Item " .. tostring(i)
-                table.insert(location_names, current_name)
+            for i = 1, Options.values.extra_location_per_shop, 1 do
+                table.insert(location_names, MerchantLocations.Build(shop, MerchantLocations.EXTRA, i))
             end
         end
         
@@ -133,17 +159,12 @@ end
 ---Send a location check
 ---@param location_id number Location ID
 function Archipelago:SendLocationCheckByID(location_id)
-    Facade.LocationManager:SendLocationCheckByID(location_id)
+    LocationManager:SendLocationCheckByID(location_id)
 end
 
 ---Send victory/completion
 function Archipelago:SendVictory()
-    Facade.LocationManager:SendVictory()
-end
-
----Send Gommage DeathLink
-function Archipelago:SendGommage()
-    Facade.DeathLinkManager:SendGommage()
+    LocationManager:SendVictory()
 end
 
 ---Send DeathLink
@@ -153,62 +174,62 @@ end
 ---@param tags table|nil Tags
 function Archipelago:SendDeathLink(msg, players_id, games, tags)
     if self:CanReceiveDeathLink() then
-        Facade.DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
+        DeathLinkManager:SendDeathLink(msg, players_id, games, tags)
     end
 end
 
 function Archipelago:CanReceiveDeathLink()
-    local time = self.apSystem:GetClient():GetServerTime()
+    local time = self:GetClient():GetServerTime()
     
     return time >= self.lastDeathLink + 30 and not self.wasDeathLinked
 end
 
 function Archipelago:LastDeathLinkInSeconds()
-    local time = self.apSystem:GetClient():GetServerTime()
+    local time = self:GetClient():GetServerTime()
 
     return time - self.lastDeathLink
 end
 
----Handle capacity item (legacy compatibility)
----@param item_data ItemData
-function Archipelago:HandleCapacityItem(item_data)
-    Facade.CapacityHandler:Handle(item_data)
-end
+---Price of a merchant slot, nil when the slot data does not describe it
+---@param shop_name string
+---@param extra boolean
+---@param index integer
+---@return number|nil
+function Archipelago:GetShopPrice(shop_name, extra, index)
+    local shop = self.shop_data[shop_name]
+    if shop == nil then
+        Logger:warn("No slot data for shop: " .. tostring(shop_name))
+        return nil
+    end
 
----Handle trap item (legacy compatibility)
----@param item_data ItemData
-function Archipelago:HandleTrapItem(item_data)
-    Facade.TrapHandler:Handle(item_data)
-end
+    local prices = shop[extra and "extra_prices" or "prices"]
+    if prices == nil then
+        Logger:warn(("Shop %q has no %s in the slot data"):format(shop_name, extra and "extra_prices" or "prices"))
+        return nil
+    end
 
----Get level for an item (legacy compatibility)
----@param gear_type string
----@param id integer
----@return integer level
-function Archipelago:GetLevelItem(gear_type, id)
-    return Facade.ItemReceiver:GetLevelItem(gear_type, id)
+    return prices[index]
 end
 
 function Archipelago:isRegionExcluded(region_name) 
-    local opt_endgame = self.options.exclude_endgame_locations or 0
-    local opt_tower = self.options.exclude_endless_tower or 0
-
-    if opt_endgame ~= 0 and opt_tower ~= 0 then
+    if Options.values.exclude_endgame_locations ~= Options.EXCLUSION.EXCLUDED and 
+       Options.values.exclude_endless_tower ~= Options.EXCLUSION.EXCLUDED then
         return false
     end
 
-    if opt_tower == 0 and string.find(region_name, "Endless Tower") then
+    if Options.values.exclude_endless_tower ~= Options.EXCLUSION.EXCLUDED and region_name == "Endless Tower" then
         return true
     end
 
     local exclusion_level = self:GetExclusionLevel()
-    
-    if CONSTANTS.CONFIG.REGION_LEVEL[region_name] == nil then
+    local region = Regions.BY_AP_NAME[region_name]
+    if region == nil then
         Logger:warn(region_name .. ' is not found in config region level, returning false')
         return false
     end
-
-    if opt_endgame == 0 and CONSTANTS.CONFIG.REGION_LEVEL[region_name] > exclusion_level then
+    
+    if Options.values.exclude_endgame_locations ~= Options.EXCLUSION.EXCLUDED and region.level > exclusion_level then
+        Logger:info(("Region %q excluded (level %d > %d)"):format(region_name, region.level, exclusion_level))
         return true
     end
 
@@ -216,38 +237,8 @@ function Archipelago:isRegionExcluded(region_name)
 end
 
 function Archipelago:GetExclusionLevel()
-    local level = 33
-    if self.options.goal == 0 then
-        level = 15
-    elseif self.options.goal == 1 then
-        level = 16
-    elseif self.options.goal == 4 then
-        level = 28
-    end
-
-    return level
-end
-
----Get item from AP data (utility function)
----@param item_id integer
----@return table|nil item
-function GetItemFromAPData(item_id)
-    local player = Archipelago:GetPlayer()
-    local item = {}
-    
-    if not Archipelago.apSystem then
-        return nil
-    end
-    
-    item["name"] = Archipelago.apSystem:GetClient():GetItemName(item_id, player["game"])
-
-    if not item["name"] then
-        return nil
-    end
-
-    item["id"] = item_id
-
-    return item
+    local goal = CONSTANTS.GOAL[Options.values.goal]
+    return goal and goal.exclusion_level or 33
 end
 
 return Archipelago

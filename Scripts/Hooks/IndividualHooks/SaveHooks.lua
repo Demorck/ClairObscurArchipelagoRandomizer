@@ -4,16 +4,13 @@ local SaveHooks = {}
 
 ---Register all save hooks
 ---@param hookManager HookManager
----@param dependencies table
-function SaveHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago
-    local logger = dependencies.logger
+function SaveHooks:Register(hookManager)
 
     self.AddingButtonHook = false
 
     hookManager:Register(
         "/Game/Gameplay/Save/BP_SaveManager.BP_SaveManager_C:SaveGameToFile",
-        self:SaveGame(logger, hookManager, archipelago),
+        self:SaveGame(hookManager),
         "Save - Game Save"
     )
 
@@ -35,19 +32,19 @@ function SaveHooks:Register(hookManager, dependencies)
         "Save - Set Spawn point in SM when New Save"
     )
 
-    logger:info("Save hooks registered")
+    Logger:info("Save hooks registered")
 end
 
-function SaveHooks:SaveGame(logger, hookManager, archipelago)
+function SaveHooks:SaveGame(hookManager)
     return function(ctx, SaveName)
         local manager = ctx:get() ---@type UBP_SaveManager_C
         if not Archipelago:IsInitialized() or not manager or not manager:IsValid() then
             return
         end
 
-        local data = FindFirstOf("BP_SaveGameData_C") ---@type UBP_SaveGameData_C
+        local data = FindFirstOf(CONSTANTS.BLUEPRINT.SAVE_GAME_DATA) ---@type UBP_SaveGameData_C
         if not data or not data:IsValid() then
-            logger:error("Impossible to save: SaveGameData nil")
+            Logger:error("Impossible to save: SaveGameData nil")
             return
         end
         
@@ -95,13 +92,16 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
             operation = "update",
             value = currentFlags
         }
-        local playerInfo = archipelago.apSystem:GetClient():GetPlayerInfo()
-        archipelago.apSystem:GetClient():SetDataStorage(
-            playerInfo.number .. "-coe33-flags",
-            currentFlags,
-            false,
-            {operation}
-        )
+        
+        if Archipelago:IsConnected() then
+            local playerInfo = Archipelago:GetClient():GetPlayerInfo()
+            Archipelago:GetClient():SetDataStorage(
+                playerInfo.number .. "-coe33-flags",
+                currentFlags,
+                false,
+                {operation}
+            )
+        end
 
         -- Update party and characters
         -- Characters:EnableCharactersInCollectionOnlyUnlocked()
@@ -113,21 +113,22 @@ function SaveHooks:SaveGame(logger, hookManager, archipelago)
         local lastReceived = Storage:Get("lastReceivedItemIndex")
         Storage:Set("lastSavedItemIndex", lastReceived)
         Storage:Update("SaveHooks:SaveGameToFile")
+        Storage:Flush()
     end
 end
 
 function SaveHooks:SaveNotificationUI()
     return function(ctx)
-        if not CONSTANTS.RUNTIME.CHANGE_SAVE_ICON then return end
+        if not RuntimeState.change_save_icon then return end
         local a = ctx:get() ---@cast a UWBP_FullScreenNotificationContainer_C
 
-        local random_string = Utils.TableHelper.GetRandomElement(CONSTANTS.GAME.TABLE.SAVE_NOTIFICATION)
+        local random_string = Utils.TableHelper.GetRandomElement(CONSTANTS.GAME.SAVE_NOTIFICATION)
         a.WBP_SaveGameNotification.TextBlock_SaveInProgress:SetText(FText(random_string))
 
-        ---@type ABP_ArchipelagoHelper_C
-        local client = FindFirstOf("BP_ArchipelagoHelper_C")
-        local texture = client.BaguetteTexture
-        a.WBP_SaveGameNotification.Image_CircleDot:SetBrushFromTexture(texture, false)
+        local texture = ClientBP:GetSaveIconTexture()
+        if texture ~= nil then
+            a.WBP_SaveGameNotification.Image_CircleDot:SetBrushFromTexture(texture, false)
+        end
     end
 end
 
@@ -140,26 +141,22 @@ function SaveHooks:AddNamedID()
             local value = element:get() ---@type UNamedID
             local name = value.Name:ToString()
 
-            local found = false
-            for need_to_add, bool_value in pairs(CONSTANTS.RUNTIME.NAMEDID_TO_BE_ADDED) do
-                if name == need_to_add then
-                    ctx:WritePersistentFlag(value, bool_value)
-                    found = true
-                end
+            local wanted = RuntimeState.named_ids_to_write[name]
+            if wanted ~= nil then
+                ctx:WritePersistentFlag(value, wanted)
+                RuntimeState:ClearNamedIdWrite(name)
             end
-
-            if found then Remove(CONSTANTS.RUNTIME.NAMEDID_TO_BE_ADDED, name) end
         end)
    end
 end
 
 function SaveHooks:SetSpringMeadowsSpawnpointWhenNewSave()
     return function(_, _, LevelAssetName, SpawnPointTag)
-        LevelAssetName:set(FName("Level_SpringMeadows_Main_V2"))
+        LevelAssetName:set(FName(Regions.BY_AP_NAME["Spring Meadows"].asset))
         local spawnpoint = SpawnPointTag:get() ---@cast spawnpoint FGameplayTag
         spawnpoint.TagName = FName("Level.SpawnPoint.SpringMeadows.Entry")
         
-        NEEDED_TO_INIT = true
+        RuntimeState.needs_new_game_setup = true
         Logger:info("Starting a new save...")
     end
 end

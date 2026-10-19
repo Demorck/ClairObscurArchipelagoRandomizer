@@ -4,108 +4,85 @@ local BattleHooks = {}
 
 ---Register all battle hooks
 ---@param hookManager HookManager
----@param dependencies table
-function BattleHooks:Register(hookManager, dependencies)
-    local archipelago = dependencies.archipelago ---@type Archipelago
-    local storage = dependencies.storage
-    local logger = dependencies.logger
-    local battle = dependencies.battle
-    local characters = dependencies.characters
-    local inventory = dependencies.inventory
-    local quests = dependencies.quests
+function BattleHooks:Register(hookManager)
 
     -- Battle victory
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnBattleEndVictory",
-        self:OnBattleVictory(archipelago, storage, logger, battle, characters, inventory, quests),
+        self:OnBattleVictory(),
         "Battle - Victory Handler"
     )
 
     -- All heroes killed (death link)
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:OnAllHeroesKilled",
-        self:OnPartyWipe(archipelago, storage),
+        self:OnPartyWipe(),
         "Battle - Death Link on Party Wipe"
     )
 
     -- Remove battle rewards
     hookManager:Register(
         "/Game/jRPGTemplate/Blueprints/Components/AC_jRPG_BattleManager.AC_jRPG_BattleManager_C:RollBattleRewards",
-        self:OnRollBattleRewards(archipelago, storage),
+        self:OnRollBattleRewards(),
         "Battle - Filter Rewards"
     )
 
-    logger:info("Battle hooks registered")
+    Logger:info("Battle hooks registered")
 end
 
 
-
----Handle battle victory events
----@param archipelago Archipelago
----@param storage Storage
----@param logger Logger
----@param battle Battle
----@param characters Characters
----@param inventory Inventory
----@param quests Quests
----@private
----@return function hookFunction
-function BattleHooks:OnBattleVictory(archipelago, storage, logger, battle, characters, inventory, quests)
+function BattleHooks:OnBattleVictory()
     return function(ctx)
-        if not archipelago:IsInitialized() then return end
+        if not Archipelago:IsInitialized() then return end
 
         local battleManager = ctx:get() ---@type UAC_jRPG_BattleManager_C
         local encounterName = battleManager.EncounterName:ToString()
 
         -- Check if this is the goal
-        if battle:IsEncounterGoal(encounterName) then
-            logger:info("Goal achieved: " .. encounterName)
-            archipelago:SendVictory()
+        if Battle:IsEncounterGoal(encounterName) then
+            Logger:info("Goal achieved: " .. encounterName)
+            Archipelago:SendVictory()
         end
 
         -- Check if boss (but not goal) -> send location
-        if battle:IsBossNotGoal(encounterName) then
-            logger:info("Boss defeated: " .. encounterName)
-            archipelago:SendLocationCheck(encounterName)
+        if Battle:IsBossNotGoal(encounterName) then
+            Logger:info("Boss defeated: " .. encounterName)
+            Archipelago:SendLocationCheck(encounterName)
         end
 
         -- Special case: Paintress unlocks Maelle skills
         if encounterName == "L_Boss_Paintress_P1" then
-            inventory:AddItem("Quest_MaellePainterSkillsUnlock", 1, 1)
-            quests:SetObjectiveStatus("Main_ForcedCamps", "10_ForcedCamp_PostLumiereAttack", QUEST_STATUS.COMPLETED)
+            Inventory:AddItem("Quest_MaellePainterSkillsUnlock", 1, 1)
+            Quests:SetObjectiveStatus("Main_ForcedCamps", "10_ForcedCamp_PostLumiereAttack", QUEST_STATUS.COMPLETED)
         end
 
         -- Merchant fights
-        local merchant_location = battle:GetMerchantLocationName(encounterName)
+        local merchant_location = Battle:GetMerchantLocationName(encounterName)
         if merchant_location ~= nil then
-            logger:info("Merchant defeated: " .. encounterName)
-            archipelago:ForceSendLocationCheck(merchant_location)
+            Logger:info("Merchant defeated: " .. encounterName)
+            Archipelago:ForceSendLocationCheck(merchant_location)
         end
 
         -- Handle character unlocks (if not shuffled)
-        if archipelago.options.char_shuffle == 0 then
-            local canUnlock, charName = battle:IsBattleCanUnlockCharacter(encounterName)
+        if not Options:IsEnabled("char_shuffle") then
+            local canUnlock, charName = Battle:IsBattleCanUnlockCharacter(encounterName)
             if canUnlock and charName then
                 if not Storage:IsCharacterUnlocked(charName) then
-                    logger:info("Unlocking character: " .. charName)
+                    Logger:info("Unlocking character: " .. charName)
                     AddingCharacterFromArchipelago = true
-                    characters:EnableCharacter(charName)
-                    storage:UnlockCharacter(charName)
-                    storage:Update("BattleHooks:OnBattleEndVictory")
+                    Characters:EnableCharacter(charName)
+                    Storage:UnlockCharacter(charName)
+                    Storage:Update("BattleHooks:OnBattleEndVictory")
                 end
             end
         end
     end
 end
 
----Filter battle rewards to keep only Foot and Merchant items
----@param archipelago Archipelago
----@param storage Storage
----@private
----@return function hookFunction
-function BattleHooks:OnRollBattleRewards(archipelago, storage)
+
+function BattleHooks:OnRollBattleRewards()
     return function(_, rewards)
-        if not archipelago.apSystem then return end
+        if not Archipelago:IsConnected() then return end
 
         local battleRewards = rewards:get() ---@type FS_BattleRewards
         local keepRewards = {} ---@type table<FS_RolledLootEntry>
@@ -116,7 +93,7 @@ function BattleHooks:OnRollBattleRewards(archipelago, storage)
             local itemName = entry.ItemID_2_FDDBE5744EC164155E4C959474052581:ToString()
 
             if  string.find(itemName, "Foot") or
-                Archipelago.options.shopsanity == 0 and string.find(itemName, "Merchant") then
+                not Options:IsEnabled("shopsanity") and string.find(itemName, "Merchant") then
                 table.insert(keepRewards, {
                     ItemID_2_FDDBE5744EC164155E4C959474052581 = entry.ItemID_2_FDDBE5744EC164155E4C959474052581,
                     LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7 = entry.LootContextLevelOffset_9_8DB3D2484651317AEF2735A9049799C7,
@@ -134,20 +111,15 @@ function BattleHooks:OnRollBattleRewards(archipelago, storage)
 end
 
 
----Handle party wipe for death link
----@param archipelago Archipelago
----@param storage Storage
----@private
----@return function hookFunction
-function BattleHooks:OnPartyWipe(archipelago, storage)
+function BattleHooks:OnPartyWipe()
     return function(ctx)
-        if not archipelago:IsInitialized() then return end
+        if not Archipelago:IsInitialized() then return end
 
         local battleManager = ctx:get() ---@type UAC_jRPG_BattleManager_C
 
         -- Send death link if enabled and can't send reserve team
-        if archipelago.death_link and not battleManager:CanSendReserveTeam() then
-            archipelago:SendDeathLink("can't parry even a single attack")
+        if Archipelago.death_link and not battleManager:CanSendReserveTeam() then
+            Archipelago:SendDeathLink("can't parry even a single attack")
         end
     end
 end

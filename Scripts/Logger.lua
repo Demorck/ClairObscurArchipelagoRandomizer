@@ -1,5 +1,7 @@
 ---@class Logger
 local Logger = {}
+Logger.LEVELS = { DEBUG = 1, INFO = 2, WARN = 3, ERROR = 4 }
+Logger.level = Logger.LEVELS.DEBUG -- Unstable so we debug everything
 
 
 local log_dir = "../../Content/Paks/LogicMods/ClairObscurRandomizer_data/Logs"
@@ -18,13 +20,6 @@ os.execute("mkdir \"" .. log_dir .. "\"") -- Create the log directory if it does
 local function sanitize(value, fallback)
     if value == nil or value == "" then return fallback end
     return (tostring(value):gsub("[^%w%-]", "_"))
-end
-
-
---- Create the name of the file
----@return string 
-local function makeLogName()
-    return log_dir .. "/" .. os_date("%Y-%m-%d_%H-%M-%S") .. ".txt"
 end
 
 --- List log files
@@ -75,7 +70,8 @@ end
 
 
 -- Write a line to the log
-local function writeLine(line)
+local function writeLine(level, line)
+    if level < Logger.level then return end
 
     depth = depth + 1
     if depth > 1 then CONCURRENT_LOG_HITS = CONCURRENT_LOG_HITS + 1 end
@@ -95,19 +91,19 @@ end
 --- Logs an informational message
 ---@param msg any
 function Logger:info(msg)
-    writeLine("[INFO] " .. tostring(msg))
+    writeLine(Logger.LEVELS.INFO, "[INFO] " .. tostring(msg))
 end
 
 function Logger:warn(msg)
-    writeLine("[WARN] " .. tostring(msg))
+    writeLine(Logger.LEVELS.WARN, "[WARN] " .. tostring(msg))
 end
 
 function Logger:error(msg)
-    writeLine("[ERROR] " .. tostring(msg))
+    writeLine(Logger.LEVELS.ERROR, "[ERROR] " .. tostring(msg))
 end
 
 function Logger:debug(msg)
-    writeLine("[DEBUG] " .. tostring(msg))
+    writeLine(Logger.LEVELS.DEBUG, "[DEBUG] " .. tostring(msg))
 end
 
 function Logger:startSession()
@@ -167,13 +163,6 @@ function Logger:wrapTable(t, name)
         end
     end
     return t
-end
-
-
-function Logger:initialize()
-    logFile = makeLogName()
-    rotateLogs()
-    Logger:info("Logger initialized: " .. logFile)
 end
 
 return Logger

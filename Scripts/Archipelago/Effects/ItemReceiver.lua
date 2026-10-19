@@ -1,9 +1,23 @@
 ---Item Receiver
 ---Handles reception and processing of items from Archipelago
-local ArchipelagoState = require("Archipelago.ArchipelagoState")
+local CapacityHandler = require("Archipelago.Effects.CapacityHandler")
+local TrapHandler = require("Archipelago.Effects.TrapHandler")
 
 ---@class ItemReceiver
 local ItemReceiver = {}
+
+ItemReceiver.HANDLERS_BY_TYPE = {
+    ["Area"]                   = function(item) return ItemReceiver:HandleAreaItem(item) end,
+    ["Character"]              = function(item) return ItemReceiver:HandleCharacterItem(item) end,
+    ["Other"]                  = function(item) return ItemReceiver:HandleOtherItem(item) end,
+    ["Exploration capacities"] = function(item) return CapacityHandler:Handle(item) end,
+    ["Trap"]                   = function(item) return TrapHandler:Handle(item) end,
+}
+
+ItemReceiver.INVENTORY_TYPES = {
+    ["Picto"] = true, ["Weapon"] = true, ["Journal"] = true,
+    ["Merchant Unlock"] = true, ["Quest item"] = true, ["Upgrade material"] = true,
+}
 
 ---Receive and process an item from Archipelago
 ---@param item_data table Item data from AP
@@ -16,47 +30,27 @@ function ItemReceiver:ReceiveItem(item_data)
         return false
     end
 
-    -- Handle different item types
-    if local_item_data.type == "Area" then
-        return self:HandleAreaItem(local_item_data)
+    local handler_fn = self.HANDLERS_BY_TYPE[local_item_data.type]
+    if handler_fn ~= nil then
+        return handler_fn(local_item_data)
     end
 
-    if local_item_data.type == "Exploration capacities" then
-        local CapacityHandler = require("Archipelago.Facade.CapacityHandler")
-        return CapacityHandler:Handle(local_item_data)
-    end
-
-    if local_item_data.type == "Trap" then
-        local TrapHandler = require("Archipelago.Facade.TrapHandler")
-        return TrapHandler:Handle(local_item_data)
-    end
-
-    if local_item_data.type == "Character" then
-        return self:HandleCharacterItem(local_item_data)
-    end
-
-    if local_item_data.type == "Other" then
-        return self:HandleOtherItem(local_item_data)
-    end
-
-    -- Handle gear items (Weapon, Picto, etc.)
+    -- Anything else goes straight to the inventory
     local level = self:GetLevelItem(local_item_data.type, item_data["id"])
+    Logger:debug(("Item %q (type %s) sent to inventory as %s")
+        :format(local_item_data.name, local_item_data.type, local_item_data.internal_name))
 
-    if Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level) then
-        return true
-    end
-
-    return false
+    return Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level)
 end
 
 function ItemReceiver:HandleOtherItem(item_data)
     if item_data.name == "Chroma Pack" then
         local how_much_chroma = 0
-        if Archipelago.options.chroma_pack_type == 0 then
+        if Options.values.chroma_pack_type == 0 then
             how_much_chroma = Archipelago.chroma
         else
-            local min = math.min(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
-            local max = math.min(Archipelago.options.min_chroma_pack, Archipelago.options.max_chroma_pack)
+            local min = math.min(Options.values.min_chroma_pack, Options.values.max_chroma_pack)
+            local max = math.max(Options.values.min_chroma_pack, Options.values.max_chroma_pack)
             how_much_chroma = math.random(min, max)
         end
         Inventory:AddGold(how_much_chroma)
@@ -83,7 +77,7 @@ function ItemReceiver:HandleAreaItem(item_data)
         Quests:SetObjectiveStatus("Main_GoldenPath", "12_Axon2", QUEST_STATUS.COMPLETED)
         Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.STARTED)
     elseif item_data.name == "Area - The Reacher" then
-        Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE.NAME, true)
+        Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE, true)
     elseif item_data.name == "Area - Lumiere" then
         Quests:SetObjectiveStatus("Main_GoldenPath", "16_GoBackToLumiereAndDefeatRenoir", QUEST_STATUS.STARTED)
     end
@@ -112,34 +106,38 @@ function ItemReceiver:GetLevelItem(gear_type, id)
     local function FindIDinTable(t)
         for i, v in ipairs(t) do
             if id == v then
-                return math.ceil(CONSTANTS.CONFIG.MAX_LEVEL_GEAR * i / #t)
+                return math.ceil(Archipelago.max_level_gear * i / #t)
             end
         end
         return 15
     end
 
     local level = 15
-    if  ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.SPHERE_PLACEMENT or
-        ArchipelagoState.options.gear_scaling == CONSTANTS.CONFIG.OPTIONS.GEAR_SCALING.BALANCED_RANDOM then
+    local gear_option = Options.values.gear_scaling
+    if  gear_option == Options.GEAR_SCALING.SPHERE_PLACEMENT or
+        gear_option == Options.GEAR_SCALING.BALANCED_RANDOM then
         if gear_type == "Picto" then
-            level = FindIDinTable(ArchipelagoState.pictos_data)
+            level = FindIDinTable(Archipelago.pictos_data)
         elseif gear_type == "Weapon" then
-            level = FindIDinTable(ArchipelagoState.weapons_data)
+            level = FindIDinTable(Archipelago.weapons_data)
         end
-    elseif ArchipelagoState.options.gear_scaling == 1 then
-        local percent = 0
-        percent = (Storage.pictosIndex + Storage.weaponsIndex) / (CONSTANTS.CONFIG.NUMBER_OF_PICTOS + CONSTANTS.CONFIG.NUMBER_OF_WEAPONS)
+    elseif gear_option == Options.GEAR_SCALING.ORDER_RECEIVED then
+        local total_gear = (Data.count_by_type["Picto"] or 0) + (Data.count_by_type["Weapon"] or 0)
         if gear_type == "Picto" then
-            Storage.pictosIndex = Storage.pictosIndex + 1
+            Storage:Increment("pictosIndex")
         elseif gear_type == "Weapon" then
-            Storage.weaponsIndex = Storage.weaponsIndex + 1
+            Storage:Increment("weaponsIndex")
         end
 
-        level = math.ceil(CONSTANTS.CONFIG.MAX_LEVEL_GEAR * percent)
-    elseif ArchipelagoState.options.gear_scaling == 3 then
-        level = math.random(1, CONSTANTS.CONFIG.MAX_LEVEL_GEAR)
+        local percent = (Storage:Get("pictosIndex") + Storage:Get("weaponsIndex")) / total_gear
+        level = math.ceil(Archipelago.max_level_gear * percent)
+    elseif gear_option == Options.GEAR_SCALING.FULL_RANDOM then
+        level = math.random(1, Archipelago.max_level_gear)
     end
 
+    Logger:debug(("Gear %s id=%s -> level %d (scaling %d, pictos=%d weapons=%d)")
+        :format(gear_type, tostring(id), level, Options.values.gear_scaling,
+            Storage:Get("pictosIndex"), Storage:Get("weaponsIndex")))
     return level
 end
 
