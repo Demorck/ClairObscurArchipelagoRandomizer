@@ -71,6 +71,14 @@ test("every Area item matches a region ticket", function()
     end
 end)
 
+test("portal destination resolve to area ticket with any valid name", function()
+    equal(Regions.GetAreaTicketName("GoblusLair"), "GoblusLair")
+    equal(Regions.GetAreaTicketName("Level_Goblu_Main_V5"), "GoblusLair")
+    equal(Regions.GetAreaTicketName("Flying Waters"), "GoblusLair")
+    equal(Regions.GetAreaTicketName("WorldMap"), nil)
+    equal(Regions.GetAreaTicketName("Level_WorldMap_Main_V2"), nil)
+end)
+
 test("every region ticket is granted by an Area item", function()
     local granted = {}
     for _, item in ipairs(ReadJson("data/items.json")) do

@@ -11,6 +11,7 @@ local GOALS = {
     [2] = { encounter = "TowerBattle_33",      exclusion_level = 33, name = "Endless Tower" },
     [3] = { encounter = "Boss_SimonPhase2*1",  exclusion_level = 33, name = "Simon" },
     [4] = { encounter = "CFH_Boss_Clea",       exclusion_level = 28, name = "Clea" },
+    [5] = { encounter = "VD_Osquio*1",         exclusion_level = 33, name = "Osquio" }
 }
 
 return GOALS
