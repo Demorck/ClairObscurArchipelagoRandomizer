@@ -368,6 +368,21 @@ for _, entry in ipairs(ENTRIES) do
     end
 end
 
+---Get the Area ticket for a portal destination if that destination is ticket-gated
+---@param regionName string Could be region name, AP name, or level asset name
+---@return string|nil ticketName
+function Regions.GetAreaTicketName(regionName)
+    local region = Regions.BY_NAME[regionName]
+        or Regions.BY_AP_NAME[regionName]
+        or Regions.BY_LEVEL_ASSET[regionName]
+
+    if region and region.area then
+        return region.name
+    end
+
+    return nil
+end
+
 ---Default value of the `tickets` storage field: every region gated behind an Area item
 ---@return table<string, boolean>
 function Regions.BuildTicketDefaults()

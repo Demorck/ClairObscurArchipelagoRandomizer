@@ -117,13 +117,15 @@ function LocationHooks:Register(hookManager)
             if class_name ~= "BP_jRPG_MapTeleportPoint_Interactible_C" then return end
 
             local scene = portal.LevelDestination.RowName:ToString()
+            local ticket_name = Regions.GetAreaTicketName(scene)
+            local is_old_lumiere_end_path =
+                portal.DestinationSpawnPointTag.TagName:ToString() == "Level.SpawnPoint.OldLumiere.EndPath"
+                and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED
 
-            if not Storage:IsAreaUnlocked(scene) then
+            if (ticket_name ~= nil and not Storage:IsAreaUnlocked(ticket_name)) or is_old_lumiere_end_path then
+                portal:SetActorHiddenInGame(true)
+                portal:SetActorEnableCollision(false)
                 portal:K2_SetActorRelativeTransform(a, false, {}, true)
-            else
-                if portal.DestinationSpawnPointTag.TagName:ToString() == "Level.SpawnPoint.OldLumiere.EndPath" and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED then
-                    portal:K2_SetActorRelativeTransform(a, false, {}, true)
-                end
             end
         end,
         "LocationHooks - RegisterTeleportPoint")
