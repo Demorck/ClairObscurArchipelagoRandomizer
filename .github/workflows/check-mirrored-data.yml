@@ -1,0 +1,54 @@
+name: Check mirrored data
+
+on:
+  push:
+    paths:
+      - "data/**"
+      - ".github/workflows/check-mirrored-data.yml"
+  pull_request:
+    paths:
+      - "data/**"
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  APWORLD_REPO: Demorck/ClairObscur_APWorld
+  APWORLD_REF: main
+  APWORLD_DIR: worlds/clair_obscur/data
+  LOCAL_DIR: data
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Diff every json against the apworld repo
+        run: |
+          set -u
+          base="https://raw.githubusercontent.com/$APWORLD_REPO/$APWORLD_REF/$APWORLD_DIR"
+          failed=0
+
+          for local in "$LOCAL_DIR"/*.json; do
+            name="$(basename "$local")"
+
+            if ! curl -fsSL -o "/tmp/$name" "$base/$name"; then
+              echo "::error file=$local::$name is missing from $APWORLD_REPO"
+              failed=1
+              continue
+            fi
+
+            if diff -u --label "apworld/$name" --label "client/$name" "/tmp/$name" "$local" > "/tmp/$name.diff"; then
+              echo "ok   $name"
+            else
+              echo "::error file=$local::$name differs from $APWORLD_REPO"
+              head -n 80 "/tmp/$name.diff"
+              failed=1
+            fi
+          done
+
+          exit $failed
