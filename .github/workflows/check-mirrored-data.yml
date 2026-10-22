@@ -16,10 +16,13 @@ permissions:
   contents: read
 
 env:
-  APWORLD_REPO: Demorck/ClairObscur_APWorld
-  APWORLD_REF: main
-  APWORLD_DIR: worlds/clair_obscur/data
+  REMOTE_REPO: Demorck/ClairObscur_APWorld
+  REMOTE_REF: main
+  REMOTE_DIR: worlds/clair_obscur/data
+  REMOTE_LABEL: apworld
   LOCAL_DIR: data
+  LOCAL_LABEL: client
+  NOT_MIRRORED: ""
 
 jobs:
   diff:
@@ -27,25 +30,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Diff every json against the apworld repo
+      - name: Diff the mirrored json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -u
-          base="https://raw.githubusercontent.com/$APWORLD_REPO/$APWORLD_REF/$APWORLD_DIR"
+          set -uo pipefail
+          base="https://raw.githubusercontent.com/$REMOTE_REPO/$REMOTE_REF/$REMOTE_DIR"
           failed=0
 
-          for local in "$LOCAL_DIR"/*.json; do
-            name="$(basename "$local")"
+          # what each side holds
+          curl -fsSL -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/$REMOTE_REPO/contents/$REMOTE_DIR?ref=$REMOTE_REF" \
+            | jq -r '.[] | select(.name | endswith(".json")) | .name' | sort > /tmp/remote.txt
+          ls "$LOCAL_DIR"/*.json | xargs -n 1 basename | sort > /tmp/local.txt
+
+          : > /tmp/skip.txt
+          for name in $NOT_MIRRORED; do echo "$name" >> /tmp/skip.txt; done
+
+          # ours only
+          for name in $(comm -23 /tmp/local.txt /tmp/remote.txt); do
+            if grep -qx "$name" /tmp/skip.txt; then
+              echo "skip $name (declared $LOCAL_LABEL only)"
+            else
+              echo "::error file=$LOCAL_DIR/$name::$name is missing from $REMOTE_REPO. Copy it there, or add it to NOT_MIRRORED"
+              failed=1
+            fi
+          done
+
+          # theirs only
+          for name in $(comm -13 /tmp/local.txt /tmp/remote.txt); do
+            echo "::warning::$REMOTE_REPO has $name and we do not"
+          done
+
+          # the real check, what both sides hold has to be identical
+          for name in $(comm -12 /tmp/local.txt /tmp/remote.txt); do
+            if grep -qx "$name" /tmp/skip.txt; then
+              echo "skip $name (declared $LOCAL_LABEL only)"
+              continue
+            fi
 
             if ! curl -fsSL -o "/tmp/$name" "$base/$name"; then
-              echo "::error file=$local::$name is missing from $APWORLD_REPO"
+              echo "::error file=$LOCAL_DIR/$name::could not download $name from $REMOTE_REPO"
               failed=1
               continue
             fi
 
-            if diff -u --label "apworld/$name" --label "client/$name" "/tmp/$name" "$local" > "/tmp/$name.diff"; then
+            if diff -u --label "$REMOTE_LABEL/$name" --label "$LOCAL_LABEL/$name" \
+                 "/tmp/$name" "$LOCAL_DIR/$name" > "/tmp/$name.diff"; then
               echo "ok   $name"
             else
-              echo "::error file=$local::$name differs from $APWORLD_REPO"
+              echo "::error file=$LOCAL_DIR/$name::$name differs from $REMOTE_REPO"
               head -n 80 "/tmp/$name.diff"
               failed=1
             fi
