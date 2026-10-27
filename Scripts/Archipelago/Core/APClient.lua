@@ -447,4 +447,19 @@ function APClient:GetServerTime()
     return self.client:get_server_time()
 end
 
+---Get the locations the server considers checked
+---@return table<number>|nil locationIds Checked location ids or nil when we cannot know
+function APClient:GetCheckedLocations()
+    if not self:IsConnected() then
+        return nil
+    end
+
+    if self.client.get_checked_locations == nil then
+        self.logger:warn("get_checked_locations missing from apclientpp, server side check skipped")
+        return nil
+    end
+
+    return self.client:get_checked_locations()
+end
+
 return APClient

@@ -198,4 +198,60 @@ function LocationManager:HandleMultipleLocations(location_name, locations_data)
     return res or locations_data[1]
 end
 
+---Is a location already checked
+---Looks at what we sent locally first, then at what the server knows. The local table matters
+---because SendLocationCheck goes through ExecuteAsync, so right after killing a boss the server
+---has not confirmed anything yet
+---@param location_name string Location name, or the encounter name of a boss
+---@return boolean
+function LocationManager:IsChecked(location_name)
+    local location_data = self:GetLocationFromAPData(location_name, false)
+
+    if location_data == nil then
+        Logger:warn("IsChecked on a location we cannot resolve: " .. tostring(location_name))
+        return false
+    end
+
+    return self:IsIdChecked(location_data["id"])
+end
+
+---Same thing when you already have the id
+---@param location_id number
+---@return boolean
+function LocationManager:IsIdChecked(location_id)
+    local sent = Storage:Get("locations_checked")
+
+    if type(sent) == "table" then
+        for _, id in ipairs(sent) do
+            if id == location_id then
+                return true
+            end
+        end
+    end
+
+    return self:IsIdCheckedOnServer(location_id)
+end
+
+---Checked locations as the server knows them
+---@param location_id number
+---@return boolean
+function LocationManager:IsIdCheckedOnServer(location_id)
+    if not Archipelago:IsConnected() then
+        return false
+    end
+
+    local checked = Archipelago:GetClient():GetCheckedLocations()
+    if checked == nil then
+        return false
+    end
+
+    for _, id in ipairs(checked) do
+        if id == location_id then
+            return true
+        end
+    end
+
+    return false
+end
+
 return LocationManager

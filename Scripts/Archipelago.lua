@@ -16,6 +16,8 @@ Archipelago.trying_to_connect = false
 Archipelago.hasConnectedPrior = false
 Archipelago.waitingForSync = false
 Archipelago.pendingLocationsFlush = false
+Archipelago.consumables = {}
+Archipelago.exclusion_level = 33
 
 -- Slot data
 Archipelago.totals = {}
@@ -217,7 +219,7 @@ function Archipelago:isRegionExcluded(region_name)
         return false
     end
 
-    if Options.values.exclude_endless_tower ~= Options.EXCLUSION.EXCLUDED and region_name == "Endless Tower" then
+    if Options.values.exclude_endless_tower == Options.EXCLUSION.EXCLUDED and region_name == "Endless Tower" then
         return true
     end
 
@@ -228,7 +230,7 @@ function Archipelago:isRegionExcluded(region_name)
         return false
     end
     
-    if Options.values.exclude_endgame_locations ~= Options.EXCLUSION.EXCLUDED and region.level > exclusion_level then
+    if Options.values.exclude_endgame_locations == Options.EXCLUSION.EXCLUDED and region.level > exclusion_level then
         Logger:info(("Region %q excluded (level %d > %d)"):format(region_name, region.level, exclusion_level))
         return true
     end
@@ -237,8 +239,13 @@ function Archipelago:isRegionExcluded(region_name)
 end
 
 function Archipelago:GetExclusionLevel()
-    local goal = CONSTANTS.GOAL[Options.values.goal]
-    return goal and goal.exclusion_level or 33
+    return self.exclusion_level or 33
+end
+
+---@param location_name string
+---@return boolean
+function Archipelago:IsLocationChecked(location_name)
+    return LocationManager:IsChecked(location_name)
 end
 
 return Archipelago

@@ -18,14 +18,22 @@ Options.GEAR_SCALING = {
     FULL_RANDOM      = 3,
 }
 
+---How several goals combine
+Options.GOAL_REQUIREMENT = {
+    ALL = 0,
+    ANY = 1,
+}
+
 ---@class OptionSpec
----@field default number|boolean value used when the slot data omits the option
+---@field default number|boolean|table value used when the slot data omits the option
 ---@field toggle boolean|nil true when the option is on/off and should be read as a boolean
+---@field list boolean|nil true when the option is a list of names
 ---@field values table<string, number> | nil enum used by the option
 
 ---@type table<string, OptionSpec>
 Options.SPEC = {
-    goal                      = { default = 0 },
+    goal                      = { default = { "curator" }, list = true },
+    goal_requirement          = { default = 0, values = Options.GOAL_REQUIREMENT },
     gear_scaling              = { default = 0, values = Options.GEAR_SCALING },
     starting_char             = { default = 0 },
     chroma_pack_type          = { default = 0 },
@@ -89,6 +97,16 @@ function Options:Load(slot_options)
         end
 
         local value = received
+
+        -- OptionSet comes over as a sorted list of names
+        if spec.list then
+            if type(value) == "string" then value = { value } end
+            if type(value) ~= "table" then
+                Logger:error(("Option %q should be a list, got %s"):format(key, type(value)))
+                value = spec.default
+            end
+        end
+
         if spec.toggle then
             value = ToBoolean(received)
         end

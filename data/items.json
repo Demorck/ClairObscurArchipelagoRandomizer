@@ -1,7 +1,7 @@
 [
   {
     "type": "Upgrade material",
-    "name": "Chroma Catalyst (5)",
+    "name": "Chroma Catalyst",
     "internal_name": "UpgradeMaterial_Level1",
     "quantity": 5,
     "progressive": 0
@@ -15,21 +15,21 @@
   },
   {
     "type": "Upgrade material",
-    "name": "Polished Chroma Catalyst (5)",
+    "name": "Polished Chroma Catalyst",
     "internal_name": "UpgradeMaterial_Level2",
     "quantity": 5,
     "progressive": 0
   },
   {
     "type": "Upgrade material",
-    "name": "Resplendent Chroma Catalyst (5)",
+    "name": "Resplendent Chroma Catalyst",
     "internal_name": "UpgradeMaterial_Level3",
     "quantity": 5,
     "progressive": 0
   },
   {
     "type": "Upgrade material",
-    "name": "Grandiose Chroma Catalyst (5)",
+    "name": "Grandiose Chroma Catalyst",
     "internal_name": "UpgradeMaterial_Level4",
     "quantity": 5,
     "progressive": 0
@@ -92,7 +92,7 @@
   },
   {
     "type": "Upgrade material",
-    "name": "Colour of Lumina (5)",
+    "name": "Colour of Lumina",
     "internal_name": "Consumable_LuminaPoint",
     "quantity": 5,
     "progressive": 0
@@ -3077,13 +3077,6 @@
     "type": "Merchant Unlock",
     "name": "Merchant (Forgotten Battlefield): Kasumi - Extra shop unlock",
     "internal_name": "Merchant_ForgottenBattlefield",
-    "quantity": 1,
-    "progressive": 1
-  },
-  {
-    "type": "Merchant Unlock",
-    "name": "Merchant (Monoco's Station): Grandis - Extra shop unlock",
-    "internal_name": "Merchant_GrandisStation",
     "quantity": 1,
     "progressive": 1
   },
