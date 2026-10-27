@@ -44,10 +44,18 @@ function BattleHooks:OnBattleVictory()
             Archipelago:SendVictory()
         end
 
-        -- Check if boss (but not goal) -> send location
-        if Battle:IsBossNotGoal(encounterName) then
+        -- A goal boss is a location like any other, its check goes out too
+        if Battle:IsBoss(encounterName) then
             Logger:info("Boss defeated: " .. encounterName)
             Archipelago:SendLocationCheck(encounterName)
+        end
+
+        if Goals:IsComplete() then
+            Logger:info("Every goal is done")
+            Archipelago:SendVictory()
+        elseif Goals:IsGoalEncounter(encounterName) then
+            local done, total = Goals:Progress()
+            Logger:info(("Goal %d/%d"):format(done, total))
         end
 
         -- Special case: Paintress unlocks Maelle skills

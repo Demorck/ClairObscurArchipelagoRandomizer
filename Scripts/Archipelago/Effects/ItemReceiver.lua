@@ -37,10 +37,23 @@ function ItemReceiver:ReceiveItem(item_data)
 
     -- Anything else goes straight to the inventory
     local level = self:GetLevelItem(local_item_data.type, item_data["id"])
-    Logger:debug(("Item %q (type %s) sent to inventory as %s")
-        :format(local_item_data.name, local_item_data.type, local_item_data.internal_name))
+    local quantity = self:GetQuantity(local_item_data)
+    Logger:debug(("Item %q (type %s) sent to inventory as %s (x %s)")
+        :format(local_item_data.name, local_item_data.type, local_item_data.internal_name, quantity))
 
-    return Inventory:AddItem(local_item_data.internal_name, local_item_data.quantity, level)
+    return Inventory:AddItem(local_item_data.internal_name, quantity, level)
+end
+
+---How much of an item to give
+---@param local_item_data ItemData
+---@return integer
+function ItemReceiver:GetQuantity(local_item_data)
+    local range = Archipelago.consumables[local_item_data.name]
+    if range == nil then
+        return local_item_data.quantity
+    end
+
+    return math.random(range[1], range[2])
 end
 
 function ItemReceiver:HandleOtherItem(item_data)

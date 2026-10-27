@@ -18,6 +18,8 @@ RuntimeState = require "RuntimeState"
 Options      = require "Archipelago.Options"
 MerchantLocations = require "Archipelago.MerchantLocations"
 NewGameSetup = require "Game.NewGameSetup"
+Goals        = require "Game.Goals"
+
 UEHelpers    = require "UEHelpers"
 
 Dump = Utils.TableHelper.Dump

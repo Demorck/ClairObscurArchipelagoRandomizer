@@ -55,7 +55,9 @@ function SlotDataHandler:ProcessSlotData(slotData)
     Archipelago.weapons_data = slotData.weapons or {}
     Archipelago.shop_data = slotData.shops or {}
     Archipelago.chroma = slotData.chroma or nil
+    Archipelago.consumables = slotData.consumables or {}
     Archipelago.max_level_gear = slotData.max_gear_level or 33
+    Archipelago.exclusion_level = slotData.exclusion_level or 33
 
     -- Log received data
     self:LogSessionHeader()
@@ -63,13 +65,20 @@ end
 
 function SlotDataHandler:LogSessionHeader()
     local player = Archipelago:GetPlayer()
-    local goal = CONSTANTS.GOAL[Options.values.goal]
+    local goal_names = {}
+    for key, entry in pairs(Goals:Selected()) do
+        table.insert(goal_names, entry.name or key)
+    end
+    table.sort(goal_names)
 
     Logger:info("=============== SESSION ===============")
     Logger:info(("Mod version  : %s"):format(CONSTANTS.VERSION))
     Logger:info(("Seed         : %s"):format(tostring(player.seed)))
     Logger:info(("Slot         : %s (player %s)"):format(tostring(player.slot), tostring(player.number)))
-    Logger:info(("Goal         : %s"):format(goal and goal.name or "unknown"))
+    Logger:info(("Goal         : %s (%s)"):format(
+        table.concat(goal_names, ", "),
+        Options.values.goal_requirement == Options.GOAL_REQUIREMENT.ANY and "any" or "all")
+    )
     Logger:info(("Max gear lvl : %d"):format(Archipelago.max_level_gear))
     Logger:info(("Data loaded  : %d items, %d locations, %d shops")
         :format(#Data.items, #Data.locations, #Data.shops))

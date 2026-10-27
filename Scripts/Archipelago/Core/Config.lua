@@ -28,8 +28,8 @@ Config.defaults = {
     -- AP configuration
     gameName      = "Clair Obscur Expedition 33",
     itemsHandling = 7,
-    tags          = { "Lua-APClientPP" },
-    version       = {0, 5, 4},
+    tags          = { },
+    version       = {0, 6, 3},
 
     -- Features
     deathlink = false,
