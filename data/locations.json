@@ -1141,7 +1141,7 @@
     },
     {
         "internal_name": "Chest_GestralVillage_4",
-        "name": "Gestral Village: In the arena",
+        "name": "Gestral Village: In the wrestling arena",
         "location": "Gestral Village",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -3360,7 +3360,7 @@
         "name": "Esoteric Ruins: Item after maze 1",
         "location": "Small Level Door Maze",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {"Free Aim":  1},
         "type": "Chest"
     },
     {
@@ -3368,7 +3368,7 @@
         "name": "Esoteric Ruins: Item after maze 2",
         "location": "Small Level Door Maze",
         "original_item": "Quest_WoodBoards",
-        "condition": {},
+        "condition": {"Free Aim":  1},
         "type": "Chest"
     },
     {
@@ -3376,7 +3376,7 @@
         "name": "Esoteric Ruins: Item after maze 3",
         "location": "Small Level Door Maze",
         "original_item": "Consumable_LuminaPoint",
-        "condition": {},
+        "condition": {"Free Aim":  1},
         "type": "Chest"
     },
     {
@@ -4951,7 +4951,10 @@
         "internal_name": "MF_ChapelieALPHA",
         "location": "The Crows",
         "original_item": "",
-        "condition": {"Free Aim": 1},
+        "condition": {
+            "Free Aim": 1,
+            "Painted Power": 1
+        },
         "type": "Boss",
         "boss_type": "Chromatic"
     },
