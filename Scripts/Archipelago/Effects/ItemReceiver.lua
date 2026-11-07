@@ -87,8 +87,24 @@ function ItemReceiver:HandleAreaItem(item_data)
     elseif item_data.name == "Area - Old Lumiere" then
         Quests:SetObjectiveStatus("Main_GoldenPath", "10_OldLumiere", QUEST_STATUS.STARTED)
     elseif item_data.name == "Area - The Monolith" then
-        Quests:SetObjectiveStatus("Main_GoldenPath", "12_Axon2", QUEST_STATUS.COMPLETED)
-        Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.STARTED)
+        local portal_unlocked = Storage:Get("monolith_interior_portal_unlocked")
+            or Quests:GetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith") == QUEST_STATUS.COMPLETED
+            or Quests:GetObjectiveStatus("Main_GoldenPath", "14_DefeatthePaintress") == QUEST_STATUS.COMPLETED
+
+        -- First time conditional. Starts monolith quest
+        if Quests:GetObjectiveStatus("Main_GoldenPath", "12_Axon2") ~= QUEST_STATUS.COMPLETED or
+           Quests:GetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith") == QUEST_STATUS.NOT_STARTED then
+            Quests:SetObjectiveStatus("Main_GoldenPath", "12_Axon2", QUEST_STATUS.COMPLETED)
+            Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.STARTED)
+        end
+
+        -- Regression check. Portal should be unlocked and quest should be completed if q14 is done
+        if portal_unlocked and (not Storage:Get("monolith_interior_portal_unlocked") or
+           Quests:GetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith") ~= QUEST_STATUS.COMPLETED) then
+            Storage:Set("monolith_interior_portal_unlocked", true)
+            Storage:Update("ItemReceiver:Monolith portal unlocked")
+            Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.COMPLETED)
+        end
     elseif item_data.name == "Area - The Reacher" then
         Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE, true)
     elseif item_data.name == "Area - Lumiere" then

@@ -16,6 +16,31 @@ function QuestHooks:Register(hookManager)
 
             Logger:info("Game change subquest: " .. objectiveName .. " to " .. statusValue)
 
+            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH then
+                if statusValue == QUEST_STATUS.COMPLETED
+                    and not Storage:Get("monolith_interior_portal_unlocked") then
+                    Storage:Set("monolith_interior_portal_unlocked", true)
+                    Storage:Update("QuestHooks:Monolith portal unlocked")
+                elseif statusValue == QUEST_STATUS.STARTED
+                    and Storage:Get("monolith_interior_portal_unlocked") then
+                    Quests:SetObjectiveStatus(
+                        CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
+                        CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH,
+                        QUEST_STATUS.COMPLETED
+                    )
+                end
+            end
+
+            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF
+                and statusValue == QUEST_STATUS.STARTED
+                and Storage:Get("sea_cliff_back_exit_open") then
+                Quests:SetObjectiveStatus(
+                    CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
+                    CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF,
+                    QUEST_STATUS.COMPLETED
+                )
+            end
+
             -- Auto-complete forced camps
             --TODO: Seems to not work for Post SM
             if objectiveName == CONSTANTS.QUEST.FORCED_CAMPS.POST_SPRING_MEADOWS and statusValue == QUEST_STATUS.STARTED then

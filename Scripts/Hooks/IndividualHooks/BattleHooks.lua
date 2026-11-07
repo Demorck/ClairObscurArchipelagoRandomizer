@@ -38,6 +38,13 @@ function BattleHooks:OnBattleVictory()
         local battleManager = ctx:get() ---@type UAC_jRPG_BattleManager_C
         local encounterName = battleManager.EncounterName:ToString()
 
+        -- Ensure Stone Wave Cliffs back exit doesn't regress
+        if encounterName == "SC_MirrorRenoir_GustaveEnd" then
+            Storage:Set("sea_cliff_back_exit_open", true)
+            Storage:Update("BattleHooks:Stone Wave Cliffs back exit")
+            Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF, QUEST_STATUS.COMPLETED)
+        end
+
         -- Check if this is the goal
         if Battle:IsEncounterGoal(encounterName) then
             Logger:info("Goal achieved: " .. encounterName)

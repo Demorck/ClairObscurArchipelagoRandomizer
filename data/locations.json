@@ -3308,14 +3308,6 @@
         "type": "Chest"
     },
     {
-        "internal_name": "Chest_SmallLevel_Cemetery_3",
-        "name": "Cemetery: Defeat the Nevron",
-        "location": "Small Level Cemetery",
-        "original_item": "ChromaPack_ExtraLarge",
-        "condition": {},
-        "type": "Chest"
-    },
-    {
         "internal_name": "Chest_SmallLevel_Cemetery_4",
         "name": "Cemetery: Next to Gramophone",
         "location": "Small Level Cemetery",
@@ -3727,7 +3719,7 @@
     },
     {
         "internal_name": "Chest_TwilightSanctuary_1",
-        "name": "Endless Night Sanctuary: Warrior' Route - Near expeditioner corpse",
+        "name": "Endless Night Sanctuary: Warrior's Route - Near expeditioner corpse",
         "location": "Twilight Sanctuary",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -3743,7 +3735,7 @@
     },
     {
         "internal_name": "Chest_TwilightSanctuary_3",
-        "name": "Endless Night Sanctuary: Entrance - Right path before Warrior' Route flag",
+        "name": "Endless Night Sanctuary: Entrance - Right path before Warrior's Route flag",
         "location": "Twilight Sanctuary",
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
@@ -3759,7 +3751,7 @@
     },
     {
         "internal_name": "Chest_TwilightSanctuary_5",
-        "name": "Endless Night Sanctuary: Warrior' Route - After Petank 2",
+        "name": "Endless Night Sanctuary: Warrior's Route - After Petank 2",
         "location": "Twilight Sanctuary",
         "original_item": "ChromaPack_Regular",
         "condition": {},
@@ -3799,7 +3791,7 @@
     },
     {
         "internal_name": "Chest_TwilightSanctuary_10",
-        "name": "Endless Night Sanctuary: Entrance - Before Warrior' Route flag",
+        "name": "Endless Night Sanctuary: Entrance - Before Warrior's Route flag",
         "location": "Twilight Sanctuary",
         "original_item": "ChromaPack_Regular",
         "condition": {},
@@ -3807,7 +3799,7 @@
     },
     {
         "internal_name": "Chest_TwilightSanctuary_11",
-        "name": "Endless Night Sanctuary: Warrior' Route - After Petank 3",
+        "name": "Endless Night Sanctuary: Warrior's Route - After Petank 3",
         "location": "Twilight Sanctuary",
         "original_item": "UpgradeMaterial",
         "condition": {},
@@ -3815,7 +3807,7 @@
     },
     {
         "internal_name": "Chest_TwilightSanctuary_12",
-        "name": "Endless Night Sanctuary: Warrior' Route - After Petank 1",
+        "name": "Endless Night Sanctuary: Warrior's Route - After Petank 1",
         "location": "Twilight Sanctuary",
         "original_item": "ChromaPack_Regular",
         "condition": {},
@@ -3852,6 +3844,15 @@
         "original_item": "GradientBreak",
         "condition": {},
         "type": "Chest"
+    },
+    {
+        "name": "Endless Night Sanctuary: Ultimate Sakapatate",
+        "internal_name": "TS_PotatoBagBossTwilight*1_Tank*1_Ranger*1",
+        "location": "Endless Night Sanctuary",
+        "original_item": "",
+        "condition": {},
+        "type": "Boss",
+        "boss_type": "Area"
     },
     {
         "internal_name": "Chest_Visages_1",
@@ -4004,6 +4005,33 @@
         "original_item": "UpgradeMaterial",
         "condition": {},
         "type": "Chest"
+    },
+    {
+        "name": "Visages: Anger Vale - Mask of Anger",
+        "internal_name": "MF_ANGRY_BoucheclierMaskAnger*3_0",
+        "location": "Visages",
+        "original_item": "",
+        "condition": {},
+        "type": "Boss",
+        "boss_type": "Elite"
+    },
+    {
+        "name": "Visages: Joy Vale - Mask of Joy",
+        "internal_name": "MF_JOY_Moissonneuse_MaskJoy*3_0",
+        "location": "Visages",
+        "original_item": "",
+        "condition": {},
+        "type": "Boss",
+        "boss_type": "Elite"
+    },
+    {
+        "name": "Visages: Sadness Vale - Mask of Sadness",
+        "internal_name": "MF_SADNESS_Chapelier_MaskSadness*3",
+        "location": "Visages",
+        "original_item": "",
+        "condition": {},
+        "type": "Boss",
+        "boss_type": "Elite"
     },
     {
         "internal_name": "Chest_WorldMap_1",
@@ -4723,6 +4751,14 @@
         "original_item": "Consumable_LuminaPoint",
         "condition": {},
         "type": "Dive"
+    },
+    {
+        "internal_name": "Chest_SideLevel_CleasTower_1",
+        "name": "Endless Tower: Underneath the right staircase",
+        "location": "Endless Tower",
+        "original_item": "Verso - Visages Outfit",
+        "condition": {},
+        "type": "Chest"
     },
     {
         "name": "Ancient Sanctuary: Ultimate Sakapatate",
@@ -6255,7 +6291,7 @@
         "name": "Verso's Drafts: Candy land - In candy jars at the carnival",
         "internal_name": "Chest_SideLevel_VersosDraft_8",
         "location": "Verso's Drafts",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "original_item": "",
         "type": "Chest"
     },
@@ -6287,7 +6323,7 @@
         "name": "Verso's Drafts: In candy jar across from the cake door",
         "internal_name": "Chest_SideLevel_VersosDraft_12",
         "location": "Verso's Drafts",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "original_item": "",
         "type": "Chest"
     },
@@ -6309,7 +6345,7 @@
     },
     {
         "name": "Verso's Drafts: Open Playground - Paint cage",
-        "internal_name": "15",
+        "internal_name": "Chest_SideLevel_VersosDraft_15",
         "location": "Verso's Drafts",
         "condition": {"Free Aim": 1},
         "original_item": "",
@@ -6403,7 +6439,7 @@
         "name": "Verso's Drafts: Reverie Path - In candy jar before carnival entrance",
         "internal_name": "Chest_SideLevel_VersosDraft_26",
         "location": "Verso's Drafts",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "original_item": "",
         "type": "Chest"
     },
@@ -6459,7 +6495,7 @@
         "name": "Verso's Drafts: Candy land - Hopscotch in the cave",
         "internal_name": "Chest_SideLevel_VersosDraft_33",
         "location": "Verso's Drafts",
-        "condition": {},
+        "condition": {"Paint Break": 1},
         "original_item": "",
         "type": "Chest"
     },

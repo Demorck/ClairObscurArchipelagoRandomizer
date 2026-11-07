@@ -162,7 +162,7 @@ function ShopHooks:ModifyDatatable(state)
                     break
                 end
             end
-            
+
             if not found then
                 goto next_shop_data
             end
@@ -227,8 +227,9 @@ function ShopHooks:ChangeItemInformation()
         end
 
         local has_item = not extra
+        local internal_name = nil
         if extra then
-            local internal_name = Data:FindInternalNameItemFromName(shop_data.unlock_item)
+            internal_name = Data:FindInternalNameItemFromName(shop_data.unlock_item)
             has_item = internal_name ~= nil and Inventory:HasItem(internal_name)
         end
 

@@ -78,6 +78,20 @@ function LocationHooks:Register(hookManager)
                 Storage:Set("currentLocation", level)
 
                 Logger:info(("Level change -> %s (%s)"):format(level, level_asset))
+                
+                local entered_monolith = level_asset == "Level_PaintressIntro_Main"
+                        and Quests:GetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
+                        CONSTANTS.QUEST.GOLDEN_PATH.DEFEAT_PAINTRESS) == QUEST_STATUS.COMPLETED
+
+                if entered_monolith then
+                        Storage:Set("monolith_interior_portal_unlocked", true)
+                        Storage:Update("LocationHooks:Monolith portal unlocked")
+                        Quests:SetObjectiveStatus(
+                            CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
+                            CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH,
+                            QUEST_STATUS.COMPLETED
+                        )
+                end
             end
          end,
         "LocationHooks - ChangeMapByAssetName"
@@ -89,27 +103,6 @@ function LocationHooks:Register(hookManager)
             if level_name ~= Regions.BY_NAME.WorldMap.asset then return end
 
             local portal = tp_UObject:get() ---@cast portal ABP_jRPG_MapTeleportPoint_C
-
-            local a = {
-                    Rotation = {
-                        X = 0,
-                        Y = 0,
-                        Z = 0,
-                        W = 0
-                    },
-
-                    Translation = {
-                        X = 0,
-                        Y = -1000,
-                        Z = 0,
-                    },
-
-                    Scale3D = {
-                        X = 0,
-                        Y = 0,
-                        Z = 0,
-                    },
-                }
                 
             if portal == nil or not portal:IsValid() then return end
 
@@ -120,12 +113,16 @@ function LocationHooks:Register(hookManager)
             local ticket_name = Regions.GetAreaTicketName(scene)
             local is_old_lumiere_end_path =
                 portal.DestinationSpawnPointTag.TagName:ToString() == "Level.SpawnPoint.OldLumiere.EndPath"
-                and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere") ~= QUEST_STATUS.COMPLETED
+            local old_lumiere_status = is_old_lumiere_end_path
+                and Quests:GetObjectiveStatus("Main_GoldenPath", "10_OldLumiere")
+            local old_lumiere_quest_incomplete = is_old_lumiere_end_path
+                and old_lumiere_status ~= QUEST_STATUS.COMPLETED
+            local area_unlocked = ticket_name == nil or Storage:IsAreaUnlocked(ticket_name)
 
-            if (ticket_name ~= nil and not Storage:IsAreaUnlocked(ticket_name)) or is_old_lumiere_end_path then
+            if (ticket_name ~= nil and not area_unlocked)
+                or old_lumiere_quest_incomplete then
                 portal:SetActorHiddenInGame(true)
                 portal:SetActorEnableCollision(false)
-                portal:K2_SetActorRelativeTransform(a, false, {}, true)
             end
         end,
         "LocationHooks - RegisterTeleportPoint")
