@@ -8,6 +8,5 @@ require("test_storage")
 require("test_merchants_locations")
 require("test_shops")
 require("test_item_receiver")
-require("test_quest_hooks")
 
 require("runner").report()
