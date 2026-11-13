@@ -16,29 +16,57 @@ function QuestHooks:Register(hookManager)
 
             Logger:info("Game change subquest: " .. objectiveName .. " to " .. statusValue)
 
-            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH then
-                if statusValue == QUEST_STATUS.COMPLETED
-                    and not Storage:Get("monolith_interior_portal_unlocked") then
-                    Storage:Set("monolith_interior_portal_unlocked", true)
-                    Storage:Update("QuestHooks:Monolith portal unlocked")
-                elseif statusValue == QUEST_STATUS.STARTED
-                    and Storage:Get("monolith_interior_portal_unlocked") then
-                    Quests:SetObjectiveStatus(
-                        CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
-                        CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH,
-                        QUEST_STATUS.COMPLETED
-                    )
+            -- Vanilla quest hooks can update multiple quests
+            -- Finishing Esquie's Nest sets Esquie's Nest to Completed and Sea Cliff to Started
+            -- If Sea Cliff is completed before Esquie's Nest there is regression
+            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF then
+                if statusValue == QUEST_STATUS.COMPLETED then
+                    Storage:Set("sea_cliff_back_exit_open", true)
+                    Storage:Update("QuestHooks: Sea Cliff complete")
+                end
+                
+                if statusValue ~= QUEST_STATUS.COMPLETED and
+                Storage:Get("sea_cliff_back_exit_open") then
+                    Logger:info("Quest persistence: SEA_CLIFF is already completed")
+                    Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF, QUEST_STATUS.COMPLETED)
                 end
             end
 
-            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF
-                and statusValue == QUEST_STATUS.STARTED
-                and Storage:Get("sea_cliff_back_exit_open") then
-                Quests:SetObjectiveStatus(
+            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF then
+                local quest_name = CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME
+                local current_status = Quests:GetObjectiveStatus(quest_name, objectiveName)
+
+                Logger:info(("Sea Cliff persistence diagnostic: objective=%s incoming=%s stored=%s level=%s")
+                    :format(objectiveName, tostring(statusValue), tostring(current_status),
+                        tostring(ClientBP:GetLevelName())))
+            elseif objectiveName == CONSTANTS.QUEST.FORCED_CAMPS.POST_SEA_CLIFF then
+                local sea_cliff_status = Quests:GetObjectiveStatus(
                     CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
-                    CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF,
-                    QUEST_STATUS.COMPLETED
+                    CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF
                 )
+                local camp_status = Quests:GetObjectiveStatus(
+                    CONSTANTS.QUEST.FORCED_CAMPS.QUEST_NAME,
+                    objectiveName
+                )
+
+                Logger:info(("Sea Cliff camp diagnostic: objective=%s incoming=%s stored=%s sea_cliff_status=%s level=%s")
+                    :format(objectiveName, tostring(statusValue), tostring(camp_status),
+                        tostring(sea_cliff_status), tostring(ClientBP:GetLevelName())))
+            end
+
+            -- Defeating an axon sets Axon Defeated quest to completed and Enter the Monolith to Started
+            -- If an axon is defeated after entering the monolith there is regression
+            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH then
+                if statusValue == QUEST_STATUS.COMPLETED then
+                    Storage:Set("monolith_interior_portal_unlocked", true)
+                    Storage:Update("QuestHooks: Enter the Monolith completed")
+                end
+
+                if statusValue ~= QUEST_STATUS.COMPLETED and
+                Storage:Get("monolith_interior_portal_unlocked") then
+                    Logger:info("Quest persistence: ENTER_MONOLITH is already completed")
+                    Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, objectiveName, QUEST_STATUS.COMPLETED)
+                end
             end
 
             -- Auto-complete forced camps

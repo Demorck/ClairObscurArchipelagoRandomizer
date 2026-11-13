@@ -78,20 +78,6 @@ function LocationHooks:Register(hookManager)
                 Storage:Set("currentLocation", level)
 
                 Logger:info(("Level change -> %s (%s)"):format(level, level_asset))
-                
-                local entered_monolith = level_asset == "Level_PaintressIntro_Main"
-                        and Quests:GetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
-                        CONSTANTS.QUEST.GOLDEN_PATH.DEFEAT_PAINTRESS) == QUEST_STATUS.COMPLETED
-
-                if entered_monolith then
-                        Storage:Set("monolith_interior_portal_unlocked", true)
-                        Storage:Update("LocationHooks:Monolith portal unlocked")
-                        Quests:SetObjectiveStatus(
-                            CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
-                            CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH,
-                            QUEST_STATUS.COMPLETED
-                        )
-                end
             end
          end,
         "LocationHooks - ChangeMapByAssetName"
