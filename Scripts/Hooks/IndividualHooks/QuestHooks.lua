@@ -32,28 +32,6 @@ function QuestHooks:Register(hookManager)
                 end
             end
 
-            if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF then
-                local quest_name = CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME
-                local current_status = Quests:GetObjectiveStatus(quest_name, objectiveName)
-
-                Logger:info(("Sea Cliff persistence diagnostic: objective=%s incoming=%s stored=%s level=%s")
-                    :format(objectiveName, tostring(statusValue), tostring(current_status),
-                        tostring(ClientBP:GetLevelName())))
-            elseif objectiveName == CONSTANTS.QUEST.FORCED_CAMPS.POST_SEA_CLIFF then
-                local sea_cliff_status = Quests:GetObjectiveStatus(
-                    CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME,
-                    CONSTANTS.QUEST.GOLDEN_PATH.SEA_CLIFF
-                )
-                local camp_status = Quests:GetObjectiveStatus(
-                    CONSTANTS.QUEST.FORCED_CAMPS.QUEST_NAME,
-                    objectiveName
-                )
-
-                Logger:info(("Sea Cliff camp diagnostic: objective=%s incoming=%s stored=%s sea_cliff_status=%s level=%s")
-                    :format(objectiveName, tostring(statusValue), tostring(camp_status),
-                        tostring(sea_cliff_status), tostring(ClientBP:GetLevelName())))
-            end
-
             -- Defeating an axon sets Axon Defeated quest to completed and Enter the Monolith to Started
             -- If an axon is defeated after entering the monolith there is regression
             if objectiveName == CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH then
