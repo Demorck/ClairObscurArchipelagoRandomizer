@@ -80,14 +80,6 @@ function QuestHooks:Register(hookManager)
 end
 
 function QuestHooks:RequestMonolithRestore()
-
-    -- Not necessary unless the player uses the debug command.
-    -- We can remove if we want to allow restoring the monolith regardless of its previous state.
-    if not Storage:Get("monolith_interior_portal_unlocked") then
-        Logger:warn("Quest persistence: Monolith restore ignored because it has not been unlocked before")
-        return
-    end
-
     -- Prevents extra polling
     if Quests:GetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH) == QUEST_STATUS.COMPLETED then
         Logger:info("Quest persistence: ENTER_MONOLITH is already completed")
