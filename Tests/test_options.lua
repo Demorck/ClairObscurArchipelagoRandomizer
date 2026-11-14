@@ -24,9 +24,10 @@ test("an unknown option value falls back to the default", function()
 end)
 
 test("slot data wins over the defaults", function()
-    Options:Load({ goal = 3, location_per_shop = 5 })
+    Options:Load({ goal = {"test_goal", "goal_for_test"}, location_per_shop = 5 })
 
-    equal(Options.values.goal, 3, "goal was not read from the slot data")
+    equal(Options.values.goal[1], "test_goal", "goal was not read from the slot data")
+    equal(Options.values.goal[2], "goal_for_test", "goal was not read from the slot data")
     equal(Options.values.location_per_shop, 5, "location_per_shop was not read from the slot data")
 end)
 

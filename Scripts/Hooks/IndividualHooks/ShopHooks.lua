@@ -162,7 +162,6 @@ function ShopHooks:ModifyDatatable(state)
                     break
                 end
             end
-            
             if not found then
                 goto next_shop_data
             end

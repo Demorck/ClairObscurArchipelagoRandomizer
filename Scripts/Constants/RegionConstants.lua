@@ -67,8 +67,8 @@ local ENTRIES = {
         level = 28, area = true,
         asset = "Level_Side_CleasWorkShop_V2",
         levels = {
-            ["Level_Side_CleasWorkShop_V2"] = { "DT_Merchant_CleaIsland.DT_Merchant_CleaIsland" },
-            ["Level_CleaFlyingHouse_Main"] = {},
+            ["Level_Side_CleasWorkShop_V2"] = {},
+            ["Level_CleaFlyingHouse_Main"] = { "DT_Merchant_CleaIsland.DT_Merchant_CleaIsland" },
         },
     },
     {
@@ -185,8 +185,10 @@ local ENTRIES = {
         level = 29, area = true,
         levels = {
             ["Level_Side_VersosDraft"] = {
-                "CustomizationMerchants/DT_Merchant_Osquio.DT_Merchant_Osquio",
                 "DT_Merchant_VersosDraft.DT_Merchant_VersosDraft",
+            },
+            ["Level_Small_EsquieRealCousin"] = {
+                "CustomizationMerchants/DT_Merchant_Osquio.DT_Merchant_Osquio",
             },
         },
     },
@@ -241,7 +243,6 @@ local ENTRIES = {
                 "CustomizationMerchants/DT_Merchant_WM_17.DT_Merchant_WM_17",
                 
                 "CustomizationMerchants/DT_Merchant_WM_Chic.DT_Merchant_WM_Chic",
-                "CustomizationMerchants/DT_Merchant_GestralVillage3.DT_Merchant_GestralVillage3",
             },
         },
     },
@@ -313,7 +314,15 @@ local ENTRIES = {
     { ap = "Lost Woods", level = 1 },
     { ap = "Painting Workshop", level = 1 },
     { ap = "Red Woods", level = 1 },
-    { ap = "Sacred River", level = 1 },
+    {
+        ap = "Sacred River",
+        level = 1,
+        levels = {
+            ["SmallLevel_SacredRiver"] = {
+                "DT_Merchant_GestralVillage3.DT_Merchant_GestralVillage3",
+            },
+        },
+    },
     { ap = "Sinister Cave", level = 13 },
     { ap = "Sirene's Dress", level = 20, aliases = { "Sirene’s Dress" } },
     { ap = "Sky Island", level = 20 },
