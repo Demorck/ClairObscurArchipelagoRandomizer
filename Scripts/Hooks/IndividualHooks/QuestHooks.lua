@@ -42,8 +42,7 @@ function QuestHooks:Register(hookManager)
 
                 if statusValue ~= QUEST_STATUS.COMPLETED and
                 Storage:Get("monolith_interior_portal_unlocked") then
-                    Logger:info("Quest persistence: ENTER_MONOLITH is already completed")
-                    Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, objectiveName, QUEST_STATUS.COMPLETED)
+                    QuestHooks:RequestMonolithRestore()
                 end
             end
 
@@ -78,6 +77,32 @@ function QuestHooks:Register(hookManager)
     )
 
     Logger:info("Quest hooks registered")
+end
+
+function QuestHooks:RequestMonolithRestore()
+
+    -- Not necessary unless the player uses the debug command.
+    -- We can remove if we want to allow restoring the monolith regardless of its previous state.
+    if not Storage:Get("monolith_interior_portal_unlocked") then
+        Logger:warn("Quest persistence: Monolith restore ignored because it has not been unlocked before")
+        return
+    end
+
+    -- Prevents extra polling
+    if Quests:GetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH) == QUEST_STATUS.COMPLETED then
+        Logger:info("Quest persistence: ENTER_MONOLITH is already completed")
+        return
+    end
+
+    -- Needs a delay so it doesn't try to fire at the same time as teleporting to camp. Otherwise the player will fall through the floor
+    -- Added a debug command in case this doesn't fire properly
+    Logger:info("Quest persistence: ENTER_MONOLITH restore scheduled in 10 seconds")
+    ExecuteWithDelay(10000, function()
+        if Quests:GetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH) ~= QUEST_STATUS.COMPLETED then
+            Logger:info("Quest persistence: restoring ENTER_MONOLITH")
+            Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH, QUEST_STATUS.COMPLETED)
+        end
+    end)
 end
 
 return QuestHooks

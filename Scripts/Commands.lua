@@ -10,6 +10,7 @@ function DebugCommands:DebugFunction2()
 end
 
 function DebugCommands:DebugFunction3()
+    QuestHooks:RequestMonolithRestore()
 end
 
 function DebugCommands:DebugFunction4()
