@@ -87,8 +87,16 @@ function ItemReceiver:HandleAreaItem(item_data)
     elseif item_data.name == "Area - Old Lumiere" then
         Quests:SetObjectiveStatus("Main_GoldenPath", "10_OldLumiere", QUEST_STATUS.STARTED)
     elseif item_data.name == "Area - The Monolith" then
-        Quests:SetObjectiveStatus("Main_GoldenPath", "12_Axon2", QUEST_STATUS.COMPLETED)
-        Quests:SetObjectiveStatus("Main_GoldenPath", "13_EnterTheMonolith", QUEST_STATUS.STARTED)
+        local axon_2__quest_status_completed = Quests:GetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.AXON_2) == QUEST_STATUS.COMPLETED
+        local monolith_quest_status_not_started = Quests:GetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH) == QUEST_STATUS.NOT_STARTED
+
+        -- Debugging logs showed regression of quest 13 from completed to started if an axon was defeated after the paintress.
+        -- Ensure quest status is correct when receiving monolith ticket
+        if not axon_2__quest_status_completed or monolith_quest_status_not_started then
+            Logger:info("Monolith ticket received: attempting to complete quest 12 and start quest 13")
+            Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.AXON_2, QUEST_STATUS.COMPLETED)
+            Quests:SetObjectiveStatus(CONSTANTS.QUEST.GOLDEN_PATH.QUEST_NAME, CONSTANTS.QUEST.GOLDEN_PATH.ENTER_MONOLITH, QUEST_STATUS.STARTED)
+        end
     elseif item_data.name == "Area - The Reacher" then
         Save:WriteFlagByName(CONSTANTS.NID.REACHER_LVL6_MAELLE, true)
     elseif item_data.name == "Area - Lumiere" then

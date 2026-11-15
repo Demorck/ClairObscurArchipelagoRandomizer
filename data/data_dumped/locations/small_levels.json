@@ -280,5 +280,11 @@
         "location": "Small Level Sacred River",
         "original_item": "Consumable_LuminaPoint",
         "condition": {}
+    },
+    {
+        "name": "Chest_SideLevel_CleasTower_1",
+        "location": "Side Level Cleas Tower",
+        "original_item": "Verso - Visages Outfit",
+        "condition": {}
     }
 ]

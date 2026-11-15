@@ -78,6 +78,16 @@ StorageSchema.fields = {
         default = false,
     },
 
+    sea_cliff_back_exit_open = {
+        type = "boolean",
+        default = false,
+    },
+
+    monolith_interior_portal_unlocked = {
+        type = "boolean",
+        default = false,
+    },
+
     -- Location tracking
     currentLocation = {
         type = "string",

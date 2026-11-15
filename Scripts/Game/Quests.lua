@@ -69,7 +69,7 @@ function Quests:GetObjectiveStatus(quest_name, objective_name)
     status = quest_data.ObjectivesStatus_8_EA1232C14DA1F6DDA84EBA9185000F56:Find(FName(objective_name)):get()
 
     if status then
-        return QUEST_STATUS[status]
+        return status
     end
 
     return nil
