@@ -119,7 +119,8 @@ function LocationManager:ScoutLocation(location_names, create_hint)
 
     for _, location_name in ipairs(location_names) do
         local id = Archipelago:GetClient():GetLocationId(location_name)
-        if id == nil then
+        print(tostring(id))
+        if id == nil or id < 0 then
             Logger:warn("Unknown location, not scouted: " .. location_name)
         else
             table.insert(location_ids, id)
